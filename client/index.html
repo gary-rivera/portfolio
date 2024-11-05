@@ -3,6 +3,47 @@
 	<head>
 		<meta charset="UTF-8" />
 		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+		<!-- <script>
+			async function fetchAndStoreBgPatterns() {
+				const API_URL = 'https://www.toptal.com/designers/';
+				const LIGHT_PATTERN_PATH = 'subtlepatterns/uploads/ep_naturalwhite.png';
+				const DARK_PATTERN_PATH = 'subtlepatterns/uploads/denim.png';
+
+				try {
+					const lightPatternPromise = fetch(`${API_URL}${LIGHT_PATTERN_PATH}`);
+					const darkPatternPromise = fetch(`${API_URL}${DARK_PATTERN_PATH}`);
+
+					// Use Promise.all to wait for both fetch requests to complete
+					const responses = await Promise.all([
+						lightPatternPromise,
+						darkPatternPromise,
+					]);
+
+					// Check for successful responses
+					const patterns = await Promise.all(
+						responses.map((response) => {
+							if (!response.ok) {
+								throw new Error(`HTTP error! status: ${response.status}`);
+							}
+							return response.blob(); // Getting the blob for each pattern
+						})
+					);
+
+					// You can now store these patterns or use them in your app
+					console.log('Pattern blobs:', patterns);
+					// Example: storing the URLs in localStorage as object URLs
+					const lightPatternURL = URL.createObjectURL(patterns[0]);
+					const darkPatternURL = URL.createObjectURL(patterns[1]);
+					localStorage.setItem('lightPatternURL', lightPatternURL);
+					localStorage.setItem('darkPatternURL', darkPatternURL);
+
+					console.log('Patterns stored in localStorage');
+				} catch (err) {
+					console.error('[index.html] failed to fetch bg patterns', err);
+				}
+			}
+			fetchAndStoreBgPatterns();
+		</script> -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>gr</title>
 	</head>

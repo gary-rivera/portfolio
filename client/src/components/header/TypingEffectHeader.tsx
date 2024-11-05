@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import styles from '../styles/TypingEffectHeader.module.css';
+import styles from '../../styles/TypingEffectHeader.module.css';
+import { HStack, Text } from '@chakra-ui/react';
 
 const TypingEffect = () => {
 	const [text, setText] = useState('');
@@ -48,16 +49,16 @@ const TypingEffect = () => {
 	}, [text, isDeleting, wordIndex, isComplete]);
 
 	return (
-		<div className={styles.typingContainer}>
-			<span className={styles.typedText}>{text}</span>
-			<span
+		<HStack className={styles.typingContainer}>
+			<Text className={styles.typedText}>{text}</Text>
+			<Text
 				className={
 					isComplete && blinkEnded ? styles.cursorStopped : styles.cursor
 				}
 			>
 				&nbsp;
-			</span>
-		</div>
+			</Text>
+		</HStack>
 	);
 };
 

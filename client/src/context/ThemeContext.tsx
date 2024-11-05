@@ -8,14 +8,19 @@ import {
 
 type Theme = 'light' | 'dark';
 
-const ThemeContext = createContext({
+interface ThemeContextType {
+	theme: Theme;
+	toggleTheme: () => void;
+}
+
+const ThemeContext = createContext<ThemeContextType>({
 	theme: 'dark',
 	toggleTheme: () => {},
 });
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 	const [theme, setTheme] = useState<Theme>(() => {
-		const savedTheme = localStorage.getItem('color-theme') as Theme;
+		const savedTheme = localStorage.getItem('theme') as Theme;
 		return savedTheme || 'dark';
 	});
 
@@ -35,4 +40,4 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 	);
 };
 
-export const useTheme = () => useContext(ThemeContext);
+export const useThemeContext = () => useContext(ThemeContext);

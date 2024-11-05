@@ -1,39 +1,10 @@
-:root {
-	min-height: 100vh;
-	background-color: #f9f7f0;
-	background-image: linear-gradient(
-			0deg,
-			rgba(173, 216, 230, 0.3) 1px,
-			transparent 1px
-		),
-		linear-gradient(90deg, rgba(173, 216, 230, 0.25) 1px, transparent 1px),
-		url('https://www.toptal.com/designers/subtlepatterns/uploads/ep_naturalwhite.png');
-
-	background-size: 25px 25px;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-
-	--bg-primary-light: #f9f7f0;
-	--bg-primary-dark: #f9f7f0;
-	--bg-secondary-light: rgba(173, 216, 230, 0.3);
-	--bg-secondary-dark: #f9f7f0;
-}
-
 a {
 	font-weight: 500;
-	color: #646cff;
+	color: #646cff; /* TODO */
 	text-decoration: inherit;
 }
 a:hover {
-	color: #535bf2;
-}
-
-body {
-	margin: 0;
-	display: flex;
-	place-items: center;
-	min-width: 320px;
-	min-height: 100vh;
+	color: #535bf2; /* TODO */
 }
 
 h1 {
@@ -48,13 +19,14 @@ button {
 	font-size: 1em;
 	font-weight: 500;
 	font-family: inherit;
-	background-color: #1a1a1a;
 	cursor: pointer;
 	transition: border-color 0.25s;
 }
+
 button:hover {
 	border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
 	outline: 4px auto -webkit-focus-ring-color;

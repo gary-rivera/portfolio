@@ -1,6 +1,6 @@
 import TypingEffectHeader from './TypingEffectHeader';
 import styles from '../../styles/MainHeader.module.css';
-import { Box, HStack, Divider } from '@chakra-ui/react';
+import { Box, HStack } from '@chakra-ui/react';
 
 function MainHeader() {
 	return (

@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import {
 	Box,
+	Em,
 	Flex,
 	Grid,
 	GridItem,
@@ -10,6 +11,8 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import Experience from './Experience';
+
 import { MdCircle as FilledCircle } from 'react-icons/md';
 import { FaCircleHalfStroke as HalfFilledCircle } from 'react-icons/fa6';
 import { FaCircle as EmptyCircle } from 'react-icons/fa';
@@ -121,7 +124,7 @@ function ContentContainer() {
 						</Flex>
 
 						<HStack position="absolute" left="3" top="-2">
-							<Text>2024</Text>
+							<Em>2024</Em>
 						</HStack>
 						<HStack></HStack>
 					</VStack>
@@ -132,21 +135,16 @@ function ContentContainer() {
 				<motion.div
 					key={activeTab}
 					ref={contentRef}
-					initial={{ opacity: 0, height: 0 }}
-					animate={{ opacity: 1, height }}
+					initial={{ opacity: 0, minHeight: '33.333%' }}
+					animate={{ opacity: 1, minHeight: height, maxHeight: '500px' }}
 					exit={{ opacity: 0, height: 0 }}
 					transition={{ duration: 0.6 }}
 					style={{ overflow: 'hidden' }}
 				>
 					{activeTab === 'experience' && (
 						<Box bg="green.300" p={4}>
-							<ul>
-								<li>Item 1</li>
-								<li>Item 2</li>
-								<li>Item 3</li>
-								<li>Item 4</li>
-								<li>Item 5</li>
-							</ul>
+							{/* REF for bullet points or heading?: https://www.chakra-ui.com/docs/components/blockquote */}
+							<Experience />
 						</Box>
 					)}
 

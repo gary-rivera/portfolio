@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -13,13 +13,12 @@
 					const lightPatternPromise = fetch(`${API_URL}${LIGHT_PATTERN_PATH}`);
 					const darkPatternPromise = fetch(`${API_URL}${DARK_PATTERN_PATH}`);
 
-					// Use Promise.all to wait for both fetch requests to complete
+
 					const responses = await Promise.all([
 						lightPatternPromise,
 						darkPatternPromise,
 					]);
 
-					// Check for successful responses
 					const patterns = await Promise.all(
 						responses.map((response) => {
 							if (!response.ok) {
@@ -29,9 +28,6 @@
 						})
 					);
 
-					// You can now store these patterns or use them in your app
-					console.log('Pattern blobs:', patterns);
-					// Example: storing the URLs in localStorage as object URLs
 					const lightPatternURL = URL.createObjectURL(patterns[0]);
 					const darkPatternURL = URL.createObjectURL(patterns[1]);
 					localStorage.setItem('lightPatternURL', lightPatternURL);

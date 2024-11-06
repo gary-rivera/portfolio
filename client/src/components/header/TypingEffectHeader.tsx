@@ -7,7 +7,7 @@ const TypingEffect = () => {
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [wordIndex, setWordIndex] = useState(0);
 	const [isComplete, setIsComplete] = useState(false);
-	const [blinkEnded, setBlinkEnded] = useState(false); // Tracks when blinking should stop
+	const [blinkEnded, setBlinkEnded] = useState(false);
 	const words = ['dinglega', 'gary r.'];
 	const typingSpeed = 100;
 	const deletingSpeed = 40;

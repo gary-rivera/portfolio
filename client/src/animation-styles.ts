@@ -15,6 +15,6 @@ const animationStyles = defineAnimationStyles({
 			animationTimingFunction: 'ease-in-out',
 		},
 	},
-}) as Record<string, unknown>;  // Using a basic type assertion
+});
 
 export default animationStyles;

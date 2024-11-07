@@ -1,10 +1,44 @@
-import { fetcher } from '../services/api'
+import { fetcher, octokitFetcher, octokitGQL } from '../services/api'
 import useSWR from 'swr'
 
-const ghUsername = 'gary-rivera'
+type UserRepositoriesResponse = {
+  user: {
+    repositories: {
+      nodes: Array<{
+        name: string
+        description: string
+        stargazerCount: number
+      }>
+    }
+  }
+}
+
+export const fetchRepositories = async (username: string) => {
+  console.log('Authorization Header:', octokitGQL.defaults) // Log auth header
+
+  const { user } = await octokitGQL<UserRepositoriesResponse>(
+    `
+    query ($username: String!) {
+      user(login: $username) {
+        repositories(first: 10) {
+          nodes {
+            name
+            description
+            stargazerCount
+          }
+        }
+      }
+    }
+  `,
+    { username }
+  )
+
+  return user.repositories.nodes
+}
+
 export const useGithubRepos = () => {
   const { data, error, isLoading } = useSWR(
-    `https://api.github.com/${ghUsername}/repos`,
+    `https://api.github.com/user/repos?visibility=all&affiliation=owner&sort=created&per_page=80`,
     fetcher,
     {
       revalidateOnFocus: false,
@@ -15,13 +49,38 @@ export const useGithubRepos = () => {
   return {
     repos: data,
     isLoading,
-    isError: !!error
+    isError: !!error,
+  }
+}
+
+export const useGithubReposOctokit = () => {
+  const { data, error, isLoading } = useSWR(
+    'octokit-fetch-repos',
+    async () => {
+      const response = await octokitFetcher.rest.repos.listForAuthenticatedUser({
+        visibility: 'all',
+        affiliation: 'owner',
+        sort: 'created',
+        per_page: 80,
+      })
+      return response.data
+    },
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  )
+
+  return {
+    repos: data,
+    isLoading,
+    isError: !!error,
   }
 }
 
 export const useGithubRepo = (repo: string) => {
   const { data, error, isLoading } = useSWR(
-    `https://api.github.com/repos/${ghUsername}/${repo}/contents`,
+    `https://api.github.com/repos/gary-rivera/${repo}/contents`,
     fetcher,
     {
       revalidateOnFocus: false,
@@ -32,82 +91,24 @@ export const useGithubRepo = (repo: string) => {
   return {
     repo: data,
     isLoading,
-    isError: !!error
-  }
-}
-
-export const useGithubRepoWithReadme = (repoName: string) => {
-
-  const { data: repoData, error: repoError, isLoading: isRepoLoading } = useSWR(
-    repoName ? `https://api.github.com/repos/gary-rivera/${repoName}/contents` : null,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
-  )
-
-  const readmeFile = repoData?.find((file: any) => file.name === 'README.md')
-
-  const { data: readmeContent, error: readmeError, isLoading: isReadmeLoading } = useSWR(
-    readmeFile?.download_url || null,
-    (url: string) => fetch(url).then(res => res.text()),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
-  )
-
-  console.log({
-    repoData,
-    isRepoLoading,
-    repoError,
-    readmeContent,
-    isReadmeLoading,
-    readmeError
-  })
-
-  return {
-    repoData,
-    isRepoLoading,
-    repoError,
-    readmeContent,
-    isReadmeLoading,
-    readmeError
+    isError: !!error,
   }
 }
 
 export const useResumeRepo = () => {
   const { data, error, isLoading } = useSWR(
     'https://raw.githubusercontent.com/gary-rivera/resume-md/main/README.md',
-    (url: string) => fetch(url).then(res => res.text()),
+    (url: string) => fetch(url).then((res) => res.text()),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-      shouldRetryOnError: false
-    }
-  )
-  return {
-    readmeContent: data,
-    isLoading,
-    isError: !!error
-  }
-}
-
-export const useGitHubRepoContent = (downloadUrl?: string) => {
-  const { data, error, isLoading } = useSWR(
-    downloadUrl || null,
-    (url: string) => fetch(url).then(res => res.text()),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      shouldRetryOnError: false
+      shouldRetryOnError: false,
     }
   )
 
   return {
     readmeContent: data,
     isLoading,
-    isError: !!error
+    isError: !!error,
   }
 }

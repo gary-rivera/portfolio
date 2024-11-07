@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import styles from '../../styles/TypingEffectHeader.module.css';
 import { HStack, Text } from '@chakra-ui/react';
+import { keyframes } from '@emotion/react';
+
+const blink = keyframes`
+	0% { opacity: 1; }
+	50% { opacity: 0; }
+	100% { opacity: 1; }
+`;
 
 const TypingEffect = () => {
 	const [text, setText] = useState('');
@@ -12,6 +19,7 @@ const TypingEffect = () => {
 	const typingSpeed = 100;
 	const deletingSpeed = 40;
 
+	// Typing effect logic
 	useEffect(() => {
 		let timer: number;
 
@@ -49,15 +57,19 @@ const TypingEffect = () => {
 	}, [text, isDeleting, wordIndex, isComplete]);
 
 	return (
-		<HStack className={styles.typingContainer}>
-			<Text className={styles.typedText}>{text}</Text>
-			<Text
-				className={
-					isComplete && blinkEnded ? styles.cursorStopped : styles.cursor
-				}
-			>
-				&nbsp;
-			</Text>
+		<HStack fontSize="42px" fontWeight="900">
+			<Text>{text}</Text>
+			{!isComplete && (
+				<Text
+					fontSize="1"
+					w="0.1rem"
+					backgroundColor="black"
+					marginLeft="2px"
+					animation={`${blink} 750ms infinite`}
+				>
+					&nbsp;
+				</Text>
+			)}
 		</HStack>
 	);
 };

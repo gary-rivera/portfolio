@@ -3,28 +3,37 @@ import MainHeader from './components/header/MainHeader';
 import ContentContainer from './components/content/ContentContainer';
 import ThemeToggleButton from './components/ThemeToggleButton';
 import { Provider /*as ChakraProvider*/ } from '@/components/ui/provider';
-import { HStack, Flex } from '@chakra-ui/react';
+import { HStack, Flex, Box } from '@chakra-ui/react';
 import { ThemeProvider } from './context/ThemeContext';
 import './App.css';
 
 function App() {
 	return (
-		<>
-			<RuioWrapper>
-				<Provider>
-					<ThemeProvider>
-						<HStack className="app-container">
-							<Flex className="content" direction="column">
-								<MainHeader />
-								{/* TODO: style the toggle, reference spline for inspo */}
-								<ContentContainer />
-								{/* <ThemeToggleButton /> */}
-							</Flex>
-						</HStack>
-					</ThemeProvider>
-				</Provider>
-			</RuioWrapper>
-		</>
+		<RuioWrapper>
+			<Provider>
+				<ThemeProvider>
+					<HStack
+						flexDirection="column"
+						alignItems="center"
+						justifyContent="center"
+						zIndex="1"
+						color="var(--text-color)"
+						margin={{
+							base: '2rem 1rem',
+							md: '4rem 4rem',
+							lg: '4rem 10rem',
+							xl: '8rem 15rem',
+						}}
+					>
+						<Flex direction="column" w="100%">
+							<MainHeader />
+							<ContentContainer />
+							<ThemeToggleButton />
+						</Flex>
+					</HStack>
+				</ThemeProvider>
+			</Provider>
+		</RuioWrapper>
 	);
 }
 

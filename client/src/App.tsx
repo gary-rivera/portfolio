@@ -1,6 +1,6 @@
 import RuioWrapper from 'ruio';
 import MainHeader from './components/header/MainHeader';
-import ContentContainer from './components/content/ContentContainer';
+import AcheivementsContainer from './components/content/AcheivementsContainer';
 import ThemeToggleButton from './components/ThemeToggleButton';
 import { Provider /*as ChakraProvider*/ } from '@/components/ui/provider';
 import { HStack, Flex, Box } from '@chakra-ui/react';
@@ -27,7 +27,7 @@ function App() {
 					>
 						<Flex direction="column" w="100%">
 							<MainHeader />
-							<ContentContainer />
+							<AcheivementsContainer />
 							<ThemeToggleButton />
 						</Flex>
 					</HStack>

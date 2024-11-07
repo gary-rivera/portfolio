@@ -7,7 +7,6 @@ import {
 	GridItem,
 	HStack,
 	Tabs,
-	Text,
 	VStack,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
@@ -33,12 +32,6 @@ function ContentContainer() {
 		setActiveTab(activeTab === 'experience' ? 'projects' : 'experience');
 	};
 
-	// DONE: timeline to the left
-	// DONE: Tab toggle + Container
-	// TODO: experience tab
-	// TODO: projects tab
-	// TODO: dynamic sizing - https://v2.chakra-ui.com/docs/components/transitions/usage#changing-the-startingheight OR https://v2.chakra-ui.com/docs/components/transitions/usage#changing-transitions-manually-using-motion-props
-
 	// TODO: make dynamic circle progress? is there enough content? https://www.chakra-ui.com/docs/components/progress-circle
 	// TODO: progress bar reactive to progress of mouse in container?
 	// NOTE: pick one of these ^^
@@ -50,8 +43,8 @@ function ContentContainer() {
 					<Box
 						position="absolute"
 						flexGrow={1}
-						top="3.5"
-						w="0"
+						top={2.5}
+						w={0}
 						h="100%"
 						className="tl-progress-bar"
 						borderLeft="1px dashed black"
@@ -59,13 +52,44 @@ function ContentContainer() {
 				</Flex>
 
 				<HStack position="absolute" left="3" top="-2">
-					<Text>{year}</Text>
-					{/* <HalfFilledCircle /> */}
-					{/* <EmptyCircle /> */}
+					<Em>{year}</Em>
 				</HStack>
 				<HStack></HStack>
 			</VStack>
 		</Flex>
+	);
+
+	// TODO: instead of starting from 0 height back to whatever it should be, just shorten/heighten to where it should go.
+	// TODO: fix only seeing all content after toggling back and forth
+	// TODO: fix toggling invoking an api call. context? useMemo?
+	const ContentContainer = () => (
+		<motion.div
+			key={activeTab}
+			ref={contentRef}
+			initial={{ opacity: 0, minHeight: '33%' }}
+			animate={{ opacity: 1, minHeight: height, maxHeight: '500px' }}
+			exit={{ opacity: 0, height: 0 }}
+			transition={{ duration: 0.6 }}
+			style={{ overflow: 'hidden' }}
+		>
+			{activeTab === 'experience' && (
+				<Box bg="green.300" p={4}>
+					{/* REF for bullet points or heading?: https://www.chakra-ui.com/docs/components/blockquote */}
+					<Experience />
+				</Box>
+			)}
+
+			{activeTab === 'projects' && (
+				<Box bg="green.300" p={4}>
+					Projects panel content
+				</Box>
+			)}
+			{activeTab === 'projects' && (
+				<Box bg="green.300" p={4}>
+					Projects panel content
+				</Box>
+			)}
+		</motion.div>
 	);
 
 	return (
@@ -108,52 +132,10 @@ function ContentContainer() {
 				rowStart={2}
 				bg="tomato"
 			>
-				<Flex alignItems="start" direction="column" h="100%" py={4} pl={2}>
-					<VStack position="relative" h="inherit">
-						<Flex position="relative" h="95%" justifyContent="center">
-							<FilledCircle size="8px" />
-							<Box
-								position="absolute"
-								flexGrow={1}
-								top={2.5}
-								w={0}
-								h="100%"
-								className="tl-progress-bar"
-								borderLeft="1px dashed black"
-							/>
-						</Flex>
-
-						<HStack position="absolute" left="3" top="-2">
-							<Em>2024</Em>
-						</HStack>
-						<HStack></HStack>
-					</VStack>
-				</Flex>
+				<Timeline year="2024" />
 			</GridItem>
 			<GridItem className="content-grid-item" rowSpan={1} colSpan={5}>
-				{/* Motion wrapper for animating height */}
-				<motion.div
-					key={activeTab}
-					ref={contentRef}
-					initial={{ opacity: 0, minHeight: '33.333%' }}
-					animate={{ opacity: 1, minHeight: height, maxHeight: '500px' }}
-					exit={{ opacity: 0, height: 0 }}
-					transition={{ duration: 0.6 }}
-					style={{ overflow: 'hidden' }}
-				>
-					{activeTab === 'experience' && (
-						<Box bg="green.300" p={4}>
-							{/* REF for bullet points or heading?: https://www.chakra-ui.com/docs/components/blockquote */}
-							<Experience />
-						</Box>
-					)}
-
-					{activeTab === 'projects' && (
-						<Box bg="green.300" p={4}>
-							Projects panel content
-						</Box>
-					)}
-				</motion.div>
+				<ContentContainer />
 			</GridItem>
 		</Grid>
 	);

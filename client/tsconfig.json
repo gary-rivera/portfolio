@@ -21,7 +21,7 @@
 	},
 	"files": [],
 	"exclude": ["node_modules"],
-	"include": ["src", "src/theme.ts", "src/animation-styles.ts"],
+	"include": ["src", "src/styles/theme.ts", "src/styles/animation-styles.ts"],
 	"references": [
 		{ "path": "./tsconfig.app.json" },
 		{ "path": "./tsconfig.node.json" }

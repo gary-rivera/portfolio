@@ -24,6 +24,7 @@ function App() {
 							lg: '4rem 10rem',
 							xl: '8rem 15rem',
 						}}
+						// filter="blur(5px)"
 					>
 						<Flex direction="column" w="100%">
 							<MainHeader />

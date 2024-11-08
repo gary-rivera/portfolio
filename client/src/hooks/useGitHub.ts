@@ -14,7 +14,7 @@ type UserRepositoriesResponse = {
 }
 
 export const fetchRepositories = async (username: string) => {
-  console.log('Authorization Header:', octokitGQL.defaults) // Log auth header
+  console.log('Authorization Header:', octokitGQL.defaults)
 
   const { user } = await octokitGQL<UserRepositoriesResponse>(
     `

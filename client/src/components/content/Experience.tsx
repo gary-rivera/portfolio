@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react';
 import Markdown from 'react-markdown';
 
-// TODO: preserve readmeContent so that api call doesn't need to be recalled
 function Experience() {
 	const { readmeContent, isLoading, isError } = useResumeRepo();
 

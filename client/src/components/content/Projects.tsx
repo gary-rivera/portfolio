@@ -7,7 +7,6 @@ import { components } from '@octokit/openapi-types';
 type Repo = components['schemas']['repository'];
 
 function Projects() {
-	// TODO: start API call while page is loading and when experience tab is rendered
 	const { repos: fetchedRepos, isLoading, isError } = useGithubRepos();
 	const [projectDetails, setProjectDetails] = useState({});
 

@@ -14,8 +14,6 @@ import Experience from './Experience';
 import Projects from './Projects';
 
 import { MdCircle as FilledCircle } from 'react-icons/md';
-import { FaCircleHalfStroke as HalfFilledCircle } from 'react-icons/fa6';
-import { FaCircle as EmptyCircle } from 'react-icons/fa';
 
 function AcheivementsContainer() {
 	const [activeTab, setActiveTab] = useState('experience');
@@ -33,9 +31,6 @@ function AcheivementsContainer() {
 		setActiveTab(activeTab === 'experience' ? 'projects' : 'experience');
 	};
 
-	// TODO: make dynamic circle progress? is there enough content? https://www.chakra-ui.com/docs/components/progress-circle
-	// TODO: progress bar reactive to progress of mouse in container?
-	// NOTE: pick one of these ^^
 	const Timeline = ({ year }: { year: string }) => (
 		<Flex alignItems="start" direction="column" h="100%" py={4} pl={2}>
 			<VStack position="relative" h="inherit">
@@ -60,9 +55,6 @@ function AcheivementsContainer() {
 		</Flex>
 	);
 
-	// TODO: instead of starting from 0 height back to whatever it should be, just shorten/heighten to where it should go.
-	// TODO: fix only seeing all content after toggling back and forth
-	// TODO: fix toggling invoking an api call every time. context? useMemo?
 	const ContentContainer = () => (
 		<motion.div
 			key={activeTab}
@@ -73,7 +65,6 @@ function AcheivementsContainer() {
 			transition={{ duration: 0.6 }}
 			style={{ overflow: 'hidden' }}
 		>
-			{/* TODO: remove uneeded box wrapper (experience component already has one. hat on hat) */}
 			{activeTab === 'experience' && (
 				<Box
 					// bg="green.300"

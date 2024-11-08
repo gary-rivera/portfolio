@@ -1,4 +1,3 @@
-// api helper
 import { Octokit } from '@octokit/rest'
 import { graphql } from '@octokit/graphql'
 
@@ -7,7 +6,7 @@ const VITE_GH_API_TOKEN = import.meta.env.VITE_GH_API_TOKEN
 export const octokitFetcher: Octokit = new Octokit({
   auth: VITE_GH_API_TOKEN,
   mediaType: {
-    previews: ['inertia'], // Adjust this based on the fields you need
+    previews: ['inertia'],
   },
 })
 export const octokitGQL = graphql.defaults({

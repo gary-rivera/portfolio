@@ -15,6 +15,7 @@ import {
 	Stack,
 	VStack,
 } from '@chakra-ui/react';
+import { Blockquote } from '@/components/ui/blockquote';
 import { FaNpm } from 'react-icons/fa';
 import { FaGithub } from 'react-icons/fa';
 import { FaExternalLinkAlt } from 'react-icons/fa';
@@ -27,10 +28,34 @@ interface ProjectCardProps {
 	// project: Repo;
 }
 
+// TODO: spacing/margin/padding
+// TODO: bottom HStack as footer (at end of container)
+// TODO: badge mapping to color scheme for languages and stack
+// TODO: deprecate timeline component?
+// TODO: format icon sizing
+// TODO: onload, blur -> focus in of header only (handle api calls while this happens)
+// TODO: responsive design -> media querying
+// TODO: update repo descriptions
+// TODO: use array for [icon, relativeDimensionSizing]
+// TODO: hover + click effect of project title
+// TODO: whiteAlpha vs. blackAlpha
+// TODO: skeleton while project/experience values load
+// TODO: resume-md repo to have static object values for experience
+// TODO: progress/steps UI for experience?
+
 function ProjectCard({ project }: ProjectCardProps) {
 	const { logo, links, name, description } = project;
 	return (
-		<Box w="100%" minH="10rem" bg="blackAlpha.100" borderRadius="2px">
+		// <Box w="100%" minH="10rem" bg="blackAlpha.50" borderRadius="2px">
+		<Flex
+			direction="column"
+			w="100%"
+			minH="10rem"
+			bg="whiteAlpha.400"
+			borderRadius="2px"
+			py="4"
+			px="5"
+		>
 			<Flex justify="space-between">
 				<Flex align="center" justify="center">
 					{/* <HStack> */}
@@ -49,12 +74,14 @@ function ProjectCard({ project }: ProjectCardProps) {
 					color="gray.600"
 					textAlign="right"
 				>
-					<Em>commits</Em>
-					<Em>created</Em>
+					<Em>commits: 45</Em>
+					<Em>created: Jan. 1</Em>
 				</Flex>
 			</Flex>
 			<HStack>
-				<Text fontWeight="500">{description}</Text>
+				<Blockquote fontWeight="500" mt="2">
+					{description}
+				</Blockquote>
 			</HStack>
 			<Flex justify="space-between">
 				<HStack>
@@ -86,7 +113,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 					)}
 				</HStack>
 			</Flex>
-		</Box>
+		</Flex>
 	);
 }
 

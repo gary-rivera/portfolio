@@ -99,15 +99,10 @@ function AcheivementsContainer() {
 		<Grid
 			className="content-container"
 			gridTemplateRows={'40px repeat(1, 1fr)'}
-			gridTemplateColumns="repeat(6, 1fr)"
+			gridTemplateColumns="repeat(4, 1fr)"
 			mt="2rem"
 		>
-			<GridItem
-				className="nav-tabs-grid-item"
-				rowSpan={1}
-				colSpan={2}
-				colStart={2}
-			>
+			<GridItem className="nav-tabs-grid-item" rowSpan={1} colSpan={2}>
 				<Tabs.Root
 					variant="line"
 					defaultValue="experience"
@@ -128,21 +123,8 @@ function AcheivementsContainer() {
 					</Tabs.List>
 				</Tabs.Root>
 			</GridItem>
-			<GridItem
-				className="timeline-grid-item"
-				rowSpan={1}
-				colSpan={1}
-				rowStart={2}
-				bg="tomato"
-			>
-				<Timeline year="2024" />
-			</GridItem>
-			<GridItem
-				className="content-grid-item"
-				rowSpan={1}
-				colSpan={5}
-				// border="3px solid yellow"
-			>
+
+			<GridItem className="content-grid-item" rowSpan={1} colSpan={4}>
 				<ContentContainer />
 			</GridItem>
 		</Grid>

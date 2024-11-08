@@ -18,15 +18,8 @@ function App() {
 						justifyContent="center"
 						zIndex="1"
 						color="var(--text-color)"
-						margin={{
-							base: '2rem 1rem',
-							md: '4rem 4rem',
-							lg: '4rem 10rem',
-							xl: '8rem 15rem',
-						}}
-						// filter="blur(5px)"
 					>
-						<Flex direction="column" w="100%">
+						<Flex direction="column" w="40%">
 							<MainHeader />
 							<AcheivementsContainer />
 							<ThemeToggleButton />

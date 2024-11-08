@@ -11,12 +11,13 @@ import {
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import Experience from './Experience';
+import Projects from './Projects';
 
 import { MdCircle as FilledCircle } from 'react-icons/md';
 import { FaCircleHalfStroke as HalfFilledCircle } from 'react-icons/fa6';
 import { FaCircle as EmptyCircle } from 'react-icons/fa';
 
-function ContentContainer() {
+function AcheivementsContainer() {
 	const [activeTab, setActiveTab] = useState('experience');
 	const [height, setHeight] = useState('auto');
 	const contentRef = useRef<HTMLDivElement | null>(null);
@@ -61,7 +62,7 @@ function ContentContainer() {
 
 	// TODO: instead of starting from 0 height back to whatever it should be, just shorten/heighten to where it should go.
 	// TODO: fix only seeing all content after toggling back and forth
-	// TODO: fix toggling invoking an api call. context? useMemo?
+	// TODO: fix toggling invoking an api call every time. context? useMemo?
 	const ContentContainer = () => (
 		<motion.div
 			key={activeTab}
@@ -72,21 +73,23 @@ function ContentContainer() {
 			transition={{ duration: 0.6 }}
 			style={{ overflow: 'hidden' }}
 		>
+			{/* TODO: remove uneeded box wrapper (experience component already has one. hat on hat) */}
 			{activeTab === 'experience' && (
-				<Box bg="green.300" p={4}>
+				<Box
+					// bg="green.300"
+					p={4}
+				>
 					{/* REF for bullet points or heading?: https://www.chakra-ui.com/docs/components/blockquote */}
 					<Experience />
 				</Box>
 			)}
 
 			{activeTab === 'projects' && (
-				<Box bg="green.300" p={4}>
-					Projects panel content
-				</Box>
-			)}
-			{activeTab === 'projects' && (
-				<Box bg="green.300" p={4}>
-					Projects panel content
+				<Box
+					// bg="green.300"
+					p={4}
+				>
+					<Projects />
 				</Box>
 			)}
 		</motion.div>
@@ -134,11 +137,16 @@ function ContentContainer() {
 			>
 				<Timeline year="2024" />
 			</GridItem>
-			<GridItem className="content-grid-item" rowSpan={1} colSpan={5}>
+			<GridItem
+				className="content-grid-item"
+				rowSpan={1}
+				colSpan={5}
+				// border="3px solid yellow"
+			>
 				<ContentContainer />
 			</GridItem>
 		</Grid>
 	);
 }
 
-export default ContentContainer;
+export default AcheivementsContainer;

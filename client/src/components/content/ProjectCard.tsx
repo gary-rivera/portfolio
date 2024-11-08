@@ -1,53 +1,55 @@
 import {
 	Box,
+	IconButton,
 	Code,
 	Heading,
+	HStack,
+	Icon,
 	Image,
 	Link,
 	Text,
 	DataList,
 	Stack,
 } from '@chakra-ui/react';
-import { DataListItem } from '@/components/ui/data-list';
-import { DataListRoot } from '@/components/ui/data-list';
+import { FaNpm } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 import { components } from '@octokit/openapi-types';
 type Repo = components['schemas']['repository'];
 
 interface ProjectCardProps {
-	project: Repo;
+	project: any;
+	// project: Repo;
 }
 
 function ProjectCard({ project }: ProjectCardProps) {
-	console.log(project.name, { project });
+	const { logo, links, name, description } = project;
 	return (
-		<DataListRoot
-			id={project.id.toString()}
-			w="100%"
-			minH="10rem"
-			bg="whiteAlpha.500"
-			orientation="horizontal"
-		>
-			{/* <DataListItem key="id" label="id" value={project.id} /> */}
-			{[
-				'id',
-				'node_id',
-				'name',
-				'description',
-				'url',
-				'created_at',
-				'updated_at',
-				'html_url',
-				'branches_url',
-				'git_tags_url',
-				'languages_url',
-				'commits_url',
-				'git_commits_url',
-				// 'homepage',
-			].map((key) => (
-				<DataListItem key={key} label={key} value={project[key]} />
-			))}
-		</DataListRoot>
+		<Box w="100%" minH="10rem" bg="whiteAlpha.500">
+			<HStack>
+				<Icon fontSize="50px">
+					<img src={logo} />
+				</Icon>
+				<Heading>{name}</Heading>
+			</HStack>
+			<Text>{description}</Text>
+			{links['npm'] && (
+				<IconButton variant="ghost">
+					<FaNpm />
+				</IconButton>
+			)}
+			{links['deployment'] && (
+				<IconButton variant="ghost">
+					<FaExternalLinkAlt />
+				</IconButton>
+			)}
+			{links['repo'] && (
+				<IconButton variant="ghost">
+					<FaGithub />
+				</IconButton>
+			)}
+		</Box>
 	);
 }
 

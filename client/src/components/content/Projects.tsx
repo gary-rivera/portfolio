@@ -1,41 +1,37 @@
+import { useState, useEffect } from 'react';
 import { useGithubRepos } from '../../hooks/useGitHub';
 import { Flex } from '@chakra-ui/react';
+import { ProjectCatalog } from '../../data/projects';
 import ProjectCard from './ProjectCard';
 import { components } from '@octokit/openapi-types';
 type Repo = components['schemas']['repository'];
 
 function Projects() {
 	// TODO: start API call while page is loading and when experience tab is rendered
-	const { repos, isLoading, isError } = useGithubRepos();
+	const { repos: fetchedRepos, isLoading, isError } = useGithubRepos();
+	const [projectDetails, setProjectDetails] = useState({});
+
+	useEffect(() => {
+		if (fetchedRepos) {
+			const updatedCatalog = { ...projectDetails };
+			fetchedRepos.forEach((repo: Repo) => {
+				if (ProjectCatalog[repo.name]) {
+					ProjectCatalog[repo.name].description = repo.description || null;
+					ProjectCatalog[repo.name].links.repo = repo.html_url || null;
+				}
+			});
+			setProjectDetails(updatedCatalog);
+		}
+	}, [fetchedRepos]);
+
 	if (isLoading) return <p>Loading...</p>;
 	if (isError) return <p>Error loading repository contents</p>;
-	console.log({
-		repos,
-		isLoading,
-		isError,
-	});
-
-	const renderedProjects = [
-		'ruio',
-		'gbot',
-		'deadlocked',
-		'meme-generator',
-		'calculator',
-		// 'micasa'
-	];
-	const projects: Repo[] = [];
-
-	for (const repo of repos) {
-		if (projects.length === renderedProjects.length) break;
-		if (renderedProjects.includes(repo.name)) projects.push(repo);
-	}
 
 	return (
-		<Flex direction="column" gap="1">
-			{projects.length &&
-				projects.map((project: Repo) => (
-					<ProjectCard key={project.node_id} project={project} />
-				))}
+		<Flex direction="column" gap="2">
+			{Object.keys(ProjectCatalog).map((projectKey: string, idx) => (
+				<ProjectCard key={idx} project={ProjectCatalog[projectKey]} />
+			))}
 		</Flex>
 	);
 }
@@ -53,9 +49,9 @@ forsure:
 - url
 - created_at
 - updated_at
+- html_url
 
 maybe:
-- html_url?
 - branches_url?
 - git_tags_url?
 - languages_url?

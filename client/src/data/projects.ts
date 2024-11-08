@@ -14,6 +14,8 @@ type Project = {
 	logo: string;
 	name: string;
 	links: ProjectLinks;
+	description?: string | null;
+	languages?: string | null; // NOTE: should ultimately be an array
 };
 
 type Projects = {
@@ -33,9 +35,8 @@ export const ProjectCatalog: Projects = {
 		logo: calculatorIcon,
 		name: 'Calculator Mockup',
 		links: {
-			npm: null,
-			repo: null,
 			deployment: 'https://gary-rivera.github.io/calculator/',
+			repo: null,
 		},
 	},
 	gbot: {
@@ -50,16 +51,16 @@ export const ProjectCatalog: Projects = {
 		logo: deadlockIcon,
 		name: 'Deadlock Shop Template',
 		links: {
-			repo: null,
 			deployment: null, // TODO: open source + deploy
+			repo: null,
 		},
 	},
 	'meme-generator': {
 		logo: memeGenieLamp,
 		name: 'Meme Genie',
 		links: {
-			repo: null,
 			deployment: 'https://gary-rivera.github.io/meme-generator/',
+			repo: null,
 		},
 	},
 };

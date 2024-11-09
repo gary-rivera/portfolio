@@ -13,12 +13,14 @@ import { FaNpm } from 'react-icons/fa';
 import { FaGithub } from 'react-icons/fa';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
+import { Project } from '@/data/projects';
 import { components } from '@octokit/openapi-types';
 type Repo = components['schemas']['repository'];
 
 interface ProjectCardProps {
 	project: any;
 	// project: Repo;
+	project: Project;
 }
 
 function ProjectCard({ project }: ProjectCardProps) {

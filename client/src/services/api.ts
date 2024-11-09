@@ -1,4 +1,4 @@
-import { graphql } from '@octokit/graphql'
+import { graphql, GraphqlResponseError } from '@octokit/graphql'
 import type { GraphQlQueryResponseData } from "@octokit/graphql";
 
 const VITE_GH_API_TOKEN = import.meta.env.VITE_GH_API_TOKEN
@@ -10,7 +10,7 @@ const GitHubGQLConfig = graphql.defaults({
   },
 })
 
-export const fetchRepositoryData = async (username: string, repoName: string) => {
+export const fetchGithubRepositoryGQL = async (username: string, repoName: string) => {
   const query = `
     query ($username: String!, $repoName: String!) {
       repository(owner: $username, name: $repoName) {
@@ -40,7 +40,7 @@ export const fetchRepositoryData = async (username: string, repoName: string) =>
   const { repository }: GraphQlQueryResponseData = await GitHubGQLConfig(query, variables)
   return repository
 }
-export const fetchRepositoriesData = async (repoNames: string[]) => {
+export const fetchGithubRepositoriesGQL = async (repoNames: string[]) => {
   const queries = repoNames.map((repoName) => `
     ${repoName}: repository(owner: "${GH_USERNAME}", name: "${repoName}") {
       name
@@ -68,11 +68,40 @@ export const fetchRepositoriesData = async (repoNames: string[]) => {
       }
     }
   `).join("\n")
-
   const query = `query { ${queries} }`
 
-  const data: GraphQlQueryResponseData = await GitHubGQLConfig(query)
-  return data
+  try {
+    const data: GraphQlQueryResponseData = await GitHubGQLConfig(query)
+    return data
+  } catch (error) {
+    if (error instanceof GraphqlResponseError) {
+      // do something with the error, allowing you to detect a graphql response error,
+      // compared to accidentally catching unrelated errors.
+
+      // server responds with an object like the following (as an example)
+      // class GraphqlResponseError {
+      //  "headers": {
+      //    "status": "403",
+      //  },
+      //  "data": null,
+      //  "errors": [{
+      //   "message": "Field 'bioHtml' doesn't exist on type 'User'",
+      //   "locations": [{
+      //    "line": 3,
+      //    "column": 5
+      //   }]
+      //  }]
+      // }
+
+      console.error("[api][fetchRepositoriesData][graphql] request failed: ", error.request); // { query, variables: {}, headers: { authorization: 'token secret123' } }
+      console.error("[api][fetchRepositoriesData][graphql] with message: ", error.message); // Field 'bioHtml' doesn't exist on type 'User'
+    } else {
+      // @ts-ignore
+      console.error("[api][fetchRepositoriesData] request failed: ", error.request);
+      // @ts-ignore
+      console.error("[api][fetchRepositoriesData] with message: ", error.message);
+    }
+  }
 }
 // url, createdAt, total commits for repo, total commits for user (maybe more?)
 

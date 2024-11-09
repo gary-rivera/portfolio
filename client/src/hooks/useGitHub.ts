@@ -1,40 +1,35 @@
-import { fetcher, octokitFetcher, octokitGQL } from '../services/api'
 import useSWR from 'swr'
+import { fetcher, fetchGithubRepositoryGQL, fetchGithubRepositoriesGQL } from '../services/api'
 
-type UserRepositoriesResponse = {
-  user: {
-    repositories: {
-      nodes: Array<{
-        name: string
-        description: string
-        stargazerCount: number
-      }>
+export const useGitHubRepoData = (username: string, repoName: string) => {
+  const { data, error } = useSWR([username, repoName], ([user, repo]) =>
+    fetchGithubRepositoryGQL(user, repo)
+  )
+
+  return {
+    repo: data,
+    isLoading: !error && !data,
+    isError: error
+  }
+}
+export const useGitHubReposGQL = (repos: string[]) => {
+  const { data, error } = useSWR([repos], ([repos]) =>
+    fetchGithubRepositoriesGQL(repos),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+      errorRetryCount: 3,
     }
+  )
+
+  return {
+    repos: data,
+    isLoading: !error && !data,
+    isError: error
   }
 }
 
-export const fetchRepositories = async (username: string) => {
-  console.log('Authorization Header:', octokitGQL.defaults)
 
-  const { user } = await octokitGQL<UserRepositoriesResponse>(
-    `
-    query ($username: String!) {
-      user(login: $username) {
-        repositories(first: 10) {
-          nodes {
-            name
-            description
-            stargazerCount
-          }
-        }
-      }
-    }
-  `,
-    { username }
-  )
-
-  return user.repositories.nodes
-}
 
 export const useGithubRepos = () => {
   const { data, error, isLoading } = useSWR(
@@ -48,48 +43,6 @@ export const useGithubRepos = () => {
 
   return {
     repos: data,
-    isLoading,
-    isError: !!error,
-  }
-}
-
-export const useGithubReposOctokit = () => {
-  const { data, error, isLoading } = useSWR(
-    'octokit-fetch-repos',
-    async () => {
-      const response = await octokitFetcher.rest.repos.listForAuthenticatedUser({
-        visibility: 'all',
-        affiliation: 'owner',
-        sort: 'created',
-        per_page: 80,
-      })
-      return response.data
-    },
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
-  )
-
-  return {
-    repos: data,
-    isLoading,
-    isError: !!error,
-  }
-}
-
-export const useGithubRepo = (repo: string) => {
-  const { data, error, isLoading } = useSWR(
-    `https://api.github.com/repos/gary-rivera/${repo}/contents`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
-  )
-
-  return {
-    repo: data,
     isLoading,
     isError: !!error,
   }

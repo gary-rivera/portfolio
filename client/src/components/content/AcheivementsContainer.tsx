@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import Experience from './Experience';
-import Projects from './Projects';
+import ProjectsContainer from './Projects';
 
 import { MdCircle as FilledCircle } from 'react-icons/md';
 
@@ -80,7 +80,7 @@ function AcheivementsContainer() {
 					// bg="green.300"
 					p={4}
 				>
-					<Projects />
+					<ProjectsContainer />
 				</Box>
 			)}
 		</motion.div>

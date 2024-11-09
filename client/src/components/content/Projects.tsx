@@ -1,41 +1,26 @@
-import { useState, useEffect } from 'react';
-import { useGithubRepos } from '../../hooks/useGitHub';
 import { Flex } from '@chakra-ui/react';
-import { ProjectCatalog } from '../../data/projects';
 import ProjectCard from './ProjectCard';
+import { useProjectsContext } from '@/context/ProjectsContext';
+
 import { components } from '@octokit/openapi-types';
 type Repo = components['schemas']['repository'];
 
-function Projects() {
-	const { repos: fetchedRepos, isLoading, isError } = useGithubRepos();
-	const [projectDetails, setProjectDetails] = useState({});
-
-	useEffect(() => {
-		if (fetchedRepos) {
-			const updatedCatalog = { ...projectDetails };
-			fetchedRepos.forEach((repo: Repo) => {
-				if (ProjectCatalog[repo.name]) {
-					ProjectCatalog[repo.name].description = repo.description || null;
-					ProjectCatalog[repo.name].links.repo = repo.html_url || null;
-				}
-			});
-			setProjectDetails(updatedCatalog);
-		}
-	}, [fetchedRepos]);
+function ProjectsContainer() {
+	const { projects, isLoading, isError } = useProjectsContext();
 
 	if (isLoading) return <p>Loading...</p>;
 	if (isError) return <p>Error loading repository contents</p>;
 
 	return (
 		<Flex direction="column" gap="2">
-			{Object.keys(ProjectCatalog).map((projectKey: string, idx) => (
-				<ProjectCard key={idx} project={ProjectCatalog[projectKey]} />
+			{Object.keys(projects).map((projectKey: string, idx) => (
+				<ProjectCard key={idx} project={projects[projectKey]} />
 			))}
 		</Flex>
 	);
 }
 
-export default Projects;
+export default ProjectsContainer;
 
 /*
 useful keys:

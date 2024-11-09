@@ -4,21 +4,21 @@ import calculatorIcon from '../assets/calculator-logo.png'
 import gbotIcon from '../assets/g-bot-icon.png'
 import memeGenieLamp from '../assets/meme-genie-logo.svg';
 
-type ProjectLinks = {
-	npm?: string | null;
-	repo?: string | null;
-	deployment?: string | null;
-};
-
-type Project = {
+export type Project = {
 	logo: string;
 	name: string;
-	links: ProjectLinks;
+  links: {
+		npm?: string | null;
+		repo?: string | null;
+		deployment?: string | null;
+	};
 	description?: string | null;
-	languages?: string | null; // NOTE: should ultimately be an array
+	languages?: string[];
+	createdAt?: Date;
+	totalCommits?: number;
 };
 
-type Projects = {
+export type Projects = {
 	[key: string]: Project;
 };
 
@@ -41,7 +41,7 @@ export const ProjectCatalog: Projects = {
 	},
 	gbot: {
 		logo: gbotIcon,
-		name: 'g-bot',
+		name: 'gbot',
 		links: {
 			npm: null, // TODO: maybe?
 			repo: null,
@@ -64,3 +64,5 @@ export const ProjectCatalog: Projects = {
 		},
 	},
 };
+
+export const projectRepoKeys = Object.keys(ProjectCatalog)

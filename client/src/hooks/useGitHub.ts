@@ -12,13 +12,24 @@ export const useGitHubRepoData = (username: string, repoName: string) => {
     isError: error
   }
 }
-export const useGitHubReposGQL = (repos: string[]) => {
-  const { data, error } = useSWR([repos], ([repos]) =>
-    fetchGithubRepositoriesGQL(repos),
+export const useGitHubReposGQL = () => {
+  // TODO: change to Object.keys base projects
+  const repoNames = [
+		'ruio',
+		'calculator',
+		'deadlocked',
+		'gbot',
+		// 'meme-generator',
+	]
+
+  const fetcher = () => fetchGithubRepositoriesGQL(repoNames)
+  const { data, error } = useSWR('ruio', () =>
+      fetcher,
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-      errorRetryCount: 3,
+      errorRetryCount: 0,             // Disable retry on error
+      refreshInterval: 0,
     }
   )
 

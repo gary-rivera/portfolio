@@ -3,6 +3,7 @@ import React, {
 	createContext,
 	useState,
 	useEffect,
+	useMemo,
 	ReactNode,
 } from 'react';
 import { useGitHubReposGQL } from '@/hooks/useGitHub';
@@ -12,20 +13,22 @@ import {
 	Projects,
 } from '@/data/projects';
 
-const ProjectsContext = createContext({
+type ProjectsContextType = {
+	projects: Projects;
+	isLoading: boolean;
+	isError: boolean;
+};
+
+const ProjectsContext = createContext<ProjectsContextType>({
 	projects: ProjectCatalog,
+	isLoading: false,
+	isError: false,
 });
 
 export const ProjectsProvider = ({ children }: { children: ReactNode }) => {
 	const [projects, setProjects] = useState<Projects>(ProjectCatalog);
-	const { repos, isLoading, isError } = useGitHubReposGQL([
-		'ruio',
-		'calculator',
-		'deadlocked',
-		'gbot',
-		// 'meme-generator',
-	]);
-	// const { repos, isLoading, isError } = useGitHubReposGQL(repoKeys);
+	console.log('[context] calling swr');
+	const { repos, isLoading, isError } = useGitHubReposGQL();
 
 	useEffect(() => {
 		if (repos && !isLoading && !isError) {
@@ -42,12 +45,20 @@ export const ProjectsProvider = ({ children }: { children: ReactNode }) => {
 				};
 			}
 
-			setProjects(updatedProjects);
+			// Only update state if it's actually changed
+			if (JSON.stringify(updatedProjects) !== JSON.stringify(projects)) {
+				setProjects(updatedProjects);
+			}
 		}
 	}, [repos, isLoading, isError]);
 
+	const contextValue = useMemo(
+		() => ({ projects, isLoading, isError }),
+		[projects, isLoading, isError]
+	);
+
 	return (
-		<ProjectsContext.Provider value={{ projects }}>
+		<ProjectsContext.Provider value={contextValue}>
 			{children}
 		</ProjectsContext.Provider>
 	);

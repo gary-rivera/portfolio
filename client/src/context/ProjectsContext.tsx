@@ -1,17 +1,13 @@
 import React, {
 	useContext,
+	useMemo,
 	createContext,
 	useState,
 	useEffect,
-	useMemo,
 	ReactNode,
 } from 'react';
 import { useGitHubReposGQL } from '@/hooks/useGitHub';
-import {
-	ProjectCatalog,
-	projectRepoKeys as repoKeys,
-	Projects,
-} from '@/data/projects';
+import { ProjectCatalog, projectKeys, Projects } from '@/data/projects';
 
 type ProjectsContextType = {
 	projects: Projects;
@@ -27,17 +23,18 @@ const ProjectsContext = createContext<ProjectsContextType>({
 
 export const ProjectsProvider = ({ children }: { children: ReactNode }) => {
 	const [projects, setProjects] = useState<Projects>(ProjectCatalog);
-	console.log('[context] calling swr');
-	const { repos, isLoading, isError } = useGitHubReposGQL();
+	const { repos, isLoading, isError } = useGitHubReposGQL(projectKeys);
 
 	useEffect(() => {
 		if (repos && !isLoading && !isError) {
 			const updatedProjects = { ...projects };
-			for (const [key, value] of Object.entries(repos)) {
-				const { url, description, createdAt, languages } = value;
 
-				updatedProjects[key] = {
-					...updatedProjects[key],
+			for (const [_, value] of Object.entries(repos)) {
+				const { url, description, createdAt, languages, name } = value;
+
+				// process + map data to final projects index
+				updatedProjects[name] = {
+					...updatedProjects[name],
 					links: { repo: url },
 					description,
 					languages: languages.edges.flatMap((e: any) => e?.node?.name) || [],
@@ -45,10 +42,7 @@ export const ProjectsProvider = ({ children }: { children: ReactNode }) => {
 				};
 			}
 
-			// Only update state if it's actually changed
-			if (JSON.stringify(updatedProjects) !== JSON.stringify(projects)) {
-				setProjects(updatedProjects);
-			}
+			setProjects(updatedProjects);
 		}
 	}, [repos, isLoading, isError]);
 

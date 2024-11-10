@@ -65,4 +65,5 @@ export const ProjectCatalog: Projects = {
 	},
 };
 
-export const projectRepoKeys = Object.keys(ProjectCatalog)
+export const projectKeys = Object.keys(ProjectCatalog)
+  .filter(p => ProjectCatalog[p].active)

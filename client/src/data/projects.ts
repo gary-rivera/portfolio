@@ -16,6 +16,7 @@ export type Project = {
 	languages?: string[];
 	createdAt?: Date;
 	totalCommits?: number;
+	active: boolean;
 };
 
 export type Projects = {
@@ -24,6 +25,7 @@ export type Projects = {
 
 export const ProjectCatalog: Projects = {
 	ruio: {
+		active: true,
 		logo: ruioIcon,
 		name: 'ruio',
 		links: {
@@ -32,6 +34,7 @@ export const ProjectCatalog: Projects = {
 		},
 	},
 	calculator: {
+		active: true,
 		logo: calculatorIcon,
 		name: 'Calculator Mockup',
 		links: {
@@ -40,6 +43,7 @@ export const ProjectCatalog: Projects = {
 		},
 	},
 	gbot: {
+		active: true,
 		logo: gbotIcon,
 		name: 'gbot',
 		links: {
@@ -48,6 +52,7 @@ export const ProjectCatalog: Projects = {
 		},
 	},
 	deadlocked: {
+		active: true,
 		logo: deadlockIcon,
 		name: 'Deadlock Shop Template',
 		links: {
@@ -56,6 +61,7 @@ export const ProjectCatalog: Projects = {
 		},
 	},
 	'meme-generator': {
+		active: true,
 		logo: memeGenieLamp,
 		name: 'Meme Genie',
 		links: {
@@ -63,6 +69,15 @@ export const ProjectCatalog: Projects = {
 			repo: null,
 		},
 	},
+	'flappy-js': {
+		active: false,
+		logo: memeGenieLamp,
+		name: 'Flappy Bird',
+		links: {
+			deployment: 'https://gary-rivera.github.io/meme-generator/',
+			repo: null,
+		},
+	}
 };
 
 export const projectKeys = Object.keys(ProjectCatalog)

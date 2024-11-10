@@ -3,43 +3,18 @@
 	<head>
 		<meta charset="UTF-8" />
 		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
-		<!-- <script>
-			async function fetchAndStoreBgPatterns() {
-				const API_URL = 'https://www.toptal.com/designers/';
-				const LIGHT_PATTERN_PATH = 'subtlepatterns/uploads/ep_naturalwhite.png';
-				const DARK_PATTERN_PATH = 'subtlepatterns/uploads/denim.png';
 
-				try {
-					const lightPatternPromise = fetch(`${API_URL}${LIGHT_PATTERN_PATH}`);
-					const darkPatternPromise = fetch(`${API_URL}${DARK_PATTERN_PATH}`);
-
-
-					const responses = await Promise.all([
-						lightPatternPromise,
-						darkPatternPromise,
-					]);
-
-					const patterns = await Promise.all(
-						responses.map((response) => {
-							if (!response.ok) {
-								throw new Error(`HTTP error! status: ${response.status}`);
-							}
-							return response.blob(); // Getting the blob for each pattern
-						})
-					);
-
-					const lightPatternURL = URL.createObjectURL(patterns[0]);
-					const darkPatternURL = URL.createObjectURL(patterns[1]);
-					localStorage.setItem('lightPatternURL', lightPatternURL);
-					localStorage.setItem('darkPatternURL', darkPatternURL);
-
-					console.log('Patterns stored in localStorage');
-				} catch (err) {
-					console.error('[index.html] failed to fetch bg patterns', err);
-				}
-			}
-			fetchAndStoreBgPatterns();
-		</script> -->
+		<!-- preload (prioritized) the theme related image -->
+		<link
+			rel="preload"
+			href="https://www.toptal.com/designers/subtlepatterns/uploads/ep_naturalwhite.png"
+			as="image"
+		/>
+		<link
+			rel="prefetch"
+			href="https://i0.wp.com/textures.world/wp-content/uploads/2023/08/09-denim-background-texture.jpg?w=1182&h=591&ssl=1"
+			as="image"
+		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>gr</title>
 	</head>

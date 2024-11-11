@@ -1,21 +1,12 @@
-import { useEffect, useState, useRef } from 'react';
-import {
-	Box,
-	Em,
-	Flex,
-	Grid,
-	GridItem,
-	HStack,
-	Tabs,
-	VStack,
-} from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import Experience from '../experience/Container';
-import ProjectsContainer from './Projects';
+import { useEffect, useState, useRef } from "react";
+import { Box, Em, Flex, Grid, GridItem, HStack, Tabs, VStack } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import Experience from "./experience/ExperienceContainer";
+import ProjectsContainer from "./projects/ProjectsContainer";
 
 function AcheivementsContainer() {
-	const [activeTab, setActiveTab] = useState('experience');
-	const [height, setHeight] = useState('auto');
+	const [activeTab, setActiveTab] = useState("experience");
+	const [height, setHeight] = useState("auto");
 	const contentRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
@@ -26,27 +17,27 @@ function AcheivementsContainer() {
 	}, [activeTab]);
 
 	const toggleActiveTab = () => {
-		setActiveTab(activeTab === 'experience' ? 'projects' : 'experience');
+		setActiveTab(activeTab === "experience" ? "projects" : "experience");
 	};
 
 	const ContentContainer = () => (
 		<motion.div
 			key={activeTab}
 			ref={contentRef}
-			initial={{ opacity: 0, minHeight: '33%' }}
-			animate={{ opacity: 1, minHeight: height, maxHeight: 'auto' }}
+			initial={{ opacity: 0, minHeight: "33%" }}
+			animate={{ opacity: 1, minHeight: height, maxHeight: "auto" }}
 			exit={{ opacity: 0, height: 0 }}
 			transition={{ duration: 0.6 }}
 			style={{
-				overflow: 'hidden',
+				overflow: "hidden",
 				// maxWidth: '600px',
 				// border: '2px solid green',
 			}}
 		>
-			{activeTab === 'experience' && <Experience />}
+			{activeTab === "experience" && <Experience />}
 			{/* {activeTab === 'experience' && <ExperienceContainer />} */}
 
-			{activeTab === 'projects' && (
+			{activeTab === "projects" && (
 				<Box p={4}>
 					<ProjectsContainer />
 				</Box>
@@ -55,18 +46,9 @@ function AcheivementsContainer() {
 	);
 
 	return (
-		<Grid
-			gridTemplateRows={'40px repeat(1, 1fr)'}
-			gridTemplateColumns="repeat(4, 1fr)"
-			mt="2rem"
-		>
+		<Grid gridTemplateRows={"40px repeat(1, 1fr)"} gridTemplateColumns="repeat(4, 1fr)" mt="2rem">
 			<GridItem rowSpan={1} colSpan={2}>
-				<Tabs.Root
-					variant="line"
-					defaultValue="experience"
-					onValueChange={toggleActiveTab}
-					colorPalette="cyan"
-				>
+				<Tabs.Root variant="line" defaultValue="experience" onValueChange={toggleActiveTab} colorPalette="cyan">
 					<Tabs.List>
 						<Tabs.Trigger value="experience">Experience</Tabs.Trigger>
 						<Tabs.Trigger value="projects">Projects</Tabs.Trigger>

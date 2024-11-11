@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { useResumeRepo } from "../../hooks/useGitHub";
-import { useDistanceBetweenElements } from "@/components/MeasureDistance";
+import { useDistanceBetweenElements } from "@/hooks/useDistanceBetweenElements.ts";
 import { Text, Em, Box, VStack } from "@chakra-ui/react";
 import TimelineItem from "./TimelineItem";
 import { events } from "@/data/experience";
-import { Distance } from "@/components/MeasureDistance";
+import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
 
 function ExperienceContainer() {
 	const { readmeContent, isLoading, isError } = useResumeRepo();

@@ -1,15 +1,16 @@
-import { useRef } from 'react';
-import { useResumeRepo } from '../../hooks/useGitHub';
-import { useDistanceBetweenElements } from '@/components/MeasureDistance';
-import { Text, Em, Box, VStack } from '@chakra-ui/react';
-import TimelineItem from './TimelineItem';
-import { events } from '@/data/experience';
+import { useRef } from "react";
+import { useResumeRepo } from "../../hooks/useGitHub";
+import { useDistanceBetweenElements } from "@/components/MeasureDistance";
+import { Text, Em, Box, VStack } from "@chakra-ui/react";
+import TimelineItem from "./TimelineItem";
+import { events } from "@/data/experience";
+import { Distance } from "@/components/MeasureDistance";
 
 function ExperienceContainer() {
 	const { readmeContent, isLoading, isError } = useResumeRepo();
 
 	const iconRefs = events.map(() => useRef<HTMLDivElement>(null));
-	const distances = iconRefs.map((ref, index) => {
+	const distances: (Distance | null)[] = iconRefs.map((ref, index) => {
 		if (index < iconRefs.length - 1) {
 			return useDistanceBetweenElements(ref, iconRefs[index + 1]);
 		}
@@ -25,11 +26,10 @@ function ExperienceContainer() {
 				distanceObj ? (
 					<Box key={index}>
 						<p>
-							Distance between icons {index} and {index + 1}:{' '}
-							{distanceObj.distance?.toFixed(2)}px
+							Distance between icons {index} and {index + 1}: {distanceObj.distance?.toFixed(2)}px
 						</p>
 					</Box>
-				) : null
+				) : null,
 			)}
 			{events.map((event, index) => {
 				const alternate = !!(index % 2); // for alternating the card and date positioning

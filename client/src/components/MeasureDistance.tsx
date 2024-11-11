@@ -1,8 +1,9 @@
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState, RefObject } from 'react';
 
-export function useDistanceBetweenElements() {
-	const element1Ref = useRef<HTMLDivElement>(null);
-	const element2Ref = useRef<HTMLDivElement>(null);
+export function useDistanceBetweenElements(
+	ref1: RefObject<HTMLElement>,
+	ref2: RefObject<HTMLElement>
+) {
 	const [distance, setDistance] = useState<number | null>(null);
 	const [horizontalDistance, setHorizontalDistance] = useState<number | null>(
 		null
@@ -10,9 +11,9 @@ export function useDistanceBetweenElements() {
 	const [verticalDistance, setVerticalDistance] = useState<number | null>(null);
 
 	const calculateDistances = () => {
-		if (element1Ref.current && element2Ref.current) {
-			const rect1 = element1Ref.current.getBoundingClientRect();
-			const rect2 = element2Ref.current.getBoundingClientRect();
+		if (ref1.current && ref2.current) {
+			const rect1 = ref1.current.getBoundingClientRect();
+			const rect2 = ref2.current.getBoundingClientRect();
 
 			const x1 = rect1.left + rect1.width / 2;
 			const y1 = rect1.top + rect1.height / 2;
@@ -35,12 +36,10 @@ export function useDistanceBetweenElements() {
 			animationFrameId = requestAnimationFrame(calculateDistances);
 		};
 
-		// Initial calculation
 		calculateWithDelay();
 
-		// Recalculate on window resize with debouncing to reduce the number of recalculations
 		const handleResize = () => {
-			cancelAnimationFrame(animationFrameId); // Cancel any ongoing frames
+			cancelAnimationFrame(animationFrameId);
 			animationFrameId = requestAnimationFrame(calculateDistances);
 		};
 
@@ -50,13 +49,11 @@ export function useDistanceBetweenElements() {
 			window.removeEventListener('resize', handleResize);
 			cancelAnimationFrame(animationFrameId);
 		};
-	}, []); // Only runs on initial mount
+	}, [ref1, ref2]);
 
 	return {
 		distance,
 		horizontalDistance,
 		verticalDistance,
-		element1Ref,
-		element2Ref,
 	};
 }

@@ -1,43 +1,39 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useResumeRepo } from '../../hooks/useGitHub';
+import { useDistanceBetweenElements } from '@/components/MeasureDistance';
 import {
 	Flex,
-	Heading,
 	Text,
-	Link,
-	Code,
 	Card,
 	Em,
 	Box,
-	List,
 	Icon,
-	ListItem,
-	Image,
-	Stack,
-	HStack,
 	VStack,
 	GridItem,
 	Grid,
 } from '@chakra-ui/react';
-import Markdown from 'react-markdown';
-
 import { VscCircleLargeFilled } from 'react-icons/vsc';
+import { LuTarget } from 'react-icons/lu';
+
 import { Event, events } from '@/data/experience';
 
 type TimelineItemProps = {
 	event: Event;
+	index: number;
 	isFirst: boolean;
 	isLast: boolean;
 	alternate: boolean;
+
+	iconRef: React.RefObject<HTMLDivElement>;
 };
 
-type TimelineEventCardProps = {
-	description: string;
-};
+// type TimelineEventCardProps = {
+// 	description: string;
+// };
 
-type TimelineEventDateProps = {
-	date: string;
-};
+// type TimelineEventDateProps = {
+// 	date: string;
+// };
 
 const gridItemProps = {
 	// bg: 'green',
@@ -54,30 +50,39 @@ const cardItemProps = {
 function ExperienceTimeline() {
 	const { readmeContent, isLoading, isError } = useResumeRepo();
 
+	const iconRefs = events.map(() => useRef<HTMLDivElement>(null));
+
+	const distances = iconRefs.map((ref, index) => {
+		if (index < iconRefs.length - 1) {
+			return useDistanceBetweenElements(ref, iconRefs[index + 1]);
+		}
+		return null;
+	});
+	console.log({ distances });
 	if (isLoading) return <p>Loading...</p>;
-	if (isError) return <p>Error loading repository contentsaaa</p>;
+	if (isError) return <p>Error loading repository contents</p>;
 
 	const TimelineItem: React.FC<TimelineItemProps> = ({
 		event,
+		index,
 		isFirst,
 		isLast,
 		alternate,
+		iconRef,
 	}) => {
-		const gridItemDefaultProps = {
-			// bg: 'green',
-			// border: '2px solid cyan',
-			height: '115%',
-		};
 		const layout1 = (
 			<>
 				<GridItem width="auto" height="fit-content" justifySelf="end">
 					<TimelineEventDate date={event.date} />
 				</GridItem>
-
-				<GridItem placeSelf="center">
-					<TimelinePath />
+				<GridItem
+					placeSelf="center"
+					// border="1px solid red"
+					h="max-content"
+				>
+					<TimelinePath iconRef={iconRef} index={index} />
 				</GridItem>
-				<GridItem {...gridItemDefaultProps}>
+				<GridItem {...gridItemProps}>
 					<TimelineEventCard description={event.description} />
 				</GridItem>
 			</>
@@ -85,11 +90,14 @@ function ExperienceTimeline() {
 
 		const layout2 = (
 			<>
-				<GridItem {...gridItemDefaultProps}>
-					<TimelineEventCard description={event.description} />
+				<GridItem>
+					<TimelineEventCard
+						description={event.description}
+						{...gridItemProps}
+					/>
 				</GridItem>
 				<GridItem placeSelf="center">
-					<TimelinePath />
+					<TimelinePath iconRef={iconRef} index={index} />
 				</GridItem>
 				<GridItem width="auto" height="fit-content" justifySelf="start">
 					<TimelineEventDate date={event.date} />
@@ -107,41 +115,80 @@ function ExperienceTimeline() {
 				gridAutoColumns="auto"
 				alignItems="center"
 				justifyContent="center"
+				overflow="visible"
 				w="100%"
 				h="110%"
-				// py="2rem"
 			>
 				{alternate ? layout2 : layout1}
 			</Grid>
 		);
 	};
 
-	const TimelinePath = () => (
-		<Flex
-			top={0}
-			bottom={0}
-			minH="30px"
-			w="auto"
-			h="100%"
-			// border="2px solid green"
-			justify={'center'}
-			alignItems={'center'}
-		>
-			<Flex
-				h="100%"
-				justifyContent="center"
-				alignItems="center"
-				position="relative"
-			>
-				{/* Circle indicator */}
-				<Icon fontSize="14px" zIndex={1}>
-					<VscCircleLargeFilled />
-				</Icon>
-			</Flex>
-		</Flex>
-	);
+	const TimelinePath: React.FC<{
+		index: number;
+		iconRef: React.RefObject<HTMLDivElement>;
+	}> = ({ iconRef, index }) => {
+		// .toFixed(2)
+		const distanceToNextTimelineIcon = distances[index]?.distance || 0;
+		const halfDistance = distanceToNextTimelineIcon
+			? distanceToNextTimelineIcon / 2
+			: undefined;
 
-	const TimelineEventCard: React.FC<TimelineEventCardProps> = ({
+		const isFirst = index === 0;
+		const isLast = index === events.length - 1;
+		// render two vertical lines: topHalf and bottomHalf
+		const TopHalf = () => (
+			<Box
+				position="absolute"
+				top="100%"
+				// bottom={0}
+				width="2px"
+				height={`${halfDistance}px`}
+				backgroundColor="black"
+				transform="translateY(-50%)"
+				zIndex={0}
+			/>
+		);
+		const TimelineConnector = () => (
+			<Box
+				position="absolute"
+				top="100%"
+				width="3px"
+				height={`${distanceToNextTimelineIcon - 20}px`}
+				backgroundColor="orange.400"
+				overflow="hidden"
+				zIndex={0}
+			/>
+		);
+
+		console.log('[Experience][TimelinePath]: ', {
+			distanceToNextTimelineIcon,
+			halfDistance,
+			index,
+			isFirst,
+			isLast,
+		});
+		return (
+			<Flex
+				position="relative"
+				width="auto"
+				// height="100px"
+				alignItems="center"
+				justifyContent="center"
+				ref={iconRef}
+				// border="2px solid green"
+			>
+				<Icon fontSize="20px" zIndex={1} color="rgba(8, 145, 178)">
+					{/* <VscCircleLargeFilled opacity="0.8" /> */}
+					<LuTarget opacity="0.8" />
+				</Icon>
+				{/* {!isFirst && <TopHalf />} */}
+				{!isLast && <TimelineConnector />}
+			</Flex>
+		);
+	};
+
+	const TimelineEventCard: React.FC<{ description: string }> = ({
 		description,
 	}) => (
 		<Card.Root w="auto" bg="rgba(0, 0, 0, 0.035)" {...cardItemProps}>
@@ -152,26 +199,27 @@ function ExperienceTimeline() {
 		</Card.Root>
 	);
 
-	const TimelineEventDate: React.FC<TimelineEventDateProps> = ({ date }) => (
-		<Box
-			/*bg="rgba(0, 0, 0, 0.05)"*/ width="fit-content"
-			color="black"
-			w="auto"
-		>
+	const TimelineEventDate: React.FC<{ date: string }> = ({ date }) => (
+		<Box width="fit-content" color="black" w="auto">
 			<Em width="fit-content" color="gray.600">
 				{date}
 			</Em>
 		</Box>
 	);
+
 	return (
-		<VStack
-			gap={0}
-			position="relative"
-			// border="2px solid red"
-			// border="2px solid red"
-			py="1rem"
-		>
-			<div
+		<VStack gap={0} position="relative" py="1rem">
+			{distances.map((distanceObj, index) =>
+				distanceObj ? (
+					<Box key={index}>
+						<p>
+							Distance between icons {index} and {index + 1}:{' '}
+							{distanceObj.distance?.toFixed(2)}px
+						</p>
+					</Box>
+				) : null
+			)}
+			{/* <div
 				style={{
 					position: 'absolute',
 					top: 0,
@@ -183,18 +231,21 @@ function ExperienceTimeline() {
 					// backgroundColor: 'red',
 					opacity: 0.75,
 				}}
-			></div>
-			{events.map((e, index) => {
+			></div> */}
+			{events.map((event, index) => {
 				const isFirst = index === 0;
 				const isLast = index === events.length - 1;
 				const alternate = !!(index % 2);
+
 				return (
 					<TimelineItem
 						key={index}
-						event={e}
+						index={index}
+						event={event}
 						isFirst={isFirst}
 						isLast={isLast}
 						alternate={alternate}
+						iconRef={iconRefs[index]}
 					/>
 				);
 			})}

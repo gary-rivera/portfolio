@@ -64,7 +64,7 @@ function AcheivementsContainer() {
 			style={{
 				overflow: 'hidden',
 				// maxWidth: '600px',
-				border: '2px solid pink',
+				// border: '2px solid green',
 			}}
 		>
 			{activeTab === 'experience' && <Experience />}
@@ -96,11 +96,7 @@ function AcheivementsContainer() {
 						<Tabs.Trigger value="projects" bg="none">
 							Projects
 						</Tabs.Trigger>
-						<Tabs.Indicator
-							rounded="l1"
-							bg={'blue.500'}
-							outlineColor="yellow"
-						/>
+						<Tabs.Indicator rounded="l1" bg="rgba(0, 0, 0, 0.1)" />
 					</Tabs.List>
 				</Tabs.Root>
 			</GridItem>

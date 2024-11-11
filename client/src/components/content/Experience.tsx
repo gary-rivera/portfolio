@@ -26,6 +26,9 @@ import { Event, events } from '@/data/experience';
 
 type TimelineItemProps = {
 	event: Event;
+	isFirst: boolean;
+	isLast: boolean;
+	alternate: boolean;
 };
 
 type TimelineEventCardProps = {
@@ -42,50 +45,60 @@ function ExperienceTimeline() {
 	if (isLoading) return <p>Loading...</p>;
 	if (isError) return <p>Error loading repository contentsaaa</p>;
 
-	const TimelineItem: React.FC<TimelineItemProps> = ({ event }) => (
-		<Grid
-			gap={0}
-			position="relative"
-			border="2px solid white"
-			// gridTemplateRows={'40px repeat(1, 1fr)'}
-			templateColumns="1fr auto 1fr"
-			templateRows="1fr"
-			gridAutoFlow="row"
-			gridAutoColumns="auto"
-			alignItems="center"
-			justifyContent="center"
-			// gridAutoRow="50px"
-			w="100%"
-			h="auto"
-		>
-			<GridItem
-				bg="green.solid"
-				border="1px solid yellow"
-				// rowSpan={1}
-				width="auto"
-				height="fit-content"
-			>
-				<TimelineEventDate date={event.date} />
-			</GridItem>
+	const TimelineItem: React.FC<TimelineItemProps> = ({
+		event,
+		isFirst,
+		isLast,
+		alternate,
+	}) => {
+		const layout2 = (
+			<>
+				<GridItem width="auto" height="fit-content" justifySelf="end">
+					<TimelineEventDate date={event.date} />
+				</GridItem>
 
-			<GridItem
-				// bg="tomato"
-				// rowSpan={1}
+				<GridItem placeSelf="center">
+					<TimelinePath />
+				</GridItem>
+				<GridItem height="fit-content">
+					<TimelineEventCard description={event.description} />
+				</GridItem>
+			</>
+		);
 
-				placeSelf="center"
-			>
-				<TimelinePath />
-			</GridItem>
-			<GridItem
-				bg="teal.solid"
-				// rowSpan={1}
+		const layout1 = (
+			<>
+				<GridItem height="fit-content">
+					<TimelineEventCard description={event.description} />
+				</GridItem>
+				<GridItem placeSelf="center">
+					<TimelinePath />
+				</GridItem>
+				<GridItem width="auto" height="fit-content" justifySelf="start">
+					<TimelineEventDate date={event.date} />
+				</GridItem>
+			</>
+		);
 
-				height="fit-content"
+		return (
+			<Grid
+				gap={3}
+				position="relative"
+				// border="2px solid yellow"
+				templateColumns="1fr auto 1fr"
+				templateRows="1fr"
+				gridAutoFlow="row"
+				gridAutoColumns="auto"
+				alignItems="center"
+				justifyContent="center"
+				w="100%"
+				h="auto"
+				py="2rem"
 			>
-				<TimelineEventCard description={event.description} />
-			</GridItem>
-		</Grid>
-	);
+				{alternate ? layout1 : layout2}
+			</Grid>
+		);
+	};
 
 	const TimelinePath = () => (
 		<Flex
@@ -94,26 +107,21 @@ function ExperienceTimeline() {
 			minH="30px"
 			w="auto"
 			h="100%"
-			border="2px solid green"
+			// border="2px solid green"
 			justify={'center'}
 			alignItems={'center'}
 		>
 			{/* <VStack position="relative" h="inherit"> */}
-			<Flex h="100%" justifyContent="center" alignItems="center">
+			<Flex
+				h="100%"
+				justifyContent="center"
+				alignItems="center"
+				// position="relative"
+			>
 				{/* Circle indicator */}
 				<Icon fontSize="14px" zIndex={1}>
 					<VscCircleLargeFilled />
 				</Icon>
-				{/* <TimelineConnector />, */}
-				{/* <Box
-					position="absolute"
-					flexGrow={1}
-					top={1}
-					width="2px"
-					bg="gray.400"
-					h="100%"
-					zIndex={0}
-				/> */}
 			</Flex>
 			{/* </VStack> */}
 		</Flex>
@@ -123,7 +131,7 @@ function ExperienceTimeline() {
 		description,
 	}) => (
 		// <Flex w="auto" h="auto" alignItems="center">
-		<Card.Root w="auto" h="auto" maxHeight="75%" my="1rem">
+		<Card.Root w="auto" h="auto" maxHeight="100%" bg="rgba(0, 0, 0, 0.075)">
 			<Card.Body>
 				<Card.Title>Event Title</Card.Title>
 				<Card.Description>{description || 'fuck'}</Card.Description>
@@ -136,12 +144,18 @@ function ExperienceTimeline() {
 	);
 
 	const TimelineEventDate: React.FC<TimelineEventDateProps> = ({ date }) => (
-		<Box bg="white" width="auto">
-			<Text>{date}</Text>
+		<Box
+			/*bg="rgba(0, 0, 0, 0.05)"*/ width="fit-content"
+			color="black"
+			w="auto"
+		>
+			<Em width="fit-content" color="gray.600">
+				{date}
+			</Em>
 		</Box>
 	);
 	return (
-		<VStack gap={0} position="relative" border="2px solid red" py="1rem">
+		<VStack gap={0} position="relative" /*border="2px solid red"*/ pb="1rem">
 			<div
 				style={{
 					position: 'absolute',
@@ -155,9 +169,20 @@ function ExperienceTimeline() {
 					opacity: 0.75,
 				}}
 			></div>
-			{events.map((e, index) => (
-				<TimelineItem key={index} event={e} />
-			))}
+			{events.map((e, index) => {
+				const isFirst = index === 0;
+				const isLast = index === events.length - 1;
+				const alternate = !!(index % 2);
+				return (
+					<TimelineItem
+						key={index}
+						event={e}
+						isFirst={isFirst}
+						isLast={isLast}
+						alternate={alternate}
+					/>
+				);
+			})}
 		</VStack>
 	);
 }

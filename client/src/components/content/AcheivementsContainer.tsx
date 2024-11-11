@@ -12,6 +12,7 @@ import {
 import { motion } from 'framer-motion';
 import Experience from './Experience';
 import ProjectsContainer from './Projects';
+console.log('[acheievements] Tabs @ chakra', Tabs);
 
 import { MdCircle as FilledCircle } from 'react-icons/md';
 
@@ -88,15 +89,12 @@ function AcheivementsContainer() {
 					variant="line"
 					defaultValue="experience"
 					onValueChange={toggleActiveTab}
+					colorPalette="cyan"
 				>
-					<Tabs.List rounded="l3" px="0">
-						<Tabs.Trigger value="experience" bg="none" bgClip="inherit">
-							Experience
-						</Tabs.Trigger>
-						<Tabs.Trigger value="projects" bg="none">
-							Projects
-						</Tabs.Trigger>
-						<Tabs.Indicator rounded="l1" bg="rgba(0, 0, 0, 0.1)" />
+					<Tabs.List>
+						<Tabs.Trigger value="experience">Experience</Tabs.Trigger>
+						<Tabs.Trigger value="projects">Projects</Tabs.Trigger>
+						<Tabs.Indicator rounded="l1" bg="rgba(0, 0, 0, 0.02)" />
 					</Tabs.List>
 				</Tabs.Root>
 			</GridItem>

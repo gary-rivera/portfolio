@@ -39,6 +39,18 @@ type TimelineEventDateProps = {
 	date: string;
 };
 
+const gridItemProps = {
+	// bg: 'green',
+	// border: '2px solid cyan',
+	height: '115%',
+};
+const cardItemProps = {
+	// bg: 'green',
+	// border: '1px solid',
+	borderColor: 'rgba(12,92,114, 0.2)',
+	height: '100%',
+};
+
 function ExperienceTimeline() {
 	const { readmeContent, isLoading, isError } = useResumeRepo();
 
@@ -51,7 +63,12 @@ function ExperienceTimeline() {
 		isLast,
 		alternate,
 	}) => {
-		const layout2 = (
+		const gridItemDefaultProps = {
+			// bg: 'green',
+			// border: '2px solid cyan',
+			height: '115%',
+		};
+		const layout1 = (
 			<>
 				<GridItem width="auto" height="fit-content" justifySelf="end">
 					<TimelineEventDate date={event.date} />
@@ -60,15 +77,15 @@ function ExperienceTimeline() {
 				<GridItem placeSelf="center">
 					<TimelinePath />
 				</GridItem>
-				<GridItem height="fit-content">
+				<GridItem {...gridItemDefaultProps}>
 					<TimelineEventCard description={event.description} />
 				</GridItem>
 			</>
 		);
 
-		const layout1 = (
+		const layout2 = (
 			<>
-				<GridItem height="fit-content">
+				<GridItem {...gridItemDefaultProps}>
 					<TimelineEventCard description={event.description} />
 				</GridItem>
 				<GridItem placeSelf="center">
@@ -84,7 +101,6 @@ function ExperienceTimeline() {
 			<Grid
 				gap={3}
 				position="relative"
-				// border="2px solid yellow"
 				templateColumns="1fr auto 1fr"
 				templateRows="1fr"
 				gridAutoFlow="row"
@@ -92,10 +108,10 @@ function ExperienceTimeline() {
 				alignItems="center"
 				justifyContent="center"
 				w="100%"
-				h="auto"
-				py="2rem"
+				h="110%"
+				// py="2rem"
 			>
-				{alternate ? layout1 : layout2}
+				{alternate ? layout2 : layout1}
 			</Grid>
 		);
 	};
@@ -111,36 +127,29 @@ function ExperienceTimeline() {
 			justify={'center'}
 			alignItems={'center'}
 		>
-			{/* <VStack position="relative" h="inherit"> */}
 			<Flex
 				h="100%"
 				justifyContent="center"
 				alignItems="center"
-				// position="relative"
+				position="relative"
 			>
 				{/* Circle indicator */}
 				<Icon fontSize="14px" zIndex={1}>
 					<VscCircleLargeFilled />
 				</Icon>
 			</Flex>
-			{/* </VStack> */}
 		</Flex>
 	);
 
 	const TimelineEventCard: React.FC<TimelineEventCardProps> = ({
 		description,
 	}) => (
-		// <Flex w="auto" h="auto" alignItems="center">
-		<Card.Root w="auto" h="auto" maxHeight="100%" bg="rgba(0, 0, 0, 0.075)">
+		<Card.Root w="auto" bg="rgba(0, 0, 0, 0.035)" {...cardItemProps}>
 			<Card.Body>
 				<Card.Title>Event Title</Card.Title>
-				<Card.Description>{description || 'fuck'}</Card.Description>
+				<Card.Description>{description}</Card.Description>
 			</Card.Body>
-			{/* <Card.Footer justifyContent="flex-end">
-				<Em>Footer content</Em>
-			</Card.Footer> */}
 		</Card.Root>
-		// </Flex>
 	);
 
 	const TimelineEventDate: React.FC<TimelineEventDateProps> = ({ date }) => (
@@ -155,7 +164,13 @@ function ExperienceTimeline() {
 		</Box>
 	);
 	return (
-		<VStack gap={0} position="relative" /*border="2px solid red"*/ pb="1rem">
+		<VStack
+			gap={0}
+			position="relative"
+			// border="2px solid red"
+			// border="2px solid red"
+			py="1rem"
+		>
 			<div
 				style={{
 					position: 'absolute',
@@ -183,6 +198,9 @@ function ExperienceTimeline() {
 					/>
 				);
 			})}
+			<Text>
+				Total events: <Em fontStyle="bold">{events.length}</Em>
+			</Text>
 		</VStack>
 	);
 }

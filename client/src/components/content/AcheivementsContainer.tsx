@@ -34,7 +34,7 @@ function AcheivementsContainer() {
 	const Timeline = ({ year }: { year: string }) => (
 		<Flex alignItems="start" direction="column" h="100%" py={4} pl={2}>
 			<VStack position="relative" h="inherit">
-				<Flex position="relative" h="95%" justifyContent="center">
+				<Flex h="95%" justifyContent="center">
 					<FilledCircle size="8px" />
 					<Box
 						position="absolute"
@@ -47,9 +47,7 @@ function AcheivementsContainer() {
 					/>
 				</Flex>
 
-				<HStack position="absolute" left="3" top="-2">
-					<Em>{year}</Em>
-				</HStack>
+				<HStack position="absolute" left="3" top="-2"></HStack>
 				<HStack></HStack>
 			</VStack>
 		</Flex>
@@ -60,26 +58,19 @@ function AcheivementsContainer() {
 			key={activeTab}
 			ref={contentRef}
 			initial={{ opacity: 0, minHeight: '33%' }}
-			animate={{ opacity: 1, minHeight: height, maxHeight: '500px' }}
+			animate={{ opacity: 1, minHeight: height, maxHeight: 'auto' }}
 			exit={{ opacity: 0, height: 0 }}
 			transition={{ duration: 0.6 }}
-			style={{ overflow: 'hidden' }}
+			style={{
+				overflow: 'hidden',
+				// maxWidth: '600px',
+				border: '2px solid pink',
+			}}
 		>
-			{activeTab === 'experience' && (
-				<Box
-					// bg="green.300"
-					p={4}
-				>
-					{/* REF for bullet points or heading?: https://www.chakra-ui.com/docs/components/blockquote */}
-					<Experience />
-				</Box>
-			)}
+			{activeTab === 'experience' && <Experience />}
 
 			{activeTab === 'projects' && (
-				<Box
-					// bg="green.300"
-					p={4}
-				>
+				<Box p={4}>
 					<ProjectsContainer />
 				</Box>
 			)}
@@ -88,12 +79,11 @@ function AcheivementsContainer() {
 
 	return (
 		<Grid
-			className="content-container"
 			gridTemplateRows={'40px repeat(1, 1fr)'}
 			gridTemplateColumns="repeat(4, 1fr)"
 			mt="2rem"
 		>
-			<GridItem className="nav-tabs-grid-item" rowSpan={1} colSpan={2}>
+			<GridItem rowSpan={1} colSpan={2}>
 				<Tabs.Root
 					variant="line"
 					defaultValue="experience"
@@ -115,7 +105,7 @@ function AcheivementsContainer() {
 				</Tabs.Root>
 			</GridItem>
 
-			<GridItem className="content-grid-item" rowSpan={1} colSpan={4}>
+			<GridItem rowSpan={1} colSpan={4}>
 				<ContentContainer />
 			</GridItem>
 		</Grid>

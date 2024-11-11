@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 export function useDistanceBetweenElements() {
 	const element1Ref = useRef<HTMLDivElement>(null);
@@ -28,18 +28,22 @@ export function useDistanceBetweenElements() {
 		}
 	};
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		let animationFrameId: number;
 
 		const calculateWithDelay = () => {
-			animationFrameId = requestAnimationFrame(() => calculateDistances());
+			animationFrameId = requestAnimationFrame(calculateDistances);
 		};
 
-		// Initial calculation with delay to allow any async DOM changes to complete
+		// Initial calculation
 		calculateWithDelay();
 
-		// Recalculate on window resize
-		const handleResize = () => calculateWithDelay();
+		// Recalculate on window resize with debouncing to reduce the number of recalculations
+		const handleResize = () => {
+			cancelAnimationFrame(animationFrameId); // Cancel any ongoing frames
+			animationFrameId = requestAnimationFrame(calculateDistances);
+		};
+
 		window.addEventListener('resize', handleResize);
 
 		return () => {

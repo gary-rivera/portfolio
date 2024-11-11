@@ -1,7 +1,7 @@
 import { Project } from "@/data/projects";
 
 // styling
-import { Badge, Em, Flex, Heading, HStack, Icon, IconButton, Image } from "@chakra-ui/react";
+import { Badge, Em, Flex, Heading, HStack, Icon, IconButton, Image, Text } from "@chakra-ui/react";
 import { Blockquote } from "@/components/ui/blockquote";
 
 // icons
@@ -13,14 +13,21 @@ interface ProjectCardProps {
 	project: Project;
 }
 
+// TODO: add skeleton component
+import { Skeleton, SkeletonCircle } from "@/components/ui/skeleton";
+// const { isLoading } = useProjectsContext();
 function ProjectCard({ project }: ProjectCardProps) {
 	const { logo, links, name, description } = project;
+	// console.log({ project });
 	return (
 		<Flex direction="column" w="100%" minH="10rem" bg="whiteAlpha.400" borderRadius="2px" py="4" px="5">
 			<Flex justify="space-between">
 				<Flex align="center" justify="center">
-					<Image src={logo} alt="project-logo" height="30px" mt="1" />
-					<Heading textDecoration="underline dotted #636363" fontSize="30px">
+					<Skeleton loading={!logo?.length}>
+						<SkeletonCircle />
+						<Image src={logo} alt="project-logo" height="30px" mt="1" />
+					</Skeleton>
+					<Heading textDecoration={`underline dotted #0891b2`} fontSize="30px">
 						{name}
 					</Heading>
 				</Flex>
@@ -36,13 +43,14 @@ function ProjectCard({ project }: ProjectCardProps) {
 				>
 					{/* Code component? */}
 					<Em>commits: 45</Em>
+					{/* data.ruio.defaultBranchRef.target.history.totalCount */}
 					<Em>created: Jan. 1</Em>
 				</Flex>
 			</Flex>
-			<HStack>
-				<Blockquote fontWeight="500" mt="2">
+			<HStack fontWeight="500" mt="2">
+				<Text borderLeft="2px solid" borderColor="cyan.600" pl="0.65rem" ml="3">
 					{description}
-				</Blockquote>
+				</Text>
 			</HStack>
 			<Flex justify="space-between">
 				<HStack>

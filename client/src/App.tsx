@@ -12,6 +12,7 @@ function App() {
 				<MainHeader />
 				<AcheivementsContainer />
 				<ColorModeButton />
+				{/* <ColorModeButton /> */}
 				{/* <ThemeToggleButton /> */}
 			</Flex>
 		</HStack>

@@ -46,14 +46,6 @@ const TimelinePath: React.FC<{
 }> = ({ iconRef, index, distances }) => {
 	const distanceToNextTimelineIcon = distances[index]?.distance || 0;
 	const isLast = index === events.length - 1;
-	// don't delete (needed for possible debugging rn)
-	console.log({
-		distances,
-		distanceToNextTimelineIcon,
-		isLast,
-		index,
-		iconRef,
-	});
 
 	const TimelineConnector = () => (
 		<Box

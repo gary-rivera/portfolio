@@ -10,7 +10,7 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import Experience from './Experience';
+import Experience from '../experience/Container';
 import ProjectsContainer from './Projects';
 
 function AcheivementsContainer() {

@@ -12,9 +12,6 @@ import {
 import { motion } from 'framer-motion';
 import Experience from './Experience';
 import ProjectsContainer from './Projects';
-console.log('[acheievements] Tabs @ chakra', Tabs);
-
-import { MdCircle as FilledCircle } from 'react-icons/md';
 
 function AcheivementsContainer() {
 	const [activeTab, setActiveTab] = useState('experience');
@@ -32,28 +29,6 @@ function AcheivementsContainer() {
 		setActiveTab(activeTab === 'experience' ? 'projects' : 'experience');
 	};
 
-	const Timeline = ({ year }: { year: string }) => (
-		<Flex alignItems="start" direction="column" h="100%" py={4} pl={2}>
-			<VStack position="relative" h="inherit">
-				<Flex h="95%" justifyContent="center">
-					<FilledCircle size="8px" />
-					<Box
-						position="absolute"
-						flexGrow={1}
-						top={2.5}
-						w={0}
-						h="100%"
-						className="tl-progress-bar"
-						borderLeft="1px dashed black"
-					/>
-				</Flex>
-
-				<HStack position="absolute" left="3" top="-2"></HStack>
-				<HStack></HStack>
-			</VStack>
-		</Flex>
-	);
-
 	const ContentContainer = () => (
 		<motion.div
 			key={activeTab}
@@ -69,6 +44,7 @@ function AcheivementsContainer() {
 			}}
 		>
 			{activeTab === 'experience' && <Experience />}
+			{/* {activeTab === 'experience' && <ExperienceContainer />} */}
 
 			{activeTab === 'projects' && (
 				<Box p={4}>

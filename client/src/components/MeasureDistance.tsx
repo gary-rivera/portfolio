@@ -33,7 +33,9 @@ export function useDistanceBetweenElements(
 		let animationFrameId: number;
 
 		const calculateWithDelay = () => {
-			animationFrameId = requestAnimationFrame(calculateDistances);
+			setTimeout(() => {
+				animationFrameId = requestAnimationFrame(calculateDistances);
+			}, 10);
 		};
 
 		calculateWithDelay();

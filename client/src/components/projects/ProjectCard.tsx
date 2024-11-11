@@ -1,40 +1,22 @@
-import {
-	Badge,
-	Em,
-	Flex,
-	Heading,
-	HStack,
-	Icon,
-	IconButton,
-	Image,
-} from '@chakra-ui/react';
-import { Blockquote } from '@/components/ui/blockquote';
-import { FaNpm } from 'react-icons/fa';
-import { FaGithub } from 'react-icons/fa';
-import { FaExternalLinkAlt } from 'react-icons/fa';
+import { Project } from "@/data/projects";
 
-import { Project } from '@/data/projects';
-import { components } from '@octokit/openapi-types';
-type Repo = components['schemas']['repository'];
+// styling
+import { Badge, Em, Flex, Heading, HStack, Icon, IconButton, Image } from "@chakra-ui/react";
+import { Blockquote } from "@/components/ui/blockquote";
+
+// icons
+import { FaNpm } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface ProjectCardProps {
-	project: any;
-	// project: Repo;
 	project: Project;
 }
 
 function ProjectCard({ project }: ProjectCardProps) {
 	const { logo, links, name, description } = project;
 	return (
-		<Flex
-			direction="column"
-			w="100%"
-			minH="10rem"
-			bg="whiteAlpha.400"
-			borderRadius="2px"
-			py="4"
-			px="5"
-		>
+		<Flex direction="column" w="100%" minH="10rem" bg="whiteAlpha.400" borderRadius="2px" py="4" px="5">
 			<Flex justify="space-between">
 				<Flex align="center" justify="center">
 					<Image src={logo} alt="project-logo" height="30px" mt="1" />
@@ -75,17 +57,17 @@ function ProjectCard({ project }: ProjectCardProps) {
 					</Badge>
 				</HStack>
 				<HStack>
-					{links['npm'] && (
+					{links["npm"] && (
 						<Icon border="1px solid" fontSize="35px">
 							<FaNpm />
 						</Icon>
 					)}
-					{links['deployment'] && (
+					{links["deployment"] && (
 						<IconButton variant="ghost">
 							<FaExternalLinkAlt />
 						</IconButton>
 					)}
-					{links['repo'] && (
+					{links["repo"] && (
 						<IconButton variant="ghost">
 							<FaGithub />
 						</IconButton>

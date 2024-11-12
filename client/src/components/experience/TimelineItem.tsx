@@ -27,7 +27,7 @@ type ImpactEventCardProps = {
 	event: CareerEvent;
 };
 
-// TODO: bind the alternating card layout to a state? (possible fix for the items not offseting)
+// TODO: bind the alternating card layout to a state? (possible fix for the items height not overlapping)
 // TODO: add hover tooltip to events where employer is listed giving a quick blurb about what service they offered +/- badges
 const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 	const { title, subtitle, description, date, origin, attributes, category } = event;

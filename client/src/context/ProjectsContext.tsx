@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import React, { useContext, useMemo, createContext, useState, useEffect, ReactNode } from "react";
 import { useGitHubReposGQL } from "@/hooks/useGitHub";
+import type { GraphQlQueryResponseData } from "@octokit/graphql";
 import { ProjectCatalog, projectKeys, Projects } from "@/data/projects";
 
 type ProjectsContextType = {
@@ -34,7 +35,7 @@ export const ProjectsProvider = ({ children }: { children: ReactNode }) => {
 					...updatedProjects[name],
 					links: { repo: url },
 					description,
-					languages: languages.edges.flatMap((e: any) => e?.node?.name) || [],
+					languages: languages.edges.flatMap((e: GraphQlQueryResponseData) => e?.node?.name) || [],
 					totalCommits: defaultBranchRef.target.history.totalCount,
 					createdAt,
 				};

@@ -59,7 +59,7 @@ function App() {
 				<MainHeader />
 				<AcheivementsContainer />
 				<ColorModeButton w="2rem" />
-				{/* rest of social icons */}
+				{/* TODO: rest of social icons */}
 			</Flex>
 		</HStack>
 	);

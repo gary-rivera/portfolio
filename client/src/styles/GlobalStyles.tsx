@@ -8,13 +8,10 @@ const GlobalStyles = () => {
 					height: "100%",
 					margin: 0,
 					padding: 0,
-					minHeight: "100vh",
-					overflowY: "hidden", // Hide scrollbar globally
-					scrollbarWidth: "none", // Firefox
+					// minHeight: "auto",
+					// overflowY: "hidden",
+					// scrollbarWidth: "none",
 				},
-				// "*::-webkit-scrollbar": {
-				// 	display: "none", // Chrome, Safari, Edge
-				// },
 				":root": {
 					backgroundColor: "#faedd0", // Static background color
 					color: "black", // Static text color

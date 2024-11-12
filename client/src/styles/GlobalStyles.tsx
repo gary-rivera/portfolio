@@ -8,9 +8,10 @@ const GlobalStyles = () => {
 					height: "100%",
 					margin: 0,
 					padding: 0,
-					// minHeight: "auto",
-					// overflowY: "hidden",
-					// scrollbarWidth: "none",
+					minHeight: "auto",
+					overflowY: "hidden",
+					scrollbarWidth: "none",
+					scrollbarColor: "red",
 				},
 				":root": {
 					backgroundColor: "#faedd0", // Static background color

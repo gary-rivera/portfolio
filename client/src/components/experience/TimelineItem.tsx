@@ -1,7 +1,8 @@
 import React from "react";
-import { Flex, Card, Em, HStack, Heading, Box, Icon, GridItem, Grid, useRecipe, Text } from "@chakra-ui/react";
-import { LuTarget } from "react-icons/lu";
+import { Flex, Em, HStack, Heading, Box, Icon, GridItem, Grid, useRecipe, Text } from "@chakra-ui/react";
 import { CareerEvent, events } from "@/data/experience";
+import { LuTarget } from "react-icons/lu";
+import { HiAtSymbol } from "react-icons/hi";
 
 //TODO: move to MeasureDistance.ts
 type Distance = {
@@ -25,24 +26,35 @@ type TimelineItemProps = {
 type ImpactEventCardProps = {
 	event: CareerEvent;
 };
-// TODO: just pass the whole damn object instead.
-// TODO: bind the alternating card layout to a state?
-// TODO: card title doesn't center if its only one present
+
+// TODO: bind the alternating card layout to a state? (possible fix for the items not offseting)
 // TODO: add hover tooltip to events where employer is listed giving a quick blurb about what service they offered +/- badges
-// TODO: fix the elevated LCP (850ms) from description block
 const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
-	const { title, description, date, origin, attributes, category } = event;
+	const { title, subtitle, description, date, origin, attributes, category } = event;
+
 	const recipe = useRecipe({ key: "eventCard" });
 	const styles = recipe({ category });
-	console.log({ styles });
 	return (
-		<Flex css={styles} direction="column" justifyContent="center" py="3" px="5">
-			<HStack>
-				<Heading size="md">{title}</Heading>
-				<Text fontSize="xs">{category}</Text>
+		<Flex css={styles} direction="column" justifyContent="center" py="3" px="5" fontSize="16px">
+			<HStack fontSize="16px">
+				{subtitle ? (
+					<Heading fontWeight="semibold" fontSize="1.05rem" color="blackAlpha.800">
+						{title}
+						<Icon fontSize="0.9rem" mx="0.1rem" color="blackAlpha.500">
+							<HiAtSymbol />
+						</Icon>
+						{subtitle}
+					</Heading>
+				) : (
+					<Heading fontWeight="semibold" fontSize="1.05rem" color="blackAlpha.800">
+						{title}
+					</Heading>
+				)}
 			</HStack>
 			<HStack>
-				<Text fontSize="xs">{description}</Text>
+				<Text fontSize="0.82rem" mt="1">
+					{description}
+				</Text>
 			</HStack>
 		</Flex>
 	);
@@ -76,16 +88,8 @@ const TimelinePath: React.FC<{
 	);
 
 	return (
-		<Flex
-			position="relative"
-			width="auto"
-			// height="100px"
-			alignItems="center"
-			justifyContent="center"
-			ref={iconRef}
-		>
+		<Flex position="relative" width="auto" alignItems="center" justifyContent="center" ref={iconRef}>
 			<Icon fontSize="20px" zIndex={1} color="#0891b2">
-				{/* <VscCircleLargeFilled opacity="0.8" /> */}
 				<LuTarget opacity="0.8" />
 			</Icon>
 			{!isLast && <TimelineConnector />}

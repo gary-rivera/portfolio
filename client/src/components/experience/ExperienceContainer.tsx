@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useResumeRepo } from "../../hooks/useGitHub";
 import { useDistanceBetweenElements } from "@/hooks/useDistanceBetweenElements.ts";
-import { Text, Em, Box, VStack } from "@chakra-ui/react";
+import { Text, Em, Box, VStack, Card } from "@chakra-ui/react";
 import TimelineItem from "./TimelineItem";
 import { events } from "@/data/experience";
 import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
@@ -21,8 +21,8 @@ function ExperienceContainer() {
 	if (isError) return <p>Error loading repository contents</p>;
 
 	return (
-		<VStack gap={0} position="relative" py="1rem">
-			{distances.map((distanceObj, index) =>
+		<VStack gap={0} position="relative" py="2rem" style={{ overflowY: "auto", maxHeight: "600px" }}>
+			{/* {distances.map((distanceObj, index) =>
 				distanceObj ? (
 					<Box key={index}>
 						<p>
@@ -31,6 +31,9 @@ function ExperienceContainer() {
 					</Box>
 				) : null,
 			)}
+					<Text>
+						Total events: <Em fontStyle="bold">{events.length}</Em>
+					</Text> */}
 			{events.map((event, index) => {
 				const alternate = !!(index % 2); // for alternating the card and date positioning
 
@@ -45,9 +48,6 @@ function ExperienceContainer() {
 					/>
 				);
 			})}
-			<Text>
-				Total events: <Em fontStyle="bold">{events.length}</Em>
-			</Text>
 		</VStack>
 	);
 }

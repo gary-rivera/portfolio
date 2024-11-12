@@ -15,7 +15,7 @@ export const experience = [
 
 export const events: CareerEvent[] = [
 	{
-		date: "Mar. 2024",
+		date: "Mar 2024",
 		title: "Combine Product Platform",
 		description:
 			"As part of the corporate merger, led the integration of a pipeline to funnel Extra's qualified, success-story customers into Orchard’s mortgage platform.",
@@ -26,36 +26,36 @@ export const events: CareerEvent[] = [
 		category: "impact",
 	},
 	{
-		date: "Feb. 2024",
+		date: "Feb 2024",
 		title: "Hired @ Orchard",
 		description: experience[1], // TODO: describe that this was a merger situtaion and/or explain the product/service that Orchard provides
 		origin: "",
 		category: "milestone",
 	},
 	{
-		date: "Sep. 2021",
+		date: "Sep 2021",
 		title: "Permissions Framework", // TODO: hyperlink here
 		description:
 			"Engineered a permissions framework for API actions, reducing authorization incidents by 80% and enhancing security across platforms.",
 		category: "impact",
 	},
 	{
-		date: "Aug. 2022",
-		title: "Stepped into Senior Dev role", // NOTE: Stepped into Senior Dev role
+		date: "Aug 2022",
+		title: "Senior Software Developer @ Extra Card", // NOTE: Stepped into Senior Dev role
 		// description: experience[2],
 		origin: "",
 		category: "milestone",
 	},
 
 	{
-		date: "Sep. 2021",
+		date: "Sep 2021",
 		title: "Card Journey API util", // TODO: hyperlink here
 		description:
 			"Built a feature to track user progress in the card journey, boosting conversion rates by 12% and providing real-time insights to reduce support inquiries.",
 		category: "impact",
 	},
 	{
-		date: "Sep. 2021",
+		date: "Sep 2021",
 		title: "Hired @ Extra Card", // TODO: hyperlink here // TODO: explain the product/service that Extra provides
 		category: "achievement",
 		attributes: [
@@ -66,20 +66,32 @@ export const events: CareerEvent[] = [
 		],
 	},
 	{
-		date: "Aug. 2021 - Sep. 2021",
+		date: "Aug 2021 → Sep. 2021",
 		title: "Freelancing @ KnowledgeCapital",
 		category: "achievement",
 	},
 	{
-		date: "Jul. 2021",
+		date: "Jul 2021",
 		title: "Internship @ Numbers API",
 		category: "achievement",
 	},
 	{
-		date: "Jul. 2021",
+		date: "Jul 2021",
 		title: "Completed schooling @ Rithm",
 		category: "achievement",
 	},
 ];
 
 /*
+standout career acheivemnts:
+- Coding-bootcamp: https://www.notion.so/Coding-Bootcamp-Rithm-ddc02225a16b48a8911d6cebed143ee2
+- Numbers API internship: June 2021
+- KnowledgeCapital freelancing: Aug 2021 - Sep 2021
+- when i started @ Extra: https://www.notion.so/Hired-Extra-Card-a272e5dfc80c4985a2c217ebc175e0e0
+- combine Extra Academy + Backend office hours
+- promotion to Core Software Engineer
+- promotion to Senior Software Engineer
+- assist in database migration from D0 to AWS
+- "As part of Extra's aquirement, integrated a pipeline to bridge success-story customers to the Orchard's mortgage platform"
+- started a
+*/

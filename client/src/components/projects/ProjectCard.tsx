@@ -1,8 +1,7 @@
 import { Project } from "@/data/projects";
-
+import dayjs from "dayjs";
 // styling
-import { Badge, Em, Flex, Heading, HStack, Icon, IconButton, Image, Text } from "@chakra-ui/react";
-import { Blockquote } from "@/components/ui/blockquote";
+import { Badge, Em, Flex, Heading, HStack, Icon, IconButton, Image, Text, Spacer } from "@chakra-ui/react";
 
 // icons
 import { FaNpm } from "react-icons/fa";
@@ -17,17 +16,33 @@ interface ProjectCardProps {
 import { Skeleton, SkeletonCircle } from "@/components/ui/skeleton";
 // const { isLoading } = useProjectsContext();
 function ProjectCard({ project }: ProjectCardProps) {
-	const { logo, links, name, description } = project;
-	// console.log({ project });
+	const { logo, links, name, description, totalCommits, createdAt, languages } = project;
+	console.log(`[ProjectCard] project: ${name} `, { project });
 	return (
-		<Flex direction="column" w="100%" minH="10rem" bg="whiteAlpha.400" borderRadius="2px" py="4" px="5">
+		<Flex
+			direction="column"
+			w="50rem"
+			h="16rem"
+			bg="rgba(0, 0, 0, 0.035)"
+			borderRadius="10px"
+			pt="10"
+			pb="5"
+			px="12"
+			fontSize="24px"
+		>
 			<Flex justify="space-between">
 				<Flex align="center" justify="center">
 					<Skeleton loading={!logo?.length}>
 						<SkeletonCircle />
-						<Image src={logo} alt="project-logo" height="30px" mt="1" />
+						<Image src={logo} alt="project-logo" height="40px" mt="1" />
 					</Skeleton>
-					<Heading textDecoration={`underline dotted #0891b2`} fontSize="30px">
+					<Heading
+						ml="0.5"
+						textDecoration={`underline dotted #0891b2`}
+						size="3xl"
+						fontWeight="700"
+						letterSpacing="tight"
+					>
 						{name}
 					</Heading>
 				</Flex>
@@ -42,27 +57,33 @@ function ProjectCard({ project }: ProjectCardProps) {
 					textAlign="right"
 				>
 					{/* Code component? */}
-					<Em>commits: 45</Em>
+					{totalCommits && <Em fontSize="0.75rem">commits: {totalCommits}</Em>}
 					{/* data.ruio.defaultBranchRef.target.history.totalCount */}
-					<Em>created: Jan. 1</Em>
+					<Em fontSize="0.75rem">created: {dayjs(createdAt).format("MMM YYYY")}</Em>
 				</Flex>
 			</Flex>
-			<HStack fontWeight="500" mt="2">
-				<Text borderLeft="2px solid" borderColor="cyan.600" pl="0.65rem" ml="3">
+			<HStack fontWeight="500" mt="2" justifySelf="end" h="auto">
+				<Text
+					fontSize="1.1rem"
+					// borderLeft="2px solid"
+					borderColor="cyan.600"
+					pl="0.65rem"
+					mt="1"
+					// ml="3"
+				>
 					{description}
 				</Text>
 			</HStack>
+			<Spacer />
+
 			<Flex justify="space-between">
 				<HStack>
-					<Badge variant="outline" colorPalette="yellow">
-						Javascript
-					</Badge>
-					<Badge variant="subtle" colorPalette="yellow">
-						Javascript
-					</Badge>
-					<Badge variant="surface" colorPalette="yellow">
-						Javascript
-					</Badge>
+					{languages?.length &&
+						languages?.map((l) => (
+							<Badge variant="subtle" colorPalette="yellow">
+								{l}
+							</Badge>
+						))}
 				</HStack>
 				<HStack>
 					{links["npm"] && (

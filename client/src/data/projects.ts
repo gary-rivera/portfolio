@@ -1,13 +1,13 @@
-import ruioIcon from '../assets/ruio-active-logo.png'
-import deadlockIcon from '../assets/deadlock-logo.png'
-import calculatorIcon from '../assets/calculator-logo.png'
-import gbotIcon from '../assets/g-bot-icon.png'
-import memeGenieLamp from '../assets/meme-genie-logo.svg';
+import ruioIcon from "../assets/ruio-active-logo.png";
+import deadlockIcon from "../assets/deadlock-logo.png";
+import calculatorIcon from "../assets/calculator-logo.png";
+import gbotIcon from "../assets/g-bot-icon.png";
+import memeGenieLamp from "../assets/meme-genie-logo.svg";
 
 export type Project = {
 	logo: string;
 	name: string;
-  links: {
+	links: {
 		npm?: string | null;
 		repo?: string | null;
 		deployment?: string | null;
@@ -20,32 +20,32 @@ export type Project = {
 };
 
 export type Projects = {
-	[key: string]: Project;
+	[key: string]: Project; // Dynamic keys for individual projects
 };
 
 export const ProjectCatalog: Projects = {
 	ruio: {
 		active: true,
 		logo: ruioIcon,
-		name: 'ruio',
+		name: "ruio",
 		links: {
-			npm: 'https://www.npmjs.com/package/ruio',
+			npm: "https://www.npmjs.com/package/ruio",
 			repo: null,
 		},
 	},
 	calculator: {
 		active: true,
 		logo: calculatorIcon,
-		name: 'Calculator Mockup',
+		name: "Calculator Mockup",
 		links: {
-			deployment: 'https://gary-rivera.github.io/calculator/',
+			deployment: "https://gary-rivera.github.io/calculator/",
 			repo: null,
 		},
 	},
 	gbot: {
 		active: true,
 		logo: gbotIcon,
-		name: 'gbot',
+		name: "gbot",
 		links: {
 			npm: null, // TODO: maybe?
 			repo: null,
@@ -54,31 +54,30 @@ export const ProjectCatalog: Projects = {
 	deadlocked: {
 		active: true,
 		logo: deadlockIcon,
-		name: 'Deadlock Shop Template',
+		name: "Deadlock Shop Template",
 		links: {
 			deployment: null, // TODO: open source + deploy
 			repo: null,
 		},
 	},
-	'meme-generator': {
+	"meme-generator": {
 		active: true,
 		logo: memeGenieLamp,
-		name: 'Meme Genie',
+		name: "Meme Genie",
 		links: {
-			deployment: 'https://gary-rivera.github.io/meme-generator/',
+			deployment: "https://gary-rivera.github.io/meme-generator/",
 			repo: null,
 		},
 	},
-	'flappy-js': {
+	"flappy-js": {
 		active: false,
 		logo: memeGenieLamp,
-		name: 'Flappy Bird',
+		name: "Flappy Bird",
 		links: {
-			deployment: 'https://gary-rivera.github.io/meme-generator/',
+			deployment: "https://gary-rivera.github.io/meme-generator/",
 			repo: null,
 		},
-	}
+	},
 };
 
-export const projectKeys = Object.keys(ProjectCatalog)
-  .filter(p => ProjectCatalog[p].active)
+export const projectKeys = Object.keys(ProjectCatalog).filter((p) => ProjectCatalog[p].active);

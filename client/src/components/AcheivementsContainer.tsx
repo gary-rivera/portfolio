@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Box, Em, Flex, Grid, GridItem, HStack, Tabs, VStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import Experience from "./experience/ExperienceContainer";
+import ExperienceContainer from "./experience/ExperienceContainer";
 import ProjectsContainer from "./projects/ProjectsContainer";
 
 function AcheivementsContainer() {
@@ -21,32 +21,23 @@ function AcheivementsContainer() {
 	};
 
 	const ContentContainer = () => (
-		<motion.div
+		<div
 			key={activeTab}
 			ref={contentRef}
-			initial={{ opacity: 0, minHeight: "33%" }}
-			animate={{ opacity: 1, minHeight: height, maxHeight: "auto" }}
-			exit={{ opacity: 0, height: 0 }}
-			transition={{ duration: 0.6 }}
-			style={{
-				overflow: "hidden",
-				// maxWidth: '600px',
-				// border: '2px solid green',
-			}}
+			// initial={{ opacity: 0, minHeight: "33%" }}
+			// animate={{ opacity: 1, minHeight: height, maxHeight: "auto" }}
+			// exit={{ opacity: 0, height: 0 }}
+			// transition={{ duration: 0.6 }}
+			style={{}}
 		>
-			{activeTab === "experience" && <Experience />}
-			{/* {activeTab === 'experience' && <ExperienceContainer />} */}
+			{activeTab === "experience" && <ExperienceContainer />}
 
-			{activeTab === "projects" && (
-				<Box p={4}>
-					<ProjectsContainer />
-				</Box>
-			)}
-		</motion.div>
+			{activeTab === "projects" && <ProjectsContainer />}
+		</div>
 	);
 
 	return (
-		<Grid gridTemplateRows={"40px repeat(1, 1fr)"} gridTemplateColumns="repeat(4, 1fr)" mt="2rem">
+		<Grid gridTemplateRows={"40px repeat(1, 1fr)"} gridTemplateColumns="repeat(4, 1fr)" mt="2rem" overflowY="scroll">
 			<GridItem rowSpan={1} colSpan={2}>
 				<Tabs.Root variant="line" defaultValue="experience" onValueChange={toggleActiveTab} colorPalette="cyan">
 					<Tabs.List>

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import styles from '../../styles/TypingEffectHeader.module.css';
-import { HStack, Text } from '@chakra-ui/react';
-import { keyframes } from '@emotion/react';
+import { useEffect, useState } from "react";
+import styles from "../../styles/TypingEffectHeader.module.css";
+import { HStack, Text } from "@chakra-ui/react";
+import { keyframes } from "@emotion/react";
 
 const blink = keyframes`
 	0% { opacity: 1; }
@@ -10,12 +10,12 @@ const blink = keyframes`
 `;
 
 const TypingEffect = () => {
-	const [text, setText] = useState('');
+	const [text, setText] = useState("");
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [wordIndex, setWordIndex] = useState(0);
 	const [isComplete, setIsComplete] = useState(false);
 	const [blinkEnded, setBlinkEnded] = useState(false);
-	const words = ['dinglega', 'gary r.'];
+	const words = ["dinglega", "gary r."];
 	const typingSpeed = 100;
 	const deletingSpeed = 40;
 
@@ -30,7 +30,7 @@ const TypingEffect = () => {
 			if (isDeleting) {
 				setText((prevText) => prevText.slice(0, -1));
 
-				if (text === '') {
+				if (text === "") {
 					setIsDeleting(false);
 					setWordIndex(1);
 				}
@@ -44,10 +44,7 @@ const TypingEffect = () => {
 		};
 
 		if (!isComplete) {
-			timer = window.setTimeout(
-				handleTyping,
-				isDeleting ? deletingSpeed : typingSpeed
-			);
+			timer = window.setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
 		} else {
 			// Allow one last blink before stopping
 			timer = window.setTimeout(() => setBlinkEnded(true), 1500);
@@ -60,13 +57,7 @@ const TypingEffect = () => {
 		<HStack fontSize="42px" fontWeight="900">
 			<Text>{text}</Text>
 			{!isComplete && (
-				<Text
-					fontSize="1"
-					w="0.1rem"
-					backgroundColor="black"
-					marginLeft="2px"
-					animation={`${blink} 750ms infinite`}
-				>
+				<Text fontSize="1" w="0.1rem" backgroundColor="black" marginLeft="2px" animation={`${blink} 750ms infinite`}>
 					&nbsp;
 				</Text>
 			)}

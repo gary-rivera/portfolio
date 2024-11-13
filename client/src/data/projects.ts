@@ -4,6 +4,7 @@ import calculatorIcon from "../assets/calculator-logo.png";
 import gbotIcon from "../assets/g-bot-icon.png";
 import memeGenieLamp from "../assets/meme-genie-logo.svg";
 
+const GH_USER_LINK = "https://github.com/gary-rivera";
 export type Project = {
 	logo: string;
 	name: string;
@@ -30,7 +31,7 @@ export const ProjectCatalog: Projects = {
 		name: "ruio",
 		links: {
 			npm: "https://www.npmjs.com/package/ruio",
-			repo: null,
+			repo: GH_USER_LINK,
 		},
 	},
 	calculator: {
@@ -39,7 +40,7 @@ export const ProjectCatalog: Projects = {
 		name: "Calculator Mockup",
 		links: {
 			deployment: "https://gary-rivera.github.io/calculator/",
-			repo: null,
+			repo: GH_USER_LINK,
 		},
 	},
 	gbot: {
@@ -48,7 +49,7 @@ export const ProjectCatalog: Projects = {
 		name: "gbot",
 		links: {
 			npm: null, // TODO: maybe?
-			repo: null,
+			repo: GH_USER_LINK,
 		},
 	},
 	deadlocked: {
@@ -57,7 +58,7 @@ export const ProjectCatalog: Projects = {
 		name: "Deadlock Shop Template",
 		links: {
 			deployment: null, // TODO: open source + deploy
-			repo: null,
+			repo: GH_USER_LINK,
 		},
 	},
 	"meme-generator": {
@@ -66,7 +67,7 @@ export const ProjectCatalog: Projects = {
 		name: "Meme Genie",
 		links: {
 			deployment: "https://gary-rivera.github.io/meme-generator/",
-			repo: null,
+			repo: GH_USER_LINK,
 		},
 	},
 	"flappy-js": {
@@ -75,9 +76,29 @@ export const ProjectCatalog: Projects = {
 		name: "Flappy Bird",
 		links: {
 			deployment: "https://gary-rivera.github.io/meme-generator/",
-			repo: null,
+			repo: GH_USER_LINK,
 		},
 	},
+};
+
+// [ text, color, icon]
+export type BadgeEntry = [string, string, null];
+
+export const projectBadgesMap: {
+	javascript?: BadgeEntry;
+	html?: BadgeEntry;
+	css?: BadgeEntry;
+	typescript?: BadgeEntry;
+	python?: BadgeEntry;
+	shell?: BadgeEntry;
+	[key: string]: BadgeEntry | undefined; // Account for potential dynamic or undefined keys
+} = {
+	javascript: ["JavaScript", "yellow", null],
+	html: ["HTML", "orange", null],
+	css: ["CSS", "teal", null],
+	typescript: ["TypeScript", "blue", null],
+	python: ["Python", "cyan", null],
+	shell: ["Shell", "gray", null],
 };
 
 export const projectKeys = Object.keys(ProjectCatalog).filter((p) => ProjectCatalog[p].active);

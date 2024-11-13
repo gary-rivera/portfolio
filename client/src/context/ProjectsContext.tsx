@@ -30,12 +30,11 @@ export const ProjectsProvider = ({ children }: { children: ReactNode }) => {
 			for (const [_, value] of Object.entries(repos)) {
 				const { url, description, createdAt, languages, name, defaultBranchRef } = value;
 
-				// process + map data to final projects index
+				updatedProjects[name].links.repo = url;
 				updatedProjects[name] = {
 					...updatedProjects[name],
-					links: { repo: url },
 					description,
-					languages: languages.edges.flatMap((e: GraphQlQueryResponseData) => e?.node?.name) || [],
+					languages: languages.edges.flatMap((e: GraphQlQueryResponseData) => e?.node?.name.toLowerCase()) || [],
 					totalCommits: defaultBranchRef.target.history.totalCount,
 					createdAt,
 				};

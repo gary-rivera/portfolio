@@ -1,6 +1,6 @@
 import MainHeader from "./components/header/MainHeader";
 import AcheivementsContainer from "./components/AcheivementsContainer";
-import ContactMeIconTray from "@/components/ContactMeIconTray";
+import ContactMeIconTray from "./components/ContactMeIconTray";
 import { HStack, Flex } from "@chakra-ui/react";
 
 function App() {
@@ -58,9 +58,9 @@ function App() {
 		<HStack alignItems="center" zIndex="1" my="5rem" overflow="hidden" justifyContent="center">
 			<Flex direction="column" w="60%">
 				<MainHeader />
+				<ContactMeIconTray />
 				<AcheivementsContainer />
 
-				<ContactMeIconTray />
 				{/* TODO: rest of social icons */}
 			</Flex>
 		</HStack>

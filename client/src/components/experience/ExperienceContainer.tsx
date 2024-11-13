@@ -21,7 +21,7 @@ function ExperienceContainer() {
 	if (isError) return <p>Error loading repository contents</p>;
 
 	return (
-		<VStack gap={0} position="relative" py="2rem" style={{ overflowY: "auto", maxHeight: "600px" }}>
+		<VStack gap={0} position="relative" py="2rem">
 			{/* {distances.map((distanceObj, index) =>
 				distanceObj ? (
 					<Box key={index}>

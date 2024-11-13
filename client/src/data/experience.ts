@@ -29,7 +29,7 @@ export const events: CareerEvent[] = [
 	{
 		title: "Hired",
 		subtitle: "Orchard",
-		date: "Feb 2024",
+		date: " Feb 2024 → Sep 2024",
 		description: experience[0], // TODO: describe that this was a merger situtaion and/or explain the product/service that Orchard provides
 		origin: "",
 		category: "milestone",
@@ -59,7 +59,7 @@ export const events: CareerEvent[] = [
 	},
 	{
 		title: "Hired", // TODO: hyperlink here // TODO: explain the product/service that Extra provides
-		date: "Sep 2021",
+		date: "Sep 2021 → Sep 2024",
 		subtitle: "Extra Card",
 		category: "achievement",
 		attributes: [
@@ -72,7 +72,7 @@ export const events: CareerEvent[] = [
 	{
 		title: "Freelancing",
 		subtitle: "KnowledgeCapital",
-		date: "Aug 2021 → Sep. 2021",
+		date: "Aug 2021 → Sep 2021",
 		category: "achievement",
 	},
 	{
@@ -96,7 +96,7 @@ standout career acheivemnts:
 - Numbers API internship: June 2021
 - KnowledgeCapital freelancing: Aug 2021 - Sep 2021
 - when i started Extra: https://www.notion.so/Hired-Extra-Card-a272e5dfc80c4985a2c217ebc175e0e0
-- combine Extra Academy + Backend office hours
+- combine Extra Academy + Backen office hours
 - promotion to Core Software Engineer
 - promotion to Senior Software Engineer
 - assist in database migration from D0 to AWS

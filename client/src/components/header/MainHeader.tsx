@@ -1,5 +1,5 @@
-import TypingEffectHeader from './TypingEffectHeader';
-import { Box, HStack } from '@chakra-ui/react';
+import TypingEffectHeader from "./TypingEffectHeader";
+import { Box, HStack } from "@chakra-ui/react";
 
 function MainHeader() {
 	return (

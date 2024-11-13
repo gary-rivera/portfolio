@@ -3,7 +3,8 @@ import { ColorModeButton } from "@/components/ui/color-mode";
 import LinkIconFactory from "@/components/ui/chakra-fixes/LinkIconFactory";
 import LinkedInSvgIcon from "@/assets/linkedin-small.svg?react";
 import GithubSvgIcon from "@/assets/online-li-conversion.svg?react";
-import { DiGithubFull } from "react-icons/di";
+import ResumeCvSvgIcon from "@/assets/resume-cv.svg?react";
+import ResumeCVIconDialog from "./resume/ResumeIconDialog";
 
 const LinkedInLogoSvg = () => (
 	<chakra.svg>
@@ -16,7 +17,7 @@ function ContactMeIconTray() {
 
 	return (
 		<HStack h="2rem" gap="0.2">
-			<ColorModeButton w="1rem" />
+			{/* <ColorModeButton w="1rem" /> */}
 			<chakra.button
 				// border="2px solid red"
 				color="blackAlpha.600"
@@ -56,6 +57,7 @@ function ContactMeIconTray() {
 				</chakra.a>
 				{/* <LinkedInSvgIcon w="150px" h="50px" /> */}
 			</chakra.button>
+			<ResumeCVIconDialog />
 		</HStack>
 	);
 }

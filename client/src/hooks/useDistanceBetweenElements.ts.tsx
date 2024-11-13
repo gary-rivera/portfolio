@@ -34,7 +34,7 @@ export function useDistanceBetweenElements(ref1: RefObject<HTMLElement>, ref2: R
 		const calculateWithDelay = () => {
 			setTimeout(() => {
 				animationFrameId = requestAnimationFrame(calculateDistances);
-			}, 10);
+			}, 15);
 		};
 
 		calculateWithDelay();

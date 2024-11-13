@@ -70,7 +70,11 @@ const TimelinePath: React.FC<{
 	iconRef: React.RefObject<HTMLDivElement>;
 	distances: (Distance | null)[];
 }> = ({ iconRef, index, distances }) => {
-	const distanceToNextTimelineIcon = distances[index]?.distance || 0;
+	const distanceToNextTimelineIcon = distances[index]?.distance;
+	// TODO: DEAR GOD PLEASE FIX THIS I HATE IT
+	// justification - 20 is the circle icon container size
+	// justification 2 - i need to redo the ref logic to better manage drilling of icon refs -- https://react.dev/reference/react/forwardRef
+	const dynamicPathLength = distanceToNextTimelineIcon ? distanceToNextTimelineIcon - 20 : 100;
 	const isLast = index === events.length - 1;
 
 	const TimelineConnector = () => (
@@ -78,7 +82,7 @@ const TimelinePath: React.FC<{
 			position="absolute"
 			top="100%"
 			width="1.5px"
-			height={`${distanceToNextTimelineIcon - 20}px`}
+			height={`${dynamicPathLength}px`}
 			bg="blackAlpha.500"
 			overflow="hidden"
 			zIndex={0}

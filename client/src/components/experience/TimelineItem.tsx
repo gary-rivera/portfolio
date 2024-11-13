@@ -60,11 +60,9 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 	);
 };
 const TimelineEventDate: React.FC<{ date: string }> = ({ date }) => (
-	<Box width="fit-content" color="black" w="auto">
-		<Em fontSize="2xs" width="fit-content" color="gray.600">
-			{date}
-		</Em>
-	</Box>
+	<Em fontSize="2xs" width="fit-content" color="gray.600" lineHeight="50px">
+		{date}
+	</Em>
 );
 
 const TimelinePath: React.FC<{

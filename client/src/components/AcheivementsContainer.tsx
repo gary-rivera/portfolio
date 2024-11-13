@@ -32,7 +32,7 @@ function AcheivementsContainer() {
 				overflowY: "auto",
 				height: "40rem",
 				maxHeight: "80vh",
-				scrollbarColor: "rgba(8, 145, 178, 0.4) #000",
+				scrollbarColor: "rgba(8, 145, 178, 0.4) transparent",
 				scrollbarWidth: "thin",
 				scrollMarginBlockEnd: "true",
 			}}
@@ -47,10 +47,27 @@ function AcheivementsContainer() {
 	return (
 		<Grid gridTemplateRows={"40px repeat(1, 1fr)"} gridTemplateColumns="repeat(4, 1fr)" mt="2rem" overflowY="scroll">
 			<GridItem rowSpan={1} colSpan={2}>
-				<Tabs.Root variant="line" defaultValue="experience" onValueChange={toggleActiveTab} colorPalette="cyan">
-					<Tabs.List>
+				<Tabs.Root
+					variant="line"
+					defaultValue="experience"
+					onValueChange={toggleActiveTab}
+					colorPalette="cyan"
+					_focus={{
+						outline: "none",
+						boxShadow: "none",
+					}}
+				>
+					<Tabs.List w="min-content">
 						<Tabs.Trigger value="experience">Experience</Tabs.Trigger>
-						<Tabs.Trigger value="projects">Projects</Tabs.Trigger>
+						<Tabs.Trigger
+							value="projects"
+							_focus={{
+								outline: "none",
+								boxShadow: "none",
+							}}
+						>
+							Projects
+						</Tabs.Trigger>
 						<Tabs.Indicator rounded="l1" bg="rgba(0, 0, 0, 0.02)" />
 					</Tabs.List>
 				</Tabs.Root>

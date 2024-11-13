@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { chakra, HStack, Button, Image } from "@chakra-ui/react";
 import ResumeCvSvgIcon from "@/assets/resume-cv.svg?react";
+import ResumeAsImage from "@/assets/fancy-resume.png";
 
 function ResumeIconDialog() {
 	const ImagineThisWorksAgain = chakra(DialogContent);
@@ -40,6 +41,7 @@ function ResumeIconDialog() {
 			<ImagineThisWorksAgain bg="whiteAlpha.700">
 				<DialogHeader></DialogHeader>
 				<DialogBody>
+					<Image src={ResumeAsImage} w="800px" />
 				</DialogBody>
 				<DialogFooter>
 					{/* <DialogActionTrigger asChild> */}

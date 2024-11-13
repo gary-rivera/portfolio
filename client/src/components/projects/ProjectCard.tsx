@@ -27,12 +27,40 @@ interface ProjectCardProps {
 	project: Project;
 }
 
+const ProjectIconLink = ({ IconTemplate, iconProps }) => (
+	<chakra.a
+		// href={url || ""}
+		href={""}
+		display="flex"
+		alignItems="center"
+		justifyContent="center"
+		borderRadius="md"
+		color="blackAlpha.700"
+		mb="0.5px"
+		h="inherit"
+		_hover={{
+			// outline="1px solid red"
+			// bg="blackAlpha.200"
+			// w="2.5rem"
+			// bg: "blackAlpha.200",
+			color: "blackAlpha.950",
+		}}
+		{...iconProps}
+	>
+		{IconTemplate}
+	</chakra.a>
+);
+
 // TODO: add skeleton component
 import { Skeleton, SkeletonCircle } from "@/components/ui/skeleton";
 // const { isLoading } = useProjectsContext();
 function ProjectCard({ project }: ProjectCardProps) {
 	const { logo, links, name, description, totalCommits, createdAt, languages } = project;
 	console.log(`[ProjectCard] project: ${name} `, { project });
+
+	const GhIcon = chakra(FaGithub);
+	const ExternalLinkIcon = chakra(FaExternalLinkAlt);
+	const NpmIcon = chakra(FaNpm);
 	return (
 		<Flex
 			direction="column"
@@ -108,8 +136,8 @@ function ProjectCard({ project }: ProjectCardProps) {
 			</HStack>
 			<Spacer />
 
-			<Flex justify="space-between">
-				<HStack>
+			<Flex justify="space-between" h="2.3rem">
+				<HStack gap="0.25rem">
 					{languages?.length &&
 						languages?.map((language) => {
 							// TODO: fix Unknown to just be language once all badges are in
@@ -122,22 +150,19 @@ function ProjectCard({ project }: ProjectCardProps) {
 							);
 						})}
 				</HStack>
-				<HStack>
-					{links["npm"] && (
-						<Icon border="1px solid" fontSize="35px">
-							<FaNpm />
-						</Icon>
-					)}
-					{links["deployment"] && (
-						<IconButton variant="ghost">
-							<FaExternalLinkAlt />
-						</IconButton>
-					)}
-					{links["repo"] && (
-						<IconButton variant="ghost">
-							<FaGithub />
-						</IconButton>
-					)}
+				<HStack
+					gap="0.3rem"
+					h="inherit"
+					// border="1px solid red"
+				>
+					<ProjectIconLink
+						iconProps={{
+							mb: "2px",
+						}}
+						IconTemplate={<ExternalLinkIcon boxSize="0.75rem" />}
+					/>
+					<ProjectIconLink iconProps={{}} IconTemplate={<NpmIcon boxSize="2rem" />} />
+					<ProjectIconLink iconProps={{}} IconTemplate={<GhIcon boxSize="1.5rem" />} />
 				</HStack>
 			</Flex>
 		</Flex>

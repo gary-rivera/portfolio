@@ -111,11 +111,16 @@ function ProjectCard({ project }: ProjectCardProps) {
 			<Flex justify="space-between">
 				<HStack>
 					{languages?.length &&
-						languages?.map((l) => (
-							<Badge variant="subtle" colorPalette="yellow">
-								{l}
-							</Badge>
-						))}
+						languages?.map((language) => {
+							// TODO: fix Unknown to just be language once all badges are in
+							const [title, colorScheme, icon] = projectBadgesMap[language] || ["Unknown", "red", null];
+							return (
+								<Badge key={`badge-${title}`} variant="subtle" colorPalette={colorScheme} opacity="0.6">
+									{title || "Unknown"}
+									{icon && <Icon></Icon>}
+								</Badge>
+							);
+						})}
 				</HStack>
 				<HStack>
 					{links["npm"] && (

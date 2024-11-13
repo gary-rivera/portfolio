@@ -1,11 +1,26 @@
-import { Project } from "@/data/projects";
+import { Project, projectBadgesMap } from "@/data/projects";
 import dayjs from "dayjs";
 // styling
-import { Badge, Em, Flex, Heading, HStack, Icon, IconButton, Image, Text, Spacer } from "@chakra-ui/react";
-
+import {
+	chakra,
+	Badge,
+	Box,
+	Em,
+	Flex,
+	Heading,
+	HStack,
+	Icon,
+	IconButton,
+	Image,
+	Text,
+	Spacer,
+	Link,
+} from "@chakra-ui/react";
+import { IconType } from "react-icons";
 // icons
 import { FaNpm } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { LuExternalLink } from "react-icons/lu";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface ProjectCardProps {
@@ -22,53 +37,70 @@ function ProjectCard({ project }: ProjectCardProps) {
 		<Flex
 			direction="column"
 			w="50rem"
-			h="16rem"
+			h="14rem"
 			bg="rgba(0, 0, 0, 0.035)"
-			borderRadius="10px"
-			pt="10"
-			pb="5"
-			px="12"
+			borderRadius="5px"
+			py="6"
+			px="10"
 			fontSize="24px"
 		>
 			<Flex justify="space-between">
 				<Flex align="center" justify="center">
 					<Skeleton loading={!logo?.length}>
 						<SkeletonCircle />
-						<Image src={logo} alt="project-logo" height="40px" mt="1" />
+						<Image src={logo} alt="project-logo" height="2rem" mt="1" />
 					</Skeleton>
-					<Heading
+					<Link
 						ml="0.5"
-						textDecoration={`underline dotted #0891b2`}
-						size="3xl"
+						textDecoration="underline"
+						textDecorationStyle="dotted"
+						textDecorationThickness="0.16rem"
+						textDecorationColor="gray"
+						textUnderlineOffset="0.2rem"
+						fontSize="1.8rem"
 						fontWeight="700"
 						letterSpacing="tight"
+						_hover={{ textDecorationColor: "#0891b2" }}
+						_focus={{
+							outline: "none",
+							boxShadow: "none",
+						}}
+						href={links.repo || ""}
+						target="_blank"
+						rel="noopener noreferrer"
 					>
 						{name}
-					</Heading>
+					</Link>
 				</Flex>
 
 				<Flex
 					direction="column"
-					justify="center"
+					justify="start"
 					fontSize="0.6rem"
 					m="0"
-					fontWeight="light"
-					color="gray.600"
+					fontWeight="300"
+					color="blackAlpha.600"
 					textAlign="right"
 				>
 					{/* Code component? */}
-					{totalCommits && <Em fontSize="0.75rem">commits: {totalCommits}</Em>}
+					{totalCommits && (
+						<Em letterSpacing="tight" lineHeight="shorter" fontSize="0.7rem">
+							commits: {totalCommits}
+						</Em>
+					)}
 					{/* data.ruio.defaultBranchRef.target.history.totalCount */}
-					<Em fontSize="0.75rem">created: {dayjs(createdAt).format("MMM YYYY")}</Em>
+					<Em letterSpacing="tight" lineHeight="shorter" fontSize="0.7rem">
+						created: {dayjs(createdAt).format("MMM YYYY")}
+					</Em>
 				</Flex>
 			</Flex>
 			<HStack fontWeight="500" mt="2" justifySelf="end" h="auto">
 				<Text
-					fontSize="1.1rem"
-					// borderLeft="2px solid"
+					fontSize="1rem"
 					borderColor="cyan.600"
-					pl="0.65rem"
-					mt="1"
+					// borderLeft="2px solid"
+					// pl="0.65rem"
+					// mt="1"
 					// ml="3"
 				>
 					{description}

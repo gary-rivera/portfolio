@@ -1,55 +1,17 @@
 import { Project, projectBadgesMap } from "@/data/projects";
 import dayjs from "dayjs";
+
 // styling
-import {
-	chakra,
-	Badge,
-	Box,
-	Em,
-	Flex,
-	Heading,
-	HStack,
-	Icon,
-	IconButton,
-	Image,
-	Text,
-	Spacer,
-	Link,
-} from "@chakra-ui/react";
-import { IconType } from "react-icons";
+import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Link } from "@chakra-ui/react";
+
 // icons
 import { FaNpm } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
-import { LuExternalLink } from "react-icons/lu";
 import { FaExternalLinkAlt } from "react-icons/fa";
-
+import LinkIcon from "@/components/ui/chakra-fixes/LinkIconFactory";
 interface ProjectCardProps {
 	project: Project;
 }
-
-const ProjectIconLink = ({ IconTemplate, iconProps }) => (
-	<chakra.a
-		// href={url || ""}
-		href={""}
-		display="flex"
-		alignItems="center"
-		justifyContent="center"
-		borderRadius="md"
-		color="blackAlpha.700"
-		mb="0.5px"
-		h="inherit"
-		_hover={{
-			// outline="1px solid red"
-			// bg="blackAlpha.200"
-			// w="2.5rem"
-			// bg: "blackAlpha.200",
-			color: "blackAlpha.950",
-		}}
-		{...iconProps}
-	>
-		{IconTemplate}
-	</chakra.a>
-);
 
 // TODO: add skeleton component
 import { Skeleton, SkeletonCircle } from "@/components/ui/skeleton";
@@ -150,19 +112,15 @@ function ProjectCard({ project }: ProjectCardProps) {
 							);
 						})}
 				</HStack>
-				<HStack
-					gap="0.3rem"
-					h="inherit"
-					// border="1px solid red"
-				>
-					<ProjectIconLink
+				<HStack gap="0.3rem" h="inherit">
+					<LinkIcon
 						iconProps={{
 							mb: "2px",
 						}}
 						IconTemplate={<ExternalLinkIcon boxSize="0.75rem" />}
 					/>
-					<ProjectIconLink iconProps={{}} IconTemplate={<NpmIcon boxSize="2rem" />} />
-					<ProjectIconLink iconProps={{}} IconTemplate={<GhIcon boxSize="1.5rem" />} />
+					<LinkIcon iconProps={{}} IconTemplate={<NpmIcon boxSize="2rem" />} />
+					<LinkIcon iconProps={{}} IconTemplate={<GhIcon boxSize="1.5rem" />} />
 				</HStack>
 			</Flex>
 		</Flex>

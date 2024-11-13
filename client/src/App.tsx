@@ -14,41 +14,43 @@ function App() {
 	// DONE: repo.languages_url map during data mapping in context
 	// DONE: fix only seeing all content after toggling back and forth
 	// DONE: prefetch background images within html head
-	// TODO: maybe? fetch my user info too for overall profile stats (commits, activity charting, etc.)
-	// TODO: update repo descriptions
-	// TODO: instead of starting from 0 height back to whatever it should be, just shorten/heighten to where it should go.
-	// TODO: add topics to repo's too
 	// DONE: custom timeline component since chakra is ass now
-	// TODO: finish experience section via resume-md repo.static to have static object values for experience
+	// DONE: finish experience section UI
 	// DONE: Experience tab acceptable-ish state
+	// TODO: dynamic pull data from resume-md repo?
+	// TODO: maybe? fetch my user info too for overall profile stats (commits, activity charting, etc.)
+	// TODO: update repo descriptions and add topics too
+	// TODO: add comppany icons to EventCards for extra, orchard, etc.
+	// TODO: hover effects apply outline on hyperlinks
+	// TODO: icon/button to pop up a modal of resume (use the figma visually appealing version)
+	// TODO: socials/contact me icon tray
+	// TODO: on page load effect: blur -> focus in of header only (handle api calls in context while this happens)
+	// TODO: responsive design -> media querying
+	// TODO: make typing headiner cursor match the blue
 
 	// p2
 	/*
-	TODO: Project Card fine tuning -- spacing/margin/padding:
-			[ ] badge mapping to color scheme for languages and stack
-			[ ] format icon sizing by using array for [icon, relativeDimensionSizing]
-			[ ] bottom HStack as footer (at end of container)
-			[ ] hover + click effect of project title
+	DONE: Project Card fine tuning -- spacing/margin/padding:
+	[x] badge mapping to color scheme for languages and stack
+	[x] format icon sizing by using array for [icon, relativeDimensionSizing]
+	[x] bottom HStack as footer (at end of container)
+	[x] hover + click effect of project title
 	*/
-	// TODO: on page load effect: blur -> focus in of header only (handle api calls in context while this happens)
-	// TODO: resume modal popup (use the figma visually appealing version)
 	// DONE: (after context api data management complete) cleanup api.ts and useGithub.ts files
 	// TODO: add iconRef for height differential on TimelinePath offset (static to 20px rn)
 	// TODO: sorta undid the overlap UI that I really liked for ExperienceCards. explore how to readd that but without doing so in a hacky way
 
 	// p3
 	// DONE: scrub though and complete all relevant TODO's leftover
-	// TODO: skeleton component while/if project/experience values have to load
-	// TODO: responsive design -> media querying
 	// DONE: cleanup unused imports
 	// DONE: cleanup leftover docu
-	// TODO: optimize/improve Performance (g devtools)
+	// DONE: optimize/improve Performance (g devtools)
 	// DONE: remove uneeded box wrapper for Experience and Projects component. hat on hat
 	/* NOTE: NOT DOING light/dark mode:
 			[ ] complete chakra migration for light/dark mode
 			[ ] switch component to toggle between
 	*/
-	// TODO: remove all `type: any`
+	// DONE: remove all `type: any`
 
 	// p4 / maybe nah
 

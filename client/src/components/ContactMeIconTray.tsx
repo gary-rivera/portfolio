@@ -15,15 +15,15 @@ function ContactMeIconTray() {
 	// const LinkedInLogo = chakra(LinkedInLogoSvg);
 
 	return (
-		<HStack h="2.5rem">
+		<HStack h="2rem" gap="0.2">
 			<ColorModeButton w="1rem" />
 			<chakra.button
-				border="2px solid red"
-				color="blackAlpha.800"
+				// border="2px solid red"
+				color="blackAlpha.600"
 				py="0.5"
 				px="1"
 				h="inherit"
-				_hover={{ bg: "blackAlpha.200", color: "blackAlpha.950" }}
+				_hover={{ bg: "blackAlpha.100", color: "var(--primary-blue)" }}
 			>
 				<chakra.a>
 					<LinkedInSvgIcon
@@ -36,8 +36,8 @@ function ContactMeIconTray() {
 				</chakra.a>
 			</chakra.button>
 			<chakra.button
-				border="2px solid red"
-				color="blackAlpha.800"
+				// border="2px solid red"
+				color="blackAlpha.600"
 				py="0.5"
 				px="1"
 				h="inherit"

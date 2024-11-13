@@ -1,6 +1,6 @@
 import MainHeader from "./components/header/MainHeader";
 import AcheivementsContainer from "./components/AcheivementsContainer";
-import { ColorModeButton } from "@/components/ui/color-mode";
+import ContactMeIconTray from "@/components/ContactMeIconTray";
 import { HStack, Flex } from "@chakra-ui/react";
 
 function App() {
@@ -59,7 +59,8 @@ function App() {
 			<Flex direction="column" w="60%">
 				<MainHeader />
 				<AcheivementsContainer />
-				<ColorModeButton w="2rem" />
+
+				<ContactMeIconTray />
 				{/* TODO: rest of social icons */}
 			</Flex>
 		</HStack>

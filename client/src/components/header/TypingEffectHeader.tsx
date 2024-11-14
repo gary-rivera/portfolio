@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styles from "../../styles/TypingEffectHeader.module.css";
 import { HStack, Text } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 
@@ -56,8 +55,14 @@ const TypingEffect = () => {
 	return (
 		<HStack fontSize="42px" fontWeight="900">
 			<Text>{text}</Text>
-			{!isComplete && (
-				<Text fontSize="1" w="0.1rem" backgroundColor="black" marginLeft="2px" animation={`${blink} 750ms infinite`}>
+			{!isComplete && !blinkEnded && (
+				<Text
+					fontSize="1"
+					w="0.1rem"
+					backgroundColor="var(--primary-blue)"
+					marginLeft="2px"
+					animation={`${blink} 750ms infinite`}
+				>
 					&nbsp;
 				</Text>
 			)}

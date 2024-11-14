@@ -1,5 +1,6 @@
 import { Project, projectBadgesMap } from "@/data/projects";
 import dayjs from "dayjs";
+import ActionableTextHighlight from "@/components/ui/actionable-text-highlight";
 
 // styling
 import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Link } from "@chakra-ui/react";
@@ -40,27 +41,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 						<SkeletonCircle />
 						<Image src={logo} alt="project-logo" height="2rem" mt="1" />
 					</Skeleton>
-					<Link
-						ml="0.5"
-						textDecoration="underline"
-						textDecorationStyle="dotted"
-						textDecorationThickness="0.16rem"
-						textDecorationColor="gray"
-						textUnderlineOffset="0.2rem"
-						fontSize="1.8rem"
-						fontWeight="700"
-						letterSpacing="tight"
-						_hover={{ textDecorationColor: "#0891b2" }}
-						_focus={{
-							outline: "none",
-							boxShadow: "none",
-						}}
-						href={links.repo || ""}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						{name}
-					</Link>
+					<ActionableTextHighlight children={name} linkProps={{}} externalLink={links.repo} />
 				</Flex>
 
 				<Flex

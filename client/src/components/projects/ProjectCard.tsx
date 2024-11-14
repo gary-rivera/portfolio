@@ -29,7 +29,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 			w="50rem"
 			h="14rem"
 			bg="rgba(0, 0, 0, 0.035)"
-			borderRadius="5px"
+			borderRadius="sm"
 			py="6"
 			px="10"
 			fontSize="24px"

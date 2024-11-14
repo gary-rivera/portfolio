@@ -58,7 +58,9 @@ function AcheivementsContainer() {
 					}}
 				>
 					<Tabs.List w="min-content">
-						<Tabs.Trigger value="experience">Experience</Tabs.Trigger>
+						<Tabs.Trigger _hover={{}} value="experience">
+							Experience
+						</Tabs.Trigger>
 						<Tabs.Trigger
 							value="projects"
 							_focus={{
@@ -68,7 +70,7 @@ function AcheivementsContainer() {
 						>
 							Projects
 						</Tabs.Trigger>
-						<Tabs.Indicator rounded="l1" bg="rgba(0, 0, 0, 0.02)" />
+						<Tabs.Indicator rounded="l1" bg="blackAlpha.100" />
 					</Tabs.List>
 				</Tabs.Root>
 			</GridItem>

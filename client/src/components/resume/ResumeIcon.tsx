@@ -3,6 +3,7 @@ import ResumeCvSvgIcon from "@/assets/resume-cv.svg?react";
 import ResumeAsImage from "@/assets/fancy-resume.png";
 import React, { useState } from "react";
 import ResumeDialogContainer from "./ResumeDialogContainer";
+import SquareCVIcon from "@/assets/square-cv-online.svg?react";
 
 function ResumeIcon() {
 	const [isDialogOpen, setDialogOpen] = useState(false);
@@ -10,24 +11,20 @@ function ResumeIcon() {
 	return (
 		<>
 			<chakra.button
-				color="blackAlpha.600"
-				py="0.5"
-				px="1"
+				color="blackAlpha.500"
+				px="0"
 				h="inherit"
-				_hover={{ bg: "blackAlpha.200", color: "blackAlpha.950" }}
+				_hover={{ color: "blackAlpha.950", cursor: "pointer" }}
 				onClick={() => setDialogOpen(true)}
 			>
-				<chakra.a>
-					<ResumeCvSvgIcon
-						fill="currentColor"
-						style={{
-							maxHeight: "inherit",
-							width: "30px",
-
-							height: "inherit",
-						}}
-					/>
-				</chakra.a>
+				<SquareCVIcon
+					stroke="currentColor"
+					style={{
+						maxHeight: "inherit",
+						width: "24px",
+						height: "24px",
+					}}
+				/>
 			</chakra.button>
 
 			<ResumeDialogContainer isOpen={isDialogOpen} onClose={() => setDialogOpen(false)}>

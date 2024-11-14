@@ -19,6 +19,8 @@ const GlobalStyles = () => {
 					WebkitFontSmoothing: "antialiased",
 					MozOsxFontSmoothing: "grayscale",
 					"--primary-bg-color": "#faedd0", // Static primary background color
+					"--primary-blue": "rgb(8, 145, 178)",
+					// "--primary-blue": "rgba(8, 145, 178, 0.4)",
 					"--secondary-bg-color": "rgba(173, 216, 230, 1)", // Static secondary color
 					"--bg-pattern": "url('https://www.toptal.com/designers/subtlepatterns/uploads/ep_naturalwhite.png')", // Static background pattern
 					"--bg-filter": "opacity(50%) blur(0.01rem)", // Static filter

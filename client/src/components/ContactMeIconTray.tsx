@@ -1,62 +1,44 @@
-import { chakra, VStack, HStack, Flex, Box } from "@chakra-ui/react";
-import { ColorModeButton } from "@/components/ui/color-mode";
-import LinkIconFactory from "@/components/ui/chakra-fixes/LinkIconFactory";
-import LinkedInSvgIcon from "@/assets/linkedin-small.svg?react";
-import GithubSvgIcon from "@/assets/online-li-conversion.svg?react";
-import ResumeCvSvgIcon from "@/assets/resume-cv.svg?react";
-import ResumeCVIconDialog from "./resume/ResumeIconDialog";
+import { chakra, HStack } from "@chakra-ui/react";
+import LinkedInSvgIcon from "@/assets/linkedin-logo.svg?react";
+import GithubSvgIcon from "@/assets/github-logo.svg?react";
+import ResumeCVIconDialog from "./resume/ResumeIcon";
 
-const LinkedInLogoSvg = () => (
-	<chakra.svg>
-		<></>
-	</chakra.svg>
-);
+const USER_LINKEDIN_URL = "https://www.linkedin.com/in/gary-a-rivera/";
+const USER_GITHUB_URL = "https://github.com/gary-rivera";
 
 function ContactMeIconTray() {
-	// const LinkedInLogo = chakra(LinkedInLogoSvg);
-
 	return (
-		<HStack h="2rem" gap="0.2">
-			{/* <ColorModeButton w="1rem" /> */}
+		<HStack h="3rem" gap="0.2rem" border="2px solid red" w="min-content">
 			<chakra.button
-				// border="2px solid red"
+				as="a"
+				href={USER_LINKEDIN_URL}
+				display="flex"
+				alignItems="center"
+				justifyContent="center"
 				color="blackAlpha.600"
-				py="0.5"
-				px="1"
-				h="inherit"
+				h="100%"
+				w="4rem"
+				p={0}
 				_hover={{ bg: "blackAlpha.100", color: "var(--primary-blue)" }}
 			>
-				<chakra.a>
-					<LinkedInSvgIcon
-						fill="currentColor"
-						style={{
-							width: "auto",
-							height: "inherit",
-						}}
-					/>
-				</chakra.a>
+				<LinkedInSvgIcon fill="currentColor" width="100%" height="100%" />
 			</chakra.button>
+
 			<chakra.button
-				// border="2px solid red"
+				as="a"
+				href={USER_GITHUB_URL}
+				display="flex"
+				alignItems="center"
+				justifyContent="center"
 				color="blackAlpha.600"
-				py="0.5"
-				px="1"
-				h="inherit"
+				h="100%"
+				w="3rem"
+				p={0}
 				_hover={{ bg: "blackAlpha.200", color: "blackAlpha.950" }}
 			>
-				<chakra.a>
-					<GithubSvgIcon
-						fill="currentColor"
-						style={{
-							maxHeight: "inherit",
-							width: "auto",
-
-							height: "inherit",
-						}}
-					/>
-				</chakra.a>
-				{/* <LinkedInSvgIcon w="150px" h="50px" /> */}
+				<GithubSvgIcon fill="currentColor" width="100%" height="100%" />
 			</chakra.button>
+
 			<ResumeCVIconDialog />
 		</HStack>
 	);

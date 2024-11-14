@@ -63,8 +63,8 @@ function App() {
 		<HStack alignItems="center" zIndex="1" my="5rem" justifyContent="center">
 			<Flex direction="column" w="60%">
 				<MainHeader />
-				{/* <ContactMeIconTray /> */}
 				<AcheivementsContainer />
+				<ContactMeIconTray />
 
 				{/* TODO: rest of social icons */}
 			</Flex>

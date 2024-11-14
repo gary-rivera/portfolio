@@ -35,7 +35,7 @@ function ContactMeIconTray() {
 	return (
 		<HStack
 			h="auto"
-			gap="0.5rem"
+			gap="0.35rem"
 			// border="2px solid red"
 			w="min-content"
 		>
@@ -44,12 +44,12 @@ function ContactMeIconTray() {
 				buttonProps={{ _hover: { color: "var(--primary-blue)" } }}
 				url={USER_LINKEDIN_URL}
 			/>
-			<ResumeCVIconDialog />
 			<SocialIcon
 				children={<GithubSvgIcon fill="currentColor" width="100%" height="100%" />}
 				buttonProps={{ w: "2.1rem" }}
 				url={USER_GITHUB_URL}
 			/>
+			<ResumeCVIconDialog />
 
 			{/* email icon? */}
 		</HStack>

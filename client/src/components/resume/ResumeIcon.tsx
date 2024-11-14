@@ -12,17 +12,28 @@ function ResumeIcon() {
 		<>
 			<chakra.button
 				color="blackAlpha.500"
-				px="0"
+				py="0.5"
+				px="1"
 				h="inherit"
+				w="min-content"
 				_hover={{ color: "blackAlpha.950", cursor: "pointer" }}
 				onClick={() => setDialogOpen(true)}
 			>
-				<SquareCVIcon
+				{/* <SquareCVIcon
 					stroke="currentColor"
 					style={{
 						maxHeight: "inherit",
-						width: "24px",
+						width: "auto",
 						height: "24px",
+					}}
+				/> */}
+				<ResumeCvSvgIcon
+					fill="currentColor"
+					style={{
+						maxHeight: "inherit",
+						width: "30px",
+
+						height: "inherit",
 					}}
 				/>
 			</chakra.button>

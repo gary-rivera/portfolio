@@ -24,7 +24,7 @@ function MainHeader() {
 			>
 				<Text>just some dweeb pretending to know what they're doing.</Text>
 
-				<ContactMeIconTray />
+				{/* <ContactMeIconTray /> */}
 			</Flex>
 		</Box>
 	);

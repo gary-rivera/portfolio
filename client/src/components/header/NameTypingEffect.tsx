@@ -85,8 +85,8 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 					lineHeight="1"
 					mt="1"
 					style={{
-						zIndex: 2,
-						color: isHovered ? "rgba(0, 0, 0, 0.7)" : "rgba(0, 0, 0, 0.8)",
+						zIndex: 999,
+						color: isHovered ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.95)",
 						pointerEvents: "none",
 
 						// border: "1px solid green",
@@ -98,17 +98,25 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 				{isComplete && (
 					<motion.div
 						style={{
-							zIndex: 1,
+							zIndex: -1,
 							position: "absolute",
 							bottom: isHovered ? -3 : -1,
 							left: -2,
 							width: "100%",
 							borderBottom: isHovered ? "0.22rem dotted" : "0.2rem dotted",
 							borderBottomColor: isHovered ? "var(--primary-blue)" : "gray",
-							transition: "border-bottom-color 0.5s ease, border-bottom 0.1s easeInOut, bottom 0.2s easeInOut",
 						}}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
+						initial={{ opacity: 0, bottom: -1, borderBottomColor: "gray" }}
+						animate={{
+							opacity: 1,
+							bottom: isHovered ? -3 : -1,
+							borderBottomColor: isHovered ? "var(--primary-blue)" : "gray",
+							borderBottomWidth: isHovered ? "0.22rem" : "0.2rem",
+						}}
+						transition={{
+							duration: 0.2,
+							ease: "easeInOut",
+						}}
 					/>
 				)}
 			</motion.div>

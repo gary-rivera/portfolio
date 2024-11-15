@@ -9,7 +9,7 @@ const blink = keyframes`
 	100% { opacity: 1; }
 `;
 
-const TypingEffect = () => {
+const NameTypingEffect = () => {
 	const [text, setText] = useState("");
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [wordIndex, setWordIndex] = useState(0);
@@ -68,9 +68,8 @@ const TypingEffect = () => {
 					&nbsp;
 				</Text>
 			)}
-			{/* <ResumeCVIconDialog /> */}
 		</HStack>
 	);
 };
 
-export default TypingEffect;
+export default NameTypingEffect;

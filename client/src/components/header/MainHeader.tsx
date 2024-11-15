@@ -1,5 +1,5 @@
 import ContactMeIconTray from "../ContactMeIconTray";
-import TypingEffectHeader from "./TypingEffectHeader";
+import NameTypingEffect from "./NameTypingEffect";
 import { Box, VStack, HStack, Text, Flex } from "@chakra-ui/react";
 
 function MainHeader() {
@@ -13,7 +13,7 @@ function MainHeader() {
 			px="3"
 			pb="1.5"
 		>
-			<TypingEffectHeader />
+			<NameTypingEffect />
 			<Flex
 				direction="column"
 				justify="space-between"

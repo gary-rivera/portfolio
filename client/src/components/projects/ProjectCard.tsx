@@ -1,6 +1,6 @@
 import { Project, projectBadgesMap } from "@/data/projects";
 import dayjs from "dayjs";
-import ActionableTextHighlight from "@/components/ui/actionable-text-highlight";
+import ActionableTextHighlight from "@/components/ui/ActionableTextHighlight";
 
 // styling
 import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Link } from "@chakra-ui/react";
@@ -9,6 +9,7 @@ import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Link } from
 import { FaNpm } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaExternalLinkAlt } from "react-icons/fa";
+
 import LinkIcon from "@/components/ui/chakra-fixes/LinkIconFactory";
 interface ProjectCardProps {
 	project: Project;
@@ -29,7 +30,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 			direction="column"
 			w="50rem"
 			h="14rem"
-			bg="rgba(0, 0, 0, 0.035)"
+			bg="var(--primary-bg-color)"
 			borderRadius="sm"
 			py="6"
 			px="10"
@@ -41,7 +42,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 						<SkeletonCircle />
 						<Image src={logo} alt="project-logo" height="2rem" mt="1" />
 					</Skeleton>
-					<ActionableTextHighlight children={name} linkProps={{}} externalLink={links.repo} />
+					<ActionableTextHighlight children={name} externalLink={links.repo} />
 				</Flex>
 
 				<Flex

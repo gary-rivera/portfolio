@@ -1,8 +1,8 @@
-import ruioIcon from "../assets/ruio-active-logo.png";
-import deadlockIcon from "../assets/deadlock-logo.png";
-import calculatorIcon from "../assets/calculator-logo.png";
-import gbotIcon from "../assets/g-bot-icon.png";
-import memeGenieLamp from "../assets/meme-genie-logo.svg";
+import ruioIcon from "@/assets/icons/projects/ruio-active-logo.png";
+import deadlockIcon from "@/assets/icons/projects/deadlock-logo.png";
+import calculatorIcon from "@/assets/icons/projects/calculator-logo.png";
+import gbotIcon from "@/assets/icons/projects/g-bot-icon.png";
+import memeGenieLamp from "@/assets/icons/projects/meme-genie-logo.svg";
 
 const GH_USER_LINK = "https://github.com/gary-rivera";
 export type Project = {

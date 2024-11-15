@@ -1,8 +1,12 @@
 import React from "react";
-import { Flex, Em, HStack, Heading, Box, Icon, GridItem, Grid, useRecipe, Text } from "@chakra-ui/react";
+import { chakra, Flex, Em, HStack, Heading, Box, Icon, GridItem, Grid, useRecipe, Text } from "@chakra-ui/react";
+import ActionableTextHighlight from "../ui/ActionableTextHighlight";
+
 import { CareerEvent, events } from "@/data/experience";
 import { LuTarget } from "react-icons/lu";
 import { HiAtSymbol } from "react-icons/hi";
+
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 //TODO: move to MeasureDistance.ts
 type Distance = {
@@ -30,7 +34,18 @@ type ImpactEventCardProps = {
 // TODO: bind the alternating card layout to a state? (possible fix for the items height not overlapping)
 // TODO: add hover tooltip to events where employer is listed giving a quick blurb about what service they offered +/- badges
 const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
-	const { title, subtitle, description, date, origin, attributes, category } = event;
+	const {
+		event: eventTitle,
+		subtitle,
+		companyName,
+		description,
+		date,
+		origin,
+		attributes,
+		category,
+		icon: AvyIconnn,
+	} = event;
+	console.log(origin);
 
 	const recipe = useRecipe({ key: "eventCard" });
 	const styles = recipe({ category });
@@ -39,15 +54,24 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 			<HStack fontSize="16px">
 				{subtitle ? (
 					<Heading fontWeight="semibold" fontSize="1.05rem" color="blackAlpha.800">
-						{title}
+						{eventTitle}
 						<Icon fontSize="0.9rem" mx="0.1rem" color="blackAlpha.500">
 							<HiAtSymbol />
 						</Icon>
-						{subtitle}
+						<ActionableTextHighlight
+							tooltipContent={{
+								icon: AvyIconnn,
+								heading: companyName,
+								text: "Debit to credit platform. Financial literacy development",
+								iconLinkUrl: origin,
+							}}
+						>
+							{subtitle}
+						</ActionableTextHighlight>
 					</Heading>
 				) : (
 					<Heading fontWeight="semibold" fontSize="1.05rem" color="blackAlpha.800">
-						{title}
+						{eventTitle}
 					</Heading>
 				)}
 			</HStack>
@@ -59,6 +83,7 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 		</Flex>
 	);
 };
+
 const TimelineEventDate: React.FC<{ date: string }> = ({ date }) => (
 	<Em fontSize="2xs" width="fit-content" color="gray.600" lineHeight="50px">
 		{date}

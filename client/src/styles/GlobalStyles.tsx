@@ -18,7 +18,7 @@ const GlobalStyles = () => {
 					color: "black", // Static text color
 					WebkitFontSmoothing: "antialiased",
 					MozOsxFontSmoothing: "grayscale",
-					"--primary-bg-color": "#faedd0", // Static primary background color
+					"--primary-bg-color": "rgba(0, 0, 0, 0.035)", // Static primary background color
 					"--primary-blue": "rgb(8, 145, 178)",
 					// "--primary-blue": "rgba(8, 145, 178, 0.4)",
 					"--secondary-bg-color": "rgba(173, 216, 230, 1)", // Static secondary color

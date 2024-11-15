@@ -3,7 +3,7 @@ import { createSystem, defaultConfig, defineConfig, defineRecipe } from "@chakra
 const EventCardRecipe = defineRecipe({
 	base: {
 		w: "auto",
-		bg: "rgba(0, 0, 0, 0.035)", // TODO: add to css global variables
+		bg: "var(--primary-bg-color)", // TODO: add to css global variables
 		h: "100%",
 		borderRadius: "5px",
 		py: 2,

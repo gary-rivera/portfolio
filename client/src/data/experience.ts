@@ -1,8 +1,9 @@
 import employers from "@/components/ui/Employers";
 
 export type CareerEvent = {
-	title: string;
+	event: string;
 	subtitle?: string;
+	companyName?: string;
 	description?: string;
 	date: string;
 	origin?: string;
@@ -19,7 +20,7 @@ export const experience = [
 
 export const events: CareerEvent[] = [
 	{
-		title: "Combine Product Platform",
+		event: "Combine Product Platform",
 		date: "Mar 2024",
 		description:
 			"As part of the corporate merger, led the integration of a pipeline to funnel Extra's qualified, success-story customers into Orchard’s mortgage platform.",
@@ -30,8 +31,9 @@ export const events: CareerEvent[] = [
 		category: "impact",
 	},
 	{
-		title: "Hired",
-		subtitle: employers.orchard.companyName,
+		event: "Hired",
+		subtitle: employers.orchard.shortName,
+		companyName: employers.orchard.companyName,
 		date: "Feb 2024 → Sep 2024",
 		description: experience[0], // TODO: remove but preserve the visual balance of tab by managing order and content of other events
 		origin: employers.orchard.url,
@@ -39,15 +41,16 @@ export const events: CareerEvent[] = [
 		category: "milestone",
 	},
 	{
-		title: "Permissions Framework",
+		event: "Permissions Framework",
 		date: "Sep 2021",
 		description:
 			"Engineered a permissions framework for API actions, reducing authorization incidents by 80% and enhancing security across platforms.",
 		category: "impact",
 	},
 	{
-		title: "Senior Software Developer",
-		subtitle: employers.extra.companyName,
+		event: "Senior Software Developer",
+		subtitle: employers.extra.shortName,
+		companyName: employers.extra.companyName,
 		date: "Aug 2022",
 		// description: experience[2],
 		origin: employers.extra.url,
@@ -55,15 +58,16 @@ export const events: CareerEvent[] = [
 		category: "milestone",
 	},
 	{
-		title: "Card Journey API Util",
+		event: "Card Journey API Util",
 		date: "Sep 2021",
 		description:
 			"Built a feature to track user progress in the card journey, boosting conversion rates by 12% and providing real-time insights to reduce support inquiries.",
 		category: "impact",
 	},
 	{
-		title: "Hired",
-		subtitle: employers.extra.companyName,
+		event: "Hired",
+		subtitle: employers.extra.shortName,
+		companyName: employers.extra.companyName,
 		date: "Sep 2021 → Sep 2024",
 		origin: employers.extra.url,
 		icon: employers.extra.icon,
@@ -76,24 +80,27 @@ export const events: CareerEvent[] = [
 		],
 	},
 	{
-		title: "Freelancing",
-		subtitle: employers.knowCap.companyName,
+		event: "Freelancing",
+		subtitle: employers.knowCap.shortName,
+		companyName: employers.knowCap.companyName,
 		date: "Aug 2021 → Sep 2021",
 		origin: employers.knowCap.url,
 		icon: employers.knowCap.icon,
 		category: "achievement",
 	},
 	{
-		title: "Internship",
-		subtitle: employers.numbersApi.companyName,
+		event: "Internship",
+		subtitle: employers.numbersApi.shortName,
+		companyName: employers.numbersApi.companyName,
 		date: "Jul 2021",
 		origin: employers.numbersApi.url,
 		icon: employers.numbersApi.icon,
 		category: "achievement",
 	},
 	{
-		title: "Completed Schooling",
-		subtitle: employers.rithmSchool.companyName,
+		event: "Completed Schooling",
+		subtitle: employers.rithmSchool.shortName,
+		companyName: employers.rithmSchool.companyName,
 		date: "Jul 2021",
 		origin: employers.rithmSchool.url,
 		icon: employers.rithmSchool.icon,

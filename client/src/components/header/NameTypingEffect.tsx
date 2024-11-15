@@ -81,7 +81,7 @@ const NameTypingEffect = () => {
 					style={{
 						zIndex: 2,
 						position: "relative",
-						color: isHovered ? "darkgrey" : "black",
+						color: isHovered ? "rgba(0, 0, 0, 0.7)" : "rgba(0, 0, 0, 0.80)",
 					}}
 				>
 					{text}
@@ -91,10 +91,10 @@ const NameTypingEffect = () => {
 						style={{
 							zIndex: 1,
 							position: "absolute",
-							bottom: -1,
+							bottom: isHovered ? -2.5 : -1,
 							left: -3,
 							width: "105%",
-							borderBottom: "0.2rem dotted",
+							borderBottom: isHovered ? "0.23rem dotted" : "0.2rem dotted",
 							borderBottomColor: isHovered ? "var(--primary-blue)" : "gray",
 							transition: "border-bottom-color 0.5s ease", // Smooth color transition
 						}}

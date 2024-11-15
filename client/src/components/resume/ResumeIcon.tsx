@@ -13,9 +13,11 @@ function ResumeIcon() {
 			<chakra.button
 				color="blackAlpha.500"
 				py="0.5"
-				px="1"
-				h="inherit"
-				w="min-content"
+				m="0"
+				p="0"
+				h="24px"
+				w="auto"
+				// border="1px solid red"
 				_hover={{ color: "blackAlpha.950", cursor: "pointer" }}
 				onClick={() => setDialogOpen(true)}
 			>
@@ -30,9 +32,7 @@ function ResumeIcon() {
 				<ResumeCvBoxSvg
 					fill="currentColor"
 					style={{
-						maxHeight: "inherit",
-						width: "30px",
-
+						width: "inherit",
 						height: "inherit",
 					}}
 				/>

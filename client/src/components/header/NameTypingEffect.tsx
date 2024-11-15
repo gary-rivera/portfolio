@@ -1,75 +1,144 @@
-import { useEffect, useState } from "react";
-import { HStack, Text } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
-import { motion } from "framer-motion";
+import React, { useReducer, useEffect, useCallback, useMemo } from "react";
 import ResumeDialogContainer from "@/components/resume/ResumeDialogContainer";
-
-const blink = keyframes`
-  0% { opacity: 1; }
-	40% { opacity: 0; }
-  65% { opacity: 1; }
-	95% { opacity: 1; }
-
-`;
+import { HStack, Text } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 
 type NameTypingEffectProps = {
 	isComplete: boolean;
 	setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+const deletingSpeed = 40;
+
+type State = {
+	text: string;
+	wordIndex: number;
+	isTyping: boolean;
+	isDeleting: boolean;
+	typingStarted: boolean;
+	isHovered: boolean;
+	isDialogOpen: boolean;
+};
+
+type Action =
+	| { type: "SET_TEXT"; payload: string }
+	| { type: "SET_TYPING_STARTED" }
+	| { type: "SET_IS_TYPING"; payload: boolean }
+	| { type: "SET_IS_DELETING"; payload: boolean }
+	| { type: "SET_WORD_INDEX"; payload: number }
+	| { type: "TOGGLE_DIALOG" }
+	| { type: "SET_HOVER"; payload: boolean };
+
+const initialState: State = {
+	text: "",
+	wordIndex: 0,
+	isTyping: true,
+	isDeleting: false,
+	typingStarted: false,
+	isHovered: false,
+	isDialogOpen: false,
+};
+
+const reducer = (state: State, action: Action): State => {
+	switch (action.type) {
+		case "SET_TEXT":
+			return { ...state, text: action.payload };
+		case "SET_TYPING_STARTED":
+			return { ...state, typingStarted: true };
+		case "SET_IS_TYPING":
+			return { ...state, isTyping: action.payload };
+		case "SET_IS_DELETING":
+			return { ...state, isDeleting: action.payload };
+		case "SET_WORD_INDEX":
+			return { ...state, wordIndex: action.payload };
+		case "TOGGLE_DIALOG":
+			return { ...state, isDialogOpen: !state.isDialogOpen };
+		case "SET_HOVER":
+			return { ...state, isHovered: action.payload };
+		default:
+			return state;
+	}
+};
+
+const getTypingSpeedForWord = (wordIndex: number) => {
+	if (wordIndex === 0) {
+		return { minSpeed: 45, maxSpeed: 85 };
+	}
+	if (wordIndex === 1) {
+		return { minSpeed: 70, maxSpeed: 110 };
+	}
+	return { minSpeed: 73, maxSpeed: 193 };
+};
+
+const getRandomTypingSpeed = (wordIndex: number) => {
+	const { minSpeed, maxSpeed } = getTypingSpeedForWord(wordIndex);
+	return Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
+};
+
 const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsComplete }) => {
-	const [text, setText] = useState("");
-	const [wordIndex, setWordIndex] = useState(0);
-	const [isTyping, setIsTyping] = useState(true);
-	const [isDeleting, setIsDeleting] = useState(false);
-	const [typingStarted, setTypingStarted] = useState(false);
+	const [state, dispatch] = useReducer(reducer, initialState);
 
-	const [isHovered, setIsHovered] = useState(false);
-	const [isDialogOpen, setDialogOpen] = useState(false);
+	const words = useMemo(() => ["dinglega", "gary r."], []);
 
-	const words = ["dinglega", "gary r."];
-	const typingSpeed = 100;
-	const deletingSpeed = 40;
-
-	// Blink cursor before starting typing
 	useEffect(() => {
-		const blinkCursorTimeout = setTimeout(() => setTypingStarted(true), 1000);
+		const blinkCursorTimeout = setTimeout(() => {
+			dispatch({ type: "SET_TYPING_STARTED" });
+		}, 1000);
+
 		return () => clearTimeout(blinkCursorTimeout);
 	}, []);
 
 	useEffect(() => {
-		if (!isTyping || !typingStarted) return;
+		if (!state.isTyping || !state.typingStarted) return;
 
 		let timer: number;
 
 		const handleTyping = () => {
-			const currentWord = words[wordIndex];
-			const isEndOfWord = text === currentWord;
+			const currentWord = words[state.wordIndex];
+			const isEndOfWord = state.text === currentWord;
 
-			if (isDeleting) {
-				setText((prevText) => prevText.slice(0, -1));
-				if (text.length === 0) {
-					setIsDeleting(false);
-					setWordIndex((prevIndex) => prevIndex + 1);
+			if (state.isDeleting) {
+				dispatch({
+					type: "SET_TEXT",
+					payload: state.text.slice(0, -1),
+				});
+
+				if (state.text.length === 1) {
+					dispatch({ type: "SET_IS_DELETING", payload: false });
+					dispatch({ type: "SET_WORD_INDEX", payload: state.wordIndex + 1 });
 				}
 			} else if (!isEndOfWord) {
-				setText((prevText) => currentWord.slice(0, prevText.length + 1));
-			} else if (isEndOfWord && wordIndex === 0) {
-				timer = window.setTimeout(() => setIsDeleting(true), 350);
-			} else if (isEndOfWord && wordIndex === 1) {
-				timer = window.setTimeout(() => {
-					setIsTyping(false);
-					setTimeout(() => setIsComplete(true), 500); // Wait 1s before setting isComplete
-				}, 750);
+				dispatch({
+					type: "SET_TEXT",
+					payload: currentWord.slice(0, state.text.length + 1),
+				});
+			} else if (isEndOfWord) {
+				if (state.wordIndex === 0) {
+					timer = window.setTimeout(() => dispatch({ type: "SET_IS_DELETING", payload: true }), 350);
+				} else if (state.wordIndex === 1) {
+					timer = window.setTimeout(() => {
+						dispatch({ type: "SET_IS_TYPING", payload: false });
+						window.setTimeout(() => setIsComplete(true), 250);
+					}, 750);
+				}
 			}
 		};
 
-		timer = window.setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
+		timer = window.setTimeout(handleTyping, state.isDeleting ? deletingSpeed : getRandomTypingSpeed(state.wordIndex));
 		return () => clearTimeout(timer);
-	}, [text, isDeleting, wordIndex, isTyping, typingStarted, setIsComplete]);
+	}, [state.text, state.isDeleting, state.wordIndex, state.isTyping, state.typingStarted, words, setIsComplete]);
 
-	const handleMouseEnter = () => setIsHovered(true);
-	const handleMouseLeave = () => setIsHovered(false);
+	const handleMouseEnter = useCallback(() => {
+		dispatch({ type: "SET_HOVER", payload: true });
+	}, []);
+
+	const handleMouseLeave = useCallback(() => {
+		dispatch({ type: "SET_HOVER", payload: false });
+	}, []);
+
+	const toggleDialog = useCallback(() => {
+		dispatch({ type: "TOGGLE_DIALOG" });
+	}, []);
 
 	return (
 		<HStack fontSize="42px" fontWeight="900">
@@ -80,51 +149,53 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 					lineHeight: "1",
 					cursor: "pointer",
 					zIndex: 1,
-					pointerEvents: isComplete ? "auto" : "none",
+					pointerEvents: state.isTyping ? "none" : "auto",
 				}}
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
-				onClick={() => setDialogOpen(!isDialogOpen)}
+				onClick={toggleDialog}
 			>
 				<Text
 					lineHeight="1"
 					mt="1"
 					style={{
 						zIndex: 2,
-						color: isHovered ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.95)",
+						color: state.isHovered ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.95)",
 						pointerEvents: "none",
 					}}
 					mr="0"
 				>
-					{text}
+					{state.text}
 				</Text>
 				{isComplete && (
 					<motion.div
 						style={{
 							zIndex: -1,
 							position: "absolute",
-							bottom: isHovered ? -3 : -1,
+							bottom: state.isHovered ? -3 : -1,
 							left: -2,
 							width: "100%",
-							borderBottom: isHovered ? "0.22rem dotted" : "0.2rem dotted",
-							borderBottomColor: isHovered ? "var(--primary-blue)" : "gray",
+							borderBottom: state.isHovered ? "0.22rem dotted" : "0.2rem dotted",
+							borderBottomColor: state.isHovered ? "var(--primary-blue)" : "gray",
 						}}
 						initial={{ opacity: 0, bottom: -1, borderBottomColor: "gray" }}
 						animate={{
 							opacity: 1,
-							bottom: isHovered ? -3 : -1,
-							borderBottomColor: isHovered ? "var(--primary-blue)" : "gray",
-							borderBottomWidth: isHovered ? "0.22rem" : "0.2rem",
+							bottom: state.isHovered ? -3 : -1,
+							borderBottomColor: state.isHovered ? "var(--primary-blue)" : "gray",
+							borderBottomWidth: state.isHovered ? "0.22rem" : "0.2rem",
 						}}
 						transition={{
-							duration: 0.1,
-							ease: "easeInOut",
+							opacity: { duration: 0.6, ease: "easeInOut" },
+							bottom: { duration: 0.1, ease: "easeInOut" },
+							borderBottomColor: { duration: 0.1, ease: "easeInOut" },
+							borderBottomWidth: { duration: 0.1, ease: "easeInOut" },
 						}}
 					/>
 				)}
 			</motion.div>
 
-			{isTyping && (
+			{state.isTyping && (
 				<motion.div
 					style={{
 						display: "inline-block",
@@ -147,7 +218,7 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 					}}
 				/>
 			)}
-			<ResumeDialogContainer isOpen={isDialogOpen} onClose={() => setDialogOpen(false)} />
+			<ResumeDialogContainer isOpen={state.isDialogOpen} onClose={toggleDialog} />
 		</HStack>
 	);
 };

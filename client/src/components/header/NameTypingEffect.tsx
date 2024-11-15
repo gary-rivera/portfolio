@@ -57,34 +57,6 @@ const NameTypingEffect = () => {
 		return () => clearTimeout(timer);
 	}, [text, isDeleting, wordIndex, isComplete]);
 
-	// // Define variants for the underline animation
-	// const underlineVariants = {
-	// 	hidden: { opacity: 0 },
-	// 	visible: {
-	// 		opacity: 1,
-	// 		borderBottomColor: "gray",
-	// 		transition: { duration: 5, ease: "easeOut" }, // Smooth transition in visible state
-	// 	},
-	// 	hover: {
-	// 		borderBottomColor: "var(--primary-blue)",
-	// 		transition: { duration: 2, ease: "easeInOut" }, // Smooth transition on hover
-	// 		scale: 1.1,
-	// 	},
-	// };
-
-	const underlineVariants = {
-		hidden: { opacity: 0 },
-		visible: {
-			opacity: 1,
-			"--underline-color": "gray", // Start with gray
-			transition: { duration: 2 },
-		},
-		hover: {
-			"--underline-color": "var(--primary-blue)", // Animate to blue
-			transition: { duration: 2 },
-		},
-	};
-
 	const handleMouseEnter = () => setIsHovered(true);
 	const handleMouseLeave = () => setIsHovered(false);
 

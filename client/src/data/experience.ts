@@ -1,9 +1,12 @@
+import employers from "@/components/ui/Employers";
+
 export type CareerEvent = {
 	title: string;
 	subtitle?: string;
 	description?: string;
 	date: string;
 	origin?: string;
+	icon?: any;
 	attributes?: { attribute: string; colorScheme: string }[];
 	category: "milestone" | "achievement" | "impact"; // NOTE: conditional rendering controller for how the card looks + what values the card is expecting + how it styles them
 };
@@ -28,67 +31,75 @@ export const events: CareerEvent[] = [
 	},
 	{
 		title: "Hired",
-		subtitle: "Orchard",
-		date: " Feb 2024 → Sep 2024",
-		description: experience[0], // TODO: describe that this was a merger situtaion and/or explain the product/service that Orchard provides
-		origin: "",
+		subtitle: employers.orchard.companyName,
+		date: "Feb 2024 → Sep 2024",
+		description: experience[0], // TODO: remove but preserve the visual balance of tab by managing order and content of other events
+		origin: employers.orchard.url,
+		icon: employers.orchard.icon,
 		category: "milestone",
 	},
 	{
-		title: "Permissions Framework", // TODO: hyperlink here
+		title: "Permissions Framework",
 		date: "Sep 2021",
 		description:
 			"Engineered a permissions framework for API actions, reducing authorization incidents by 80% and enhancing security across platforms.",
 		category: "impact",
 	},
 	{
-		title: "Senior Software Developer", // NOTE: Stepped into Senior Dev role
-		subtitle: "Extra Card",
+		title: "Senior Software Developer",
+		subtitle: employers.extra.companyName,
 		date: "Aug 2022",
 		// description: experience[2],
-		origin: "",
+		origin: employers.extra.url,
+		icon: employers.extra.icon,
 		category: "milestone",
 	},
-
 	{
-		title: "Card Journey API util", // TODO: hyperlink here
+		title: "Card Journey API Util",
 		date: "Sep 2021",
 		description:
 			"Built a feature to track user progress in the card journey, boosting conversion rates by 12% and providing real-time insights to reduce support inquiries.",
 		category: "impact",
 	},
 	{
-		title: "Hired", // TODO: hyperlink here // TODO: explain the product/service that Extra provides
+		title: "Hired",
+		subtitle: employers.extra.companyName,
 		date: "Sep 2021 → Sep 2024",
-		subtitle: "Extra Card",
+		origin: employers.extra.url,
+		icon: employers.extra.icon,
 		category: "achievement",
 		attributes: [
 			{
-				attribute: "fintech",
+				attribute: "Fintech",
 				colorScheme: "green",
 			},
 		],
 	},
 	{
 		title: "Freelancing",
-		subtitle: "KnowledgeCapital",
+		subtitle: employers.knowCap.companyName,
 		date: "Aug 2021 → Sep 2021",
+		origin: employers.knowCap.url,
+		icon: employers.knowCap.icon,
 		category: "achievement",
 	},
 	{
 		title: "Internship",
-		subtitle: "Numbers API",
+		subtitle: employers.numbersApi.companyName,
 		date: "Jul 2021",
+		origin: employers.numbersApi.url,
+		icon: employers.numbersApi.icon,
 		category: "achievement",
 	},
 	{
-		title: "Completed schooling",
-		subtitle: "Rithm",
+		title: "Completed Schooling",
+		subtitle: employers.rithmSchool.companyName,
 		date: "Jul 2021",
+		origin: employers.rithmSchool.url,
+		icon: employers.rithmSchool.icon,
 		category: "achievement",
 	},
 ];
-
 /*
 standout career acheivemnts:
 - Add ruio package released on npm as an achievement

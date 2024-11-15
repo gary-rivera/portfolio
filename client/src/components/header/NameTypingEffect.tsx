@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { HStack, Text } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import { motion } from "framer-motion";
+import ResumeDialogContainer from "@/components/resume/ResumeDialogContainer";
 
 const blink = keyframes`
   0% { opacity: 1; }
@@ -18,6 +19,7 @@ const NameTypingEffect = () => {
 	const [isComplete, setIsComplete] = useState(false);
 	const [blinkEnded, setBlinkEnded] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
+	const [isDialogOpen, setDialogOpen] = useState(false);
 
 	const words = ["dinglega", "gary r."];
 	const typingSpeed = 100;
@@ -62,7 +64,6 @@ const NameTypingEffect = () => {
 
 	return (
 		<HStack fontSize="42px" fontWeight="900">
-			{/* Wrap the Text component and underline in a motion.div */}
 			<motion.div
 				style={{
 					position: "relative",
@@ -71,14 +72,16 @@ const NameTypingEffect = () => {
 					cursor: "pointer",
 					zIndex: 1,
 				}}
-				onMouseEnter={handleMouseEnter} // Track hover state on container
+				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
+				onClick={() => setDialogOpen(!isDialogOpen)}
 			>
 				<Text
 					lineHeight="1"
 					style={{
 						zIndex: 2,
 						position: "relative",
+						color: isHovered ? "darkgrey" : "black",
 					}}
 				>
 					{text}
@@ -88,11 +91,11 @@ const NameTypingEffect = () => {
 						style={{
 							zIndex: 1,
 							position: "absolute",
-							bottom: 0,
-							left: 0,
-							width: "100%",
-							borderBottom: "2px dotted",
-							borderBottomColor: isHovered ? "var(--primary-blue)" : "gray", // Change color on hover
+							bottom: -1,
+							left: -3,
+							width: "105%",
+							borderBottom: "0.2rem dotted",
+							borderBottomColor: isHovered ? "var(--primary-blue)" : "gray",
 							transition: "border-bottom-color 0.5s ease", // Smooth color transition
 						}}
 						initial={{ opacity: 0 }}
@@ -100,6 +103,7 @@ const NameTypingEffect = () => {
 					/>
 				)}
 			</motion.div>
+
 			{!isComplete && !blinkEnded && (
 				<Text
 					lineHeight="1"
@@ -112,6 +116,7 @@ const NameTypingEffect = () => {
 					&nbsp;
 				</Text>
 			)}
+			<ResumeDialogContainer isOpen={isDialogOpen} onClose={() => setDialogOpen(false)} />
 		</HStack>
 	);
 };

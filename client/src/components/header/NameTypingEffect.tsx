@@ -59,8 +59,8 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 			} else if (isEndOfWord && wordIndex === 1) {
 				timer = window.setTimeout(() => {
 					setIsTyping(false);
-					setIsComplete(true);
-				}, 500);
+					setTimeout(() => setIsComplete(true), 500); // Wait 1s before setting isComplete
+				}, 750);
 			}
 		};
 
@@ -125,16 +125,27 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 			</motion.div>
 
 			{isTyping && (
-				<Text
-					lineHeight="1"
-					fontSize="1"
-					w="0.1rem"
-					backgroundColor="rgba(0, 0, 0, 0.94)"
-					marginLeft="-2"
-					animation={`${blink} 0.7s steps(1) infinite`}
-				>
-					&nbsp;
-				</Text>
+				<motion.div
+					style={{
+						display: "inline-block",
+						lineHeight: "1",
+						width: "0.1rem",
+						height: "1em",
+						backgroundColor: "rgba(0, 0, 0, 0.94)",
+						marginLeft: "-2px",
+					}}
+					initial={{ opacity: 0 }}
+					animate={{
+						opacity: [0, 1, 0],
+						scaleY: [1, 0.95, 1],
+					}}
+					transition={{
+						duration: 0.7,
+						repeat: Infinity,
+						repeatType: "loop",
+						ease: "easeInOut",
+					}}
+				/>
 			)}
 			<ResumeDialogContainer isOpen={isDialogOpen} onClose={() => setDialogOpen(false)} />
 		</HStack>

@@ -1,6 +1,6 @@
 import React from "react";
 import { chakra, Flex, Em, HStack, Heading, Box, Icon, GridItem, Grid, useRecipe, Text } from "@chakra-ui/react";
-import ActionableTextHighlight from "../ui/actionable-text-highlight";
+import ActionableTextHighlight from "../ui/ActionableTextHighlight";
 
 import { CareerEvent, events } from "@/data/experience";
 import { LuTarget } from "react-icons/lu";
@@ -34,8 +34,18 @@ type ImpactEventCardProps = {
 // TODO: bind the alternating card layout to a state? (possible fix for the items height not overlapping)
 // TODO: add hover tooltip to events where employer is listed giving a quick blurb about what service they offered +/- badges
 const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
-	const { title, subtitle, description, date, origin, attributes, category, icon: AvyIconnn } = event;
-	const ExternalLinkIcon = chakra(FaExternalLinkAlt);
+	const {
+		event: eventTitle,
+		subtitle,
+		companyName,
+		description,
+		date,
+		origin,
+		attributes,
+		category,
+		icon: AvyIconnn,
+	} = event;
+	console.log(origin);
 
 	const recipe = useRecipe({ key: "eventCard" });
 	const styles = recipe({ category });
@@ -44,16 +54,16 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 			<HStack fontSize="16px">
 				{subtitle ? (
 					<Heading fontWeight="semibold" fontSize="1.05rem" color="blackAlpha.800">
-						{title}
+						{eventTitle}
 						<Icon fontSize="0.9rem" mx="0.1rem" color="blackAlpha.500">
 							<HiAtSymbol />
 						</Icon>
 						<ActionableTextHighlight
 							tooltipContent={{
 								icon: AvyIconnn,
-								heading: subtitle,
+								heading: companyName,
 								text: "Debit to credit platform. Financial literacy development",
-								linkIcon: <ExternalLinkIcon fontSize="0.8rem" href={origin} />,
+								iconLinkUrl: origin,
 							}}
 						>
 							{subtitle}
@@ -61,7 +71,7 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 					</Heading>
 				) : (
 					<Heading fontWeight="semibold" fontSize="1.05rem" color="blackAlpha.800">
-						{title}
+						{eventTitle}
 					</Heading>
 				)}
 			</HStack>

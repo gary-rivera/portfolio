@@ -1,6 +1,6 @@
 import { Project, projectBadgesMap } from "@/data/projects";
 import dayjs from "dayjs";
-import ActionableTextHighlight from "@/components/ui/actionable-text-highlight";
+import ActionableTextHighlight from "@/components/ui/ActionableTextHighlight";
 
 // styling
 import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Link } from "@chakra-ui/react";

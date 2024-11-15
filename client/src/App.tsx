@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import MainHeader from "./components/header/MainHeader";
 import AcheivementsContainer from "./components/AcheivementsContainer";
 import ContactMeIconTray from "./components/ContactMeIconTray";
@@ -55,18 +56,37 @@ function App() {
 			[ ] complete chakra migration for light/dark mode
 			[ ] switch component to toggle between
 	*/
-	// DONE: remove all `type: any`
+// TODO: remove all `type: any`
 
-	// p4 / maybe nah
+function App() {
+	const [isLoadingAnimationComplete, setIsLoadingAnimationComplete] = useState(false);
+	const [loadRest, setLoadRest] = useState(false);
+	// on page load (state?)
+	// start main header at dead center of page
+	// wait for isLoadingAnimationComplete to know when to begin moving the main header to its top left position
+	// animate loading effects of rest of ui (i.e. AcheivementsContainer then ContactMeIconTray)
+
+	useEffect(() => {
+		if (isLoadingAnimationComplete) {
+			console.log("[app] header animations signaled as complete");
+			setTimeout(() => setLoadRest(true), 5000);
+			// perform element moving animation logic
+		}
+	}, [isLoadingAnimationComplete]);
 
 	return (
 		<HStack alignItems="center" zIndex="1" my="5rem" justifyContent="center">
 			<Flex direction="column" w="60%">
-				<MainHeader />
-				<AcheivementsContainer />
-				<ContactMeIconTray />
-
-				{/* TODO: rest of social icons */}
+				<MainHeader
+					isLoadingAnimationComplete={isLoadingAnimationComplete}
+					setIsLoadingAnimationComplete={setIsLoadingAnimationComplete}
+				/>
+				{loadRest && (
+					<>
+						<AcheivementsContainer />
+						<ContactMeIconTray />
+					</>
+				)}
 			</Flex>
 		</HStack>
 	);

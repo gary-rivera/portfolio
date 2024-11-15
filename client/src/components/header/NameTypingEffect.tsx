@@ -19,6 +19,7 @@ type NameTypingEffectProps = {
 
 const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsComplete }) => {
 	// TODO: up initial word typing speed and normal speed for actual name.
+	// TODO: allow cursor to blink a couple times at start
 	const [text, setText] = useState("");
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [wordIndex, setWordIndex] = useState(0);
@@ -74,6 +75,7 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 					lineHeight: "1",
 					cursor: "pointer",
 					zIndex: 1,
+					pointerEvents: isComplete ? "auto" : "none",
 				}}
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
@@ -81,10 +83,12 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 			>
 				<Text
 					lineHeight="1"
+					mt="1"
 					style={{
 						zIndex: 2,
-						position: "relative",
 						color: isHovered ? "rgba(0, 0, 0, 0.7)" : "rgba(0, 0, 0, 0.8)",
+						pointerEvents: "none",
+
 						// border: "1px solid green",
 					}}
 					mr="0"

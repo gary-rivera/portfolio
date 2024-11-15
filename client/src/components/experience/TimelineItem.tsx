@@ -45,7 +45,6 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 		category,
 		icon: AvyIconnn,
 	} = event;
-	console.log(origin);
 
 	const recipe = useRecipe({ key: "eventCard" });
 	const styles = recipe({ category });

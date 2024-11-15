@@ -12,11 +12,11 @@ const blink = keyframes`
   100% { opacity: 1; }
 `;
 
-const NameTypingEffect = () => {
+const NameTypingEffect = ({ isComplete, setIsComplete }) => {
 	const [text, setText] = useState("");
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [wordIndex, setWordIndex] = useState(0);
-	const [isComplete, setIsComplete] = useState(false);
+
 	const [blinkEnded, setBlinkEnded] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
 	const [isDialogOpen, setDialogOpen] = useState(false);
@@ -25,9 +25,10 @@ const NameTypingEffect = () => {
 	const typingSpeed = 100;
 	const deletingSpeed = 40;
 
-	// Typing effect logic
 	useEffect(() => {
-		let timer: number; // Explicitly type the timer variable
+		let timer: number;
+
+		console.log("[nametyping]", { text, isDeleting, wordIndex, isComplete });
 
 		const handleTyping = () => {
 			const currentWord = words[wordIndex];
@@ -45,19 +46,20 @@ const NameTypingEffect = () => {
 			} else if (isEndOfWord && wordIndex === 0) {
 				timer = window.setTimeout(() => setIsDeleting(true), 350);
 			} else if (isEndOfWord && wordIndex === 1) {
-				setIsComplete(true);
+				if (blinkEnded) setIsComplete(true);
+				else window.setTimeout(() => setBlinkEnded(true), 750);
 			}
 		};
 
 		if (!isComplete) {
 			timer = window.setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
 		} else {
-			// Allow one last blink before stopping
+			// Allow one last blink before stopping (BROKEN)
 			timer = window.setTimeout(() => setBlinkEnded(true), 1500);
 		}
 
 		return () => clearTimeout(timer);
-	}, [text, isDeleting, wordIndex, isComplete]);
+	}, [text, isDeleting, wordIndex, isComplete, blinkEnded]);
 
 	const handleMouseEnter = () => setIsHovered(true);
 	const handleMouseLeave = () => setIsHovered(false);
@@ -81,8 +83,10 @@ const NameTypingEffect = () => {
 					style={{
 						zIndex: 2,
 						position: "relative",
-						color: isHovered ? "rgba(0, 0, 0, 0.7)" : "rgba(0, 0, 0, 0.80)",
+						color: isHovered ? "rgba(0, 0, 0, 0.7)" : "rgba(0, 0, 0, 0.8)",
+						// border: "1px solid green",
 					}}
+					mr="0"
 				>
 					{text}
 				</Text>
@@ -91,12 +95,12 @@ const NameTypingEffect = () => {
 						style={{
 							zIndex: 1,
 							position: "absolute",
-							bottom: isHovered ? -2.5 : -1,
-							left: -3,
-							width: "105%",
-							borderBottom: isHovered ? "0.23rem dotted" : "0.2rem dotted",
+							bottom: isHovered ? -4 : 0,
+							left: -2,
+							width: "100%",
+							borderBottom: isHovered ? "0.22rem dotted" : "0.2rem dotted",
 							borderBottomColor: isHovered ? "var(--primary-blue)" : "gray",
-							transition: "border-bottom-color 0.5s ease", // Smooth color transition
+							transition: "border-bottom-color 0.5s ease, border-bottom 0.1s easeInOut, bottom 0.2s easeInOut",
 						}}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
@@ -109,9 +113,11 @@ const NameTypingEffect = () => {
 					lineHeight="1"
 					fontSize="1"
 					w="0.1rem"
-					backgroundColor="var(--primary-blue)"
-					marginLeft="2px"
-					animation={`${blink} 750ms infinite`}
+					// backgroundColor="var(--primary-blue)"
+					backgroundColor="rgba(0, 0, 0, 0.94)"
+					marginLeft="-2"
+					animation={`${blink} 1s steps(1) infinite`}
+					// border="1px solid red"
 				>
 					&nbsp;
 				</Text>

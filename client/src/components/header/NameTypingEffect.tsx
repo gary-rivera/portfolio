@@ -12,7 +12,13 @@ const blink = keyframes`
   100% { opacity: 1; }
 `;
 
-const NameTypingEffect = ({ isComplete, setIsComplete }) => {
+type NameTypingEffectProps = {
+	isComplete: boolean;
+	setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsComplete }) => {
+	// TODO: up initial word typing speed and normal speed for actual name.
 	const [text, setText] = useState("");
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [wordIndex, setWordIndex] = useState(0);
@@ -27,8 +33,6 @@ const NameTypingEffect = ({ isComplete, setIsComplete }) => {
 
 	useEffect(() => {
 		let timer: number;
-
-		console.log("[nametyping]", { text, isDeleting, wordIndex, isComplete });
 
 		const handleTyping = () => {
 			const currentWord = words[wordIndex];
@@ -53,9 +57,6 @@ const NameTypingEffect = ({ isComplete, setIsComplete }) => {
 
 		if (!isComplete) {
 			timer = window.setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
-		} else {
-			// Allow one last blink before stopping (BROKEN)
-			timer = window.setTimeout(() => setBlinkEnded(true), 1500);
 		}
 
 		return () => clearTimeout(timer);
@@ -95,7 +96,7 @@ const NameTypingEffect = ({ isComplete, setIsComplete }) => {
 						style={{
 							zIndex: 1,
 							position: "absolute",
-							bottom: isHovered ? -4 : 0,
+							bottom: isHovered ? -3 : -1,
 							left: -2,
 							width: "100%",
 							borderBottom: isHovered ? "0.22rem dotted" : "0.2rem dotted",
@@ -116,7 +117,7 @@ const NameTypingEffect = ({ isComplete, setIsComplete }) => {
 					// backgroundColor="var(--primary-blue)"
 					backgroundColor="rgba(0, 0, 0, 0.94)"
 					marginLeft="-2"
-					animation={`${blink} 1s steps(1) infinite`}
+					animation={`${blink} 0.75s steps(1) infinite`}
 					// border="1px solid red"
 				>
 					&nbsp;

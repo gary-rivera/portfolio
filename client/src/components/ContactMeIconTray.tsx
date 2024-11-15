@@ -17,7 +17,7 @@ const SocialIcon = ({ children, buttonProps, url }) => (
 		display="flex"
 		alignItems="center"
 		justifyContent="center"
-		color="blackAlpha.500"
+		color="blackAlpha.600"
 		h="100%"
 		w="3rem"
 		// px="1"

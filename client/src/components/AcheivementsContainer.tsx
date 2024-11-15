@@ -70,7 +70,7 @@ function AcheivementsContainer() {
 						>
 							Projects
 						</Tabs.Trigger>
-						<Tabs.Indicator rounded="l1" bg="blackAlpha.100" />
+						<Tabs.Indicator rounded="l1" bg="var(--primary-bg-color)" />
 					</Tabs.List>
 				</Tabs.Root>
 			</GridItem>

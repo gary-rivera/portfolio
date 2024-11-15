@@ -1,9 +1,9 @@
-import { chakra, Box, HStack, Button, Image } from "@chakra-ui/react";
-import ResumeCvSvgIcon from "@/assets/resume-cv.svg?react";
-import ResumeAsImage from "@/assets/fancy-resume.png";
 import React, { useState } from "react";
+import { chakra, Box, HStack, Button, Image } from "@chakra-ui/react";
+import ResumeCvBoxSvg from "@/assets/icons/experience/resume-cv-box.svg?react";
+import ResumeAsImage from "@/assets/icons/experience/fancy-resume.png";
 import ResumeDialogContainer from "./ResumeDialogContainer";
-import SquareCVIcon from "@/assets/square-cv-online.svg?react";
+// import SquareCVIcon from "@/assets/square-cv-online.svg?react";
 
 function ResumeIcon() {
 	const [isDialogOpen, setDialogOpen] = useState(false);
@@ -27,7 +27,7 @@ function ResumeIcon() {
 						height: "24px",
 					}}
 				/> */}
-				<ResumeCvSvgIcon
+				<ResumeCvBoxSvg
 					fill="currentColor"
 					style={{
 						maxHeight: "inherit",

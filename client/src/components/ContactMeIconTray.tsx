@@ -1,8 +1,8 @@
 import { chakra, HStack } from "@chakra-ui/react";
-import LinkedInSvgIcon from "@/assets/linkedin-logo.svg?react";
-import GithubSvgIcon from "@/assets/github-logo.svg?react";
+import LinkedInTextSvg from "@/assets/icons/experience/linkedin-text-logo.svg?react";
+import GithubTextSvg from "@/assets/icons/experience/github-text-logo.svg?react";
 import ResumeCVIconDialog from "./resume/ResumeIcon";
-import SquareCVIcon from "@/assets/square-cv-online.svg?react";
+// import SquareCVIcon from "@/assets/square-cv-online.svg?react";
 
 const USER_LINKEDIN_URL = "https://www.linkedin.com/in/gary-a-rivera/";
 const USER_GITHUB_URL = "https://github.com/gary-rivera";
@@ -40,12 +40,12 @@ function ContactMeIconTray() {
 			w="min-content"
 		>
 			<SocialIcon
-				children={<LinkedInSvgIcon fill="currentColor" width="100%" height="100%" />}
+				children={<LinkedInTextSvg fill="currentColor" width="100%" height="100%" />}
 				buttonProps={{ _hover: { color: "var(--primary-blue)" } }}
 				url={USER_LINKEDIN_URL}
 			/>
 			<SocialIcon
-				children={<GithubSvgIcon fill="currentColor" width="100%" height="100%" />}
+				children={<GithubTextSvg fill="currentColor" width="100%" height="100%" />}
 				buttonProps={{ w: "2.1rem" }}
 				url={USER_GITHUB_URL}
 			/>

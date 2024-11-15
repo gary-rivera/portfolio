@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>extra square logo glowing</title>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#66FDF4" offset="0%"></stop>
+            <stop stop-color="#36FABB" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="100%" x2="3.37403716e-14%" y2="-3.46944695e-16%" id="linearGradient-2">
+            <stop stop-color="#021814" offset="0%"></stop>
+            <stop stop-color="#093D34" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="extra-square-logo-glowing">
+            <rect id="Rectangle" fill="url(#linearGradient-1)" x="0" y="0" width="512" height="512" rx="119"></rect>
+            <path d="M493,201 L493,382.241831 C493,442.902079 443.64837,492.078864 382.772449,492.078864 L382.772449,492.078864 L129.227551,493 C68.3505282,493 19,443.823214 19,383.162967 L19,383.162967 L19,361.184834 L71.9952782,361.184834 C118.454538,361.184834 163.14933,343.674065 196.213186,312.288133 L196.213186,312.288133 L269.761969,242.480932 C297.039981,216.588224 334.191626,201.921136 373.071639,201.921136 L373.071639,201.921136 L493,201 Z M382.772449,19 C443.64837,19 493,68.2983235 493,129.110949 L493,129.110949 L493,170.413308 L373.071639,171.339124 C326.616237,171.339124 281.91869,188.892186 248.854558,220.355013 L248.854558,220.355013 L175.305775,290.338779 C148.027763,316.294683 110.877771,331 71.9952782,331 L71.9952782,331 L19,331 L19,130.036765 C19,69.2241396 68.3505282,19.925816 129.227551,19.925816 L129.227551,19.925816 Z" id="Combined-Shape" fill="url(#linearGradient-2)" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

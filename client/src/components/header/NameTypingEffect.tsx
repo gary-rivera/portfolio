@@ -1,50 +1,31 @@
 import { useEffect, useState } from "react";
 import { HStack, Text } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
-import ResumeCVIconDialog from "@/components/resume/ResumeIcon";
-import ActionableTextHighlight from "../ui/ActionableTextHighlight";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const blink = keyframes`
-	0% { opacity: 1; }
-	25%: { opacity: 0.5; }
-	50% { opacity: 0; }
-	75%: { opacity: 0.5; }
-	100% { opacity: 1; }
+  0% { opacity: 1; }
+  25% { opacity: 0.5; }
+  50% { opacity: 0; }
+  75% { opacity: 0.5; }
+  100% { opacity: 1; }
 `;
 
-const onceCompletedStyling = {
-	textDecoration: "underline",
-	textDecorationStyle: "dotted",
-	textDecorationThickness: "0.16rem",
-	textDecorationColor: "gray",
-	textUnderlineOffset: "0.2rem",
-
-	_hover: {
-		textDecorationColor: "var(--primary-blue)",
-		// bg: "blackAlpha.50",
-		color: "blackAlpha.800",
-		textDecorationThickness: "0.175rem",
-		// textUnderlineOffset: "0.25rem",
-	},
-	_focus: {
-		outline: "none",
-		boxShadow: "none",
-	},
-};
 const NameTypingEffect = () => {
 	const [text, setText] = useState("");
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [wordIndex, setWordIndex] = useState(0);
 	const [isComplete, setIsComplete] = useState(false);
 	const [blinkEnded, setBlinkEnded] = useState(false);
+	const [isHovered, setIsHovered] = useState(false);
+
 	const words = ["dinglega", "gary r."];
 	const typingSpeed = 100;
 	const deletingSpeed = 40;
 
 	// Typing effect logic
 	useEffect(() => {
-		let timer: number;
+		let timer: number; // Explicitly type the timer variable
 
 		const handleTyping = () => {
 			const currentWord = words[wordIndex];
@@ -76,12 +57,77 @@ const NameTypingEffect = () => {
 		return () => clearTimeout(timer);
 	}, [text, isDeleting, wordIndex, isComplete]);
 
+	// // Define variants for the underline animation
+	// const underlineVariants = {
+	// 	hidden: { opacity: 0 },
+	// 	visible: {
+	// 		opacity: 1,
+	// 		borderBottomColor: "gray",
+	// 		transition: { duration: 5, ease: "easeOut" }, // Smooth transition in visible state
+	// 	},
+	// 	hover: {
+	// 		borderBottomColor: "var(--primary-blue)",
+	// 		transition: { duration: 2, ease: "easeInOut" }, // Smooth transition on hover
+	// 		scale: 1.1,
+	// 	},
+	// };
+
+	const underlineVariants = {
+		hidden: { opacity: 0 },
+		visible: {
+			opacity: 1,
+			"--underline-color": "gray", // Start with gray
+			transition: { duration: 2 },
+		},
+		hover: {
+			"--underline-color": "var(--primary-blue)", // Animate to blue
+			transition: { duration: 2 },
+		},
+	};
+
+	const handleMouseEnter = () => setIsHovered(true);
+	const handleMouseLeave = () => setIsHovered(false);
+
 	return (
 		<HStack fontSize="42px" fontWeight="900">
-			<Text lineHeight="1" {...(isComplete && onceCompletedStyling)}>
-				{text}
-			</Text>
-			{/* {isComplete ? <ActionableTextHighlight>{text}</ActionableTextHighlight> : <Text lineHeight="1">{text}</Text>} */}
+			{/* Wrap the Text component and underline in a motion.div */}
+			<motion.div
+				style={{
+					position: "relative",
+					display: "inline-block",
+					lineHeight: "1",
+					cursor: "pointer",
+					zIndex: 1,
+				}}
+				onMouseEnter={handleMouseEnter} // Track hover state on container
+				onMouseLeave={handleMouseLeave}
+			>
+				<Text
+					lineHeight="1"
+					style={{
+						zIndex: 2,
+						position: "relative",
+					}}
+				>
+					{text}
+				</Text>
+				{isComplete && (
+					<motion.div
+						style={{
+							zIndex: 1,
+							position: "absolute",
+							bottom: 0,
+							left: 0,
+							width: "100%",
+							borderBottom: "2px dotted",
+							borderBottomColor: isHovered ? "var(--primary-blue)" : "gray", // Change color on hover
+							transition: "border-bottom-color 0.5s ease", // Smooth color transition
+						}}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+					/>
+				)}
+			</motion.div>
 			{!isComplete && !blinkEnded && (
 				<Text
 					lineHeight="1"

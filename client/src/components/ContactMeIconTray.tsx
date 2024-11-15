@@ -17,7 +17,7 @@ const SocialIcon = ({ children, buttonProps, url }) => (
 		display="flex"
 		alignItems="center"
 		justifyContent="center"
-		color="blackAlpha.500"
+		color="blackAlpha.600"
 		h="100%"
 		w="3rem"
 		// px="1"
@@ -46,7 +46,10 @@ function ContactMeIconTray() {
 			/>
 			<SocialIcon
 				children={<GithubTextSvg fill="currentColor" width="100%" height="100%" />}
-				buttonProps={{ w: "2.1rem" }}
+				buttonProps={{
+					w: "2.2rem",
+					// border: "1px solid green"
+				}}
 				url={USER_GITHUB_URL}
 			/>
 			<ResumeCVIconDialog />

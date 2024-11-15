@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { chakra, Box, HStack, Button, Image } from "@chakra-ui/react";
+import { useState } from "react";
+import { chakra } from "@chakra-ui/react";
 import ResumeCvBoxSvg from "@/assets/icons/experience/resume-cv-box.svg?react";
-import ResumeAsImage from "@/assets/icons/experience/fancy-resume.png";
+
 import ResumeDialogContainer from "./ResumeDialogContainer";
 // import SquareCVIcon from "@/assets/square-cv-online.svg?react";
 
@@ -13,9 +13,11 @@ function ResumeIcon() {
 			<chakra.button
 				color="blackAlpha.500"
 				py="0.5"
-				px="1"
-				h="inherit"
-				w="min-content"
+				m="0"
+				p="0"
+				h="24px"
+				w="auto"
+				// border="1px solid red"
 				_hover={{ color: "blackAlpha.950", cursor: "pointer" }}
 				onClick={() => setDialogOpen(true)}
 			>
@@ -30,18 +32,13 @@ function ResumeIcon() {
 				<ResumeCvBoxSvg
 					fill="currentColor"
 					style={{
-						maxHeight: "inherit",
-						width: "30px",
-
+						width: "inherit",
 						height: "inherit",
 					}}
 				/>
 			</chakra.button>
 
-			<ResumeDialogContainer isOpen={isDialogOpen} onClose={() => setDialogOpen(false)}>
-				{/* <Box h="500px" w="200px"></Box> */}
-				<Image src={ResumeAsImage} />
-			</ResumeDialogContainer>
+			<ResumeDialogContainer isOpen={isDialogOpen} onClose={() => setDialogOpen(false)} />
 		</>
 	);
 }

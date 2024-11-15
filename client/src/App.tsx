@@ -3,6 +3,7 @@ import MainHeader from "./components/header/MainHeader";
 import AcheivementsContainer from "./components/AcheivementsContainer";
 import ContactMeIconTray from "./components/ContactMeIconTray";
 import { HStack, Flex } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 
 function App() {
 	// p1
@@ -69,10 +70,23 @@ function App() {
 	useEffect(() => {
 		if (isLoadingAnimationComplete) {
 			console.log("[app] header animations signaled as complete");
-			setTimeout(() => setLoadRest(true), 5000);
-			// perform element moving animation logic
+			setTimeout(() => setLoadRest(true), 50);
 		}
 	}, [isLoadingAnimationComplete]);
+
+	const containerVariants = {
+		hidden: { opacity: 0, y: 20 },
+		visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+	};
+
+	const staggerVariants = {
+		hidden: {},
+		visible: {
+			transition: {
+				staggerChildren: 0.35,
+			},
+		},
+	};
 
 	return (
 		<HStack alignItems="center" zIndex="1" my="5rem" justifyContent="center">

@@ -103,11 +103,9 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 				// outline="1px solid green"
 				// h="100%"
 			>
-				{steps
-					.slice(0, currentStep + 1) // Render up to the current step
-					.map((step, index) => (
-						<Box key={index}>{step.component}</Box>
-					))}
+				{steps.slice(0, currentStep + 1).map((step, index) => (
+					<Box key={index}>{step.component}</Box>
+				))}
 			</Flex>
 		</Box>
 	);

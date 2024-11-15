@@ -2,13 +2,36 @@ import { useEffect, useState } from "react";
 import { HStack, Text } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import ResumeCVIconDialog from "@/components/resume/ResumeIcon";
+import ActionableTextHighlight from "../ui/ActionableTextHighlight";
+import { motion, AnimatePresence } from "framer-motion";
 
 const blink = keyframes`
 	0% { opacity: 1; }
+	25%: { opacity: 0.5; }
 	50% { opacity: 0; }
+	75%: { opacity: 0.5; }
 	100% { opacity: 1; }
 `;
 
+const onceCompletedStyling = {
+	textDecoration: "underline",
+	textDecorationStyle: "dotted",
+	textDecorationThickness: "0.16rem",
+	textDecorationColor: "gray",
+	textUnderlineOffset: "0.2rem",
+
+	_hover: {
+		textDecorationColor: "var(--primary-blue)",
+		// bg: "blackAlpha.50",
+		color: "blackAlpha.800",
+		textDecorationThickness: "0.175rem",
+		// textUnderlineOffset: "0.25rem",
+	},
+	_focus: {
+		outline: "none",
+		boxShadow: "none",
+	},
+};
 const NameTypingEffect = () => {
 	const [text, setText] = useState("");
 	const [isDeleting, setIsDeleting] = useState(false);
@@ -55,7 +78,10 @@ const NameTypingEffect = () => {
 
 	return (
 		<HStack fontSize="42px" fontWeight="900">
-			<Text lineHeight="1">{text}</Text>
+			<Text lineHeight="1" {...(isComplete && onceCompletedStyling)}>
+				{text}
+			</Text>
+			{/* {isComplete ? <ActionableTextHighlight>{text}</ActionableTextHighlight> : <Text lineHeight="1">{text}</Text>} */}
 			{!isComplete && !blinkEnded && (
 				<Text
 					lineHeight="1"

@@ -6,10 +6,10 @@ import ResumeDialogContainer from "@/components/resume/ResumeDialogContainer";
 
 const blink = keyframes`
   0% { opacity: 1; }
-  25% { opacity: 0.5; }
-  50% { opacity: 0; }
-  75% { opacity: 0.5; }
-  100% { opacity: 1; }
+	40% { opacity: 0; }
+  65% { opacity: 1; }
+	95% { opacity: 1; }
+
 `;
 
 type NameTypingEffectProps = {
@@ -18,13 +18,12 @@ type NameTypingEffectProps = {
 };
 
 const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsComplete }) => {
-	// TODO: up initial word typing speed and normal speed for actual name.
-	// TODO: allow cursor to blink a couple times at start
 	const [text, setText] = useState("");
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [wordIndex, setWordIndex] = useState(0);
 
-	const [blinkEnded, setBlinkEnded] = useState(false);
+	const [typingStarted, setTypingStarted] = useState(false);
+	const [isTyping, setIsTyping] = useState(true);
 	const [isHovered, setIsHovered] = useState(false);
 	const [isDialogOpen, setDialogOpen] = useState(false);
 
@@ -32,7 +31,13 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 	const typingSpeed = 100;
 	const deletingSpeed = 40;
 
+	// allow cursor to blink a bit before typing
 	useEffect(() => {
+		if (!typingStarted) setTimeout(() => setTypingStarted(true), 1250);
+	}, []);
+
+	useEffect(() => {
+		if (!typingStarted) return;
 		let timer: number;
 
 		const handleTyping = () => {
@@ -51,17 +56,15 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 			} else if (isEndOfWord && wordIndex === 0) {
 				timer = window.setTimeout(() => setIsDeleting(true), 350);
 			} else if (isEndOfWord && wordIndex === 1) {
-				if (blinkEnded) setIsComplete(true);
-				else window.setTimeout(() => setBlinkEnded(true), 750);
+				setIsComplete(true);
 			}
 		};
-
 		if (!isComplete) {
 			timer = window.setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
 		}
 
 		return () => clearTimeout(timer);
-	}, [text, isDeleting, wordIndex, isComplete, blinkEnded]);
+	}, [text, isDeleting, wordIndex, isComplete, isTyping, typingStarted]);
 
 	const handleMouseEnter = () => setIsHovered(true);
 	const handleMouseLeave = () => setIsHovered(false);
@@ -88,8 +91,6 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 						zIndex: 999,
 						color: isHovered ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.95)",
 						pointerEvents: "none",
-
-						// border: "1px solid green",
 					}}
 					mr="0"
 				>
@@ -114,23 +115,21 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 							borderBottomWidth: isHovered ? "0.22rem" : "0.2rem",
 						}}
 						transition={{
-							duration: 0.2,
+							duration: 0.45,
 							ease: "easeInOut",
 						}}
 					/>
 				)}
 			</motion.div>
 
-			{!isComplete && !blinkEnded && (
+			{isTyping && (
 				<Text
 					lineHeight="1"
 					fontSize="1"
 					w="0.1rem"
-					// backgroundColor="var(--primary-blue)"
 					backgroundColor="rgba(0, 0, 0, 0.94)"
 					marginLeft="-2"
-					animation={`${blink} 0.75s steps(1) infinite`}
-					// border="1px solid red"
+					animation={`${blink} 0.7s steps(1) infinite`}
 				>
 					&nbsp;
 				</Text>

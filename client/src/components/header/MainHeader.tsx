@@ -39,7 +39,7 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 					style={{
 						position: "absolute",
 						left: 0,
-						height: "100%", // Adjusted height for viewport scaling
+						height: "100%",
 						width: "4px",
 						backgroundColor: "rgba(8, 145, 178, 0.7)",
 					}}
@@ -72,20 +72,14 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 		},
 		{
 			component: (
-				<HStack
-					h="2rem" // Responsive height based on viewport
-					// h={["2rem", "3rem", "4rem"]} // Responsive height based on viewport
-				>
+				<HStack h="2rem">
 					<motion.div
 						style={{ display: "inline-block" }}
 						initial={flipUpStyles.initial}
 						animate={flipUpStyles.animate}
 						onAnimationComplete={() => setIsLoadingAnimationComplete(true)}
 					>
-						<Text
-							color="blackAlpha.700"
-							fontSize={["xs", "sm", "md"]} // Responsive font size for different screen sizes
-						>
+						<Text color="blackAlpha.700" fontSize={["xs", "sm", "md"]}>
 							just some dweeb pretending to know what they're doing.
 						</Text>
 					</motion.div>
@@ -95,24 +89,13 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 	];
 
 	return (
-		<Box
-			// w={["90%", "80%", "fit-content"]} // Scales with viewport width
-			h={["15vh", "15vh", "20vh"]} // Scales with viewport height
-			w="fit-content"
-			px="3"
-			// pb="1.5"
-			position="relative"
-			outline={["2px solid red", "2px solid blue", "2px solid green"]}
-		>
+		<Flex h="10vh" w="fit-content" px="3" position="relative" direction="column" justify="center">
 			{steps.slice(0, currentStep + 1).map((step, index) => (
-				<Box
-					key={index}
-					mb={["0.2rem", "0.3rem", "0.4rem"]} // Spacing between steps
-				>
+				<Box key={index} mb={["0.2rem", "0.3rem", "0.4rem"]}>
 					{step.component}
 				</Box>
 			))}
-		</Box>
+		</Flex>
 	);
 };
 

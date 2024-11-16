@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import NameTypingEffect from "./NameTypingEffect";
 import { Box, Text, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { halfWayLinesChakraStyle } from "@/utils/layoutHelper";
+
 type AppHeaderContainerProps = {
 	isLoadingAnimationComplete: boolean;
 	setIsLoadingAnimationComplete: React.Dispatch<React.SetStateAction<boolean>>;
@@ -40,7 +42,9 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 			direction="column"
 			justify="center"
 			// outline={["2px solid red", "2px solid blue", "2px solid green"]}
+			{...halfWayLinesChakraStyle}
 		>
+			{/* vertical bar */}
 			<motion.div
 				style={{
 					position: "absolute",
@@ -63,7 +67,15 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 				onAnimationComplete={() => setVerticalBarComplete(() => true)}
 			/>
 			{/* text container */}
-			<Flex width="100%" height="100%" display="flex" flexDirection="column" justifyContent="center" alignItems="start">
+			<Flex
+				width="100%"
+				height="100%"
+				display="flex"
+				flexDirection="column"
+				justifyContent="center"
+				alignItems="start"
+				mt={["0.5rem", "0.5rem", "0.3rem", "0.3rem"]}
+			>
 				{verticalBarComplete && (
 					<NameTypingEffect
 						isComplete={isTypingEffectComplete}

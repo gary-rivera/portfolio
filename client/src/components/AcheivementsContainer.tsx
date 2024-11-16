@@ -5,25 +5,23 @@ import ExperienceContainer from "./experience/ExperienceContainer";
 import ProjectsContainer from "./projects/ProjectsContainer";
 
 function AcheivementsContainer() {
-	const [activeTab, setActiveTab] = useState("experience");
-	const [height, setHeight] = useState("auto");
-	const contentRef = useRef<HTMLDivElement | null>(null);
-
-	useEffect(() => {
-		if (contentRef.current) {
-			const scrollHeight = `${contentRef.current.scrollHeight}px`;
-			setHeight(scrollHeight);
-		}
-	}, [activeTab]);
+	const [activeTab, setActiveTab] = useState<"experience" | "projects">("experience");
 
 	const toggleActiveTab = () => {
 		setActiveTab(activeTab === "experience" ? "projects" : "experience");
 	};
 
+	const renderContent = () => {
+		if (activeTab === "experience") {
+			return <ExperienceContainer />;
+		} else {
+			return <ProjectsContainer />;
+		}
+	};
+
 	const ContentContainer = () => (
 		<motion.div
 			key={activeTab}
-			ref={contentRef}
 			initial={{
 				opacity: 0,
 			}}
@@ -33,12 +31,12 @@ function AcheivementsContainer() {
 			exit={{ opacity: 0, height: 0 }}
 			transition={{ duration: 0.6 }}
 			style={{
-				overflowY: "auto",
-				height: "40rem",
-				maxHeight: "80vh",
+				overflowY: "scroll",
+				height: "100%",
 				scrollbarColor: "rgba(8, 145, 178, 0.4) transparent",
 				scrollbarWidth: "thin",
 				scrollMarginBlockEnd: "true",
+				border: "3px solid green",
 			}}
 		>
 			{activeTab === "experience" && <ExperienceContainer />}
@@ -49,7 +47,16 @@ function AcheivementsContainer() {
 	);
 
 	return (
-		<Grid gridTemplateRows={"40px repeat(1, 1fr)"} gridTemplateColumns="repeat(4, 1fr)" mt="2rem" overflowY="scroll">
+		<Grid
+			gridTemplateRows={"40px repeat(1, 1fr)"}
+			gridTemplateColumns="repeat(4, 1fr)"
+			//
+			mt={["0.5rem", "1rem", "1.5rem"]}
+			mb="0"
+			overflowY="scroll"
+			h={["41rem", "44rem", "43rem"]}
+			border="1px solid red"
+		>
 			<GridItem rowSpan={1} colSpan={2}>
 				<Tabs.Root
 					variant="line"

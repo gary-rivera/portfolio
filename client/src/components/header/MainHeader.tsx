@@ -4,71 +4,111 @@ import NameTypingEffect from "./NameTypingEffect";
 import { chakra, Box, VStack, HStack, Text, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
-function MainHeader() {
-	const [isLoadingAnimationComplete, setIsLoadingAnimationComplete] = useState(false);
+type AppHeaderContainerProps = {
+	isLoadingAnimationComplete: boolean;
+	setIsLoadingAnimationComplete: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
+	isLoadingAnimationComplete,
+	setIsLoadingAnimationComplete,
+}) => {
 	const [isTypingEffectComplete, setIsTypingEffectComplete] = useState(false);
-	const [isSubHeadingAnimationComplete, setIsSubHeadingAnimationComplete] = useState(false);
-	// wait for typing of name to finish
-	useEffect(() => {
-		if (isTypingEffectComplete) {
-			setIsLoadingAnimationComplete(true);
-		}
-	}, [isTypingEffectComplete]);
-	// animation on load is considered complete setIsLoadingAnimationComplete -> true
+	// const [isSubHeadingAnimationComplete, setIsSubHeadingAnimationComplete] = useState(false);
+	const [currentStep, setCurrentStep] = useState(0);
 
 	const flipUpStyles = {
 		initial: {
 			opacity: 0,
-			rotateX: -90, // Start with text facing downwards
+			rotateX: -90,
 			transformOrigin: "bottom center",
 		},
 		animate: {
 			opacity: 1,
-			rotateX: 0, // End with text facing forward
+			rotateX: 0,
 			transition: {
-				duration: 0.8, // Customize duration for smoothness
+				duration: 1,
 				ease: "easeOut",
 			},
 		},
 	};
 
-	return (
-		<Box
-			// borderLeft="4px solid"
-			borderColor="var(--primary-blue)"
-			w="fit-content"
-			px="3"
-			pb="1.5"
-			position="relative"
-		>
-			{isTypingEffectComplete && (
+	const steps = [
+		{
+			component: (
 				<motion.div
 					style={{
 						position: "absolute",
 						left: 0,
-						height: "100%",
+						height: "90px	",
 						width: "4px",
-						backgroundColor: "rgba(8, 145, 178, 0.6)",
+						backgroundColor: "rgba(8, 145, 178, 0.7)",
 					}}
-					initial={{ opacity: 0 }}
+					initial={{ y: "-75%", opacity: 0 }}
 					animate={{
+						y: "0",
 						opacity: 1,
-						transition: { duration: 1.2, ease: "easeInOut" },
+					}}
+					transition={{
+						type: "spring",
+						damping: 45,
+						stiffness: 400,
+					}}
+					onAnimationComplete={() => {
+						setCurrentStep((prev) => prev + 1);
 					}}
 				/>
-			)}
-
-			<NameTypingEffect isComplete={isTypingEffectComplete} setIsComplete={setIsTypingEffectComplete} />
-
-			<HStack h="2rem">
-				{isTypingEffectComplete && (
-					<motion.div style={{ display: "inline-block" }} initial={flipUpStyles.initial} animate={flipUpStyles.animate}>
-						<Text>just some dweeb pretending to know what they're doing.</Text>
+			),
+		},
+		{
+			component: (
+				<NameTypingEffect
+					isComplete={isTypingEffectComplete}
+					setIsComplete={() => {
+						setCurrentStep((prev) => prev + 1);
+						setIsTypingEffectComplete(() => true);
+					}}
+				/>
+			),
+		},
+		{
+			component: (
+				<HStack h="2rem">
+					<motion.div
+						style={{ display: "inline-block" }}
+						initial={flipUpStyles.initial}
+						animate={flipUpStyles.animate}
+						onAnimationComplete={() => setIsLoadingAnimationComplete(true)}
+					>
+						<Text color="blackAlpha.700">just some dweeb pretending to know what they're doing.</Text>
 					</motion.div>
-				)}
-			</HStack>
+				</HStack>
+			),
+		},
+	];
+
+	return (
+		<Box
+			//
+			w="fit-content"
+			h="90px"
+			px="3"
+			// pb="1.5"
+			position="relative"
+			// outline="1px solid red"
+		>
+			<Flex
+				direction="column"
+				// justify="center"
+				// outline="1px solid green"
+				// h="100%"
+			>
+				{steps.slice(0, currentStep + 1).map((step, index) => (
+					<Box key={index}>{step.component}</Box>
+				))}
+			</Flex>
 		</Box>
 	);
-}
+};
 
-export default MainHeader;
+export default AppHeaderContainer;

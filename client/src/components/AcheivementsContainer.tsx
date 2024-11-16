@@ -21,13 +21,17 @@ function AcheivementsContainer() {
 	};
 
 	const ContentContainer = () => (
-		<div
+		<motion.div
 			key={activeTab}
 			ref={contentRef}
-			// initial={{ opacity: 0, minHeight: "33%" }}
-			// animate={{ opacity: 1, minHeight: height, maxHeight: "auto" }}
-			// exit={{ opacity: 0, height: 0 }}
-			// transition={{ duration: 0.6 }}
+			initial={{
+				opacity: 0,
+			}}
+			animate={{
+				opacity: 1,
+			}}
+			exit={{ opacity: 0, height: 0 }}
+			transition={{ duration: 0.6 }}
 			style={{
 				overflowY: "auto",
 				height: "40rem",
@@ -41,7 +45,7 @@ function AcheivementsContainer() {
 
 			{activeTab === "projects" && <ProjectsContainer />}
 			{/* Someday: Contributions Tab */}
-		</div>
+		</motion.div>
 	);
 
 	return (

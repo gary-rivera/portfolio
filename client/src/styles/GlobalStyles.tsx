@@ -23,16 +23,19 @@ const GlobalStyles = () => {
 					// "--primary-blue": "rgba(8, 145, 178, 0.4)",
 					"--secondary-bg-color": "rgba(173, 216, 230, 1)", // Static secondary color
 					"--bg-pattern": "url('https://www.toptal.com/designers/subtlepatterns/uploads/ep_naturalwhite.png')", // Static background pattern
-					"--bg-filter": "opacity(50%) blur(0.01rem)", // Static filter
+					"--bg-filter": "opacity(20%) blur(0.01rem)", // Static filter
+					// backgroundImage: "var(--bg-pattern)",
+					// filter: "var(--bg-filter)",
 				},
 				":root::before": {
+					// backgroundColor: "#faedd0", // Static background color
+
 					content: '""',
 					position: "absolute",
 					top: 0,
 					left: 0,
 					width: "100%",
 					height: "100%",
-					backgroundImage: "var(--bg-pattern)",
 					backgroundSize: "auto",
 					backgroundPosition: "center",
 					zIndex: -2,
@@ -40,6 +43,8 @@ const GlobalStyles = () => {
 					pointerEvents: "none",
 				},
 				":root::after": {
+					// backgroundColor: "#faedd0", // Static background color
+
 					content: '""',
 					position: "absolute",
 					top: 0,
@@ -49,8 +54,8 @@ const GlobalStyles = () => {
 					opacity: 0.5,
 					zIndex: -1,
 					backgroundImage:
-						"linear-gradient(to right, var(--secondary-bg-color) 1px, transparent 1px), linear-gradient(to bottom, var(--secondary-bg-color) 1px, transparent 1px)",
-					filter: "blur(0.04rem)",
+						"linear-gradient(to right, var(--secondary-bg-color) 1px, transparent 2px), linear-gradient(to bottom, var(--secondary-bg-color) 1px, transparent 2px)",
+					filter: "blur(0.05rem)",
 					backgroundSize: "25px 25px",
 					pointerEvents: "none",
 				},

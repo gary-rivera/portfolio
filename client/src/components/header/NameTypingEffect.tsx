@@ -146,6 +146,7 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 			fontWeight="900"
 			// h="5vh"
 			my="0"
+			mt={["1", "2.5"]}
 			// outline={["2px solid red", "2px solid blue", "2px solid green"]}
 		>
 			<motion.div

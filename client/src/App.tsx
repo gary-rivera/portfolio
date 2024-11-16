@@ -64,10 +64,10 @@ function App() {
 		<HStack
 			alignItems="center"
 			zIndex="1"
-			my={["2rem", "3rem", "5rem"]}
+			my={["2rem", "4rem", "6rem"]}
 			justifyContent="center"
 			w="100vw"
-			px={["1rem", "2rem", "3rem"]}
+			px={["2rem", "3rem"]}
 		>
 			<Flex direction="column" w="100%" maxW="1000px">
 				<MainHeader

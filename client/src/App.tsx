@@ -76,7 +76,7 @@ function App() {
 				/>
 				{loadRest && (
 					<motion.div variants={staggerVariants} initial="hidden" animate="visible" style={{ width: "100%" }}>
-						<motion.div variants={containerVariants} style={{ marginBottom: "2rem" }}>
+						<motion.div variants={containerVariants}>
 							<AcheivementsContainer />
 						</motion.div>
 						<motion.div variants={containerVariants}>

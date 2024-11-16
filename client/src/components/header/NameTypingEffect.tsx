@@ -141,7 +141,13 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 	}, []);
 
 	return (
-		<HStack fontSize="42px" fontWeight="900">
+		<HStack
+			fontSize="42px"
+			fontWeight="900"
+			// h="5vh"
+			my="0"
+			// outline={["2px solid red", "2px solid blue", "2px solid green"]}
+		>
 			<motion.div
 				style={{
 					position: "relative",
@@ -157,7 +163,6 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 			>
 				<Text
 					lineHeight="1"
-					mt="1"
 					style={{
 						zIndex: 2,
 						color: state.isHovered ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.95)",

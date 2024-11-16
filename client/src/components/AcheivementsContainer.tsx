@@ -26,11 +26,9 @@ function AcheivementsContainer() {
 			ref={contentRef}
 			initial={{
 				opacity: 0,
-				// minHeight: "33%"
 			}}
 			animate={{
 				opacity: 1,
-				// minHeight: height, maxHeight: "auto"
 			}}
 			exit={{ opacity: 0, height: 0 }}
 			transition={{ duration: 0.6 }}

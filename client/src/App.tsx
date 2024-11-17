@@ -6,21 +6,21 @@ import { HStack, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 // p1 aka mandatory for today
-// TODO: responsive design -> media querying
+// DONE: responsive design -> media querying
 // TODO: make resume in code
 
 // p2 aka mandatory for release
 // TODO: update repo descriptions and add topics too
-// TODO: hook up links for projects + conditional render of icons controller
+// DONE: hook up links for projects + conditional render of icons controller
 // TODO: find/make better icons for projects (outsource?)
 // TODO: localStorage/cache/token for onload animation -- easter egg
 
 // p3 aka low hanging fruit
 // TODO: add some flare/love to the ProjectCard's. Feels lacking in comparison
 // TODO: remove all `type: any`
-// TODO: add iconRef for height differential on TimelinePath offset (static to 20px rn)
+// DONE: add iconRef for height differential on TimelinePath offset (static to 20px rn)
 // TODO: assets/icons cleanup or optimize?
-// TODO: HAVE TO -_- redo navtab UI for selecting tab. underline on current tab and opaque background too UNTIL other tab is hovered, then animate that opaque background to the hovered tab.
+// DONE: HAVE TO -_- redo navtab UI for selecting tab. underline on current tab and opaque background too UNTIL other tab is hovered, then animate that opaque background to the hovered tab.
 // TODO: memoize the tabs content so that it doesn't rerender on tab switch
 
 // maybe/graveyard
@@ -37,7 +37,7 @@ import { motion } from "framer-motion";
 
 function App() {
 	const [isLoadingAnimationComplete, setIsLoadingAnimationComplete] = useState(false);
-	const [loadRest, setLoadRest] = useState(false);
+	const [loadRest, setLoadRest] = useState(true);
 
 	useEffect(() => {
 		if (isLoadingAnimationComplete) {

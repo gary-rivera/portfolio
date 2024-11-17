@@ -5,7 +5,7 @@ import ResumeCVIconDialog from "./resume/ResumeIcon";
 // import SquareCVIcon from "@/assets/square-cv-online.svg?react";
 
 const USER_LINKEDIN_URL = "https://www.linkedin.com/in/gary-a-rivera/";
-const USER_GITHUB_URL = "https://github.com/gary-rivera";
+export const USER_GITHUB_URL = "https://github.com/gary-rivera";
 
 const SocialIcon = ({ children, buttonProps, url }) => (
 	<chakra.button
@@ -33,7 +33,13 @@ const SocialIcon = ({ children, buttonProps, url }) => (
 
 function ContactMeIconTray() {
 	return (
-		<HStack h="auto" gap="0.35rem" border="2px solid red" mt="0" w="min-content">
+		<HStack
+			h="auto"
+			gap="0.35rem"
+			// border="2px solid red"
+			mt="2"
+			w="min-content"
+		>
 			<SocialIcon
 				children={<LinkedInTextSvg fill="currentColor" width="100%" height="100%" />}
 				buttonProps={{ _hover: { color: "var(--primary-blue)" } }}

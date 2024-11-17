@@ -23,10 +23,13 @@ function AcheivementsContainer() {
 			exit={{ opacity: 0, height: 0 }}
 			transition={{ duration: 0.6 }}
 			style={{
+				height: "100%",
 				overflowY: "scroll",
+				overflowX: "visible",
 				scrollbarColor: "rgba(8, 145, 178, 0.4) transparent",
 				scrollbarWidth: "thin",
 				scrollMarginBlockEnd: "true",
+				// border: "1px solid green",
 			}}
 		>
 			{activeTab === "experience" && <ExperienceContainer />}
@@ -37,7 +40,16 @@ function AcheivementsContainer() {
 	);
 
 	return (
-		<VStack w="full" align="start" mt={["0.5rem", "1rem", "1.5rem"]} mb="0" gap="0" h={["41rem", "44rem", "43rem"]}>
+		<VStack
+			w="full"
+			align="start"
+			mt={["0.5rem", "1rem", "1.5rem"]}
+			mb="0"
+			gap="0"
+			// h="44rem"
+			h={["42rem", "45rem", "43rem"]}
+			// border="1px solid red"
+		>
 			{/* Tab Navigation */}
 			<HStack justify="start" gap="0">
 				{["Experience", "Projects"].map((tabName) => {

@@ -34,51 +34,78 @@ type ImpactEventCardProps = {
 // TODO: bind the alternating card layout to a state? (possible fix for the items height not overlapping)
 // TODO: add hover tooltip to events where employer is listed giving a quick blurb about what service they offered +/- badges
 const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
-	const {
-		event: eventTitle,
-		subtitle,
-		companyName,
-		description,
-		date,
-		origin,
-		attributes,
-		category,
-		icon: AvyIconnn,
-	} = event;
+	const { event: eventTitle, subtitle, companyName, description, date, origin, attributes, category, icon } = event;
 
 	const recipe = useRecipe({ key: "eventCard" });
-	const styles = recipe({ category });
+	const titleStyles = {
+		fontSize: ["0.70rem", "0.8rem", "0.85rem", "1rem"],
+		fontWeight: "semibold",
+		color: "blackAlpha.800",
+		lineHeight: "normal",
+	};
 	return (
-		<Flex css={styles} direction="column" justifyContent="center" py="3" px="5" fontSize="16px">
-			<HStack fontSize="16px">
+		<Flex
+			gap={0}
+			//
+			w="auto"
+			bg={["blue.100", "red.200", "yellow.200", "var(--primary-bg-color)"]}
+			h={["auto", "auto", "auto", "100%"]}
+			borderRadius="5px"
+			py={[2.5, 3]}
+			px={[3, 4, 5]}
+			direction="column"
+			justifyContent="space-evenly"
+			fontSize="24px"
+			// border="1px solid orange"
+		>
+			{/* Title */}
+			<HStack
+				mb="0"
+				//
+				h="fit-content"
+			>
 				{subtitle ? (
-					<Heading fontWeight="semibold" fontSize="1.05rem" color="blackAlpha.800">
-						{eventTitle}
-						<Icon fontSize="0.9rem" mx="0.1rem" color="blackAlpha.500">
+					<Flex gap="0.05rem" align="center" wrap="nowrap">
+						<Heading
+							{...titleStyles}
+							//
+						>
+							{eventTitle}
+						</Heading>
+						<Icon //
+							fontSize={["0.5rem", "0.75rem", "0.7rem", "0.85rem"]}
+							mt="1px"
+							// border="1px solid red"
+							color="blackAlpha.500"
+						>
 							<HiAtSymbol />
 						</Icon>
 						<ActionableTextHighlight
 							tooltipContent={{
-								icon: AvyIconnn,
+								icon,
 								heading: companyName,
 								text: "Debit to credit platform. Financial literacy development",
 								iconLinkUrl: origin,
 							}}
+							linkProps={{ ...titleStyles }}
 						>
 							{subtitle}
 						</ActionableTextHighlight>
-					</Heading>
+					</Flex>
 				) : (
-					<Heading fontWeight="semibold" fontSize="1.05rem" color="blackAlpha.800">
+					<Heading //
+						{...titleStyles}
+					>
 						{eventTitle}
 					</Heading>
 				)}
 			</HStack>
-			<HStack>
-				<Text fontSize="0.82rem" mt="1">
+			{/* Subtext */}
+			{description && (
+				<Text fontSize={["0.5rem", "0.65rem", "0.65rem", "0.8rem"]} mt="1">
 					{description}
 				</Text>
-			</HStack>
+			)}
 		</Flex>
 	);
 };
@@ -124,29 +151,46 @@ const TimelinePath: React.FC<{
 };
 
 function TimelineItem({ event, index, alternate, iconRef, distances }: TimelineItemProps) {
-	const EventDateLeftAlignedLayout = (
+	const LayoutOfDateIconCard = (
 		<>
-			<GridItem width="auto" height="fit-content" justifySelf="end">
+			<GridItem //
+				width="auto"
+				height="fit-content"
+				justifySelf="end"
+			>
 				<TimelineEventDate date={event.date} />
 			</GridItem>
 			<GridItem placeSelf="center">
 				<TimelinePath iconRef={iconRef} index={index} distances={distances} />
 			</GridItem>
-			<GridItem h="115%">
+			<GridItem
+				h="auto"
+				justifySelf="start"
+				alignItems="center"
+				// border="1px solid red"
+			>
 				<TimelineEventCard event={event} />
 			</GridItem>
 		</>
 	);
 
-	const EventDateRightAlignedLayout = (
+	const LayoutOfCardIconDate = (
 		<>
-			<GridItem h="110%">
+			<GridItem //
+				h="auto"
+				// border="1px solid red"
+				justifySelf="end"
+				alignItems="center"
+			>
 				<TimelineEventCard event={event} />
 			</GridItem>
 			<GridItem placeSelf="center">
 				<TimelinePath iconRef={iconRef} index={index} distances={distances} />
 			</GridItem>
-			<GridItem width="auto" height="fit-content" justifySelf="start">
+			<GridItem //
+				width="auto"
+				justifySelf="start"
+			>
 				<TimelineEventDate date={event.date} />
 			</GridItem>
 		</>
@@ -154,7 +198,7 @@ function TimelineItem({ event, index, alternate, iconRef, distances }: TimelineI
 
 	return (
 		<Grid
-			gap={2}
+			gap={[0.25, 1, 2]}
 			position="relative"
 			templateColumns="1fr auto 1fr"
 			templateRows="1fr"
@@ -162,12 +206,11 @@ function TimelineItem({ event, index, alternate, iconRef, distances }: TimelineI
 			gridAutoColumns="auto"
 			alignItems="center"
 			justifyContent="center"
-			py="2"
-			// w="100%"
-			h="110%"
+			// border="1px solid green"
+
 			my="-1.5"
 		>
-			{alternate ? EventDateRightAlignedLayout : EventDateLeftAlignedLayout}
+			{alternate ? LayoutOfCardIconDate : LayoutOfDateIconCard}
 		</Grid>
 	);
 }

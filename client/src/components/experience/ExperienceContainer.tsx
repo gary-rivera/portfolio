@@ -5,6 +5,7 @@ import { Text, Em, Box, VStack, Card, Flex, Spacer } from "@chakra-ui/react";
 import TimelineItem from "./TimelineItem";
 import { events } from "@/data/experience";
 import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
+import { halfWayLinesChakraStyle } from "@/utils/layoutHelper";
 
 function ExperienceContainer() {
 	const { readmeContent, isLoading, isError } = useResumeRepo();
@@ -21,7 +22,15 @@ function ExperienceContainer() {
 	if (isError) return <p>Error loading repository contents</p>;
 
 	return (
-		<Flex direction="column" gap={0} position="relative" mt="0.75rem" minHeight="100%" overflowX="visible">
+		<Flex
+			direction="column"
+			gap={0}
+			position="relative"
+			mt="0.75rem"
+			minHeight="100%"
+			overflowX="visible"
+			// {...halfWayLinesChakraStyle}
+		>
 			{/* {distances.map((distanceObj, index) =>
 				distanceObj ? (
 					<Box key={index}>

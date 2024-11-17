@@ -13,7 +13,7 @@ const LinkIconFactory = ({ IconTemplate, iconProps }: ProjectIconLinkProps) => (
 		alignItems="center"
 		justifyContent="center"
 		borderRadius="md"
-		color="blackAlpha.700"
+		color="blackAlpha.600"
 		mb="0.5px"
 		h="inherit"
 		_hover={{

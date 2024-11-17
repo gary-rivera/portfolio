@@ -120,14 +120,9 @@ function ProjectCard({ project }: ProjectCardProps) {
 						})}
 				</HStack>
 				<HStack gap="0.3rem" h="inherit">
-					<LinkIcon
-						iconProps={{
-							mb: "2px",
-						}}
-						IconTemplate={<ExternalLinkIcon boxSize="0.75rem" />}
-					/>
-					<LinkIcon iconProps={{}} IconTemplate={<NpmIcon boxSize="2rem" />} />
-					<LinkIcon iconProps={{}} IconTemplate={<GhIcon boxSize="1.5rem" />} />
+					{iconItems.map(({ IconComponent, href, props }, idx) => (
+						<LinkIcon key={`icon-${idx}`} iconProps={{ href }} IconTemplate={<IconComponent {...props} />} />
+					))}
 				</HStack>
 			</Flex>
 		</Flex>

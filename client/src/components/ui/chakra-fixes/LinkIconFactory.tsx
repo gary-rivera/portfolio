@@ -1,6 +1,6 @@
 import { chakra } from "@chakra-ui/react";
 import { ReactElement, ReactNode } from "react";
-import { USER_GITHUB_URL } from "@/components/ContactMeIconTray";
+
 interface ProjectIconLinkProps {
 	IconTemplate: ReactElement; // or ReactNode
 	iconProps?: Record<string, any>;
@@ -8,14 +8,12 @@ interface ProjectIconLinkProps {
 
 const LinkIconFactory = ({ IconTemplate, iconProps }: ProjectIconLinkProps) => (
 	<chakra.a
-		href={USER_GITHUB_URL}
-		target="_blank"
-		rel="noopener noreferrer"
+		href={""}
 		display="flex"
 		alignItems="center"
 		justifyContent="center"
 		borderRadius="md"
-		color="blackAlpha.600"
+		color="blackAlpha.700"
 		mb="0.5px"
 		h="inherit"
 		_hover={{

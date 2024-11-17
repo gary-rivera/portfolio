@@ -15,57 +15,33 @@ interface ProjectCardProps {
 	project: Project;
 }
 
-const GhIcon = chakra(FaGithub);
-const ExternalLinkIcon = chakra(FaExternalLinkAlt);
-const NpmIcon = chakra(FaNpm);
-
-const IconMap = {
-	repo: GhIcon,
-	npm: NpmIcon,
-	deployment: ExternalLinkIcon,
-};
-
-const iconPropsMap: Record<string, Record<string, any>> = {
-	repo: { boxSize: "1.3rem" },
-	npm: { boxSize: "2rem", _hover: { color: "#CC3534" } },
-	deployment: { boxSize: "0.9rem", ml: "4px" },
-};
-
+// TODO: add skeleton component
+import { Skeleton, SkeletonCircle } from "@/components/ui/skeleton";
+// const { isLoading } = useProjectsContext();
 function ProjectCard({ project }: ProjectCardProps) {
 	const { logo, links, name, description, totalCommits, createdAt, languages } = project;
+	console.log(`[ProjectCard] project: ${name} `, { project });
 
-	const iconItems = Object.entries(links)
-		.filter(([key, value]) => key in IconMap && value)
-		.map(([key, value]) => ({
-			IconComponent: IconMap[key],
-			href: value,
-			props: iconPropsMap[key] || {},
-		}));
-
+	const GhIcon = chakra(FaGithub);
+	const ExternalLinkIcon = chakra(FaExternalLinkAlt);
+	const NpmIcon = chakra(FaNpm);
 	return (
 		<Flex
 			direction="column"
-			w={["100%", "100%", "40rem", "45rem"]}
-			h={["auto", "12rem", "13rem", "14rem"]}
+			w="50rem"
+			h="14rem"
 			bg="var(--primary-bg-color)"
 			borderRadius="sm"
-			py={["4", "6", "6"]}
-			px={["6", "8", "10"]}
-			fontSize={["16px", "20px", "22px"]}
+			py="6"
+			px="10"
+			fontSize="24px"
 		>
 			<Flex justify="space-between">
 				<Flex align="center" justify="center">
-					<Image
-						//
-						src={logo}
-						alt="project-logo"
-						// height="2rem"
-						h={["1rem", "1rem", "1.45rem"]}
-						w="auto"
-						mt="1"
-						mr="1"
-					/>
-
+					<Skeleton loading={!logo?.length}>
+						<SkeletonCircle />
+						<Image src={logo} alt="project-logo" height="2rem" mt="1" />
+					</Skeleton>
 					<ActionableTextHighlight children={name} externalLink={links.repo} />
 				</Flex>
 
@@ -79,21 +55,20 @@ function ProjectCard({ project }: ProjectCardProps) {
 					textAlign="right"
 				>
 					{/* Code component? */}
-					{[
-						{ title: "commits", value: totalCommits ? totalCommits && totalCommits.toString() : "N/A" },
-						{ title: "created", value: dayjs(createdAt).format("MMM YYYY") },
-					].map(({ title, value }) => (
-						<Em key={title} letterSpacing="tight" lineHeight="shorter" fontSize={["0.55rem", "0.6rem", "0.65rem"]}>
-							{title}: {value}
+					{totalCommits && (
+						<Em letterSpacing="tight" lineHeight="shorter" fontSize="0.7rem">
+							commits: {totalCommits}
 						</Em>
-					))}
+					)}
+					{/* data.ruio.defaultBranchRef.target.history.totalCount */}
+					<Em letterSpacing="tight" lineHeight="shorter" fontSize="0.7rem">
+						created: {dayjs(createdAt).format("MMM YYYY")}
+					</Em>
 				</Flex>
 			</Flex>
-			<HStack fontWeight="500" mt={[1, 1, 1.5]} justifySelf="end" h="auto">
+			<HStack fontWeight="500" mt="2" justifySelf="end" h="auto">
 				<Text
-					// fontSize="1rem"
-					color="blackAlpha.800"
-					fontSize={["0.8rem", "0.85rem", "0.9rem", "1rem"]}
+					fontSize="1rem"
 					borderColor="cyan.600"
 					// borderLeft="2px solid"
 					// pl="0.65rem"
@@ -120,9 +95,14 @@ function ProjectCard({ project }: ProjectCardProps) {
 						})}
 				</HStack>
 				<HStack gap="0.3rem" h="inherit">
-					{iconItems.map(({ IconComponent, href, props }, idx) => (
-						<LinkIcon key={`icon-${idx}`} iconProps={{ href }} IconTemplate={<IconComponent {...props} />} />
-					))}
+					<LinkIcon
+						iconProps={{
+							mb: "2px",
+						}}
+						IconTemplate={<ExternalLinkIcon boxSize="0.75rem" />}
+					/>
+					<LinkIcon iconProps={{}} IconTemplate={<NpmIcon boxSize="2rem" />} />
+					<LinkIcon iconProps={{}} IconTemplate={<GhIcon boxSize="1.5rem" />} />
 				</HStack>
 			</Flex>
 		</Flex>

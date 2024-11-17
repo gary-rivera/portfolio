@@ -1,11 +1,10 @@
 import { useRef } from "react";
 import { useResumeRepo } from "../../hooks/useGitHub";
 import { useDistanceBetweenElements } from "@/hooks/useDistanceBetweenElements.ts";
-import { Text, Em, Box, VStack, Card, Flex, Spacer } from "@chakra-ui/react";
+import { Text, Em, Box, VStack, Card } from "@chakra-ui/react";
 import TimelineItem from "./TimelineItem";
 import { events } from "@/data/experience";
 import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
-import { halfWayLinesChakraStyle } from "@/utils/layoutHelper";
 
 function ExperienceContainer() {
 	const { readmeContent, isLoading, isError } = useResumeRepo();
@@ -22,15 +21,7 @@ function ExperienceContainer() {
 	if (isError) return <p>Error loading repository contents</p>;
 
 	return (
-		<Flex
-			direction="column"
-			gap={0}
-			position="relative"
-			mt="0.75rem"
-			minHeight="100%"
-			overflowX="visible"
-			// {...halfWayLinesChakraStyle}
-		>
+		<VStack gap={0} position="relative" py="2rem">
 			{/* {distances.map((distanceObj, index) =>
 				distanceObj ? (
 					<Box key={index}>
@@ -47,20 +38,17 @@ function ExperienceContainer() {
 				const alternate = !!(index % 2); // for alternating the card and date positioning
 
 				return (
-					<>
-						<TimelineItem
-							key={index}
-							index={index}
-							event={event}
-							alternate={alternate}
-							iconRef={iconRefs[index]}
-							distances={distances}
-						/>
-						<Spacer />
-					</>
+					<TimelineItem
+						key={index}
+						index={index}
+						event={event}
+						alternate={alternate}
+						iconRef={iconRefs[index]}
+						distances={distances}
+					/>
 				);
 			})}
-		</Flex>
+		</VStack>
 	);
 }
 

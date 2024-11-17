@@ -2,7 +2,7 @@ import React, { useReducer, useEffect, useCallback, useMemo } from "react";
 import ResumeDialogContainer from "@/components/resume/ResumeDialogContainer";
 import { HStack, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { halfWayLinesChakraStyle } from "@/utils/layoutHelper";
+
 type NameTypingEffectProps = {
 	isComplete: boolean;
 	setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
@@ -141,13 +141,7 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 	}, []);
 
 	return (
-		<HStack
-			fontSize="42px"
-			fontWeight="900"
-			// h="5vh"
-			// my="0"
-			// outline={["2px solid red", "2px solid blue", "2px solid green"]}
-		>
+		<HStack fontSize="42px" fontWeight="900">
 			<motion.div
 				style={{
 					position: "relative",
@@ -163,7 +157,7 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 			>
 				<Text
 					lineHeight="1"
-					fontSize={["4xl", "2.75rem", "5xl"]}
+					mt="1"
 					style={{
 						zIndex: 2,
 						color: state.isHovered ? "rgba(0, 0, 0, 0.8)" : "rgba(0, 0, 0, 0.95)",

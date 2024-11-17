@@ -1,19 +1,10 @@
 import React from "react";
 import { chakra, Flex, Em, HStack, Heading, Box, Icon, GridItem, Grid, useRecipe, Text } from "@chakra-ui/react";
 import ActionableTextHighlight from "../ui/ActionableTextHighlight";
-
+import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
 import { CareerEvent, events } from "@/data/experience";
 import { LuTarget } from "react-icons/lu";
 import { HiAtSymbol } from "react-icons/hi";
-
-import { FaExternalLinkAlt } from "react-icons/fa";
-
-//TODO: move to MeasureDistance.ts
-type Distance = {
-	distance: number | null;
-	horizontalDistance: number | null;
-	verticalDistance: number | null;
-};
 
 type TimelineItemProps = {
 	event: CareerEvent;
@@ -36,7 +27,6 @@ type ImpactEventCardProps = {
 const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 	const { event: eventTitle, subtitle, companyName, description, date, origin, attributes, category, icon } = event;
 
-	const recipe = useRecipe({ key: "eventCard" });
 	const titleStyles = {
 		fontSize: ["0.70rem", "0.8rem", "0.85rem", "1rem"],
 		fontWeight: "semibold",
@@ -48,7 +38,8 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 			gap={0}
 			//
 			w="auto"
-			bg={["blue.100", "red.200", "yellow.200", "var(--primary-bg-color)"]}
+			// bg={["blue.100", "red.200", "yellow.200", "var(--primary-bg-color)"]}
+			bg="var(--primary-bg-color)"
 			h={["auto", "auto", "auto", "100%"]}
 			borderRadius="5px"
 			py={[2.5, 3]}
@@ -102,7 +93,7 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 			</HStack>
 			{/* Subtext */}
 			{description && (
-				<Text fontSize={["0.5rem", "0.65rem", "0.65rem", "0.8rem"]} mt="1">
+				<Text fontSize={["0.5rem", "0.65rem", "0.65rem", "0.8rem"]} mt="1" lineHeight="1.4">
 					{description}
 				</Text>
 			)}
@@ -121,18 +112,19 @@ const TimelinePath: React.FC<{
 	iconRef: React.RefObject<HTMLDivElement>;
 	distances: (Distance | null)[];
 }> = ({ iconRef, index, distances }) => {
+	const currentTimelineIcon = distances[index];
 	const distanceToNextTimelineIcon = distances[index]?.distance;
-	// TODO: DEAR GOD PLEASE FIX THIS I HATE IT
-	// justification - 20 is the circle icon container size
 	// justification 2 - i need to redo the ref logic to better manage drilling of icon refs -- https://react.dev/reference/react/forwardRef
-	const dynamicPathLength = distanceToNextTimelineIcon ? distanceToNextTimelineIcon - 20 : 100;
+	console.log("currentTimelineIcon", currentTimelineIcon);
+	const blah = currentTimelineIcon?.refHeight || 20;
+	const dynamicPathLength = distanceToNextTimelineIcon ? distanceToNextTimelineIcon - blah : 100;
 	const isLast = index === events.length - 1;
 
 	const TimelineConnector = () => (
 		<Box
 			position="absolute"
 			top="100%"
-			width="1.5px"
+			width="1px"
 			height={`${dynamicPathLength}px`}
 			bg="blackAlpha.500"
 			overflow="hidden"
@@ -141,8 +133,8 @@ const TimelinePath: React.FC<{
 	);
 
 	return (
-		<Flex position="relative" width="auto" alignItems="center" justifyContent="center" ref={iconRef}>
-			<Icon fontSize="20px" zIndex={1} color="#0891b2">
+		<Flex fontSize="20px" position="relative" width="auto" alignItems="center" justifyContent="center" ref={iconRef}>
+			<Icon fontSize={["0.7rem", "0.8rem", "1rem"]} zIndex={1} color="#0891b2">
 				<LuTarget opacity="0.8" />
 			</Icon>
 			{!isLast && <TimelineConnector />}
@@ -198,7 +190,7 @@ function TimelineItem({ event, index, alternate, iconRef, distances }: TimelineI
 
 	return (
 		<Grid
-			gap={[0.25, 1, 2]}
+			gap={[1, 2]}
 			position="relative"
 			templateColumns="1fr auto 1fr"
 			templateRows="1fr"

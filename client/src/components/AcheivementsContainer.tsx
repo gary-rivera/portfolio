@@ -24,6 +24,7 @@ function AcheivementsContainer() {
 			transition={{ duration: 0.6 }}
 			style={{
 				height: "100%",
+				width: "100%",
 				overflowY: "scroll",
 				overflowX: "visible",
 				scrollbarColor: "rgba(8, 145, 178, 0.4) transparent",
@@ -46,7 +47,6 @@ function AcheivementsContainer() {
 			mt={["0.5rem", "1rem", "1.5rem"]}
 			mb="0"
 			gap="0"
-			// h="44rem"
 			h={["42rem", "45rem", "43rem"]}
 			// border="1px solid red"
 		>

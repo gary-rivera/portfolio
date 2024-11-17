@@ -37,12 +37,12 @@ import { motion } from "framer-motion";
 
 function App() {
 	const [isLoadingAnimationComplete, setIsLoadingAnimationComplete] = useState(false);
-	const [loadRest, setLoadRest] = useState(true);
+	const [loadRest, setLoadRest] = useState(false);
 
 	useEffect(() => {
 		if (isLoadingAnimationComplete) {
-			console.log("[app] header animations signaled as complete");
-			setTimeout(() => setLoadRest(true), 100);
+			setLoadRest(true);
+			// setTimeout(() => setLoadRest(true), 100);
 		}
 	}, [isLoadingAnimationComplete]);
 

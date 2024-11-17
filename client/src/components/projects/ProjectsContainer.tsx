@@ -10,6 +10,7 @@ function ProjectsContainer() {
 
 	return (
 		<Flex //
+			key="projects-container"
 			direction="column"
 			gap="5"
 			pt="5"

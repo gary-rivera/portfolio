@@ -115,7 +115,7 @@ const TimelinePath: React.FC<{
 	const currentTimelineIcon = distances[index];
 	const distanceToNextTimelineIcon = distances[index]?.distance;
 	// justification 2 - i need to redo the ref logic to better manage drilling of icon refs -- https://react.dev/reference/react/forwardRef
-	console.log("currentTimelineIcon", currentTimelineIcon);
+
 	const blah = currentTimelineIcon?.refHeight || 20;
 	const dynamicPathLength = distanceToNextTimelineIcon ? distanceToNextTimelineIcon - blah : 100;
 	const isLast = index === events.length - 1;

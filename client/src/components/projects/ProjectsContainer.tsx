@@ -9,7 +9,15 @@ function ProjectsContainer() {
 	if (isError) return <p>Error loading repository contents</p>;
 
 	return (
-		<Flex direction="column" gap="5" pt="5" justify="center" alignItems="center">
+		<Flex //
+			direction="column"
+			gap="5"
+			pt="5"
+			justify="center"
+			alignItems="center"
+			w="100%"
+			// border="1px solid red"
+		>
 			{sortedDesc.map((projectKey: string, idx) => {
 				if (projects[projectKey]?.active) return <ProjectCard key={idx} project={projects[projectKey]} />;
 			})}

@@ -1,6 +1,7 @@
 import { useEffect, useState, RefObject } from "react";
 
 export type Distance = {
+	refHeight: number | null;
 	distance: number | null;
 	horizontalDistance: number | null;
 	verticalDistance: number | null;
@@ -10,6 +11,7 @@ export function useDistanceBetweenElements(ref1: RefObject<HTMLElement>, ref2: R
 	const [distance, setDistance] = useState<number | null>(null);
 	const [horizontalDistance, setHorizontalDistance] = useState<number | null>(null);
 	const [verticalDistance, setVerticalDistance] = useState<number | null>(null);
+	const [refHeight, setRefHeight] = useState<number | null>(null);
 
 	const calculateDistances = () => {
 		if (ref1.current && ref2.current) {
@@ -22,6 +24,7 @@ export function useDistanceBetweenElements(ref1: RefObject<HTMLElement>, ref2: R
 			const y2 = rect2.top + rect2.height / 2;
 
 			const calculatedDistance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+			setRefHeight(rect1.height);
 			setDistance(calculatedDistance);
 			setHorizontalDistance(Math.abs(x2 - x1));
 			setVerticalDistance(Math.abs(y2 - y1));
@@ -53,6 +56,7 @@ export function useDistanceBetweenElements(ref1: RefObject<HTMLElement>, ref2: R
 	}, [ref1, ref2]);
 
 	return {
+		refHeight,
 		distance,
 		horizontalDistance,
 		verticalDistance,

@@ -1,20 +1,11 @@
 import { useEffect, useState, useRef } from "react";
-import { Box, Em, Flex, Grid, GridItem, HStack, Tabs, VStack } from "@chakra-ui/react";
+import { Box, Em, Flex, Grid, GridItem, HStack, Tabs, VStack, Button } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import ExperienceContainer from "./experience/ExperienceContainer";
 import ProjectsContainer from "./projects/ProjectsContainer";
 
 function AcheivementsContainer() {
-	const [activeTab, setActiveTab] = useState("experience");
-	const [height, setHeight] = useState("auto");
-	const contentRef = useRef<HTMLDivElement | null>(null);
-
-	useEffect(() => {
-		if (contentRef.current) {
-			const scrollHeight = `${contentRef.current.scrollHeight}px`;
-			setHeight(scrollHeight);
-		}
-	}, [activeTab]);
+	const [activeTab, setActiveTab] = useState<"experience" | "projects">("experience");
 
 	const toggleActiveTab = () => {
 		setActiveTab(activeTab === "experience" ? "projects" : "experience");
@@ -23,7 +14,6 @@ function AcheivementsContainer() {
 	const ContentContainer = () => (
 		<motion.div
 			key={activeTab}
-			ref={contentRef}
 			initial={{
 				opacity: 0,
 			}}
@@ -33,12 +23,14 @@ function AcheivementsContainer() {
 			exit={{ opacity: 0, height: 0 }}
 			transition={{ duration: 0.6 }}
 			style={{
-				overflowY: "auto",
-				height: "40rem",
-				maxHeight: "80vh",
+				height: "100%",
+				width: "100%",
+				overflowY: "scroll",
+				overflowX: "visible",
 				scrollbarColor: "rgba(8, 145, 178, 0.4) transparent",
 				scrollbarWidth: "thin",
 				scrollMarginBlockEnd: "true",
+				// border: "1px solid green",
 			}}
 		>
 			{activeTab === "experience" && <ExperienceContainer />}
@@ -49,40 +41,40 @@ function AcheivementsContainer() {
 	);
 
 	return (
-		<Grid gridTemplateRows={"40px repeat(1, 1fr)"} gridTemplateColumns="repeat(4, 1fr)" mt="2rem" overflowY="scroll">
-			<GridItem rowSpan={1} colSpan={2}>
-				<Tabs.Root
-					variant="line"
-					defaultValue="experience"
-					onValueChange={toggleActiveTab}
-					colorPalette="cyan"
-					_focus={{
-						outline: "none",
-						boxShadow: "none",
-					}}
-				>
-					<Tabs.List w="min-content">
-						<Tabs.Trigger _hover={{}} value="experience">
-							Experience
-						</Tabs.Trigger>
-						<Tabs.Trigger
-							value="projects"
-							_focus={{
-								outline: "none",
-								boxShadow: "none",
-							}}
-						>
-							Projects
-						</Tabs.Trigger>
-						<Tabs.Indicator rounded="l1" bg="var(--primary-bg-color)" />
-					</Tabs.List>
-				</Tabs.Root>
-			</GridItem>
+		<VStack
+			w="full"
+			align="start"
+			mt={["0.5rem", "1rem", "1.5rem"]}
+			mb="0"
+			gap="0"
+			h={["42rem", "45rem", "43rem"]}
+			// border="1px solid red"
+		>
+			{/* Tab Navigation */}
+			<HStack justify="start" gap="0">
+				{["Experience", "Projects"].map((tabName) => {
+					const isActiveTab = activeTab === tabName.toLowerCase();
+					const dynamicStyles = {
+						active: {
+							bg: "blackAlpha.100",
+							borderBottom: "2px solid var(--primary-blue)",
+							color: "blackAlpha.900",
+						},
+						inactive: {
+							bg: "transparent",
+							color: "blackAlpha.500",
+						},
+					}[isActiveTab ? "active" : "inactive"];
+					return (
+						<Button onClick={toggleActiveTab} borderBottomRadius="0" borderTopRadius="xs" {...dynamicStyles}>
+							{tabName}
+						</Button>
+					);
+				})}
+			</HStack>
 
-			<GridItem rowSpan={1} colSpan={4}>
-				<ContentContainer />
-			</GridItem>
-		</Grid>
+			<ContentContainer />
+		</VStack>
 	);
 }
 

@@ -23,17 +23,7 @@ type ImpactEventCardProps = {
 };
 
 const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
-	const {
-		event: eventTitle,
-		subtitle,
-		companyName,
-		description,
-		date,
-		origin,
-		attributes,
-		category,
-		// icon
-	} = event;
+	const { event: eventTitle, subtitle, companyName, description, date, origin, attributes, category, icon } = event;
 
 	const titleStyles = {
 		fontSize: ["0.70rem", "0.8rem", "0.85rem", "1rem"],
@@ -121,8 +111,6 @@ const TimelinePath = forwardRef<
 		distances: (Distance | null)[];
 	}
 >(({ index, distances }, ref) => {
-	// @ts-ignore
-	const { current: _ref, ...rest } = ref || {};
 	const currentTimelineIcon = distances[index];
 	const distanceToNextTimelineIcon = distances[index]?.distance;
 
@@ -145,7 +133,7 @@ const TimelinePath = forwardRef<
 	);
 
 	return (
-		<Flex fontSize="20px" position="relative" width="auto" alignItems="center" justifyContent="center" ref={iconRef}>
+		<Flex fontSize="20px" position="relative" width="auto" alignItems="center" justifyContent="center" ref={ref}>
 			<Icon fontSize={["0.7rem", "0.8rem", "1rem"]} zIndex={1} color="#0891b2">
 				<LuTarget opacity="0.8" />
 			</Icon>

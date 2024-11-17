@@ -42,7 +42,6 @@ function App() {
 	useEffect(() => {
 		if (isLoadingAnimationComplete) {
 			setLoadRest(true);
-			// setTimeout(() => setLoadRest(true), 100);
 		}
 	}, [isLoadingAnimationComplete]);
 

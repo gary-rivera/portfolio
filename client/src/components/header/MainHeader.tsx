@@ -34,17 +34,7 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 	};
 
 	return (
-		<Flex
-			h="10vh"
-			w="fit-content"
-			px="3"
-			position="relative"
-			direction="column"
-			justify="center"
-			minH="90px"
-			// outline={["2px solid red", "2px solid blue", "2px solid green"]}
-			{...halfWayLinesChakraStyle}
-		>
+		<Flex h="10vh" w="fit-content" px="3" position="relative" direction="column" justify="center" minH="90px">
 			{/* vertical bar */}
 			<motion.div
 				style={{

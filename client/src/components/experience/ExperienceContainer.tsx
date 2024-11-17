@@ -7,7 +7,7 @@ import { events } from "@/data/experience";
 import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
 
 function ExperienceContainer() {
-	// const { readmeContent, isLoading, isError } = useResumeRepo()
+	const { /*readmeContent,*/ isLoading, isError } = useResumeRepo();
 
 	const iconRefs = events.map(() => useRef<HTMLDivElement>(null));
 	const distances: (Distance | null)[] = iconRefs.map((ref, index) => {
@@ -17,8 +17,8 @@ function ExperienceContainer() {
 		return null;
 	});
 
-	// if (isLoading) return <p>Loading...</p>
-	// if (isError) return <p>Error loading repository contents</p>
+	if (isLoading) return <p>Loading...</p>;
+	if (isError) return <p>Error loading repository contents</p>;
 
 	return (
 		<Flex

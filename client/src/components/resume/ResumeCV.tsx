@@ -1,10 +1,10 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import ProfileSection from "./ProfileSection";
 import ExperienceSection from "./ExperienceSection";
 import BgOverlay from "@/assets/resume-bg-overlay.svg?react";
 
-const ResumeLayout = () => {
+const ResumeLayout = forwardRef<HTMLDivElement>((_, ref) => {
 	const childrenLayout = {
 		base: {
 			h: "auto",
@@ -20,6 +20,7 @@ const ResumeLayout = () => {
 	};
 	return (
 		<Flex
+			ref={ref}
 			align={{ base: "stretch", md: "flex-start" }}
 			bg="#fef5f1"
 			overflow="hidden"
@@ -47,6 +48,6 @@ const ResumeLayout = () => {
 			<ExperienceSection baseLayout={{ ...childrenLayout.base, ...childrenLayout.experience }} />
 		</Flex>
 	);
-};
+});
 
 export default ResumeLayout;

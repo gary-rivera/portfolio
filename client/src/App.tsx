@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import MainHeader from "./components/header/MainHeader";
 import AcheivementsContainer from "./components/AcheivementsContainer";
 import ContactMeIconTray from "./components/ContactMeIconTray";
-import { HStack, Flex } from "@chakra-ui/react";
+import { Box, HStack, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import ResumeComponent from "@/components/resume/ResumeCV";
 
 // p1 aka mandatory for today
 // DONE: responsive design -> media querying
-// TODO: make resume in code
+// DONE: make resume in code
 
 // p2 aka mandatory for release
 // TODO: update repo descriptions and add topics too
@@ -70,6 +71,8 @@ function App() {
 			px={["1rem", "1.5rem", "2rem", "3rem"]}
 		>
 			<Flex direction="column" w="100%" maxW="1000px">
+				{/* <Box bg="blue.200" border="4px solid red" w="670px" h="875px"></Box> */}
+				{/* <ResumeComponent /> */}
 				<MainHeader
 					isLoadingAnimationComplete={isLoadingAnimationComplete}
 					setIsLoadingAnimationComplete={setIsLoadingAnimationComplete}

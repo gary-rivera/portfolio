@@ -6,7 +6,6 @@ import "./ResumeIconDialog.css";
 import { createPortal } from "react-dom";
 import ResumeAsImage from "@/assets/icons/experience/fancy-resume.png";
 
-// Define dialog props to accept children and an onClose function
 interface DialogProps {
 	children?: ReactNode;
 	isOpen?: boolean;
@@ -37,11 +36,6 @@ function ResumeDialogContainer({ children, isOpen, onClose }: DialogProps) {
 		visible: { opacity: 1 },
 	};
 
-	// const dialogVariants = {
-	// 	hidden: { scale: 0.8, opacity: 0 },
-	// 	visible: { scale: 1, opacity: 1 },
-	// };
-
 	return createPortal(
 		<AnimatePresence>
 			{isOpen && (
@@ -63,10 +57,16 @@ function ResumeDialogContainer({ children, isOpen, onClose }: DialogProps) {
 						exit={{ y: "-50%", opacity: 0 }}
 						transition={{ type: "spring", damping: 25, stiffness: 300 }}
 					>
-						<Image src={ResumeAsImage} />
-						<button className="close-button" onClick={onClose}>
-							Close
-						</button>
+						{/* Pass the ref to ResumeLayout */}
+						<ResumeComponent />
+						{/* <HStack mt="4" justifyContent="center">
+							<Button colorScheme="blue" onClick={downloadPDF}>
+								Download PDF
+							</Button>
+							<Button variant="outline" onClick={onClose}>
+								Close
+							</Button>
+						</HStack> */}
 					</motion.div>
 				</motion.div>
 			)}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { chakra, Flex, Em, HStack, Heading, Box, Icon, GridItem, Grid, useRecipe, Text } from "@chakra-ui/react";
 import ActionableTextHighlight from "../ui/ActionableTextHighlight";
 import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
@@ -22,8 +22,6 @@ type ImpactEventCardProps = {
 	event: CareerEvent;
 };
 
-// TODO: bind the alternating card layout to a state? (possible fix for the items height not overlapping)
-// TODO: add hover tooltip to events where employer is listed giving a quick blurb about what service they offered +/- badges
 const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 	const { event: eventTitle, subtitle, companyName, description, date, origin, attributes, category, icon } = event;
 
@@ -38,7 +36,6 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 			gap={0}
 			//
 			w="auto"
-			// bg={["blue.100", "red.200", "yellow.200", "var(--primary-bg-color)"]}
 			bg="var(--primary-bg-color)"
 			h={["auto", "auto", "auto", "100%"]}
 			borderRadius="5px"
@@ -102,23 +99,26 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 };
 
 const TimelineEventDate: React.FC<{ date: string }> = ({ date }) => (
-	<Em fontSize="2xs" width="fit-content" color="gray.600" lineHeight="50px">
+	<Em fontSize="2xs" width="fit-content" color="rgba(82,82,91)" lineHeight="50px">
 		{date}
 	</Em>
 );
 
-const TimelinePath: React.FC<{
-	index: number;
-	iconRef: React.RefObject<HTMLDivElement>;
-	distances: (Distance | null)[];
-}> = ({ iconRef, index, distances }) => {
+const TimelinePath = forwardRef<
+	HTMLDivElement,
+	{
+		index: number;
+		distances: (Distance | null)[];
+	}
+>(({ index, distances }, ref) => {
 	const currentTimelineIcon = distances[index];
 	const distanceToNextTimelineIcon = distances[index]?.distance;
+
 	// justification 2 - i need to redo the ref logic to better manage drilling of icon refs -- https://react.dev/reference/react/forwardRef
-	console.log("currentTimelineIcon", currentTimelineIcon);
-	const blah = currentTimelineIcon?.refHeight || 20;
-	const dynamicPathLength = distanceToNextTimelineIcon ? distanceToNextTimelineIcon - blah : 100;
-	const isLast = index === events.length - 1;
+
+	const distanceOffset = currentTimelineIcon?.refHeight || 20;
+	const dynamicPathLength = distanceToNextTimelineIcon ? distanceToNextTimelineIcon - distanceOffset : 100;
+	const isLast = index === distances.length - 1;
 
 	const TimelineConnector = () => (
 		<Box
@@ -133,16 +133,25 @@ const TimelinePath: React.FC<{
 	);
 
 	return (
-		<Flex fontSize="20px" position="relative" width="auto" alignItems="center" justifyContent="center" ref={iconRef}>
+		<Flex fontSize="20px" position="relative" width="auto" alignItems="center" justifyContent="center" ref={ref}>
 			<Icon fontSize={["0.7rem", "0.8rem", "1rem"]} zIndex={1} color="#0891b2">
 				<LuTarget opacity="0.8" />
 			</Icon>
 			{!isLast && <TimelineConnector />}
 		</Flex>
 	);
-};
+});
+TimelinePath.displayName = "TimelinePath";
 
-function TimelineItem({ event, index, alternate, iconRef, distances }: TimelineItemProps) {
+const TimelineItem = forwardRef<
+	HTMLDivElement,
+	{
+		event: any;
+		index: number;
+		alternate: boolean;
+		distances: (Distance | null)[];
+	}
+>(({ event, index, alternate, distances }, ref) => {
 	const LayoutOfDateIconCard = (
 		<>
 			<GridItem //
@@ -153,7 +162,7 @@ function TimelineItem({ event, index, alternate, iconRef, distances }: TimelineI
 				<TimelineEventDate date={event.date} />
 			</GridItem>
 			<GridItem placeSelf="center">
-				<TimelinePath iconRef={iconRef} index={index} distances={distances} />
+				<TimelinePath ref={ref} index={index} distances={distances} />
 			</GridItem>
 			<GridItem
 				h="auto"
@@ -177,7 +186,7 @@ function TimelineItem({ event, index, alternate, iconRef, distances }: TimelineI
 				<TimelineEventCard event={event} />
 			</GridItem>
 			<GridItem placeSelf="center">
-				<TimelinePath iconRef={iconRef} index={index} distances={distances} />
+				<TimelinePath ref={ref} index={index} distances={distances} />
 			</GridItem>
 			<GridItem //
 				width="auto"
@@ -199,12 +208,14 @@ function TimelineItem({ event, index, alternate, iconRef, distances }: TimelineI
 			alignItems="center"
 			justifyContent="center"
 			// border="1px solid green"
-
 			my="-1.5"
 		>
 			{alternate ? LayoutOfCardIconDate : LayoutOfDateIconCard}
 		</Grid>
 	);
-}
+});
+
+// Add a displayName for easier debugging in React DevTools
+TimelineItem.displayName = "TimelineItem";
 
 export default TimelineItem;

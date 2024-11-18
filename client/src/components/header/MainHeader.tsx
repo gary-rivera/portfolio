@@ -34,16 +34,7 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 	};
 
 	return (
-		<Flex
-			h="10vh"
-			w="fit-content"
-			px="3"
-			position="relative"
-			direction="column"
-			justify="center"
-			// outline={["2px solid red", "2px solid blue", "2px solid green"]}
-			{...halfWayLinesChakraStyle}
-		>
+		<Flex h="10vh" w="fit-content" px="3" position="relative" direction="column" justify="center" minH="90px">
 			{/* vertical bar */}
 			<motion.div
 				style={{
@@ -81,6 +72,7 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 						isComplete={isTypingEffectComplete}
 						setIsComplete={() => {
 							setIsTypingEffectComplete(() => true);
+							setIsLoadingAnimationComplete(() => true);
 						}}
 					/>
 				)}
@@ -92,7 +84,7 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 							style={{ display: "inline-block" }}
 							initial={flipUpStyles.initial}
 							animate={flipUpStyles.animate}
-							onAnimationComplete={() => setIsLoadingAnimationComplete(true)}
+							// onAnimationComplete={() => setIsLoadingAnimationComplete(true)}
 						>
 							<Text color="blackAlpha.700" fontSize={["0.7rem", "sm", "md"]}>
 								just some dweeb pretending to know what they're doing.

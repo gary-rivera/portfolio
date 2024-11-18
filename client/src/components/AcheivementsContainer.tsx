@@ -42,6 +42,7 @@ function AcheivementsContainer() {
 
 	return (
 		<VStack
+			key="acheivements-container"
 			w="full"
 			align="start"
 			mt={["0.5rem", "1rem", "1.5rem"]}
@@ -66,7 +67,13 @@ function AcheivementsContainer() {
 						},
 					}[isActiveTab ? "active" : "inactive"];
 					return (
-						<Button onClick={toggleActiveTab} borderBottomRadius="0" borderTopRadius="xs" {...dynamicStyles}>
+						<Button
+							key={`${tabName}-${isActiveTab}`}
+							onClick={toggleActiveTab}
+							borderBottomRadius="0"
+							borderTopRadius="xs"
+							{...dynamicStyles}
+						>
 							{tabName}
 						</Button>
 					);

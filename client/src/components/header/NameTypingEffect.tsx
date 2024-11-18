@@ -2,7 +2,7 @@ import React, { useReducer, useEffect, useCallback, useMemo } from "react";
 import ResumeDialogContainer from "@/components/resume/ResumeDialogContainer";
 import { HStack, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { halfWayLinesChakraStyle } from "@/utils/layoutHelper";
+
 type NameTypingEffectProps = {
 	isComplete: boolean;
 	setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
@@ -141,13 +141,7 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 	}, []);
 
 	return (
-		<HStack
-			fontSize="42px"
-			fontWeight="900"
-			// h="5vh"
-			// my="0"
-			// outline={["2px solid red", "2px solid blue", "2px solid green"]}
-		>
+		<HStack fontSize="42px" fontWeight="900">
 			<motion.div
 				style={{
 					position: "relative",
@@ -181,14 +175,15 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 							bottom: state.isHovered ? -3 : -1,
 							left: -2,
 							width: "100%",
-							borderBottom: state.isHovered ? "0.22rem dotted" : "0.2rem dotted",
-							borderBottomColor: state.isHovered ? "var(--primary-blue)" : "gray",
+							borderBottomWidth: state.isHovered ? "0.22rem" : "0.2rem",
+							borderBottomStyle: "dotted",
+							borderBottomColor: state.isHovered ? "var(--primary-blue)" : "rgba(161,161,170)",
 						}}
-						initial={{ opacity: 0, bottom: -1, borderBottomColor: "gray" }}
+						initial={{ opacity: 0, bottom: -1, borderBottomColor: "rgba(161,161,170)" }}
 						animate={{
 							opacity: 1,
 							bottom: state.isHovered ? -3 : -1,
-							borderBottomColor: state.isHovered ? "var(--primary-blue)" : "gray",
+							borderBottomColor: state.isHovered ? "var(--primary-blue)" : "rgba(161,161,170)",
 							borderBottomWidth: state.isHovered ? "0.22rem" : "0.2rem",
 						}}
 						transition={{

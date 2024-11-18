@@ -30,7 +30,7 @@ function ActionableTextHighlight({ children, linkProps, externalLink, tooltipCon
 		textDecoration: "underline",
 		textDecorationStyle: "dotted",
 		textDecorationThickness: "0.16rem",
-		textDecorationColor: "gray",
+		textDecorationColor: "rgba(161,161,170)",
 		textUnderlineOffset: "0.2rem",
 		fontWeight: "700",
 		_hover: {

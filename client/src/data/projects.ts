@@ -15,6 +15,7 @@ export type Project = {
 	};
 	description?: string | null;
 	languages?: string[];
+	tags?: string[];
 	createdAt?: Date;
 	totalCommits?: number;
 	active: boolean;
@@ -29,6 +30,7 @@ export const ProjectCatalog: Projects = {
 		active: true,
 		logo: ruioIcon,
 		name: "ruio",
+		tags: [],
 		links: {
 			npm: "https://www.npmjs.com/package/ruio",
 			repo: GH_USER_LINK,
@@ -37,7 +39,8 @@ export const ProjectCatalog: Projects = {
 	calculator: {
 		active: true,
 		logo: calculatorIcon,
-		name: "Calculator Mockup",
+		name: "Calculator",
+		tags: [],
 		links: {
 			deployment: "https://gary-rivera.github.io/calculator/",
 			repo: GH_USER_LINK,
@@ -46,16 +49,18 @@ export const ProjectCatalog: Projects = {
 	gbot: {
 		active: true,
 		logo: gbotIcon,
-		name: "gbot",
+		name: "G-Bot",
+		tags: [],
 		links: {
 			npm: null, // TODO: maybe?
 			repo: GH_USER_LINK,
 		},
 	},
-	deadlocked: {
+	DeadMart: {
 		active: true,
 		logo: deadlockIcon,
-		name: "Deadlock Shop Template",
+		tags: [],
+		name: "DeadMart",
 		links: {
 			deployment: null, // TODO: open source + deploy
 			repo: GH_USER_LINK,
@@ -64,6 +69,7 @@ export const ProjectCatalog: Projects = {
 	"meme-generator": {
 		active: true,
 		logo: memeGenieLamp,
+		tags: [],
 		name: "Meme Genie",
 		links: {
 			deployment: "https://gary-rivera.github.io/meme-generator/",
@@ -82,7 +88,7 @@ export const ProjectCatalog: Projects = {
 };
 
 // [ text, color, icon]
-export type BadgeEntry = [string, string, null];
+export type BadgeEntry = [string, string, React.ReactNode | null];
 
 export const projectBadgesMap: {
 	javascript?: BadgeEntry;
@@ -93,12 +99,20 @@ export const projectBadgesMap: {
 	shell?: BadgeEntry;
 	[key: string]: BadgeEntry | undefined; // Account for potential dynamic or undefined keys
 } = {
-	javascript: ["JavaScript", "yellow", null],
+	javascript: ["JS", "yellow", null],
+	typescript: ["TypeScript", "blue", null],
+	"vanilla-js": ["Vanilla JS", "yellow", null],
 	html: ["HTML", "orange", null],
 	css: ["CSS", "teal", null],
-	typescript: ["TypeScript", "blue", null],
-	python: ["Python", "cyan", null],
 	shell: ["Shell", "gray", null],
+	python: ["Python", "cyan", null],
+	"developer-tools": ["Developer Tools", "purple", null],
+	react: ["React", "blue", null],
+	vite: ["Vite", "yellow", null],
+	mockup: ["Mockup", "pink", null],
+	ai: ["AI", "green", null],
+	crypto: ["Crypto", "accent", null],
+	gaming: ["Gaming", "red", null],
+	"first-project": ["First Project", "gray", null],
 };
 
-export const projectKeys = Object.keys(ProjectCatalog).filter((p) => ProjectCatalog[p].active);

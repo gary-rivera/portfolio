@@ -20,7 +20,7 @@ const ResumeLayout = () => {
 	return (
 		<Flex
 			align={{ base: "stretch", md: "flex-start" }}
-			bg="#feefe8"
+			bg="#fef5f1"
 			overflow="hidden"
 			w="675px" // TODO: final step will be to make this responsive
 			h="873x"

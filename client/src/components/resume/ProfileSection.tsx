@@ -1,4 +1,5 @@
 import React from "react";
+import BgOverlay from "@/assets/resume-bg-overlay.svg?react";
 import { Flex, Box, BoxProps, Text, Image, Heading, Spacer, List } from "@chakra-ui/react";
 
 type HeadingProps = {
@@ -110,52 +111,66 @@ type ProfileSectionProps = {
 };
 const ProfileSection: React.FC<ProfileSectionProps> = ({ baseLayout }) => {
 	return (
-		<Box
-			bg="#031b20"
-			display="flex"
-			flexDirection="column"
-			alignItems="flex-start"
-			color="whiteAlpha.900"
-			fontFamily="Inter, sans-serif"
-			fontWeight="500"
-			fontSize="16px"
-			{...baseLayout}
-		>
-			<Spacer w="min-content" mb="1em" borderRadius="md" />
+		<Box bg="#031b20" position="relative" {...baseLayout} zIndex="3">
+			<Box
+				position="absolute"
+				top="0"
+				left="0"
+				w="100%"
+				h="100%"
+				zIndex="-1"
+				maskImage="linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0))"
+				// maskRepeat={"no-repeat"}
+			>
+				<BgOverlay />
+			</Box>
+			<Box
+				// bg="#031b20"
+				display="flex"
+				flexDirection="column"
+				alignItems="flex-start"
+				color="whiteAlpha.900"
+				fontFamily="Inter, sans-serif"
+				fontWeight="500"
+				fontSize="16px"
+				// position="relative"
+				// {...baseLayout}
+			>
+				{/* <Spacer w="min-content" mb="1em" borderRadius="md" /> */}
+				<Image
+					src="https://cdn.builder.io/api/v1/image/assets/TEMP/834c2e7d790409beaeef42aad0cf7386ebcd148fcbf1859d4c69ace0ccd5d399?placeholderIfAbsent=true&apiKey=0d9129ea52684a33ba664902d9f1ba79"
+					alt="Profile"
+					w="70px"
+					h="auto"
+					objectFit="contain"
+				/>
+				<Spacer w="min-content" mb="1em" borderRadius="md" />
 
-			<Image
-				src="https://cdn.builder.io/api/v1/image/assets/TEMP/834c2e7d790409beaeef42aad0cf7386ebcd148fcbf1859d4c69ace0ccd5d399?placeholderIfAbsent=true&apiKey=0d9129ea52684a33ba664902d9f1ba79"
-				alt="Profile"
-				w="70px"
-				h="auto"
-				objectFit="contain"
-			/>
-			<Spacer w="min-content" mb="1em" borderRadius="md" />
+				<CustomHeading as="h1" fontSize={{ base: "40px", md: "1.65em" }} fontWeight="600" letterSpacing="-1px">
+					Gary Rivera
+				</CustomHeading>
+				<CustomHeading as="h2" fontSize="0.85em" fontWeight="600" lineHeight="1.4">
+					Senior Engineer, Designer
+				</CustomHeading>
 
-			<CustomHeading as="h1" fontSize={{ base: "40px", md: "1.65em" }} fontWeight="600" letterSpacing="-1px">
-				Gary Rivera
-			</CustomHeading>
-			<CustomHeading as="h2" fontSize="0.85em" fontWeight="600" lineHeight="1.4">
-				Senior Engineer, Designer
-			</CustomHeading>
+				<Spacer w="2em" my="1.2em" borderRadius="md" borderBottom="1px solid" borderColor="#789fa1" opacity="0.5" />
 
-			<Spacer w="2em" my="1.2em" borderRadius="md" borderBottom="1px solid" borderColor="#789fa1" opacity="0.5" />
+				<ContactInfo items={contactItems} />
 
-			<ContactInfo items={contactItems} />
+				<Spacer w="min-content" mb="1.4em" borderRadius="md" />
 
-			<Spacer w="min-content" mb="1.4em" borderRadius="md" />
+				<Text color="whiteAlpha.900" fontSize="0.75em" letterSpacing="0.2px" lineHeight="1.25em">
+					A bio can go here, aka space to craft the most thought-provoking paragraph and self-introduction mankind has
+					ever read throughout history, space, and time.
+				</Text>
 
-			<Text color="whiteAlpha.900" fontSize="0.75em" letterSpacing="0.2px" lineHeight="1.25em">
-				A bio can go here, aka space to craft the most thought-provoking paragraph and self-introduction mankind has
-				ever read throughout history, space, and time.
-			</Text>
+				<Spacer w="min-content" mb="1.4em" borderRadius="md" />
 
-			<Spacer w="min-content" mb="1.4em" borderRadius="md" />
+				<Skills skills={skills} />
+				<Spacer w="min-content" mb="1.4em" borderRadius="md" />
 
-			<Skills skills={skills} />
-			<Spacer w="min-content" mb="1.4em" borderRadius="md" />
-
-			<TechStack primary={primaryTechStack} secondary={secondaryTechStack} />
+				<TechStack primary={primaryTechStack} secondary={secondaryTechStack} />
+			</Box>
 		</Box>
 	);
 };

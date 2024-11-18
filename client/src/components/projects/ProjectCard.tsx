@@ -33,7 +33,7 @@ const iconPropsMap: Record<string, Record<string, any>> = {
 };
 
 function ProjectCard({ project }: ProjectCardProps) {
-	const { logo, links, name, description, totalCommits, createdAt, tags } = project;
+	const { logoConfig, links, name, description, totalCommits, createdAt, tags } = project;
 	const iconItems = Object.entries(links)
 		.filter(([key, value]) => key in IconMap && value)
 		.map(([key, value]) => ({
@@ -55,16 +55,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 		>
 			<Flex justify="space-between">
 				<Flex align="center" justify="center">
-					<Image
-						//
-						src={logo}
-						alt="project-logo"
-						// height="2rem"
-						h={["1rem", "1rem", "1.45rem"]}
-						w="auto"
-						mt="1"
-						mr="1"
-					/>
+					<Image src={logoConfig[0]} alt="project-logo" h="auto" w={logoConfig[1].width} mt="1" mr="1" />
 
 					<ActionableTextHighlight children={name} externalLink={links.repo} />
 				</Flex>

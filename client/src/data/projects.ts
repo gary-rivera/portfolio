@@ -7,7 +7,7 @@ import garyFlappyIcon from "@/assets/icons/projects/flappy-js-logo.png";
 
 const GH_USER_LINK = "https://github.com/gary-rivera";
 export type Project = {
-	logo: string;
+	logoConfig: [string, { height: number | string; width: number | string | any[] }];
 	name: string;
 	links: {
 		npm?: string | null;
@@ -23,13 +23,20 @@ export type Project = {
 };
 
 export type Projects = {
-	[key: string]: Project; // Dynamic keys for individual projects
+	[key: string]: Project;
 };
 
 export const ProjectCatalog: Projects = {
 	ruio: {
 		active: true,
-		logo: ruioIcon,
+
+		logoConfig: [
+			ruioIcon,
+			{
+				height: "auto",
+				width: ["2rem", "2.5rem", "3rem"],
+			},
+		],
 		name: "ruio",
 		tags: [],
 		links: {
@@ -39,7 +46,8 @@ export const ProjectCatalog: Projects = {
 	},
 	calculator: {
 		active: true,
-		logo: calculatorIcon,
+
+		logoConfig: [calculatorIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
 		name: "Calculator",
 		tags: [],
 		links: {
@@ -49,7 +57,8 @@ export const ProjectCatalog: Projects = {
 	},
 	gbot: {
 		active: true,
-		logo: gbotIcon,
+
+		logoConfig: [gbotIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
 		name: "G-Bot",
 		tags: [],
 		links: {
@@ -59,7 +68,8 @@ export const ProjectCatalog: Projects = {
 	},
 	DeadMart: {
 		active: true,
-		logo: deadlockIcon,
+
+		logoConfig: [deadlockIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
 		tags: [],
 		name: "DeadMart",
 		links: {
@@ -69,7 +79,8 @@ export const ProjectCatalog: Projects = {
 	},
 	"meme-generator": {
 		active: true,
-		logo: memeGenieLamp,
+
+		logoConfig: [memeGenieLamp, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
 		tags: [],
 		name: "Meme Genie",
 		links: {
@@ -79,7 +90,8 @@ export const ProjectCatalog: Projects = {
 	},
 	"flappy-js": {
 		active: true,
-		logo: garyFlappyIcon,
+
+		logoConfig: [garyFlappyIcon, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
 		tags: [],
 		name: "Flappy JS",
 		links: {

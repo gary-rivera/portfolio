@@ -72,7 +72,7 @@ type ExperienceSectionProps = {
 };
 const ExperienceSection: React.FC<ExperienceSectionProps> = ({ baseLayout }) => {
 	return (
-		<Box display="flex" flexDirection="column" {...baseLayout}>
+		<Box display="flex" flexDirection="column" {...baseLayout} zIndex="2">
 			<Section
 				title="Work experience"
 				content={`Eu cillum deserunt cupidatat aliquip ipsum cupidatat minim Lorem ipsum cillum ex ea. Ut aliquip non eu culpa aute. Duis consequat dolor culpa adipisicing aute minim aliqua esse. Ex ut nostrud do proident tempor excepteur. Aliqua et pariatur magna et velit occaecat et nisi eu deserunt excepteur. Sit excepteur do aliquip in occaecat sint ut magna tempor esse in officia culpa dolor. Anim consequat cupidatat veniam voluptate veniam culpa irure irure eiusmod exercitation amet ipsum occaecat.`}

@@ -122,7 +122,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({ baseLayout }) => {
 				maskImage="linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0))"
 				// maskRepeat={"no-repeat"}
 			>
-				<BgOverlay />
+				<BgOverlay stroke="#031B20" fill="#0B5223" />
 			</Box>
 			<Box
 				// bg="#031b20"

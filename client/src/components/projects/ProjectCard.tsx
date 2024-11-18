@@ -1,4 +1,5 @@
-import { Project, projectBadgesMap } from "@/data/projects";
+import { Project } from "@/data/projects";
+import { getBadgeDetails } from "@/utils/badges";
 import dayjs from "dayjs";
 import ActionableTextHighlight from "@/components/ui/ActionableTextHighlight";
 
@@ -32,8 +33,8 @@ const iconPropsMap: Record<string, Record<string, any>> = {
 };
 
 function ProjectCard({ project }: ProjectCardProps) {
-	const { logo, links, name, description, totalCommits, createdAt, languages } = project;
 
+	const { logo, links, name, description, totalCommits, createdAt, languages, tags } = project;
 	const iconItems = Object.entries(links)
 		.filter(([key, value]) => key in IconMap && value)
 		.map(([key, value]) => ({
@@ -95,10 +96,6 @@ function ProjectCard({ project }: ProjectCardProps) {
 					color="blackAlpha.800"
 					fontSize={["0.8rem", "0.85rem", "0.9rem", "1rem"]}
 					borderColor="cyan.600"
-					// borderLeft="2px solid"
-					// pl="0.65rem"
-					// mt="1"
-					// ml="3"
 				>
 					{description}
 				</Text>
@@ -107,14 +104,17 @@ function ProjectCard({ project }: ProjectCardProps) {
 
 			<Flex justify="space-between" h="2.3rem">
 				<HStack gap="0.25rem">
-					{languages?.length &&
-						languages?.map((language) => {
-							// TODO: fix Unknown to just be language once all badges are in
-							const [title, colorScheme, icon] = projectBadgesMap[language] || ["Unknown", "red", null];
+					{tags?.length &&
+						tags?.map((tag) => {
+							const [title, colorScheme, icon] = getBadgeDetails(tag);
+								title,
+								colorScheme,
+								icon,
+							);
 							return (
-								<Badge key={`badge-${title}`} variant="subtle" colorPalette={colorScheme} opacity="0.6">
-									{title || "Unknown"}
-									{icon && <Icon></Icon>}
+								<Badge key={`badge-${tag}`} variant="subtle" colorPalette={colorScheme} opacity="0.6">
+									{title}
+									{icon && <Icon>{icon}</Icon>}
 								</Badge>
 							);
 						})}

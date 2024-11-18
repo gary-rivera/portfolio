@@ -4,23 +4,30 @@ import ProfileSection from "./ProfileSection";
 import ExperienceSection from "./ExperienceSection";
 
 const ResumeLayout = () => {
+	const childrenLayout = {
+		base: {
+			h: "auto",
+			px: "33px",
+			py: "30px",
+		},
+		profile: {
+			w: "38%",
+		},
+		experience: {
+			w: "62%",
+		},
+	};
 	return (
-		<Box
+		<Flex
+			align={{ base: "stretch", md: "flex-start" }}
 			bg="#feefe8"
-			px={{ base: "20px", md: "71px" }}
 			overflow="hidden"
-			outline="1px solid red
-		"
+			w="675px" // TODO: final step will be to make this responsive
+			h="873x"
 		>
-			<Flex
-				// direction={{ base: "column", md: "row" }}
-				gap={{ base: 0, md: "20px" }}
-				align={{ base: "stretch", md: "flex-start" }}
-			>
-				<ProfileSection />
-				<ExperienceSection />
-			</Flex>
-		</Box>
+			<ProfileSection baseLayout={{ ...childrenLayout.base, ...childrenLayout.profile }} />
+			<ExperienceSection baseLayout={{ ...childrenLayout.base, ...childrenLayout.experience }} />
+		</Flex>
 	);
 };
 

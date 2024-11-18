@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Box, Text, Image, Heading, Spacer, List } from "@chakra-ui/react";
+import { Flex, Box, BoxProps, Text, Image, Heading, Spacer, List } from "@chakra-ui/react";
 
 type HeadingProps = {
 	children: React.ReactNode;
@@ -8,6 +8,7 @@ type HeadingProps = {
 	mt?: string | number;
 	letterSpacing?: string | number;
 	fontWeight?: string | number;
+	lineHeight?: string | number;
 };
 
 const skills = [
@@ -23,8 +24,22 @@ const primaryTechStack = Array(8).fill("Stack");
 const secondaryTechStack = Array(25).fill("Stack");
 const contactItems = ["gary@dinglegary.io", "415-654-8327", "Olympia, WA & San Francisco"];
 
-const CustomHeading: React.FC<HeadingProps> = ({ children, as, fontSize, mt, letterSpacing, fontWeight }) => (
-	<Heading as={as} fontSize={fontSize} mt={mt} letterSpacing={letterSpacing} fontWeight={fontWeight || "400"}>
+const CustomHeading: React.FC<HeadingProps> = ({
+	children,
+	as,
+	fontSize,
+
+	letterSpacing,
+	fontWeight,
+	lineHeight,
+}) => (
+	<Heading
+		as={as}
+		fontSize={fontSize}
+		letterSpacing={letterSpacing}
+		fontWeight={fontWeight || "400"}
+		lineHeight={lineHeight || "1.2"}
+	>
 		{children}
 	</Heading>
 );
@@ -34,9 +49,9 @@ type ContactInfoProps = {
 };
 
 const ContactInfo: React.FC<ContactInfoProps> = ({ items }) => (
-	<Flex direction="column" gap="10px">
+	<Flex direction="column" gap="0.35em">
 		{items.map((item, index) => (
-			<Text key={index} fontSize="20px" fontWeight="500" color="#789fa1" letterSpacing="0.45px">
+			<Text key={index} fontSize="0.75em" fontWeight="500" color="#789fa1" letterSpacing="0.25px">
 				{item}
 			</Text>
 		))}
@@ -47,15 +62,16 @@ type SkillsProps = {
 	skills: string[];
 };
 
+// TODO: add icon for each skill instead of bullet point-- https://www.chakra-ui.com/docs/components/list
 const Skills: React.FC<SkillsProps> = ({ skills }) => (
-	<Box mt="2rem">
-		<CustomHeading as="h3" fontSize="18px" fontWeight="800">
+	<Box color="whiteAlpha.900">
+		<CustomHeading as="h3" fontSize="0.75em" fontWeight="800">
 			Skills
 		</CustomHeading>
 
-		<List.Root gap="3.5" fontSize="18px" mt="0.6rem">
+		<List.Root gap="4" fontSize="0.75em" mt="0.9em">
 			{skills.map((skill, index) => (
-				<List.Item key={index} fontWeight="600">
+				<List.Item key={index} fontWeight="500" lineHeight="0.78em">
 					{skill}
 				</List.Item>
 			))}
@@ -69,17 +85,19 @@ type TechStackProps = {
 };
 
 const TechStack: React.FC<TechStackProps> = ({ primary, secondary }) => (
-	<Box mt="2.5rem">
-		<Flex gap="2" wrap="wrap" justifyContent="space-between" alignItems="start">
+	<Box>
+		<Flex gap="1" wrap="wrap" justifyContent="space-between" alignItems="start" w="80%">
 			{primary.map((item, index) => (
-				<Text key={index} color="whiteAlpha.800" fontWeight="800" fontSize="20px" letterSpacing="0.19px">
+				<Text key={index} color="whiteAlpha.900" fontWeight="800" fontSize="0.75em" letterSpacing="0.19px">
 					{item}
 				</Text>
 			))}
 		</Flex>
-		<Flex gap="2" wrap="wrap" mt="2.5rem">
+		<Spacer mb="1.4em" borderRadius="md" />
+
+		<Flex gap="2" wrap="wrap">
 			{secondary.map((item, index) => (
-				<Text key={index} color="#789fa1" fontSize="18px" letterSpacing="0.19px">
+				<Text key={index} color="#789fa1" fontSize="0.7em" letterSpacing="0.19px" fontWeight="500">
 					{item}
 				</Text>
 			))}
@@ -87,7 +105,10 @@ const TechStack: React.FC<TechStackProps> = ({ primary, secondary }) => (
 	</Box>
 );
 
-const ProfileSection: React.FC = () => {
+type ProfileSectionProps = {
+	baseLayout?: BoxProps;
+};
+const ProfileSection: React.FC<ProfileSectionProps> = ({ baseLayout }) => {
 	return (
 		<Box
 			bg="#031b20"
@@ -95,37 +116,45 @@ const ProfileSection: React.FC = () => {
 			flexDirection="column"
 			alignItems="flex-start"
 			color="whiteAlpha.900"
-			h="100%"
-			w={{ base: "100%", md: "41%" }}
-			px={{ base: "20px", md: "60px" }}
-			py={{ base: "40px", md: "70px" }}
-			mt={{ base: "40px", md: "0" }}
 			fontFamily="Inter, sans-serif"
 			fontWeight="500"
-			fontSize="22px"
-			outline="4px dashed orange"
-			border="1px solid red"
+			fontSize="16px"
+			{...baseLayout}
 		>
+			<Spacer w="min-content" mb="1em" borderRadius="md" />
+
 			<Image
 				src="https://cdn.builder.io/api/v1/image/assets/TEMP/834c2e7d790409beaeef42aad0cf7386ebcd148fcbf1859d4c69ace0ccd5d399?placeholderIfAbsent=true&apiKey=0d9129ea52684a33ba664902d9f1ba79"
 				alt="Profile"
-				w="120px"
+				w="70px"
 				h="auto"
 				objectFit="contain"
 			/>
-			<CustomHeading as="h1" fontSize={{ base: "40px", md: "42px" }} fontWeight="600" mt="30px" letterSpacing="-1px">
+			<Spacer w="min-content" mb="1em" borderRadius="md" />
+
+			<CustomHeading as="h1" fontSize={{ base: "40px", md: "1.65em" }} fontWeight="600" letterSpacing="-1px">
 				Gary Rivera
 			</CustomHeading>
-			<CustomHeading as="h2" fontSize="24px" fontWeight="600" mt="1rem">
+			<CustomHeading as="h2" fontSize="0.85em" fontWeight="600" lineHeight="1.4">
 				Senior Engineer, Designer
 			</CustomHeading>
-			<Spacer h="5px" w="60px" my="1.75rem" borderRadius="md" border="1px solid " borderColor="whiteAlpha.400" />
+
+			<Spacer w="2em" my="1.2em" borderRadius="md" borderBottom="1px solid" borderColor="#789fa1" opacity="0.5" />
+
 			<ContactInfo items={contactItems} />
-			<Text mt="2rem" fontSize="18px" lineHeight="25px" letterSpacing="0.22px">
+
+			<Spacer w="min-content" mb="1.4em" borderRadius="md" />
+
+			<Text color="whiteAlpha.900" fontSize="0.75em" letterSpacing="0.2px" lineHeight="1.25em">
 				A bio can go here, aka space to craft the most thought-provoking paragraph and self-introduction mankind has
 				ever read throughout history, space, and time.
 			</Text>
+
+			<Spacer w="min-content" mb="1.4em" borderRadius="md" />
+
 			<Skills skills={skills} />
+			<Spacer w="min-content" mb="1.4em" borderRadius="md" />
+
 			<TechStack primary={primaryTechStack} secondary={secondaryTechStack} />
 		</Box>
 	);

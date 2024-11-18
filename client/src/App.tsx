@@ -4,14 +4,14 @@ import AcheivementsContainer from "./components/AcheivementsContainer";
 import ContactMeIconTray from "./components/ContactMeIconTray";
 import { Box, HStack, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import ResumeComponent from "@/components/resume/ResumeCV";
+import ResumeComponent from "@/components/resume/ResumeCvComponent";
 
 // p1 aka mandatory for today
 // DONE: responsive design -> media querying
 // DONE: make resume in code
 
 // p2 aka mandatory for release
-// TODO: update repo descriptions and add topics too
+// WIP: update repo descriptions and add topics too
 // DONE: hook up links for projects + conditional render of icons controller
 // TODO: find/make better icons for projects (outsource?)
 // TODO: localStorage/cache/token for onload animation -- easter egg

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode } from "react";
 import "./ResumeIconDialog.css";
 import { createPortal } from "react-dom";
-import ResumeAsImage from "@/assets/icons/experience/fancy-resume.png";
+import ResumeCvComponent from "./ResumeCvComponent";
 
 interface DialogProps {
 	children?: ReactNode;
@@ -58,7 +58,7 @@ function ResumeDialogContainer({ children, isOpen, onClose }: DialogProps) {
 						transition={{ type: "spring", damping: 25, stiffness: 300 }}
 					>
 						{/* Pass the ref to ResumeLayout */}
-						<ResumeComponent />
+						<ResumeCvComponent />
 						{/* <HStack mt="4" justifyContent="center">
 							<Button colorScheme="blue" onClick={downloadPDF}>
 								Download PDF

@@ -4,7 +4,7 @@ import ProfileSection from "./ProfileSection";
 import ExperienceSection from "./ExperienceSection";
 import BgOverlay from "@/assets/resume-bg-overlay.svg?react";
 
-const ResumeLayout = forwardRef<HTMLDivElement>((_, ref) => {
+const ResumeCvComponent = forwardRef<HTMLDivElement>((_, ref) => {
 	const childrenLayout = {
 		base: {
 			h: "auto",
@@ -50,4 +50,4 @@ const ResumeLayout = forwardRef<HTMLDivElement>((_, ref) => {
 	);
 });
 
-export default ResumeLayout;
+export default ResumeCvComponent;

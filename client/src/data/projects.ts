@@ -3,6 +3,7 @@ import deadlockIcon from "@/assets/icons/projects/deadlock-logo.png";
 import calculatorIcon from "@/assets/icons/projects/calculator-logo.png";
 import gbotIcon from "@/assets/icons/projects/g-bot-icon.png";
 import memeGenieLamp from "@/assets/icons/projects/meme-genie-logo.svg";
+import garyFlappyIcon from "@/assets/icons/projects/flappy-js-logo.png";
 
 const GH_USER_LINK = "https://github.com/gary-rivera";
 export type Project = {
@@ -77,11 +78,12 @@ export const ProjectCatalog: Projects = {
 		},
 	},
 	"flappy-js": {
-		active: false,
-		logo: memeGenieLamp,
-		name: "Flappy Bird",
+		active: true,
+		logo: garyFlappyIcon,
+		tags: [],
+		name: "Flappy JS",
 		links: {
-			deployment: "https://gary-rivera.github.io/meme-generator/",
+			deployment: "https://gary-rivera.github.io/flappy-js/",
 			repo: GH_USER_LINK,
 		},
 	},
@@ -116,3 +118,4 @@ export const projectBadgesMap: {
 	"first-project": ["First Project", "gray", null],
 };
 
+export const projectCatalogKeys = Object.keys(ProjectCatalog).filter((p) => ProjectCatalog[p].active);

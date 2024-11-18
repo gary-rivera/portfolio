@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import ActionableTextHighlight from "@/components/ui/ActionableTextHighlight";
 
 // styling
-import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Link } from "@chakra-ui/react";
 
 // icons
 import { FaNpm } from "react-icons/fa";
@@ -33,8 +32,7 @@ const iconPropsMap: Record<string, Record<string, any>> = {
 };
 
 function ProjectCard({ project }: ProjectCardProps) {
-
-	const { logo, links, name, description, totalCommits, createdAt, languages, tags } = project;
+	const { logo, links, name, description, totalCommits, createdAt, tags } = project;
 	const iconItems = Object.entries(links)
 		.filter(([key, value]) => key in IconMap && value)
 		.map(([key, value]) => ({
@@ -107,10 +105,6 @@ function ProjectCard({ project }: ProjectCardProps) {
 					{tags?.length &&
 						tags?.map((tag) => {
 							const [title, colorScheme, icon] = getBadgeDetails(tag);
-								title,
-								colorScheme,
-								icon,
-							);
 							return (
 								<Badge key={`badge-${tag}`} variant="subtle" colorPalette={colorScheme} opacity="0.6">
 									{title}

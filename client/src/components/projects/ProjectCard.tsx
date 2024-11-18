@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import ActionableTextHighlight from "@/components/ui/ActionableTextHighlight";
 
 // styling
+import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Code } from "@chakra-ui/react";
 
 // icons
 import { FaNpm } from "react-icons/fa";
@@ -68,23 +69,26 @@ function ProjectCard({ project }: ProjectCardProps) {
 					<ActionableTextHighlight children={name} externalLink={links.repo} />
 				</Flex>
 
-				<Flex
-					direction="column"
-					justify="start"
-					fontSize="0.6rem"
-					m="0"
-					fontWeight="300"
-					color="blackAlpha.600"
-					textAlign="right"
-				>
+				<Flex direction="column" justify="start" m="0">
 					{/* Code component? */}
 					{[
 						{ title: "commits", value: totalCommits ? totalCommits && totalCommits.toString() : "N/A" },
 						{ title: "created", value: dayjs(createdAt).format("MMM YYYY") },
 					].map(({ title, value }) => (
-						<Em key={title} letterSpacing="tight" lineHeight="shorter" fontSize={["0.55rem", "0.6rem", "0.65rem"]}>
+						<Code
+							variant="none"
+							fontWeight="300"
+							color="blackAlpha.500"
+							textAlign="right"
+							letterSpacing="tight"
+							py="0"
+							my="0"
+							key={title}
+							minHeight="1"
+							fontSize={["0.55rem", "0.6rem", "0.65rem"]}
+						>
 							{title}: {value}
-						</Em>
+						</Code>
 					))}
 				</Flex>
 			</Flex>

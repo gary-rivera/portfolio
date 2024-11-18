@@ -99,7 +99,7 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 };
 
 const TimelineEventDate: React.FC<{ date: string }> = ({ date }) => (
-	<Em fontSize="2xs" width="fit-content" color="gray.600" lineHeight="50px">
+	<Em fontSize="2xs" width="fit-content" color="rgba(82,82,91)" lineHeight="50px">
 		{date}
 	</Em>
 );

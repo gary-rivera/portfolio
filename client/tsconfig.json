@@ -26,6 +26,6 @@
 	},
 	"files": [],
 	"exclude": ["node_modules", "dist"], // Exclude `dist` folder to prevent reprocessing
-	"include": ["src", "src/styles/theme.ts", "src/styles/animation-styles.ts"],
+	"include": ["src"],
 	"references": [{ "path": "./tsconfig.app.json" }]
 }

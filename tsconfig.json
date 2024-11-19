@@ -18,14 +18,21 @@
 		"paths": {
 			"@/*": ["./src/*"]
 		},
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		// "allowImportingTsExtensions": true,
+
 		"baseUrl": "./", // Ensures relative paths are resolved from the root of the project
 		"declaration": true, // Enables type declarations for libraries or components
 		"declarationDir": "./dist/types", // Outputs declaration files to `dist/types`
 		"outDir": "./dist", // Specifies the output directory (if noEmit is turned off for debugging)
-		"rootDir": "./src" // Keeps TypeScript aware of the source directory
+		"rootDir": "./src", // Keeps TypeScript aware of the source directory
+		"allowImportingTsExtensions": false, // Ensures extension-less imports
+		"moduleDetection": "force", // Forces module mode, avoids pitfalls
+		"composite": true // Enables project references (useful for large projects)
 	},
-	"files": [],
-	"exclude": ["node_modules", "dist"], // Exclude `dist` folder to prevent reprocessing
+	// "files": ["src"], // Entry point of the application
 	"include": ["src"],
-	"references": [{ "path": "./tsconfig.app.json" }]
+	"exclude": ["node_modules", "dist"] // Exclude `dist` folder to prevent reprocessing
 }

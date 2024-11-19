@@ -3,7 +3,7 @@ import { createSystem, defaultConfig, defineConfig, defineRecipe } from "@chakra
 const EventCardRecipe = defineRecipe({
 	base: {
 		w: "auto",
-		// bg: "var(--primary-bg-color)", // TODO: add to css global variables
+
 		bg: ["blue.100", "red.200", "yellow.200", "var(--primary-bg-color)"], // TODO: add to css global variables
 		h: "100%",
 		borderRadius: "5px",
@@ -31,8 +31,6 @@ const EventCardRecipe = defineRecipe({
 		},
 	},
 });
-
-const customScrollBar = defineRecipe({});
 
 const customConfig = defineConfig({
 	// ...defaultBaseConfig,

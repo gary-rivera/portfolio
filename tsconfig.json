@@ -11,7 +11,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"noEmit": true, // Ensures TypeScript does not emit compiled files (Vite handles this)
+		"noEmit": false, // Ensures TypeScript does not emit compiled files (Vite handles this)
 		"jsx": "react-jsx",
 		"skipLibCheck": true,
 		"customConditions": ["source"],

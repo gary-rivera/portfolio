@@ -31,7 +31,7 @@ export const events: CareerEvent[] = [
 		companyName: employers.orchard.companyName,
 		companyDescription: employers.orchard.description,
 		date: "Feb 2024 → Sep 2024",
-		description: "As a result of Extra merging into Orchard Mortgage",
+		description: "Corporate merger between Extra and Orchard.",
 		origin: employers.orchard.url,
 		icon: employers.orchard.icon,
 		category: "milestone",
@@ -49,7 +49,7 @@ export const events: CareerEvent[] = [
 		category: "impact",
 	},
 	{
-		event: "Senior Software Developer",
+		event: "Senior Developer",
 		subtitle: employers.extra.shortName,
 		companyName: employers.extra.companyName,
 		companyDescription: employers.extra.description,

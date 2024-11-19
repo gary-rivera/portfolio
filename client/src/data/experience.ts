@@ -4,6 +4,7 @@ export type CareerEvent = {
 	event: string;
 	subtitle?: string;
 	companyName?: string;
+	companyDescription?: string;
 	description?: string;
 	date: string;
 	origin?: string;
@@ -11,19 +12,13 @@ export type CareerEvent = {
 	attributes?: { attribute: string; colorScheme: string }[];
 	category: "milestone" | "achievement" | "impact"; // NOTE: conditional rendering controller for how the card looks + what values the card is expecting
 };
-export const experience = [
-	"As part of the corporate merger, led the integration of a pipeline to funnel Extra's qualified, success-story customers into Orchard’s mortgage platform.", // full-stack, data-management
-	"At ut provident autem et et voluptate enim ut iure maxime impedit. Veniam ducimus assumenda laborum cumque et voluptatem repellat consequatur.At ut provident autem et et voluptate enim ut iure maxime impedit. Veniam ducimus assumenda laborum cumque et voluptatem repellat consequatur.At ut provident autem et et voluptate enim ut iure maxime impedit. Veniam ducimus assumenda laborum cumque et voluptatem repellat consequatur.",
-	"Corporis magnam blanditiis culpa qui quisquam sit qui consequuntur dolores. Et reiciendis ratione asperiores.",
-	"Minima est sunt qui id est ad placeat aperiam sit aut necessitatibus molestiae placeat. ",
-];
 
 export const events: CareerEvent[] = [
 	{
-		event: "Combine Product Platform",
+		event: "Cross-platform integration",
 		date: "Mar 2024",
 		description:
-			"As part of the corporate merger, led the integration of a pipeline to funnel Extra's qualified, success-story customers into Orchard’s mortgage platform.",
+			"Led the full stack development of funneling Extra's customer base into Orchard’s mortgaging services.",
 		attributes: [
 			{ attribute: "Full stack", colorScheme: "blue" },
 			{ attribute: "Integration", colorScheme: "yellow" },
@@ -34,40 +29,55 @@ export const events: CareerEvent[] = [
 		event: "Hired",
 		subtitle: employers.orchard.shortName,
 		companyName: employers.orchard.companyName,
+		companyDescription: employers.orchard.description,
 		date: "Feb 2024 → Sep 2024",
-		description: experience[0], // TODO: remove but preserve the visual balance of tab by managing order and content of other events
+		description: "As a result of Extra merging into Orchard Mortgage",
 		origin: employers.orchard.url,
 		icon: employers.orchard.icon,
 		category: "milestone",
 	},
 	{
-		event: "Permissions Framework",
-		date: "Sep 2021",
-		description:
-			"Engineered a permissions framework for API actions, reducing authorization incidents by 80% and enhancing security across platforms.",
+		event: "Server migration",
+		date: "Oct 2022 → Jan 2023",
+		description: "Engineered a permissions framework for all internal API interactions.",
+		category: "impact",
+	},
+	{
+		event: "API security redesign",
+		date: "Sep 2022",
+		description: "Engineered a permissions framework for all internal API interactions.",
 		category: "impact",
 	},
 	{
 		event: "Senior Software Developer",
 		subtitle: employers.extra.shortName,
 		companyName: employers.extra.companyName,
+		companyDescription: employers.extra.description,
 		date: "Aug 2022",
-		// description: experience[2],
+
 		origin: employers.extra.url,
 		icon: employers.extra.icon,
 		category: "milestone",
 	},
 	{
-		event: "Card Journey API Util",
+		event: "TypeScript migration",
+		date: "Jan 2022",
+		description:
+			"Converted our frontend to good ol' TypeScript. Also redesigned the backend config to enable shared backend types.",
+		category: "impact",
+	},
+	{
+		event: "Revamped signup process",
 		date: "Sep 2021",
 		description:
-			"Built a feature to track user progress in the card journey, boosting conversion rates by 12% and providing real-time insights to reduce support inquiries.",
+			"Pretty significant rework of our signup process to retain more potential applicants and improve CRM insights.",
 		category: "impact",
 	},
 	{
 		event: "Hired",
 		subtitle: employers.extra.shortName,
 		companyName: employers.extra.companyName,
+		companyDescription: employers.extra.description,
 		date: "Sep 2021 → Sep 2024",
 		origin: employers.extra.url,
 		icon: employers.extra.icon,
@@ -83,6 +93,7 @@ export const events: CareerEvent[] = [
 		event: "Freelancing",
 		subtitle: employers.knowCap.shortName,
 		companyName: employers.knowCap.companyName,
+		companyDescription: employers.knowCap.description,
 		date: "Aug 2021 → Sep 2021",
 		origin: employers.knowCap.url,
 		icon: employers.knowCap.icon,
@@ -92,6 +103,7 @@ export const events: CareerEvent[] = [
 		event: "Internship",
 		subtitle: employers.numbersApi.shortName,
 		companyName: employers.numbersApi.companyName,
+		companyDescription: employers.numbersApi.description,
 		date: "Jul 2021",
 		origin: employers.numbersApi.url,
 		icon: employers.numbersApi.icon,
@@ -101,6 +113,7 @@ export const events: CareerEvent[] = [
 		event: "Completed Schooling",
 		subtitle: employers.rithmSchool.shortName,
 		companyName: employers.rithmSchool.companyName,
+		companyDescription: employers.rithmSchool.description,
 		date: "Jul 2021",
 		origin: employers.rithmSchool.url,
 		icon: employers.rithmSchool.icon,

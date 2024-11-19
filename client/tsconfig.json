@@ -4,23 +4,28 @@
 		"moduleResolution": "Bundler",
 		"useDefineForClassFields": true,
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
-		"esModuleInterop": false,
+		"esModuleInterop": true, // Changed to true for better compatibility with CommonJS modules
 		"allowSyntheticDefaultImports": true,
 		"allowJs": false,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"noEmit": true,
+		"noEmit": true, // Ensures TypeScript does not emit compiled files (Vite handles this)
 		"jsx": "react-jsx",
 		"skipLibCheck": true,
 		"customConditions": ["source"],
 		"paths": {
 			"@/*": ["./src/*"]
-		}
+		},
+		"baseUrl": "./", // Ensures relative paths are resolved from the root of the project
+		"declaration": true, // Enables type declarations for libraries or components
+		"declarationDir": "./dist/types", // Outputs declaration files to `dist/types`
+		"outDir": "./dist", // Specifies the output directory (if noEmit is turned off for debugging)
+		"rootDir": "./src" // Keeps TypeScript aware of the source directory
 	},
 	"files": [],
-	"exclude": ["node_modules"],
+	"exclude": ["node_modules", "dist"], // Exclude `dist` folder to prevent reprocessing
 	"include": ["src", "src/styles/theme.ts", "src/styles/animation-styles.ts"],
-	"references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+	"references": [{ "path": "./tsconfig.app.json" }]
 }

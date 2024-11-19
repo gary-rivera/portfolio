@@ -1,7 +1,7 @@
-import { BadgeEntry, projectBadgesMap } from "@/data/projects";
+import { BadgeEntry, projectTagsConfig } from "@/data/projects";
 
 export const getBadgeDetails = (tag: string): BadgeEntry => {
-	const badge = projectBadgesMap[tag];
+	const badge = projectTagsConfig[tag]?.badge;
 	if (badge) {
 		return badge;
 	}

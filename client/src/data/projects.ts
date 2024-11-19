@@ -104,30 +104,29 @@ export const ProjectCatalog: Projects = {
 // [ text, color, icon]
 export type BadgeEntry = [string, string, React.ReactNode | null];
 
-export const projectBadgesMap: {
-	javascript?: BadgeEntry;
-	html?: BadgeEntry;
-	css?: BadgeEntry;
-	typescript?: BadgeEntry;
-	python?: BadgeEntry;
-	shell?: BadgeEntry;
-	[key: string]: BadgeEntry | undefined; // Account for potential dynamic or undefined keys
-} = {
-	javascript: ["JS", "yellow", null],
-	typescript: ["TypeScript", "blue", null],
-	"vanilla-js": ["Vanilla JS", "yellow", null],
-	html: ["HTML", "orange", null],
-	css: ["CSS", "teal", null],
-	shell: ["Shell", "gray", null],
-	python: ["Python", "cyan", null],
-	"developer-tools": ["Developer Tools", "purple", null],
-	react: ["React", "blue", null],
-	vite: ["Vite", "yellow", null],
-	mockup: ["Mockup", "pink", null],
-	ai: ["AI", "green", null],
-	crypto: ["Crypto", "accent", null],
-	gaming: ["Gaming", "red", null],
-	"first-project": ["First Project", "gray", null],
+type BadgeConfig = [string, string, string | null];
+type TagConfig = {
+	priority: number;
+	badge: BadgeConfig;
+};
+
+export const projectTagsConfig: Record<string, TagConfig> = {
+	javascript: { priority: 1, badge: ["JavaScript", "yellow", null] },
+	typescript: { priority: 1, badge: ["TypeScript", "blue", null] },
+	react: { priority: 1, badge: ["React", "blue", null] },
+	vite: { priority: 1, badge: ["Vite", "yellow", null] },
+
+	html: { priority: 2, badge: ["HTML", "orange", null] },
+	css: { priority: 2, badge: ["CSS", "teal", null] },
+	shell: { priority: 2, badge: ["Shell", "gray", null] },
+	python: { priority: 2, badge: ["Python", "cyan", null] },
+	"developer-tools": { priority: 2, badge: ["Developer Tools", "purple", null] },
+
+	mockup: { priority: 3, badge: ["Mockup", "purple", null] },
+	ai: { priority: 3, badge: ["AI", "green", null] },
+	gaming: { priority: 3, badge: ["Gaming", "red", null] },
+
+	"first-project": { priority: 4, badge: ["First Project", "gray", null] },
 };
 
 export const projectCatalogKeys = Object.keys(ProjectCatalog).filter((p) => ProjectCatalog[p].active);

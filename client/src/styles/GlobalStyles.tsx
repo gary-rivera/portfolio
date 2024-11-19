@@ -12,6 +12,7 @@ const GlobalStyles = () => {
 					overflowY: "hidden",
 					scrollbarWidth: "none",
 					scrollbarColor: "red",
+					color: "black",
 				},
 				":root": {
 					backgroundColor: "#faedd0",
@@ -21,8 +22,7 @@ const GlobalStyles = () => {
 					"--primary-bg-color": "rgba(0, 0, 0, 0.035)",
 					"--primary-blue": "rgb(8, 145, 178)",
 					"--secondary-bg-color": "rgba(173, 216, 230, 1)",
-					"--bg-pattern": "url('https://www.toptal.com/designers/subtlepatterns/uploads/ep_naturalwhite.png')",
-					"--bg-filter": "opacity(20%) blur(0.01rem)",
+					// "--bg-pattern": "url('https://www.toptal.com/designers/subtlepatterns/uploads/ep_naturalwhite.png')",
 				},
 				":root::before": {
 					content: '""',

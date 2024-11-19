@@ -101,7 +101,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 						tags?.map((tag) => {
 							const [title, colorScheme, icon] = getBadgeDetails(tag);
 							return (
-								<Badge key={`badge-${tag}`} variant="subtle" colorPalette={colorScheme} opacity="0.6">
+								<Badge key={`badge-${tag}`} variant="subtle" colorPalette={colorScheme} opacity="0.5">
 									{title}
 									{icon && <Icon>{icon}</Icon>}
 								</Badge>

@@ -9,7 +9,7 @@ export type CareerEvent = {
 	origin?: string;
 	icon?: any;
 	attributes?: { attribute: string; colorScheme: string }[];
-	category: "milestone" | "achievement" | "impact"; // NOTE: conditional rendering controller for how the card looks + what values the card is expecting + how it styles them
+	category: "milestone" | "achievement" | "impact"; // NOTE: conditional rendering controller for how the card looks + what values the card is expecting
 };
 export const experience = [
 	"As part of the corporate merger, led the integration of a pipeline to funnel Extra's qualified, success-story customers into Orchard’s mortgage platform.", // full-stack, data-management

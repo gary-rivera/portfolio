@@ -49,7 +49,6 @@ function AcheivementsContainer() {
 			mb="0"
 			gap="0"
 			h={["42rem", "45rem", "43rem"]}
-			// border="1px solid red"
 		>
 			{/* Tab Navigation */}
 			<HStack justify="start" gap="0">

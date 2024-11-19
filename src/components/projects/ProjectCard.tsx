@@ -1,7 +1,7 @@
 import { Project } from "@/data/projects";
 import { getBadgeDetails } from "@/utils/badges";
 import dayjs from "dayjs";
-import ActionableTextHighlight from "@/components/ui/ActionableTextHighlight";
+import ActionableTextHighlight from "@/components/ActionableTextHighlight";
 
 // styling
 import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Code } from "@chakra-ui/react";
@@ -11,7 +11,7 @@ import { FaNpm } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
-import LinkIcon from "@/components/ui/chakra-fixes/LinkIconFactory";
+import LinkIcon from "@/components/LinkIconFactory";
 interface ProjectCardProps {
 	project: Project;
 }

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Box, Flex, HStack, VStack, Link, Text, Icon, Heading, chakra, Image, Spacer } from "@chakra-ui/react";
 import Tippy from "@tippyjs/react";
-import LinkIcon from "@/components/ui/chakra-fixes/LinkIconFactory";
+import LinkIcon from "@/components/LinkIconFactory";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 import { tooltipConfig } from "@/utils/tooltipConfig";

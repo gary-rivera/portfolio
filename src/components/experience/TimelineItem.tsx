@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import { chakra, Flex, Em, HStack, Heading, Box, Icon, GridItem, Grid, useRecipe, Text } from "@chakra-ui/react";
-import ActionableTextHighlight from "../ui/ActionableTextHighlight";
+import ActionableTextHighlight from "@/components/ActionableTextHighlight";
 import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
 import { CareerEvent, events } from "@/data/experience";
 import { LuTarget } from "react-icons/lu";

@@ -1,4 +1,4 @@
-import employers from "@/components/ui/Employers";
+import employers from "@/components/Employers";
 
 export type CareerEvent = {
 	event: string;

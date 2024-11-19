@@ -91,7 +91,7 @@ export const fetchGithubRepositoryGQL = async (username: string, repoName: strin
 	try {
 		const data: GraphQlQueryResponseData = await GitHubGQLConfig(query, variables);
 		const { repository } = data;
-		// console.log("Repository Data:", repository);
+
 		return repository as RepositoryData;
 	} catch (error) {
 		if (error instanceof GraphqlResponseError) {

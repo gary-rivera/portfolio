@@ -8,7 +8,7 @@ type NameTypingEffectProps = {
 	setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const deletingSpeed = 32;
+const deletingSpeed = 30;
 
 type State = {
 	text: string;
@@ -62,10 +62,10 @@ const reducer = (state: State, action: Action): State => {
 
 const getTypingSpeedForWord = (wordIndex: number) => {
 	if (wordIndex === 0) {
-		return { minSpeed: 40, maxSpeed: 60 };
+		return { minSpeed: 30, maxSpeed: 65 };
 	}
 	if (wordIndex === 1) {
-		return { minSpeed: 70, maxSpeed: 110 };
+		return { minSpeed: 90, maxSpeed: 130 };
 	}
 	return { minSpeed: 73, maxSpeed: 193 };
 };
@@ -78,7 +78,7 @@ const getRandomTypingSpeed = (wordIndex: number) => {
 const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsComplete }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
-	const words = useMemo(() => ["dinglega", "gary r."], []);
+	const words = useMemo(() => ["dingl", "gary r."], []);
 
 	useEffect(() => {
 		const blinkCursorTimeout = setTimeout(() => {
@@ -89,7 +89,6 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 	}, []);
 
 	useEffect(() => {
-		console.log("state.isDialogOpen", state.isDialogOpen);
 		if (!state.isTyping || !state.typingStarted) return;
 
 		let timer: number;
@@ -107,6 +106,7 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 				if (state.text.length === 1) {
 					dispatch({ type: "SET_IS_DELETING", payload: false });
 					dispatch({ type: "SET_WORD_INDEX", payload: state.wordIndex + 1 });
+					setIsComplete(true);
 				}
 			} else if (!isEndOfWord) {
 				dispatch({
@@ -117,10 +117,10 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 				if (state.wordIndex === 0) {
 					timer = window.setTimeout(() => dispatch({ type: "SET_IS_DELETING", payload: true }), 350);
 				} else if (state.wordIndex === 1) {
-					timer = window.setTimeout(() => {
-						dispatch({ type: "SET_IS_TYPING", payload: false });
-						window.setTimeout(() => setIsComplete(true), 250);
-					}, 750);
+					// timer = window.setTimeout(() => {
+					dispatch({ type: "SET_IS_TYPING", payload: false });
+					// window.setTimeout(() => setIsComplete(true), 250);
+					// }, 750);
 				}
 			}
 		};
@@ -166,9 +166,9 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 					}}
 					mr="0"
 				>
-					{state.text}
+					​{state.text}
 				</Text>
-				{isComplete && (
+				{!state.isTyping && (
 					<motion.div
 						style={{
 							zIndex: -1,

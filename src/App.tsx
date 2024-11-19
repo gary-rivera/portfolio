@@ -47,14 +47,16 @@ function App() {
 
 	const containerVariants = {
 		hidden: { opacity: 0, y: 0 },
-		visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+		visible: { opacity: 1, y: 0, transition: { duration: 1 } },
 	};
 
 	const staggerVariants = {
-		hidden: {},
+		hidden: { opacity: 0, y: 0 },
 		visible: {
+			opacity: 1,
+			y: 0,
 			transition: {
-				staggerChildren: 0.5,
+				staggerChildren: 1,
 			},
 		},
 	};

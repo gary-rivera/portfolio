@@ -27,6 +27,7 @@ const ExternalLinkIcon = chakra(FaExternalLinkAlt);
 
 function ActionableTextHighlight({ children, linkProps, externalLink, tooltipContent }: ActionableTextHighlightProps) {
 	const sharedStyles = {
+		color: "blackAlpha.900",
 		textDecoration: "underline",
 		textDecorationStyle: "dotted",
 		textDecorationThickness: "0.16rem",

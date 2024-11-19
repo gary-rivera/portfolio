@@ -10,6 +10,7 @@ type TimelineItemProps = {
 	event: CareerEvent;
 	index: number;
 	alternate: boolean;
+	a;
 	iconRef: React.RefObject<HTMLDivElement>;
 	distances: ({
 		distance: number | null;

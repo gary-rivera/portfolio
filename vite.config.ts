@@ -7,7 +7,7 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig({
 	plugins: [react(), tsconfigPaths(), svgr()],
 	build: {
-		outDir: "./dist", // Specifies the output directory
+		outDir: "dist", // Specifies the output directory
 		emptyOutDir: true, // Clears the output directory before each build
 		sourcemap: true, // Generates source maps for easier debugging
 	},

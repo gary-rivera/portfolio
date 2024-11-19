@@ -11,10 +11,10 @@ import ResumeComponent from "@/components/resume/ResumeCvComponent";
 // DONE: make resume in code
 
 // p2 aka mandatory for release
-// WIP: update repo descriptions and add topics too
+// DONE: update repo descriptions and add topics too
 // DONE: hook up links for projects + conditional render of icons controller
-// TODO: find/make better icons for projects (outsource?)
-// TODO: localStorage/cache/token for onload animation -- easter egg
+// WIP: find/make better icons for projects (outsource?)
+// TODO: finalize the onload animations. loadtimes are a bit slow rn
 
 // p3 aka low hanging fruit
 // TODO: add some flare/love to the ProjectCard's. Feels lacking in comparison
@@ -70,8 +70,6 @@ function App() {
 			px={["1rem", "1.5rem", "2rem", "3rem"]}
 		>
 			<Flex direction="column" w="100%" maxW="1000px">
-				{/* <Box bg="blue.200" border="4px solid red" w="670px" h="875px"></Box> */}
-				{/* <ResumeComponent /> */}
 				<MainHeader
 					isLoadingAnimationComplete={isLoadingAnimationComplete}
 					setIsLoadingAnimationComplete={setIsLoadingAnimationComplete}

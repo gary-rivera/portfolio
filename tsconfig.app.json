@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		/* Language and library settings */
+		"target": "ES2020", // Matches modern JavaScript features
+		"lib": ["ES2020", "DOM", "DOM.Iterable"], // Includes modern browser features
+		"useDefineForClassFields": true,
+
+		/* Module settings */
+		"module": "ESNext", // Uses the latest ES module syntax
+		"moduleResolution": "bundler", // Optimized for Vite's bundler
+		"allowImportingTsExtensions": false, // Ensures extension-less imports
+		"isolatedModules": true, // Helps with tree-shaking and per-file transpilation
+		"moduleDetection": "force", // Forces module mode, avoids pitfalls
+		"jsx": "react-jsx", // JSX handling for React
+		"paths": {
+			"@/*": ["./src/*"] // Simplified path aliases for cleaner imports
+		},
+
+		/* Build settings */
+		"skipLibCheck": true, // Speeds up builds by skipping type checks for library files
+		"composite": true, // Enables project references (useful for large projects)
+
+		/* Linting and strictness */
+		"strict": true, // Enforces strict type checks
+		"noUnusedLocals": true, // Warns about unused variables
+		"noUnusedParameters": true, // Warns about unused function parameters
+		"noFallthroughCasesInSwitch": true // Prevents accidental fallthrough in switch cases
+	},
+	"include": ["src", "src/styles/theme.ts"]
+}

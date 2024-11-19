@@ -1,16 +1,6 @@
 import useSWR from "swr";
-import { fetcher, fetchGithubRepositoryGQL, fetchGithubRepositoriesGQL } from "../services/api";
+import { fetcher, fetchGithubRepositoriesGQL } from "../services/api";
 import type { GraphQlQueryResponseData } from "@octokit/graphql";
-
-export const useGitHubRepoData = (username: string, repoName: string) => {
-	const { data, error } = useSWR([username, repoName], ([user, repo]) => fetchGithubRepositoryGQL(user, repo));
-
-	return {
-		repo: data,
-		isLoading: !error && !data,
-		isError: error,
-	};
-};
 
 export const useGitHubReposGQL = (repoNames: string[]) => {
 	const fetcher = () => fetchGithubRepositoriesGQL(repoNames);

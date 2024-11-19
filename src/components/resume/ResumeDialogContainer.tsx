@@ -18,6 +18,7 @@ function ResumeDialogContainer({ isOpen, onClose }: DialogProps) {
 		},
 		[onClose],
 	);
+
 	useEffect(() => {
 		if (isOpen) {
 			document.body.style.overflow = "hidden";
@@ -35,6 +36,11 @@ function ResumeDialogContainer({ isOpen, onClose }: DialogProps) {
 		visible: { opacity: 1 },
 	};
 
+	const contentVariants = {
+		hidden: { y: -50, opacity: 0 },
+		visible: { y: 0, opacity: 1 },
+	};
+
 	const portalRoot = document.getElementById("dialog-root");
 
 	if (!portalRoot) {
@@ -46,41 +52,23 @@ function ResumeDialogContainer({ isOpen, onClose }: DialogProps) {
 		<AnimatePresence>
 			{isOpen && (
 				<motion.div
+					key="resume-modal"
 					className="dialog-overlay"
 					onClick={onClose}
 					variants={overlayVariants}
 					initial="hidden"
 					animate="visible"
 					exit="hidden"
-					className="dialog-content"
-					role="dialog"
-					aria-modal="true"
-					onClick={(e) => e.stopPropagation()}
-					initial={{ y: -50, opacity: 0 }}
-					animate={{ y: 0, opacity: 1 }}
-					exit={{ y: -100, opacity: 0 }}
-					transition={{ type: "spring", damping: 25, stiffness: 300 }}
 				>
 					<motion.div
 						className="dialog-content"
 						role="dialog"
 						aria-modal="true"
 						onClick={(e) => e.stopPropagation()}
-						initial={{ y: "-10%", opacity: 0 }}
-						animate={{ y: "0", opacity: 1 }}
-						exit={{ y: "-50%", opacity: 0 }}
+						variants={contentVariants}
 						transition={{ type: "spring", damping: 25, stiffness: 300 }}
 					>
-						{/* Pass the ref to ResumeLayout */}
 						<ResumeCvComponent />
-						{/* <HStack mt="4" justifyContent="center">
-							<Button colorScheme="blue" onClick={downloadPDF}>
-								Download PDF
-							</Button>
-							<Button variant="outline" onClick={onClose}>
-								Close
-							</Button>
-						</HStack> */}
 					</motion.div>
 				</motion.div>
 			)}

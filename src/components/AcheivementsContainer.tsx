@@ -30,7 +30,6 @@ function AcheivementsContainer() {
 				scrollbarColor: "rgba(8, 145, 178, 0.4) transparent",
 				scrollbarWidth: "thin",
 				scrollMarginBlockEnd: "true",
-				// border: "1px solid green",
 			}}
 		>
 			{activeTab === "experience" && <ExperienceContainer />}

@@ -8,7 +8,7 @@ type NameTypingEffectProps = {
 	setIsComplete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const deletingSpeed = 40;
+const deletingSpeed = 32;
 
 type State = {
 	text: string;
@@ -62,7 +62,7 @@ const reducer = (state: State, action: Action): State => {
 
 const getTypingSpeedForWord = (wordIndex: number) => {
 	if (wordIndex === 0) {
-		return { minSpeed: 45, maxSpeed: 85 };
+		return { minSpeed: 40, maxSpeed: 60 };
 	}
 	if (wordIndex === 1) {
 		return { minSpeed: 70, maxSpeed: 110 };
@@ -89,6 +89,7 @@ const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsCo
 	}, []);
 
 	useEffect(() => {
+		console.log("state.isDialogOpen", state.isDialogOpen);
 		if (!state.isTyping || !state.typingStarted) return;
 
 		let timer: number;

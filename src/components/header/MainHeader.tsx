@@ -4,17 +4,11 @@ import { Box, Text, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 type AppHeaderContainerProps = {
-	// isLoadingAnimationComplete: boolean;
 	setIsLoadingAnimationComplete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
-	// isLoadingAnimationComplete,
-	setIsLoadingAnimationComplete,
-}) => {
+const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({ setIsLoadingAnimationComplete }) => {
 	const [isTypingEffectComplete, setIsTypingEffectComplete] = useState(false);
-
-	const [verticalBarComplete, setVerticalBarComplete] = useState(false);
 
 	const flipUpStyles = {
 		initial: {
@@ -33,29 +27,31 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 	};
 
 	return (
-		<Flex h="10vh" w="fit-content" px="3" position="relative" direction="column" justify="center" minH="90px">
+		<Flex
+			h="10vh"
+			w="fit-content"
+			px="3"
+			position="relative"
+			direction="column"
+			justify="center"
+			minH="90px"
+			alignSelf="flex-start"
+		>
 			{/* vertical bar */}
-			<motion.div
-				style={{
-					position: "absolute",
-					left: 0,
-					top: 0,
-					height: "100%",
-					width: "4px",
-					backgroundColor: "rgba(8, 145, 178, 0.7)",
-				}}
-				initial={{ y: "-75%", opacity: 0 }}
-				animate={{
-					y: "0",
-					opacity: 1,
-				}}
-				transition={{
-					type: "spring",
-					damping: 45,
-					stiffness: 400,
-				}}
-				onAnimationComplete={() => setVerticalBarComplete(() => true)}
-			/>
+			{isTypingEffectComplete && (
+				<motion.div
+					style={{
+						position: "absolute",
+						left: 0,
+						top: 0,
+						height: "100%",
+						width: "4px",
+						backgroundColor: "rgba(8, 145, 178, 0.7)",
+					}}
+					initial={flipUpStyles.initial}
+					animate={flipUpStyles.animate}
+				/>
+			)}
 			{/* text container */}
 			<Flex
 				width="100%"
@@ -66,15 +62,13 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 				alignItems="start"
 				mt={["0.5rem", "0.5rem", "0.3rem", "0.3rem"]}
 			>
-				{verticalBarComplete && (
-					<NameTypingEffect
-						isComplete={isTypingEffectComplete}
-						setIsComplete={() => {
-							setIsTypingEffectComplete(() => true);
-							setIsLoadingAnimationComplete(() => true);
-						}}
-					/>
-				)}
+				<NameTypingEffect
+					isComplete={isTypingEffectComplete}
+					setIsComplete={() => {
+						setIsTypingEffectComplete(() => true);
+						setIsLoadingAnimationComplete(() => true);
+					}}
+				/>
 
 				{/* Sub-header */}
 				<Box h="50%">
@@ -83,7 +77,6 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
 							style={{ display: "inline-block" }}
 							initial={flipUpStyles.initial}
 							animate={flipUpStyles.animate}
-							// onAnimationComplete={() => setIsLoadingAnimationComplete(true)}
 						>
 							<Text color="blackAlpha.700" fontSize={["0.7rem", "sm", "md"]}>
 								just some dweeb pretending to know what they're doing.

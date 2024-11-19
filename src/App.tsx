@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 // DONE: update repo descriptions and add topics too
 // DONE: hook up links for projects + conditional render of icons controller
 // WIP: find/make better icons for projects (outsource?)
-// TODO: finalize the onload animations. loadtimes are a bit slow rn
+// DONE: finalize the onload animations. loadtimes are a bit slow rn
 
 // p3 aka low hanging fruit
 // TODO: add some flare/love to the ProjectCard's. Feels lacking in comparison
@@ -24,7 +24,7 @@ import { motion } from "framer-motion";
 // TODO: memoize the tabs content so that it doesn't rerender on tab switch
 
 // maybe/graveyard
-// TODO: add progress bar to nav tab?
+
 // TODO: gradient on top or bottom (or both?) of the achievement container so that content isnt so suddenly cut off
 // TODO: maybe? dynamic pull data from resume-md repo?
 // TODO: maybe? fetch my user info too for overall profile stats (commits, activity charting, etc.)
@@ -46,7 +46,7 @@ function App() {
 	}, [isLoadingAnimationComplete]);
 
 	const containerVariants = {
-		hidden: { opacity: 0, y: 20 },
+		hidden: { opacity: 0, y: 0 },
 		visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 	};
 
@@ -54,7 +54,7 @@ function App() {
 		hidden: {},
 		visible: {
 			transition: {
-				staggerChildren: 0.35,
+				staggerChildren: 0.5,
 			},
 		},
 	};
@@ -68,21 +68,25 @@ function App() {
 			w="100vw"
 			px={["1rem", "1.5rem", "2rem", "3rem"]}
 		>
-			<Flex direction="column" w="100%" maxW="1000px">
-				<MainHeader
-					// isLoadingAnimationComplete={isLoadingAnimationComplete}
-					setIsLoadingAnimationComplete={setIsLoadingAnimationComplete}
-				/>
-				{loadRest && (
-					<motion.div variants={staggerVariants} initial="hidden" animate="visible" style={{ width: "100%" }}>
-						<motion.div variants={containerVariants}>
-							<AcheivementsContainer />
-						</motion.div>
-						<motion.div variants={containerVariants}>
-							<ContactMeIconTray />
-						</motion.div>
+			<Flex direction="column" w="100%" maxW="1000px" h="100%" justifyContent="center" zIndex="1">
+				<MainHeader setIsLoadingAnimationComplete={setIsLoadingAnimationComplete} />
+				<motion.div
+					variants={staggerVariants}
+					initial="hidden"
+					animate={loadRest ? "visible" : "hidden"}
+					style={{
+						width: "100%",
+						height: "100%",
+						marginTop: "0.5rem",
+					}}
+				>
+					<motion.div variants={containerVariants}>
+						<AcheivementsContainer />
 					</motion.div>
-				)}
+					<motion.div variants={containerVariants}>
+						<ContactMeIconTray />
+					</motion.div>
+				</motion.div>
 			</Flex>
 		</HStack>
 	);

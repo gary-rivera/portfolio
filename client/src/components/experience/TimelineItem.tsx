@@ -23,10 +23,10 @@ type ImpactEventCardProps = {
 };
 
 const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
-	const { event: eventTitle, subtitle, companyName, description, date, origin, attributes, category, icon } = event;
+	const { event: eventTitle, subtitle, companyName, companyDescription, description, origin, icon } = event;
 
 	const titleStyles = {
-		fontSize: ["0.70rem", "0.8rem", "0.85rem", "1rem"],
+		fontSize: ["0.70rem", "0.8rem", "0.85rem", "0.925rem"],
 		fontWeight: "semibold",
 		color: "blackAlpha.800",
 		lineHeight: "normal",
@@ -63,7 +63,6 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 						<Icon //
 							fontSize={["0.5rem", "0.75rem", "0.7rem", "0.85rem"]}
 							mt="1px"
-							// border="1px solid red"
 							color="blackAlpha.500"
 						>
 							<HiAtSymbol />
@@ -72,7 +71,7 @@ const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
 							tooltipContent={{
 								icon,
 								heading: companyName,
-								text: "Debit to credit platform. Financial literacy development",
+								text: companyDescription,
 								iconLinkUrl: origin,
 							}}
 							linkProps={{ ...titleStyles }}
@@ -164,12 +163,7 @@ const TimelineItem = forwardRef<
 			<GridItem placeSelf="center">
 				<TimelinePath ref={ref} index={index} distances={distances} />
 			</GridItem>
-			<GridItem
-				h="auto"
-				justifySelf="start"
-				alignItems="center"
-				// border="1px solid red"
-			>
+			<GridItem h="auto" justifySelf="start" alignItems="center">
 				<TimelineEventCard event={event} />
 			</GridItem>
 		</>
@@ -179,7 +173,6 @@ const TimelineItem = forwardRef<
 		<>
 			<GridItem //
 				h="auto"
-				// border="1px solid red"
 				justifySelf="end"
 				alignItems="center"
 			>

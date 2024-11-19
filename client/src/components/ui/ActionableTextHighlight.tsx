@@ -27,6 +27,7 @@ const ExternalLinkIcon = chakra(FaExternalLinkAlt);
 
 function ActionableTextHighlight({ children, linkProps, externalLink, tooltipContent }: ActionableTextHighlightProps) {
 	const sharedStyles = {
+		color: "blackAlpha.900",
 		textDecoration: "underline",
 		textDecorationStyle: "dotted",
 		textDecorationThickness: "0.16rem",
@@ -59,11 +60,7 @@ function ActionableTextHighlight({ children, linkProps, externalLink, tooltipCon
 						tooltipContent && (
 							<Flex m="1" w="auto" direction="column" fontSize="16px" color="whiteAlpha.900">
 								{tooltipContent.icon && (
-									<HStack
-										h="25px"
-										// border="1px solid red"
-										gap="0.5"
-									>
+									<HStack h="25px" gap="0.5">
 										{tooltipContent.icon}
 										<Heading fontSize="0.9rem" mx="0" px="0">
 											{tooltipContent.heading}
@@ -85,12 +82,7 @@ function ActionableTextHighlight({ children, linkProps, externalLink, tooltipCon
 									</HStack>
 								)}
 								{tooltipContent.text && (
-									<Text
-										fontSize="0.75rem"
-										fontWeight="normal"
-										textAlign="start"
-										mb="1.5" // small gutter at bottom
-									>
+									<Text fontSize="0.75rem" fontWeight="normal" textAlign="start" mb="1.5">
 										{tooltipContent.text}
 									</Text>
 								)}

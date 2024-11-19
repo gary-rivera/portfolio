@@ -17,7 +17,6 @@ function ProjectsContainer() {
 			justify="center"
 			alignItems="center"
 			w="100%"
-			// border="1px solid red"
 		>
 			{sortedDesc.map((projectKey: string, idx) => {
 				if (projects[projectKey]?.active) return <ProjectCard key={idx} project={projects[projectKey]} />;

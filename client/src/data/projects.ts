@@ -3,10 +3,11 @@ import deadlockIcon from "@/assets/icons/projects/deadlock-logo.png";
 import calculatorIcon from "@/assets/icons/projects/calculator-logo.png";
 import gbotIcon from "@/assets/icons/projects/g-bot-icon.png";
 import memeGenieLamp from "@/assets/icons/projects/meme-genie-logo.svg";
+import garyFlappyIcon from "@/assets/icons/projects/flappy-js-logo.png";
 
 const GH_USER_LINK = "https://github.com/gary-rivera";
 export type Project = {
-	logo: string;
+	logoConfig: [string, { height: number | string; width: number | string | any[] }];
 	name: string;
 	links: {
 		npm?: string | null;
@@ -22,13 +23,20 @@ export type Project = {
 };
 
 export type Projects = {
-	[key: string]: Project; // Dynamic keys for individual projects
+	[key: string]: Project;
 };
 
 export const ProjectCatalog: Projects = {
 	ruio: {
 		active: true,
-		logo: ruioIcon,
+
+		logoConfig: [
+			ruioIcon,
+			{
+				height: "auto",
+				width: ["2rem", "2.5rem", "3rem"],
+			},
+		],
 		name: "ruio",
 		tags: [],
 		links: {
@@ -38,7 +46,8 @@ export const ProjectCatalog: Projects = {
 	},
 	calculator: {
 		active: true,
-		logo: calculatorIcon,
+
+		logoConfig: [calculatorIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
 		name: "Calculator",
 		tags: [],
 		links: {
@@ -48,7 +57,8 @@ export const ProjectCatalog: Projects = {
 	},
 	gbot: {
 		active: true,
-		logo: gbotIcon,
+
+		logoConfig: [gbotIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
 		name: "G-Bot",
 		tags: [],
 		links: {
@@ -58,7 +68,8 @@ export const ProjectCatalog: Projects = {
 	},
 	DeadMart: {
 		active: true,
-		logo: deadlockIcon,
+
+		logoConfig: [deadlockIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
 		tags: [],
 		name: "DeadMart",
 		links: {
@@ -68,7 +79,8 @@ export const ProjectCatalog: Projects = {
 	},
 	"meme-generator": {
 		active: true,
-		logo: memeGenieLamp,
+
+		logoConfig: [memeGenieLamp, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
 		tags: [],
 		name: "Meme Genie",
 		links: {
@@ -77,11 +89,13 @@ export const ProjectCatalog: Projects = {
 		},
 	},
 	"flappy-js": {
-		active: false,
-		logo: memeGenieLamp,
-		name: "Flappy Bird",
+		active: true,
+
+		logoConfig: [garyFlappyIcon, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
+		tags: [],
+		name: "Flappy JS",
 		links: {
-			deployment: "https://gary-rivera.github.io/meme-generator/",
+			deployment: "https://gary-rivera.github.io/flappy-js/",
 			repo: GH_USER_LINK,
 		},
 	},
@@ -90,29 +104,29 @@ export const ProjectCatalog: Projects = {
 // [ text, color, icon]
 export type BadgeEntry = [string, string, React.ReactNode | null];
 
-export const projectBadgesMap: {
-	javascript?: BadgeEntry;
-	html?: BadgeEntry;
-	css?: BadgeEntry;
-	typescript?: BadgeEntry;
-	python?: BadgeEntry;
-	shell?: BadgeEntry;
-	[key: string]: BadgeEntry | undefined; // Account for potential dynamic or undefined keys
-} = {
-	javascript: ["JS", "yellow", null],
-	typescript: ["TypeScript", "blue", null],
-	"vanilla-js": ["Vanilla JS", "yellow", null],
-	html: ["HTML", "orange", null],
-	css: ["CSS", "teal", null],
-	shell: ["Shell", "gray", null],
-	python: ["Python", "cyan", null],
-	"developer-tools": ["Developer Tools", "purple", null],
-	react: ["React", "blue", null],
-	vite: ["Vite", "yellow", null],
-	mockup: ["Mockup", "pink", null],
-	ai: ["AI", "green", null],
-	crypto: ["Crypto", "accent", null],
-	gaming: ["Gaming", "red", null],
-	"first-project": ["First Project", "gray", null],
+type BadgeConfig = [string, string, string | null];
+type TagConfig = {
+	priority: number;
+	badge: BadgeConfig;
 };
 
+export const projectTagsConfig: Record<string, TagConfig> = {
+	javascript: { priority: 1, badge: ["JavaScript", "yellow", null] },
+	typescript: { priority: 1, badge: ["TypeScript", "blue", null] },
+	react: { priority: 1, badge: ["React", "blue", null] },
+	vite: { priority: 1, badge: ["Vite", "yellow", null] },
+
+	html: { priority: 2, badge: ["HTML", "orange", null] },
+	css: { priority: 2, badge: ["CSS", "teal", null] },
+	shell: { priority: 2, badge: ["Shell", "gray", null] },
+	python: { priority: 2, badge: ["Python", "cyan", null] },
+	"developer-tools": { priority: 2, badge: ["Developer Tools", "purple", null] },
+
+	mockup: { priority: 3, badge: ["Mockup", "purple", null] },
+	ai: { priority: 3, badge: ["AI", "green", null] },
+	gaming: { priority: 3, badge: ["Gaming", "red", null] },
+
+	"first-project": { priority: 4, badge: ["First Project", "gray", null] },
+};
+
+export const projectCatalogKeys = Object.keys(ProjectCatalog).filter((p) => ProjectCatalog[p].active);

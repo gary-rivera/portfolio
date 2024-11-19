@@ -16,18 +16,9 @@ function ResumeIcon() {
 				p="0"
 				h="24px"
 				w="auto"
-				// border="1px solid red"
 				_hover={{ color: "blackAlpha.950", cursor: "pointer" }}
 				onClick={() => setDialogOpen(true)}
 			>
-				{/* <SquareCVIcon
-					stroke="currentColor"
-					style={{
-						maxHeight: "inherit",
-						width: "auto",
-						height: "24px",
-					}}
-				/> */}
 				<ResumeCvBoxSvg
 					fill="currentColor"
 					style={{

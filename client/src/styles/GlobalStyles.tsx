@@ -12,24 +12,19 @@ const GlobalStyles = () => {
 					overflowY: "hidden",
 					scrollbarWidth: "none",
 					scrollbarColor: "red",
+					color: "black",
 				},
 				":root": {
-					backgroundColor: "#faedd0", // Static background color
-					color: "black", // Static text color
+					backgroundColor: "#faedd0",
+					color: "black",
 					WebkitFontSmoothing: "antialiased",
 					MozOsxFontSmoothing: "grayscale",
-					"--primary-bg-color": "rgba(0, 0, 0, 0.035)", // Static primary background color
+					"--primary-bg-color": "rgba(0, 0, 0, 0.035)",
 					"--primary-blue": "rgb(8, 145, 178)",
-					// "--primary-blue": "rgba(8, 145, 178, 0.4)",
-					"--secondary-bg-color": "rgba(173, 216, 230, 1)", // Static secondary color
-					"--bg-pattern": "url('https://www.toptal.com/designers/subtlepatterns/uploads/ep_naturalwhite.png')", // Static background pattern
-					"--bg-filter": "opacity(20%) blur(0.01rem)", // Static filter
-					// backgroundImage: "var(--bg-pattern)",
-					// filter: "var(--bg-filter)",
+					"--secondary-bg-color": "rgba(173, 216, 230, 1)",
+					// "--bg-pattern": "url('https://www.toptal.com/designers/subtlepatterns/uploads/ep_naturalwhite.png')",
 				},
 				":root::before": {
-					// backgroundColor: "#faedd0", // Static background color
-
 					content: '""',
 					position: "absolute",
 					top: 0,
@@ -43,8 +38,6 @@ const GlobalStyles = () => {
 					pointerEvents: "none",
 				},
 				":root::after": {
-					// backgroundColor: "#faedd0", // Static background color
-
 					content: '""',
 					position: "absolute",
 					top: 0,

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import ActionableTextHighlight from "@/components/ui/ActionableTextHighlight";
 
 // styling
-import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Link } from "@chakra-ui/react";
+import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Code } from "@chakra-ui/react";
 
 // icons
 import { FaNpm } from "react-icons/fa";
@@ -33,8 +33,7 @@ const iconPropsMap: Record<string, Record<string, any>> = {
 };
 
 function ProjectCard({ project }: ProjectCardProps) {
-
-	const { logo, links, name, description, totalCommits, createdAt, languages, tags } = project;
+	const { logoConfig, links, name, description, totalCommits, createdAt, tags } = project;
 	const iconItems = Object.entries(links)
 		.filter(([key, value]) => key in IconMap && value)
 		.map(([key, value]) => ({
@@ -56,37 +55,31 @@ function ProjectCard({ project }: ProjectCardProps) {
 		>
 			<Flex justify="space-between">
 				<Flex align="center" justify="center">
-					<Image
-						//
-						src={logo}
-						alt="project-logo"
-						// height="2rem"
-						h={["1rem", "1rem", "1.45rem"]}
-						w="auto"
-						mt="1"
-						mr="1"
-					/>
+					<Image src={logoConfig[0]} alt="project-logo" h="auto" w={logoConfig[1].width} mt="1" mr="1" />
 
 					<ActionableTextHighlight children={name} externalLink={links.repo} />
 				</Flex>
 
-				<Flex
-					direction="column"
-					justify="start"
-					fontSize="0.6rem"
-					m="0"
-					fontWeight="300"
-					color="blackAlpha.600"
-					textAlign="right"
-				>
+				<Flex direction="column" justify="start" m="0">
 					{/* Code component? */}
 					{[
 						{ title: "commits", value: totalCommits ? totalCommits && totalCommits.toString() : "N/A" },
 						{ title: "created", value: dayjs(createdAt).format("MMM YYYY") },
 					].map(({ title, value }) => (
-						<Em key={title} letterSpacing="tight" lineHeight="shorter" fontSize={["0.55rem", "0.6rem", "0.65rem"]}>
+						<Code
+							variant="none"
+							fontWeight="300"
+							color="blackAlpha.500"
+							textAlign="right"
+							letterSpacing="tight"
+							py="0"
+							my="0"
+							key={title}
+							minHeight="1"
+							fontSize={["0.55rem", "0.6rem", "0.65rem"]}
+						>
 							{title}: {value}
-						</Em>
+						</Code>
 					))}
 				</Flex>
 			</Flex>
@@ -107,12 +100,8 @@ function ProjectCard({ project }: ProjectCardProps) {
 					{tags?.length &&
 						tags?.map((tag) => {
 							const [title, colorScheme, icon] = getBadgeDetails(tag);
-								title,
-								colorScheme,
-								icon,
-							);
 							return (
-								<Badge key={`badge-${tag}`} variant="subtle" colorPalette={colorScheme} opacity="0.6">
+								<Badge key={`badge-${tag}`} variant="subtle" colorPalette={colorScheme} opacity="0.5">
 									{title}
 									{icon && <Icon>{icon}</Icon>}
 								</Badge>

@@ -29,6 +29,7 @@ function ExperienceContainer() {
 			mt="0.75rem"
 			minHeight="100%"
 			overflowX="visible"
+			pr={["0", "2.5"]}
 		>
 			{events.map((event, index) => {
 				const alternate = !!(index % 2); // alternates the timeline item's layout

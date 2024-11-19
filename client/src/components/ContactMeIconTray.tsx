@@ -33,13 +33,7 @@ const SocialIcon = ({ children, buttonProps, url }) => (
 
 function ContactMeIconTray() {
 	return (
-		<HStack
-			h="auto"
-			gap="0.35rem"
-			// border="2px solid red"
-			mt="2"
-			w="min-content"
-		>
+		<HStack h="auto" gap="0.35rem" mt="2" w="min-content">
 			<SocialIcon
 				children={<LinkedInTextSvg fill="currentColor" width="100%" height="100%" />}
 				buttonProps={{ _hover: { color: "var(--primary-blue)" } }}

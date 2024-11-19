@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import MainHeader from "./components/header/MainHeader";
 import AcheivementsContainer from "./components/AcheivementsContainer";
 import ContactMeIconTray from "./components/ContactMeIconTray";
-import { Box, HStack, Flex } from "@chakra-ui/react";
+import { HStack, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import ResumeComponent from "@/components/resume/ResumeCvComponent";
 
 // p1 aka mandatory for today
 // DONE: responsive design -> media querying
@@ -71,7 +70,7 @@ function App() {
 		>
 			<Flex direction="column" w="100%" maxW="1000px">
 				<MainHeader
-					isLoadingAnimationComplete={isLoadingAnimationComplete}
+					// isLoadingAnimationComplete={isLoadingAnimationComplete}
 					setIsLoadingAnimationComplete={setIsLoadingAnimationComplete}
 				/>
 				{loadRest && (

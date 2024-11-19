@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Box, Flex, Heading, Text, Link, SimpleGrid, Spacer, HStack, BoxProps } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Link, Spacer, BoxProps } from "@chakra-ui/react";
 
 type SectionProps = {
 	title: string;

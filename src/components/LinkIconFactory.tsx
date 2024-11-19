@@ -1,5 +1,5 @@
 import { chakra } from "@chakra-ui/react";
-import { ReactElement, ReactNode } from "react";
+import { ReactElement } from "react";
 import { USER_GITHUB_URL } from "@/components/ContactMeIconTray";
 interface ProjectIconLinkProps {
 	IconTemplate: ReactElement; // or ReactNode

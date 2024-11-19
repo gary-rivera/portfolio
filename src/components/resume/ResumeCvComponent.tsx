@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import ProfileSection from "./ProfileSection";
 import ExperienceSection from "./ExperienceSection";

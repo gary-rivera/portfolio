@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import ActionableTextHighlight from "@/components/ActionableTextHighlight";
 
 // styling
-import { chakra, Badge, Em, Flex, HStack, Icon, Image, Text, Spacer, Code } from "@chakra-ui/react";
+import { chakra, Badge, Flex, HStack, Icon, Image, Text, Spacer, Code } from "@chakra-ui/react";
 
 // icons
 import { FaNpm } from "react-icons/fa";
@@ -20,7 +20,8 @@ const GhIcon = chakra(FaGithub);
 const ExternalLinkIcon = chakra(FaExternalLinkAlt);
 const NpmIcon = chakra(FaNpm);
 
-const IconMap = {
+type IconKeys = "repo" | "npm" | "deployment";
+const IconMap: Record<IconKeys, typeof GhIcon | typeof NpmIcon | typeof ExternalLinkIcon> = {
 	repo: GhIcon,
 	npm: NpmIcon,
 	deployment: ExternalLinkIcon,
@@ -37,7 +38,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 	const iconItems = Object.entries(links)
 		.filter(([key, value]) => key in IconMap && value)
 		.map(([key, value]) => ({
-			IconComponent: IconMap[key],
+			IconComponent: IconMap[key as IconKeys],
 			href: value,
 			props: iconPropsMap[key] || {},
 		}));
@@ -57,7 +58,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 				<Flex align="center" justify="center">
 					<Image src={logoConfig[0]} alt="project-logo" h="auto" w={logoConfig[1].width} mt="1" mr="1" />
 
-					<ActionableTextHighlight children={name} externalLink={links.repo} />
+					<ActionableTextHighlight children={name} externalLink={links.repo || ""} />
 				</Flex>
 
 				<Flex direction="column" justify="start" m="0">
@@ -67,6 +68,7 @@ function ProjectCard({ project }: ProjectCardProps) {
 						{ title: "created", value: dayjs(createdAt).format("MMM YYYY") },
 					].map(({ title, value }) => (
 						<Code
+							// @ts-ignore // variant="none" is not in the types as of chakra v3 for some reason
 							variant="none"
 							fontWeight="300"
 							color="blackAlpha.500"

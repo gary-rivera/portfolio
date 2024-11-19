@@ -1,20 +1,17 @@
-import { chakra, HStack, Button, Image } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ReactNode } from "react";
 import "./ResumeIconDialog.css";
 import { createPortal } from "react-dom";
 import ResumeCvComponent from "./ResumeCvComponent";
 
 interface DialogProps {
-	children?: ReactNode;
 	isOpen?: boolean;
 	onClose: () => void;
 }
 
-function ResumeDialogContainer({ children, isOpen, onClose }: DialogProps) {
+function ResumeDialogContainer({ isOpen, onClose }: DialogProps) {
 	useEffect(() => {
-		function onKeyDown(event) {
+		function onKeyDown(event: KeyboardEvent) {
 			if (event.key === "Escape") {
 				onClose();
 			}

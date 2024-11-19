@@ -1,13 +1,22 @@
 import { chakra, HStack } from "@chakra-ui/react";
+
 import LinkedInTextSvg from "@/assets/icons/experience/linkedin-text-logo.svg?react";
-import GithubTextSvg from "@/assets/icons/experience/github-text-logo.svg?react";
+import GithubTextSvg from "../assets/icons/experience/github-text-logo.svg?react";
 import ResumeCVIconDialog from "./resume/ResumeIcon";
 // import SquareCVIcon from "@/assets/square-cv-online.svg?react";
 
 const USER_LINKEDIN_URL = "https://www.linkedin.com/in/gary-a-rivera/";
 export const USER_GITHUB_URL = "https://github.com/gary-rivera";
 
-const SocialIcon = ({ children, buttonProps, url }) => (
+import { ReactNode } from "react";
+
+interface SocialIconProps {
+	children: ReactNode;
+	buttonProps?: object;
+	url: string;
+}
+
+const SocialIcon = ({ children, buttonProps, url }: SocialIconProps) => (
 	<chakra.button
 		as="a"
 		// @ts-ignore

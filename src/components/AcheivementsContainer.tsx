@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from "react";
-import { Box, Em, Flex, Grid, GridItem, HStack, Tabs, VStack, Button } from "@chakra-ui/react";
+import { useState } from "react";
+import { HStack, VStack, Button } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import ExperienceContainer from "./experience/ExperienceContainer";
 import ProjectsContainer from "./projects/ProjectsContainer";

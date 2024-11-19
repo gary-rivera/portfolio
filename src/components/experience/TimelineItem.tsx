@@ -1,8 +1,8 @@
 import React, { forwardRef } from "react";
-import { chakra, Flex, Em, HStack, Heading, Box, Icon, GridItem, Grid, useRecipe, Text } from "@chakra-ui/react";
+import { Flex, Em, HStack, Heading, Box, Icon, GridItem, Grid, Text } from "@chakra-ui/react";
 import ActionableTextHighlight from "@/components/ActionableTextHighlight";
 import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
-import { CareerEvent, events } from "@/data/experience";
+import { CareerEvent } from "@/data/experience";
 import { LuTarget } from "react-icons/lu";
 import { HiAtSymbol } from "react-icons/hi";
 
@@ -10,13 +10,7 @@ type TimelineItemProps = {
 	event: CareerEvent;
 	index: number;
 	alternate: boolean;
-	a;
-	iconRef: React.RefObject<HTMLDivElement>;
-	distances: ({
-		distance: number | null;
-		horizontalDistance: number | null;
-		verticalDistance: number | null;
-	} | null)[];
+	distances: (Distance | null)[];
 };
 
 type ImpactEventCardProps = {
@@ -143,15 +137,7 @@ const TimelinePath = forwardRef<
 });
 TimelinePath.displayName = "TimelinePath";
 
-const TimelineItem = forwardRef<
-	HTMLDivElement,
-	{
-		event: any;
-		index: number;
-		alternate: boolean;
-		distances: (Distance | null)[];
-	}
->(({ event, index, alternate, distances }, ref) => {
+const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(({ event, index, alternate, distances }, ref) => {
 	const LayoutOfDateIconCard = (
 		<>
 			<GridItem //

@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
-import React, { useContext, useMemo, createContext, useState, useEffect, ReactNode } from "react";
+import { useContext, useMemo, createContext, useState, useEffect, ReactNode } from "react";
 import { useGitHubReposGQL } from "@/hooks/useGitHub";
-import type { GraphQlQueryResponseData } from "@octokit/graphql";
 import { ProjectCatalog, projectCatalogKeys, Projects, projectTagsConfig } from "@/data/projects";
 
 type ProjectsContextType = {

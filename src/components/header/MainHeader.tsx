@@ -1,16 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import NameTypingEffect from "./NameTypingEffect";
 import { Box, Text, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { halfWayLinesChakraStyle } from "@/utils/layoutHelper";
 
 type AppHeaderContainerProps = {
-	isLoadingAnimationComplete: boolean;
+	// isLoadingAnimationComplete: boolean;
 	setIsLoadingAnimationComplete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({
-	isLoadingAnimationComplete,
+	// isLoadingAnimationComplete,
 	setIsLoadingAnimationComplete,
 }) => {
 	const [isTypingEffectComplete, setIsTypingEffectComplete] = useState(false);

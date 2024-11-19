@@ -7,3 +7,4 @@ Quick snapshot of some of things I've done over the years
 - Vite v5.4.8
 - React v18
 - TypeScript v5.5.3
+- Chakra v3.1.0

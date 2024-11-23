@@ -75,7 +75,7 @@ const getRandomTypingSpeed = (wordIndex: number) => {
 	return Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
 };
 
-const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ isComplete, setIsComplete }) => {
+const NameTypingEffect: React.FC<NameTypingEffectProps> = ({ setIsComplete }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const words = useMemo(() => ["dingl", "gary r."], []);

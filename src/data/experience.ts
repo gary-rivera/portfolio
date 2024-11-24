@@ -37,9 +37,9 @@ export const events: CareerEvent[] = [
 		category: "milestone",
 	},
 	{
-		event: "Server migration",
+		event: "Cloud infrastructure migration",
 		date: "Oct 2022 → Jan 2023",
-		description: "Engineered a permissions framework for all internal API interactions.",
+		description: "Assisted in transitioning from DigitalOcean to AWS with zero down time.",
 		category: "impact",
 	},
 	{

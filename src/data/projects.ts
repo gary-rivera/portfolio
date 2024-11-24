@@ -66,14 +66,14 @@ export const ProjectCatalog: Projects = {
 			repo: GH_USER_LINK,
 		},
 	},
-	DeadMart: {
+	"dead-mart": {
 		active: true,
 
 		logoConfig: [deadlockIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
 		tags: [],
 		name: "DeadMart",
 		links: {
-			deployment: null, // TODO: open source + deploy
+			deployment: "https://gary-rivera.github.io/dead-mart",
 			repo: GH_USER_LINK,
 		},
 	},

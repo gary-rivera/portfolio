@@ -45,6 +45,7 @@ export const ProjectsProvider = ({ children }: { children: ReactNode }) => {
 				const { url, description, createdAt, name, defaultBranchRef, repositoryTopics } = value;
 				const tags = repositoryTopics?.edges.map((edge: any) => edge.node.topic.name) || [];
 				const sortedTags = sortProjectTags(tags);
+				if (!updatedProjects[name]) continue;
 				updatedProjects[name].links.repo = url;
 				updatedProjects[name] = {
 					...updatedProjects[name],

@@ -87,7 +87,6 @@ function App() {
 					</motion.div>
 					<motion.div variants={containerVariants}>
 						<ContactMeIconTray />
-					</motion.div>
 				</motion.div>
 			</Flex>
 		</HStack>

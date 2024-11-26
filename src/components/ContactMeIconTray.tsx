@@ -1,4 +1,4 @@
-import { chakra, HStack } from "@chakra-ui/react";
+import { chakra, HStack, Spacer } from "@chakra-ui/react";
 
 import LinkedInTextSvg from "@/assets/icons/experience/linkedin-text-logo.svg?react";
 import GithubTextSvg from "../assets/icons/experience/github-text-logo.svg?react";
@@ -26,7 +26,7 @@ const SocialIcon = ({ children, buttonProps, url }: SocialIconProps) => (
 		display="flex"
 		alignItems="center"
 		justifyContent="center"
-		color="blackAlpha.600"
+		color="blackAlpha.500"
 		h="100%"
 		w="3rem"
 		// px="1"
@@ -42,20 +42,24 @@ const SocialIcon = ({ children, buttonProps, url }: SocialIconProps) => (
 
 function ContactMeIconTray() {
 	return (
-		<HStack h="auto" gap="0.35rem" mt="2" w="min-content">
+		<HStack h="20px" gap="0.3rem" w="min-content" alignItems="center">
 			<SocialIcon
-				children={<LinkedInTextSvg fill="currentColor" width="100%" height="100%" />}
-				buttonProps={{ _hover: { color: "var(--primary-blue)" } }}
+				children={<LinkedInTextSvg fill="currentColor" width="100%" height="12px" />}
+				buttonProps={{ _hover: { color: "var(--primary-blue)" }, w: "3rem" }}
 				url={USER_LINKEDIN_URL}
 			/>
+			<Spacer h="inherit" borderRadius="full" borderRight="1.5px solid" borderColor="blackAlpha.500" />
+
 			<SocialIcon
-				children={<GithubTextSvg fill="currentColor" width="100%" height="100%" />}
+				children={<GithubTextSvg fill="currentColor" width="100%" height="12px" />}
 				buttonProps={{
-					w: "2.2rem",
-					// border: "1px solid green"
+					w: "2.1rem",
+					// outline: "1px solid green",
 				}}
 				url={USER_GITHUB_URL}
 			/>
+			<Spacer h="inherit" borderRadius="full" borderRight="1.5px solid" borderColor="blackAlpha.500" />
+
 			<ResumeCVIconDialog />
 
 			{/* email icon? */}

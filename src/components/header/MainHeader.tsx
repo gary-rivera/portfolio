@@ -2,7 +2,7 @@ import { useState } from "react";
 import NameTypingEffect from "./NameTypingEffect";
 import { Box, Text, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-
+import ContactMeIconTray from "@/components/ContactMeIconTray";
 type AppHeaderContainerProps = {
 	setIsLoadingAnimationComplete: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -30,7 +30,7 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({ setIsLoadingAni
 		<Flex
 			h="10vh"
 			w="fit-content"
-			px="3"
+			// px="3"
 			position="relative"
 			direction="column"
 			justify="center"
@@ -38,20 +38,20 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({ setIsLoadingAni
 			alignSelf="flex-start"
 		>
 			{/* vertical bar */}
-			{isTypingEffectComplete && (
+			{/* {isTypingEffectComplete && (
 				<motion.div
 					style={{
 						position: "absolute",
 						left: 0,
-						top: 0,
-						height: "100%",
-						width: "4px",
+						bottom: -5,
+						width: "100%",
+						height: "4px",
 						backgroundColor: "rgba(8, 145, 178, 0.7)",
 					}}
 					initial={flipUpStyles.initial}
 					animate={flipUpStyles.animate}
 				/>
-			)}
+			)} */}
 			{/* text container */}
 			<Flex
 				width="100%"
@@ -61,6 +61,7 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({ setIsLoadingAni
 				justifyContent="center"
 				alignItems="start"
 				mt={["0.5rem", "0.5rem", "0.3rem", "0.3rem"]}
+				gap={1}
 			>
 				<NameTypingEffect
 					isComplete={isTypingEffectComplete}
@@ -71,19 +72,15 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({ setIsLoadingAni
 				/>
 
 				{/* Sub-header */}
-				<Box h="50%">
-					{isTypingEffectComplete && (
-						<motion.div
-							style={{ display: "inline-block" }}
-							initial={flipUpStyles.initial}
-							animate={flipUpStyles.animate}
-						>
-							<Text color="blackAlpha.700" fontSize={["0.7rem", "sm", "md"]}>
-								just some dweeb pretending to know what they're doing.
-							</Text>
-						</motion.div>
-					)}
-				</Box>
+
+				{isTypingEffectComplete && (
+					<motion.div style={{ display: "inline-block" }} initial={flipUpStyles.initial} animate={flipUpStyles.animate}>
+						<Text color="blackAlpha.500" fontSize={["0.7rem", "sm", "md"]} fontWeight="600" letterSpacing={1}>
+							software & design & games & keyboards
+						</Text>
+						<ContactMeIconTray />
+					</motion.div>
+				)}
 			</Flex>
 		</Flex>
 	);

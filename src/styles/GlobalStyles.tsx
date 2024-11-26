@@ -5,16 +5,16 @@ const GlobalStyles = () => {
 		<Global
 			styles={{
 				"html, body": {
-					height: "100%",
 					margin: 0,
 					padding: 0,
 					minHeight: "auto",
-					overflowY: "hidden",
 					scrollbarWidth: "none",
 					scrollbarColor: "red",
 					color: "black",
+					fontFamily: "Inter Variable",
 				},
 				":root": {
+					position: "relative",
 					backgroundColor: "#faedd0",
 					color: "black",
 					WebkitFontSmoothing: "antialiased",

@@ -11,14 +11,14 @@ import { motion } from "framer-motion";
 // p2 aka mandatory for release
 // DONE: update repo descriptions and add topics too
 // DONE: hook up links for projects + conditional render of icons controller
-// WIP: find/make better icons for projects (outsource?)
+// DONE: find/make better icons for projects (outsource?)
 // DONE: finalize the onload animations. loadtimes are a bit slow rn
 
 // p3 aka low hanging fruit
 // TODO: add some flare/love to the ProjectCard's. Feels lacking in comparison
 // TODO: remove all `type: any`
 // DONE: add iconRef for height differential on TimelinePath offset (static to 20px rn)
-// TODO: assets/icons cleanup or optimize?
+// DONE: assets/icons cleanup or optimize?
 // DONE: HAVE TO -_- redo navtab UI for selecting tab. underline on current tab and opaque background too UNTIL other tab is hovered, then animate that opaque background to the hovered tab.
 // TODO: memoize the tabs content so that it doesn't rerender on tab switch
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import NameTypingEffect from "./NameTypingEffect";
-import { Text, Flex } from "@chakra-ui/react";
+import { Box, Text, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import ContactMeIconTray from "@/components/ContactMeIconTray";
 type AppHeaderContainerProps = {
@@ -72,15 +72,20 @@ const AppHeaderContainer: React.FC<AppHeaderContainerProps> = ({ setIsLoadingAni
 				/>
 
 				{/* Sub-header */}
-
-				{isTypingEffectComplete && (
-					<motion.div style={{ display: "inline-block" }} initial={flipUpStyles.initial} animate={flipUpStyles.animate}>
-						<Text color="blackAlpha.500" fontSize={["0.7rem", "sm", "md"]} fontWeight="600" letterSpacing={1}>
-							software & design & games & keyboards
-						</Text>
-						<ContactMeIconTray />
-					</motion.div>
-				)}
+				<Box h="50%">
+					{isTypingEffectComplete && (
+						<motion.div
+							style={{ display: "inline-block" }}
+							initial={flipUpStyles.initial}
+							animate={flipUpStyles.animate}
+						>
+							<Text color="blackAlpha.500" fontSize={["0.7rem", "sm", "md"]} fontWeight="600" letterSpacing={1}>
+								software & design & games & keyboards
+							</Text>
+							<ContactMeIconTray />
+						</motion.div>
+					)}
+				</Box>
 			</Flex>
 		</Flex>
 	);

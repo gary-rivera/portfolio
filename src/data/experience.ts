@@ -39,7 +39,7 @@ export const events: CareerEvent[] = [
 	{
 		event: "Cloud infrastructure migration",
 		date: "Oct 2022 → Jan 2023",
-		description: "Assisted in transitioning from DigitalOcean to AWS with zero down time.",
+		description: "Assisted in transitioning from DigitalOcean to AWS. Did it with zero down time.",
 		category: "impact",
 	},
 	{

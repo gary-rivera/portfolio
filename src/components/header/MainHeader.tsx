@@ -1,6 +1,6 @@
 import { useState } from "react";
 import NameTypingEffect from "./NameTypingEffect";
-import { Box, Text, Flex } from "@chakra-ui/react";
+import { Text, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import ContactMeIconTray from "@/components/ContactMeIconTray";
 type AppHeaderContainerProps = {

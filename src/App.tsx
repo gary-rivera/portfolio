@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import MainHeader from "./components/header/MainHeader";
 import AcheivementsContainer from "./components/AcheivementsContainer";
-import ContactMeIconTray from "./components/ContactMeIconTray";
 import { HStack, Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 

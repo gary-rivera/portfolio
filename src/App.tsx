@@ -69,6 +69,7 @@ function App() {
 			justifyContent="center"
 			w="100vw"
 			px={["1rem", "1.5rem", "2rem", "3rem"]}
+			fontFamily={"Inter"}
 		>
 			<Flex direction="column" w="100%" maxW="1000px" h="100%" justifyContent="center" zIndex="1">
 				<MainHeader setIsLoadingAnimationComplete={setIsLoadingAnimationComplete} />
@@ -85,8 +86,6 @@ function App() {
 					<motion.div variants={containerVariants}>
 						<AcheivementsContainer />
 					</motion.div>
-					<motion.div variants={containerVariants}>
-						<ContactMeIconTray />
 				</motion.div>
 			</Flex>
 		</HStack>

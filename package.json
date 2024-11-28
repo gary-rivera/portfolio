@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@chakra-ui/react": "^3.1.1",
 		"@emotion/react": "^11.13.3",
+		"@fontsource-variable/inter": "^5.1.0",
 		"@octokit/graphql": "^8.1.1",
 		"@octokit/openapi-types": "^22.2.0",
 		"@tippyjs/react": "^4.2.6",

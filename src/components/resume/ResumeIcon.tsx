@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { chakra } from "@chakra-ui/react";
 import ResumeCvBoxSvg from "@/assets/icons/experience/resume-cv-box.svg?react";
-
+import ResumeCvSquareSvg from "@/assets/icons/experience/resume-cv-square.svg?react";
 import ResumeDialogContainer from "./ResumeDialogContainer";
 
 function ResumeIcon() {
@@ -10,17 +10,18 @@ function ResumeIcon() {
 	return (
 		<>
 			<chakra.button
-				color="blackAlpha.600"
+				color="blackAlpha.500"
 				py="0.5"
 				m="0"
 				p="0"
-				h="24px"
+				h="18px"
 				w="auto"
 				_hover={{ color: "blackAlpha.950", cursor: "pointer" }}
 				onClick={() => setDialogOpen(true)}
 			>
-				<ResumeCvBoxSvg
-					fill="currentColor"
+				<ResumeCvSquareSvg
+					fill="none"
+					stroke="currentColor"
 					style={{
 						width: "inherit",
 						height: "inherit",

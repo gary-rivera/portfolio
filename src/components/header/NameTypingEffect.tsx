@@ -62,7 +62,7 @@ const reducer = (state: State, action: Action): State => {
 
 const getTypingSpeedForWord = (wordIndex: number) => {
 	if (wordIndex === 0) {
-		return { minSpeed: 30, maxSpeed: 65 };
+		return { minSpeed: 40, maxSpeed: 85 };
 	}
 	if (wordIndex === 1) {
 		return { minSpeed: 90, maxSpeed: 130 };

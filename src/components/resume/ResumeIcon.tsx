@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { chakra } from "@chakra-ui/react";
-import ResumeCvBoxSvg from "@/assets/icons/experience/resume-cv-box.svg?react";
 import ResumeCvSquareSvg from "@/assets/icons/experience/resume-cv-square.svg?react";
 import ResumeDialogContainer from "./ResumeDialogContainer";
 

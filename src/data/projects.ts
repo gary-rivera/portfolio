@@ -93,7 +93,7 @@ export const ProjectCatalog: Projects = {
 
 		logoConfig: [garyFlappyIcon, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
 		tags: [],
-		name: "Flappy JS",
+		name: "Snaily JS",
 		links: {
 			deployment: "https://gary-rivera.github.io/flappy-js/",
 			repo: GH_USER_LINK,

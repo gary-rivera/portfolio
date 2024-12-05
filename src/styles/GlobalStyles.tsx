@@ -24,13 +24,17 @@ const GlobalStyles = () => {
 					"--secondary-bg-color": "rgba(173, 216, 230, 1)",
 				},
 				":root::before": {
+					content: '""',
 					position: "absolute",
 					width: "-webkit-fill-available",
 					height: "-webkit-fill-available",
-					content: '""',
-					backgroundImage:
-						"linear-gradient(to right, var(--secondary-bg-color) 1px, transparent 2px), linear-gradient(to bottom, var(--secondary-bg-color) 1px, transparent 2px)",
-					backgroundSize: "25px 25px",
+					backgroundImage: `
+						linear-gradient(to right, var(--secondary-bg-color) 1px, transparent 1px),
+						linear-gradient(to bottom, var(--secondary-bg-color) 1px, transparent 1px),
+						linear-gradient(to right, var(--secondary-bg-color) 1px, transparent 2.5px),
+						linear-gradient(to bottom, var(--secondary-bg-color) 1px, transparent 2.5px)
+					`,
+					backgroundSize: "25px 25px, 25px 25px, 100px 100px, 100px 100px",
 					filter: "blur(0.05rem) opacity(0.5)",
 				},
 			}}

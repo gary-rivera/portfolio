@@ -1,4 +1,4 @@
-import employers from "@/components/Employers";
+import { employers } from "@/data/employers";
 
 export type CareerEvent = {
 	event: string;
@@ -8,9 +8,9 @@ export type CareerEvent = {
 	description?: string;
 	date: string;
 	origin?: string;
-	icon?: any;
+	iconSrc?: string;
 	attributes?: { attribute: string; colorScheme: string }[];
-	category: "milestone" | "achievement" | "impact"; // NOTE: conditional rendering controller for how the card looks + what values the card is expecting
+	category: "milestone" | "achievement" | "impact";
 };
 
 export const events: CareerEvent[] = [
@@ -33,7 +33,7 @@ export const events: CareerEvent[] = [
 		date: "Feb 2024 → Sep 2024",
 		description: "Corporate merger between Extra and Orchard.",
 		origin: employers.orchard.url,
-		icon: employers.orchard.icon,
+		iconSrc: employers.orchard.iconSrc,
 		category: "milestone",
 	},
 	{
@@ -56,7 +56,7 @@ export const events: CareerEvent[] = [
 		date: "Aug 2022",
 
 		origin: employers.extra.url,
-		icon: employers.extra.icon,
+		iconSrc: employers.extra.iconSrc,
 		category: "milestone",
 	},
 	{
@@ -80,7 +80,7 @@ export const events: CareerEvent[] = [
 		companyDescription: employers.extra.description,
 		date: "Sep 2021 → Sep 2024",
 		origin: employers.extra.url,
-		icon: employers.extra.icon,
+		iconSrc: employers.extra.iconSrc,
 		category: "achievement",
 		attributes: [
 			{
@@ -96,7 +96,7 @@ export const events: CareerEvent[] = [
 		companyDescription: employers.knowCap.description,
 		date: "Aug 2021 → Sep 2021",
 		origin: employers.knowCap.url,
-		icon: employers.knowCap.icon,
+		iconSrc: employers.knowCap.iconSrc,
 		category: "achievement",
 	},
 	{
@@ -106,7 +106,7 @@ export const events: CareerEvent[] = [
 		companyDescription: employers.numbersApi.description,
 		date: "Jul 2021",
 		origin: employers.numbersApi.url,
-		icon: employers.numbersApi.icon,
+		iconSrc: employers.numbersApi.iconSrc,
 		category: "achievement",
 	},
 	{
@@ -116,21 +116,7 @@ export const events: CareerEvent[] = [
 		companyDescription: employers.rithmSchool.description,
 		date: "Jul 2021",
 		origin: employers.rithmSchool.url,
-		icon: employers.rithmSchool.icon,
+		iconSrc: employers.rithmSchool.iconSrc,
 		category: "achievement",
 	},
 ];
-/*
-standout career acheivemnts:
-- Add ruio package released on npm as an achievement
-- Coding-bootcamp: https://www.notion.so/Coding-Bootcamp-Rithm-ddc02225a16b48a8911d6cebed143ee2
-- Numbers API internship: June 2021
-- KnowledgeCapital freelancing: Aug 2021 - Sep 2021
-- when i started Extra: https://www.notion.so/Hired-Extra-Card-a272e5dfc80c4985a2c217ebc175e0e0
-- combine Extra Academy + Backen office hours
-- promotion to Core Software Engineer
-- promotion to Senior Software Engineer
-- assist in database migration from D0 to AWS
-- "As part of Extra's aquirement, integrated a pipeline to bridge success-story customers to the Orchard's mortgage platform"
-- started a
-*/

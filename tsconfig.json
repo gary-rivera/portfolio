@@ -34,5 +34,5 @@
 	},
 	// "files": ["src"], // Entry point of the application
 	"include": ["src"],
-	"exclude": ["node_modules", "dist"] // Exclude `dist` folder to prevent reprocessing
+	"exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx", "src/test-setup.ts"] // Exclude `dist` folder to prevent reprocessing
 }

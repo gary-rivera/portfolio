@@ -1,68 +1,51 @@
-import { Image, Icon } from "@chakra-ui/react";
+import extraLogo from "@/assets/icons/experience/extra-logo-mini.svg";
+import orchardLogo from "@/assets/icons/experience/orchard-logo-mini.png";
+import companyAvatarPlaceholder from "@/assets/icons/company-avatar-placeholder.svg";
 
-import ExtraLogoMiniSvg from "@/assets/icons/experience/extra-logo-mini.svg?react";
-import OrchardLogoMiniPng from "@/assets/icons/experience/orchard-logo-mini.png";
-import CompanyAvatarPlaceholderSvg from "@/assets/icons/company-avatar-placeholder.svg?react";
+export interface Employer {
+	shortName: string;
+	companyName: string;
+	description: string;
+	url: string;
+	iconSrc: string;
+}
 
-const ExtraIcon = () => (
-	<Icon asChild h="18px" w="auto">
-		{<ExtraLogoMiniSvg />}
-	</Icon>
-);
-const OrchardIcon = () => (
-	<Image
-		src={OrchardLogoMiniPng}
-		alt="orchard-logo"
-		h="18px"
-		w="auto"
-		outline="1px solid rgba(255, 255, 255, 0.5)"
-		borderRadius="sm"
-		m="0"
-		p="0"
-	/>
-);
-const PlaceholderIcon = () => (
-	<Icon asChild h="18px" w="auto" color="blackAlpha.600">
-		{<CompanyAvatarPlaceholderSvg fill="white" />}
-	</Icon>
-);
+export type EmployerKey = "orchard" | "extra" | "knowCap" | "numbersApi" | "rithmSchool";
 
-const employers = {
+export const employers: Record<EmployerKey, Employer> = {
 	orchard: {
 		shortName: "Orchard",
 		companyName: "Orchard Mortgage",
 		description: "Fintech company that simplifies the home buying process from start to finish.",
 		url: "https://orchard.com/",
-		icon: <OrchardIcon />,
+		iconSrc: orchardLogo,
 	},
 	extra: {
 		shortName: "Extra",
 		companyName: "Extra Card",
 		description: "Debit card that helps you build credit, all the while aiming to uplift the financially underserved.",
 		url: "https://extra.app/",
-		icon: <ExtraIcon />,
+		iconSrc: extraLogo,
 	},
 	knowCap: {
 		shortName: "KnowCap.io",
 		companyName: "KnowledgeCaptial",
 		description: "Startup Accelerator driving faster MVP development and market entry for early-stage founders.",
 		url: "https://www.knowcap.io/",
-		icon: <PlaceholderIcon />,
+		iconSrc: companyAvatarPlaceholder,
 	},
 	numbersApi: {
 		shortName: "Numbers API",
 		companyName: "Numbers API",
 		description: "A free API for trivia facts about numbers.",
 		url: "http://numbersapi.com/#42",
-		icon: <PlaceholderIcon />,
+		iconSrc: companyAvatarPlaceholder,
 	},
 	rithmSchool: {
 		shortName: "Rithm",
 		companyName: "Rithm School",
 		description: "Fullstack Coding Bootcamp.",
 		url: "https://www.rithmschool.com/",
-		icon: <PlaceholderIcon />,
+		iconSrc: companyAvatarPlaceholder,
 	},
 };
-
-export default employers;

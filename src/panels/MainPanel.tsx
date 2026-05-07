@@ -1,5 +1,6 @@
 import type { SectionId } from "@/app/routes";
 import { About } from "@/sections/About";
+import { Experience } from "@/sections/Experience";
 
 interface MainPanelProps {
   activeSection: SectionId;
@@ -13,7 +14,7 @@ export function MainPanel({ activeSection, bootComplete }: MainPanelProps) {
         ~/<span className="text-text">{activeSection}</span>
       </div>
       {activeSection === "about" && <About ready={bootComplete} />}
-      {activeSection === "experience" && <div className="text-text-muted text-sm">experience placeholder</div>}
+      {activeSection === "experience" && <Experience />}
       {activeSection === "projects" && <div className="text-text-muted text-sm">projects placeholder</div>}
       {activeSection === "contact" && <div className="text-text-muted text-sm">contact placeholder</div>}
     </main>

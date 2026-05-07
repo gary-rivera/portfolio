@@ -32,4 +32,9 @@ describe("buildCommands", () => {
     const viewCmds = cmds.filter((c) => c.id.startsWith("view-"));
     expect(viewCmds.length).toBeGreaterThan(0);
   });
+
+  it("includes a download-resume action command", () => {
+    const cmds = buildCommands(ctx);
+    expect(cmds.find((c) => c.id === "download-resume")).toBeDefined();
+  });
 });

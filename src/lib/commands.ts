@@ -73,6 +73,14 @@ export function buildCommands(ctx: CommandContext): Command[] {
     });
   }
 
+  actions.push({
+    id: "download-resume",
+    label: "download resume",
+    hint: "/resume.pdf",
+    group: "action",
+    run: () => ctx.openExternal("/resume.pdf"),
+  });
+
   // Slot for easter-egg commands. Add new entries to `easterEggs` later.
   const easterEggs: Command[] = [];
 

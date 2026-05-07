@@ -5,6 +5,7 @@ import { MainPanel } from "@/panels/MainPanel";
 import { ActivityPane } from "@/panels/ActivityPane";
 import { LinksPane } from "@/panels/LinksPane";
 import { CommandPrompt } from "@/panels/CommandPrompt";
+import { ResumeDialog } from "@/components/ResumeDialog";
 
 export function App() {
   const { activeSection, setActiveSection } = useActiveSection();
@@ -36,11 +37,7 @@ export function App() {
         clearInput={() => {}}
       />
 
-      {resumeOpen && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center" onClick={() => setResumeOpen(false)}>
-          <div className="bg-surface-1 border border-border p-6 text-text">resume placeholder</div>
-        </div>
-      )}
+      <ResumeDialog open={resumeOpen} onOpenChange={setResumeOpen} />
     </div>
   );
 }

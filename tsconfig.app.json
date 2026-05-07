@@ -24,7 +24,10 @@
 		"strict": true, // Enforces strict type checks
 		"noUnusedLocals": true, // Warns about unused variables
 		"noUnusedParameters": true, // Warns about unused function parameters
-		"noFallthroughCasesInSwitch": true // Prevents accidental fallthrough in switch cases
+		"noFallthroughCasesInSwitch": true, // Prevents accidental fallthrough in switch cases
+
+		/* Testing */
+		"types": ["vitest/globals", "@testing-library/jest-dom"]
 	},
-	"include": ["src", "src/styles/theme.ts"]
+	"include": ["src", "src/test-setup.ts"]
 }

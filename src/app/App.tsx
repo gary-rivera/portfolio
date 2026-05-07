@@ -4,6 +4,7 @@ import { Sidebar } from "@/panels/Sidebar";
 import { MainPanel } from "@/panels/MainPanel";
 import { ActivityPane } from "@/panels/ActivityPane";
 import { LinksPane } from "@/panels/LinksPane";
+import { CommandPrompt } from "@/panels/CommandPrompt";
 
 export function App() {
   const { activeSection, setActiveSection } = useActiveSection();
@@ -28,10 +29,12 @@ export function App() {
         </div>
       </div>
 
-      <footer className="sticky bottom-0 border-t border-border bg-surface-1 px-4 py-2 text-sm">
-        <span className="text-accent">→</span>{" "}
-        <span className="text-text-muted">command prompt placeholder</span>
-      </footer>
+      <CommandPrompt
+        setActiveSection={setActiveSection}
+        openResume={() => setResumeOpen(true)}
+        openExternal={(href) => window.open(href, "_blank", "noopener")}
+        clearInput={() => {}}
+      />
 
       {resumeOpen && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center" onClick={() => setResumeOpen(false)}>

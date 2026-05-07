@@ -68,3 +68,8 @@ html, body {
 .animate-blink {
   animation: blink 1s steps(1, end) infinite;
 }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

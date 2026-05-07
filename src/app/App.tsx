@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { Sidebar } from "@/panels/Sidebar";
 import { MainPanel } from "@/panels/MainPanel";
+import { ActivityPane } from "@/panels/ActivityPane";
+import { LinksPane } from "@/panels/LinksPane";
 
 export function App() {
   const { activeSection, setActiveSection } = useActiveSection();
@@ -20,12 +22,8 @@ export function App() {
           <MainPanel activeSection={activeSection} bootComplete={true} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 border-t border-border">
-            <section className="p-3 border-b md:border-b-0 md:border-r border-border bg-surface-1">
-              <div className="text-text-dim text-xs tracking-widest">ACTIVITY</div>
-            </section>
-            <section className="p-3 bg-surface-1">
-              <div className="text-text-dim text-xs tracking-widest">LINKS</div>
-            </section>
+            <ActivityPane />
+            <LinksPane onOpenResume={() => setResumeOpen(true)} />
           </div>
         </div>
       </div>

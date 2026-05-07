@@ -1,0 +1,61 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist-mono";
+
+@theme {
+  --color-bg: #0A1014;
+  --color-surface-1: #101820;
+  --color-surface-2: #16222C;
+  --color-border: #243240;
+  --color-text: #DCE7EE;
+  --color-text-muted: #7E8E9A;
+  --color-text-dim: #4A5764;
+  --color-accent: #3FE0C8;
+  --color-accent-muted: #1A6A60;
+  --color-pip: #FF4D88;
+
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-panel: 4px;
+  --radius-control: 2px;
+  --container-max: 1440px;
+}
+
+/* shadcn semantic mappings — primitives auto-inherit our palette */
+:root {
+  --background: var(--color-bg);
+  --foreground: var(--color-text);
+  --card: var(--color-surface-1);
+  --card-foreground: var(--color-text);
+  --popover: var(--color-surface-1);
+  --popover-foreground: var(--color-text);
+  --primary: var(--color-accent);
+  --primary-foreground: var(--color-bg);
+  --secondary: var(--color-surface-2);
+  --secondary-foreground: var(--color-text);
+  --muted: var(--color-surface-1);
+  --muted-foreground: var(--color-text-muted);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-bg);
+  --destructive: var(--color-pip);
+  --destructive-foreground: var(--color-text);
+  --border: var(--color-border);
+  --input: var(--color-border);
+  --ring: var(--color-accent);
+  --radius: var(--radius-panel);
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-feature-settings: "ss01", "cv11";
+}
+
+* { border-color: var(--color-border); }
+
+::selection { background: var(--color-accent-muted); color: var(--color-text); }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-surface-2); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-border); }

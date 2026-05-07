@@ -1,10 +1,7 @@
 import { Tree } from "@/components/Tree";
+import { PINNED_LINKS } from "@/data/links";
 
-const CONTACT_ITEMS = [
-  { label: "email", value: "gary.rivera@hyperfi.ai", href: "mailto:gary.rivera@hyperfi.ai" },
-  { label: "github", value: "@gary-rivera", href: "https://github.com/gary-rivera" },
-  { label: "linkedin", value: "in/<TBD>", href: "#" /* TODO: replace with real LinkedIn URL */ },
-];
+const CONTACT_ITEMS = PINNED_LINKS.filter((l) => l.href);
 
 export function Contact() {
   return (
@@ -13,7 +10,7 @@ export function Contact() {
       <Tree>
         {CONTACT_ITEMS.map((item, i) => (
           <Tree.Item
-            key={item.label}
+            key={item.id}
             isLast={i === CONTACT_ITEMS.length - 1}
             onClick={() => window.open(item.href, "_blank", "noopener")}
           >

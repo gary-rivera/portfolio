@@ -1,18 +1,12 @@
 import { Tree } from "@/components/Tree";
 import { SECTIONS, type SectionId } from "@/app/routes";
+import { PINNED_LINKS } from "@/data/links";
 
 interface SidebarProps {
   activeSection: SectionId;
   onSelectSection: (id: SectionId) => void;
   onOpenResume: () => void;
 }
-
-const PINNED = [
-  { id: "resume", label: "resume.pdf", action: "resume" as const },
-  { id: "github", label: "github", href: "https://github.com/gary-rivera" },
-  { id: "linkedin", label: "linkedin", href: "#" /* TODO: replace with real LinkedIn URL */ },
-  { id: "email", label: "email", href: "mailto:gary.rivera@hyperfi.ai" },
-];
 
 const STACK = ["react", "typescript", "vite", "node", "tailwind"];
 
@@ -38,9 +32,9 @@ export function Sidebar({ activeSection, onSelectSection, onOpenResume }: Sideba
 
       <div className="text-accent text-xs tracking-widest mb-2">★ PINNED</div>
       <Tree className="mb-6">
-        {PINNED.map((item, i) => {
-          const isLast = i === PINNED.length - 1;
-          if (item.action === "resume") {
+        {PINNED_LINKS.map((item, i) => {
+          const isLast = i === PINNED_LINKS.length - 1;
+          if (item.action === "open-resume") {
             return (
               <Tree.Item key={item.id} isLast={isLast} onClick={onOpenResume}>
                 {item.label}

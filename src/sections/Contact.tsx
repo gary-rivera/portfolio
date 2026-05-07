@@ -1,7 +1,7 @@
 import { Tree } from "@/components/Tree";
 import { PINNED_LINKS } from "@/data/links";
 
-const CONTACT_ITEMS = PINNED_LINKS.filter((l) => l.href);
+const CONTACT_ITEMS = PINNED_LINKS.filter((l) => l.href && l.href !== "#");
 
 export function Contact() {
   return (

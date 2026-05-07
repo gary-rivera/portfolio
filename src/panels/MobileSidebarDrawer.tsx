@@ -1,4 +1,4 @@
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Sidebar } from "./Sidebar";
 import type { SectionId } from "@/app/routes";
 
@@ -20,8 +20,9 @@ export function MobileSidebarDrawer({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="fixed inset-y-0 left-0 right-auto h-full max-w-[280px] w-[80vw] bg-surface-1 border-r border-border p-0 translate-x-0 translate-y-0 top-0 left-0 rounded-none"
+        className="fixed inset-y-0 left-0 right-auto h-full max-w-[280px] w-[80vw] bg-surface-1 border-r border-border p-0 rounded-none top-0 transition-transform duration-200 data-[state=open]:animate-none data-[state=closed]:animate-none data-[state=closed]:-translate-x-full"
       >
+        <DialogTitle className="sr-only">Navigation</DialogTitle>
         <Sidebar
           activeSection={activeSection}
           onSelectSection={(id) => {

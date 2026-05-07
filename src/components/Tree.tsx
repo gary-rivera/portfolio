@@ -25,6 +25,14 @@ function TreeItem({ children, isLast = false, active = false, indent = 0, onClic
   return (
     <li
       onClick={onClick}
+      tabIndex={onClick ? 0 : -1}
+      onKeyDown={(e) => {
+        if (onClick && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          onClick();
+        }
+      }}
+      role={onClick ? "button" : undefined}
       className={cn(
         "flex items-center gap-1 cursor-default select-none",
         active

@@ -7,7 +7,7 @@ import garyFlappyIcon from "@/assets/icons/projects/flappy-js-logo.png";
 
 const GH_USER_LINK = "https://github.com/gary-rivera";
 export type Project = {
-	logoConfig: [string, { height: number | string; width: number | string | any[] }];
+	logoConfig: [string, { height: number | string; width: number | string | (number | string)[] }];
 	name: string;
 	links: {
 		npm?: string | null;

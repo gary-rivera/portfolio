@@ -3,7 +3,7 @@ import { Command } from "cmdk";
 import { BlinkCursor } from "@/components/BlinkCursor";
 import { buildCommands, type CommandContext } from "@/lib/commands";
 
-interface CommandPromptProps extends CommandContext {}
+type CommandPromptProps = CommandContext;
 
 export function CommandPrompt(ctx: CommandPromptProps) {
   const [open, setOpen] = useState(false);

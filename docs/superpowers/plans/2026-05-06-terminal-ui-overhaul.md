@@ -10,6 +10,8 @@
 
 **Spec:** `docs/superpowers/specs/2026-05-06-terminal-ui-overhaul-design.md`
 
+> **Implementing agent — read this before starting:** the spec contains a "Context for fresh agents" section near the bottom with the full decision log, alternatives considered, library motivations, existing data shapes, concrete identity values, and the list of things that were intentionally wiped. Skim that section first — it answers most "why" questions and tells you what shapes to expect in the data files. The plan below assumes you've read it.
+
 ---
 
 ## Pre-flight
@@ -18,14 +20,20 @@ The project is at `/Users/gr/dev/portfolio`. Current branch is `main`, working t
 
 Tasks below assume you start each command from the project root unless stated otherwise.
 
+**Identity values (also in the spec):** name = Gary Rivera, email = `gary.rivera@hyperfi.ai`, GitHub = `https://github.com/gary-rivera`, LinkedIn = TBD (the plan uses `#` as a placeholder; a code-level TODO marks the line). Title = `software engineer · ny`. Resume PDF lives at `/resume.pdf` (place an actual PDF in `public/` later — link will 404 until then; that's fine).
+
 ---
 
 ## Phase 1 — Foundation
 
-### Task 1: Cut branch and wipe legacy source
+### Task 1: Cut branch, refactor Employers to data, then wipe legacy source
+
+**Critical:** `src/data/experience.ts` imports `employers` from `src/components/Employers.tsx`, which is Chakra-coupled. Wiping `src/components/` without first relocating `Employers` would leave `experience.ts` broken. We refactor it to a pure data file FIRST.
 
 **Files:**
-- Delete: `src/components/`, `src/context/`, `src/styles/`, `src/utils/`, `src/services/`, `src/App.tsx`, `src/main.tsx`
+- Create: `src/data/employers.ts` (pure data — no Chakra)
+- Modify: `src/data/experience.ts` (update import + flatten icon usage)
+- Delete: `src/components/`, `src/context/`, `src/styles/`, `src/utils/`, `src/services/`, `src/App.tsx`, `src/main.tsx`, `src/hooks/useDistanceBetweenElements.ts.tsx`
 - Keep: `src/data/`, `src/assets/`, `src/hooks/useGitHub.ts`, `index.html`, `tsconfig*.json`, `vite.config.ts`, `eslint.config.js`, `.prettierrc`
 
 - [ ] **Step 1: Cut and switch to a new branch**
@@ -34,30 +42,118 @@ Tasks below assume you start each command from the project root unless stated ot
 git checkout -b overhaul/terminal-ui
 ```
 
-- [ ] **Step 2: Delete legacy source directories and entry files**
+- [ ] **Step 2: Create `src/data/employers.ts` (pure data, asset paths as strings)**
+
+```ts
+// src/data/employers.ts
+import extraLogo from "@/assets/icons/experience/extra-logo-mini.svg";
+import orchardLogo from "@/assets/icons/experience/orchard-logo-mini.png";
+import companyAvatarPlaceholder from "@/assets/icons/company-avatar-placeholder.svg";
+
+export interface Employer {
+  shortName: string;
+  companyName: string;
+  description: string;
+  url: string;
+  iconSrc: string;
+}
+
+export type EmployerKey = "orchard" | "extra" | "knowCap" | "numbersApi" | "rithmSchool";
+
+export const employers: Record<EmployerKey, Employer> = {
+  orchard: {
+    shortName: "Orchard",
+    companyName: "Orchard Mortgage",
+    description: "Fintech company that simplifies the home buying process from start to finish.",
+    url: "https://orchard.com/",
+    iconSrc: orchardLogo,
+  },
+  extra: {
+    shortName: "Extra",
+    companyName: "Extra Card",
+    description: "Debit card that helps you build credit, all the while aiming to uplift the financially underserved.",
+    url: "https://extra.app/",
+    iconSrc: extraLogo,
+  },
+  knowCap: {
+    shortName: "KnowCap.io",
+    companyName: "KnowledgeCaptial",
+    description: "Startup Accelerator driving faster MVP development and market entry for early-stage founders.",
+    url: "https://www.knowcap.io/",
+    iconSrc: companyAvatarPlaceholder,
+  },
+  numbersApi: {
+    shortName: "Numbers API",
+    companyName: "Numbers API",
+    description: "A free API for trivia facts about numbers.",
+    url: "http://numbersapi.com/#42",
+    iconSrc: companyAvatarPlaceholder,
+  },
+  rithmSchool: {
+    shortName: "Rithm",
+    companyName: "Rithm School",
+    description: "Fullstack Coding Bootcamp.",
+    url: "https://www.rithmschool.com/",
+    iconSrc: companyAvatarPlaceholder,
+  },
+};
+```
+
+- [ ] **Step 3: Update `src/data/experience.ts` to import from the new data location and remove the `icon` field type (Chakra-bound)**
+
+Open `src/data/experience.ts`. Replace the import line and the `CareerEvent` type. The new file should look like:
+
+```ts
+// src/data/experience.ts
+import { employers } from "@/data/employers";
+
+export type CareerEvent = {
+  event: string;
+  subtitle?: string;
+  companyName?: string;
+  companyDescription?: string;
+  description?: string;
+  date: string;
+  origin?: string;
+  iconSrc?: string;
+  attributes?: { attribute: string; colorScheme: string }[];
+  category: "milestone" | "achievement" | "impact";
+};
+
+export const events: CareerEvent[] = [
+  // ...existing entries kept verbatim, but each occurrence of:
+  //   icon: employers.X.icon,
+  // becomes:
+  //   iconSrc: employers.X.iconSrc,
+];
+```
+
+For each existing event entry, find every line `icon: employers.<key>.icon,` and rewrite it as `iconSrc: employers.<key>.iconSrc,`. Keep all other fields (event, subtitle, companyName, etc.) unchanged.
+
+- [ ] **Step 4: Delete legacy source directories and entry files**
 
 ```bash
 rm -rf src/components src/context src/styles src/utils src/services
 rm src/App.tsx src/main.tsx
+rm src/hooks/useDistanceBetweenElements.ts.tsx
 ls src
 ```
 
-Expected: `src` contains only `assets/`, `data/`, and `hooks/`.
+Expected: `src` contains only `assets/`, `data/`, and `hooks/`. `src/hooks` contains only `useGitHub.ts`.
 
-- [ ] **Step 3: Remove the unused `useDistanceBetweenElements` hook (Chakra-coupled), keep `useGitHub`**
+- [ ] **Step 5: Verify TypeScript still compiles for the data files (sanity check before continuing)**
 
 ```bash
-rm src/hooks/useDistanceBetweenElements.ts.tsx
-ls src/hooks
+npx tsc --noEmit -p tsconfig.app.json 2>&1 | head -20
 ```
 
-Expected: `src/hooks` contains only `useGitHub.ts`.
+You'll see errors about missing files (App.tsx, main.tsx, etc.) — that's expected. What you DON'T want is errors inside `src/data/experience.ts` or `src/data/employers.ts`. If those exist, fix them before continuing.
 
-- [ ] **Step 4: Commit the wipe**
+- [ ] **Step 6: Commit the wipe**
 
 ```bash
 git add -A
-git commit -m "chore: wipe legacy chakra ui in preparation for terminal overhaul"
+git commit -m "chore: wipe legacy chakra ui; refactor employers into data layer"
 ```
 
 ---
@@ -1034,8 +1130,8 @@ interface SidebarProps {
 
 const PINNED = [
   { id: "resume", label: "resume.pdf", action: "resume" as const },
-  { id: "github", label: "github", href: "https://github.com/garyrivera1992" },
-  { id: "linkedin", label: "linkedin", href: "https://www.linkedin.com/in/garyrivera1992/" },
+  { id: "github", label: "github", href: "https://github.com/gary-rivera" },
+  { id: "linkedin", label: "linkedin", href: "#" /* TODO: replace with real LinkedIn URL */ },
   { id: "email", label: "email", href: "mailto:gary.rivera@hyperfi.ai" },
 ];
 
@@ -1097,7 +1193,7 @@ export function Sidebar({ activeSection, onSelectSection, onOpenResume }: Sideba
 }
 ```
 
-(Note: Replace the GitHub/LinkedIn/email URLs above with your actual handles. Open `src/data/employers.ts` or similar if those URLs already live in the existing data files; otherwise, fill in your real values now.)
+(GitHub URL `gary-rivera` matches the `GH_USER_LINK` constant in `src/data/projects.ts`. Email comes from the spec. LinkedIn is unknown — leave the `#` placeholder until the user supplies the real URL.)
 
 - [ ] **Step 2: Wire `<Sidebar>` into App, replacing the placeholder aside**
 
@@ -1279,46 +1375,57 @@ git commit -m "feat: add MainPanel and About section with typing effect"
 
 ### Task 15: `<Experience>` section
 
-The existing experience data is in `src/data/experience.ts`. This task ports it to the terminal aesthetic. First, read the existing data file to confirm its shape.
+The data lives in `src/data/experience.ts` and was refactored in Task 1. Confirmed shape (do NOT re-read; the spec's "Existing data shapes" section documents this):
+- Named export: `events: CareerEvent[]`
+- Fields: `event` (headline), `subtitle?` (employer short name), `companyName?`, `description?`, `date` (string like `"Mar 2024"` or `"Feb 2024 → Sep 2024"` — NOT a parseable Date), `origin?` (employer URL), `iconSrc?`, `attributes?`, `category` (`"milestone" | "achievement" | "impact"`)
+
+**Important:** `date` is a free-form string. Do NOT use `dayjs` to parse it — render it verbatim.
 
 **Files:**
-- Read: `src/data/experience.ts` (verify shape)
 - Create: `src/sections/Experience.tsx`
 - Modify: `src/panels/MainPanel.tsx`
 
-- [ ] **Step 1: Open and inspect the existing data shape**
-
-```bash
-cat src/data/experience.ts
-```
-
-Note the type — typically a `CareerEvent[]` with fields like `date`, `company`, `role`, `description`. Adapt the next step's code to match the actual field names you find.
-
-- [ ] **Step 2: Implement `<Experience>` (adapt field names to match the data file)**
+- [ ] **Step 1: Implement `<Experience>`**
 
 ```tsx
 // src/sections/Experience.tsx
-import { experience } from "@/data/experience";
+import { events, type CareerEvent } from "@/data/experience";
 import { Tree } from "@/components/Tree";
-import dayjs from "dayjs";
+import { cn } from "@/lib/cn";
+
+function categoryGlyph(category: CareerEvent["category"]): string {
+  if (category === "milestone") return "★";
+  if (category === "achievement") return "◆";
+  return "→"; // impact
+}
 
 export function Experience() {
   return (
     <div className="space-y-6">
-      <div className="text-text-dim text-xs tracking-widest">// CAREER LOG</div>
+      <div className="text-text-dim text-xs tracking-widest">// CAREER LOG · {events.length} entries</div>
       <Tree>
-        {experience.map((evt, i) => {
-          const isLast = i === experience.length - 1;
-          const date = dayjs(evt.date).format("YYYY.MM");
+        {events.map((evt, i) => {
+          const isLast = i === events.length - 1;
+          const headline = evt.subtitle
+            ? `${evt.event} · ${evt.subtitle}`
+            : evt.event;
           return (
-            <Tree.Item key={`${evt.company}-${i}`} isLast={isLast}>
-              <span className="text-accent mr-2 tabular-nums">{date}</span>
-              <span className="text-text">{evt.role}</span>
-              <span className="text-text-dim mx-1">@</span>
-              <span className="text-text-muted">{evt.company}</span>
-              {evt.description && (
-                <div className="text-text-muted text-xs ml-6 mt-1">└ {evt.description}</div>
-              )}
+            <Tree.Item key={`${evt.event}-${i}`} isLast={isLast}>
+              <div className="flex flex-col gap-0.5">
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="text-accent tabular-nums whitespace-nowrap">{evt.date}</span>
+                  <span className={cn("text-xs", evt.category === "milestone" ? "text-pip" : "text-text-dim")}>
+                    {categoryGlyph(evt.category)}
+                  </span>
+                  <span className="text-text">{headline}</span>
+                  {evt.companyName && evt.companyName !== evt.subtitle && (
+                    <span className="text-text-muted text-xs">@ {evt.companyName}</span>
+                  )}
+                </div>
+                {evt.description && (
+                  <div className="text-text-muted text-xs ml-6 leading-relaxed">└ {evt.description}</div>
+                )}
+              </div>
             </Tree.Item>
           );
         })}
@@ -1328,7 +1435,7 @@ export function Experience() {
 }
 ```
 
-If the imported `experience` symbol is named differently in `src/data/experience.ts` (e.g. default export, or a name like `careerEvents`), adjust the import accordingly. If field names differ (e.g. `title` instead of `role`), update field references inline. Do not invent fields that don't exist — if the data has `[startDate, endDate]` instead of `date`, render the start.
+The category glyph differentiates the three event types visually: `★` for hires/promotions (milestones), `◆` for educational/freelance milestones (achievements), `→` for work outcomes (impact). Milestones render the glyph in `text-pip` (the hot-pink accent-2) — a sparing use that matches the spec's intent for that color.
 
 - [ ] **Step 3: Wire Experience into MainPanel**
 
@@ -1362,84 +1469,87 @@ git commit -m "feat: build Experience section as ascii career log"
 
 ### Task 16: `<Projects>` section
 
+The data lives in `src/data/projects.ts`. Confirmed shape (already documented in spec):
+- Named export: `ProjectCatalog: Projects` — a keyed object (NOT an array)
+- Also: `projectCatalogKeys: string[]` — pre-filtered active project keys
+- Project fields: `name`, `description?`, `tags?` (currently empty arrays for all entries), `links: { npm?, repo?, deployment? }`, `totalCommits?` (NOT `commits`; currently undefined for all entries), `logoConfig: [string, ...]` (tuple — first element is the imported asset URL)
+- All 6 active projects: `ruio`, `calculator`, `gbot`, `dead-mart`, `meme-generator`, `flappy-js` (display name "Snaily JS")
+
 **Files:**
-- Read: `src/data/projects.ts`
 - Create: `src/sections/Projects.tsx`
 - Modify: `src/panels/MainPanel.tsx`
 
-- [ ] **Step 1: Inspect projects data shape**
-
-```bash
-cat src/data/projects.ts
-```
-
-Note fields: typically `name`, `description`, `tags`, `repo`/`npm`/`deployment`, `commits`, `logo`, `creationDate`.
-
-- [ ] **Step 2: Implement `<Projects>`**
+- [ ] **Step 1: Implement `<Projects>`**
 
 ```tsx
 // src/sections/Projects.tsx
-import { projects } from "@/data/projects";
+import { ProjectCatalog, projectCatalogKeys } from "@/data/projects";
 import { ExternalLink, Github, Package } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 export function Projects() {
+  const items = projectCatalogKeys.map((key) => ({ key, ...ProjectCatalog[key] }));
+
   return (
     <div className="space-y-4">
-      <div className="text-text-dim text-xs tracking-widest">// PROJECTS · {projects.length} files</div>
+      <div className="text-text-dim text-xs tracking-widest">// PROJECTS · {items.length} files</div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-        {projects.map((p) => (
-          <article
-            key={p.name}
-            className={cn(
-              "border border-border bg-surface-1 p-4",
-              "hover:border-accent-muted transition-colors"
-            )}
-          >
-            <header className="flex items-baseline justify-between mb-2">
-              <h3 className="text-accent text-sm">{p.name}</h3>
-              {p.commits != null && (
-                <span className="text-text-dim text-xs tabular-nums">{p.commits} commits</span>
+        {items.map((p) => {
+          const [logoSrc] = p.logoConfig;
+          return (
+            <article
+              key={p.key}
+              className={cn(
+                "border border-border bg-surface-1 p-4",
+                "hover:border-accent-muted transition-colors"
               )}
-            </header>
-            {p.description && (
-              <p className="text-text-muted text-xs leading-relaxed mb-3">{p.description}</p>
-            )}
-            {p.tags && p.tags.length > 0 && (
-              <div className="flex flex-wrap gap-x-2 gap-y-1 mb-3">
-                {p.tags.map((tag) => (
-                  <span key={tag} className="text-text-dim text-[10px] tracking-wider">
-                    #{tag}
-                  </span>
-                ))}
+            >
+              <header className="flex items-center justify-between gap-3 mb-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  {logoSrc && <img src={logoSrc} alt="" className="w-5 h-5 object-contain opacity-80" />}
+                  <h3 className="text-accent text-sm truncate">{p.name}</h3>
+                </div>
+                {typeof p.totalCommits === "number" && (
+                  <span className="text-text-dim text-xs tabular-nums">{p.totalCommits} commits</span>
+                )}
+              </header>
+              {p.description && (
+                <p className="text-text-muted text-xs leading-relaxed mb-3">{p.description}</p>
+              )}
+              {p.tags && p.tags.length > 0 && (
+                <div className="flex flex-wrap gap-x-2 gap-y-1 mb-3">
+                  {p.tags.map((tag) => (
+                    <span key={tag} className="text-text-dim text-[10px] tracking-wider">#{tag}</span>
+                  ))}
+                </div>
+              )}
+              <div className="flex items-center gap-3 text-text-muted">
+                {p.links.repo && (
+                  <a href={p.links.repo} target="_blank" rel="noopener" className="hover:text-accent" aria-label="repository">
+                    <Github size={14} />
+                  </a>
+                )}
+                {p.links.npm && (
+                  <a href={p.links.npm} target="_blank" rel="noopener" className="hover:text-accent" aria-label="npm">
+                    <Package size={14} />
+                  </a>
+                )}
+                {p.links.deployment && (
+                  <a href={p.links.deployment} target="_blank" rel="noopener" className="hover:text-accent" aria-label="deployment">
+                    <ExternalLink size={14} />
+                  </a>
+                )}
               </div>
-            )}
-            <div className="flex items-center gap-3 text-text-muted">
-              {p.repo && (
-                <a href={p.repo} target="_blank" rel="noopener" className="hover:text-accent">
-                  <Github size={14} />
-                </a>
-              )}
-              {p.npm && (
-                <a href={p.npm} target="_blank" rel="noopener" className="hover:text-accent">
-                  <Package size={14} />
-                </a>
-              )}
-              {p.deployment && (
-                <a href={p.deployment} target="_blank" rel="noopener" className="hover:text-accent">
-                  <ExternalLink size={14} />
-                </a>
-              )}
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </div>
   );
 }
 ```
 
-If field names differ (e.g. `repoUrl` instead of `repo`), adjust references.
+Note: most projects currently have empty `description`/`tags` and undefined `totalCommits` — the conditionals above handle this gracefully. The card just shows the name + logo + link icons in those cases. That's fine for v1.
 
 - [ ] **Step 3: Wire Projects into MainPanel**
 
@@ -1478,8 +1588,8 @@ import { Tree } from "@/components/Tree";
 
 const CONTACT_ITEMS = [
   { label: "email", value: "gary.rivera@hyperfi.ai", href: "mailto:gary.rivera@hyperfi.ai" },
-  { label: "github", value: "@garyrivera1992", href: "https://github.com/garyrivera1992" },
-  { label: "linkedin", value: "in/garyrivera1992", href: "https://www.linkedin.com/in/garyrivera1992/" },
+  { label: "github", value: "@gary-rivera", href: "https://github.com/gary-rivera" },
+  { label: "linkedin", value: "in/<TBD>", href: "#" /* TODO: replace with real LinkedIn URL */ },
 ];
 
 export function Contact() {
@@ -1507,7 +1617,7 @@ export function Contact() {
 }
 ```
 
-(Use the same URLs as in `Sidebar.tsx`. If you stored those in a shared data file, import from there instead — see Task 18.)
+(Task 18 immediately refactors this to consume the shared `PINNED_LINKS` data — this implementation is intentionally short-lived. Skip the deduplication thought; we resolve it next.)
 
 - [ ] **Step 2: Wire into MainPanel**
 
@@ -1553,8 +1663,9 @@ export interface LinkItem {
 
 export const PINNED_LINKS: LinkItem[] = [
   { id: "resume", label: "resume.pdf", action: "open-resume" },
-  { id: "github", label: "github", value: "@garyrivera1992", href: "https://github.com/garyrivera1992" },
-  { id: "linkedin", label: "linkedin", value: "in/garyrivera1992", href: "https://www.linkedin.com/in/garyrivera1992/" },
+  { id: "github", label: "github", value: "@gary-rivera", href: "https://github.com/gary-rivera" },
+  // TODO: replace LinkedIn URL with the user's real profile when supplied.
+  { id: "linkedin", label: "linkedin", value: "in/<TBD>", href: "#" },
   { id: "email", label: "email", value: "gary.rivera@hyperfi.ai", href: "mailto:gary.rivera@hyperfi.ai" },
 ];
 ```
@@ -1614,37 +1725,35 @@ git commit -m "refactor: share pinned/contact links via single data module"
 - Create: `src/panels/LinksPane.tsx`
 - Modify: `src/app/App.tsx`
 
-- [ ] **Step 1: Implement `<ActivityPane>`**
+- [ ] **Step 1: Implement `<ActivityPane>` with hard-coded values**
+
+`totalCommits` is undefined for every project in the current data, so we hardcode three aspirational rows. Future work could populate this from the GitHub API via the preserved `useGitHub` hook.
 
 ```tsx
 // src/panels/ActivityPane.tsx
-import { projects } from "@/data/projects";
 import { HatchBar } from "@/components/HatchBar";
 
-export function ActivityPane() {
-  // Top 3 projects by commit count, normalized to %.
-  const sorted = [...projects]
-    .filter((p) => typeof p.commits === "number")
-    .sort((a, b) => (b.commits ?? 0) - (a.commits ?? 0))
-    .slice(0, 3);
-  const max = sorted[0]?.commits ?? 1;
+const ACTIVITY_ROWS: { label: string; value: number }[] = [
+  { label: "snaily-js", value: 73 },
+  { label: "ruio", value: 41 },
+  { label: "meme-genie", value: 28 },
+];
 
+export function ActivityPane() {
   return (
     <section className="p-3 border-b md:border-b-0 md:border-r border-border bg-surface-1">
       <div className="text-accent text-xs tracking-widest mb-3 border-b border-accent inline-block pb-1">
         ★ ACTIVITY
       </div>
       <div className="space-y-2">
-        {sorted.map((p) => (
-          <HatchBar key={p.name} label={p.name} value={Math.round(((p.commits ?? 0) / max) * 100)} />
+        {ACTIVITY_ROWS.map((row) => (
+          <HatchBar key={row.label} label={row.label} value={row.value} />
         ))}
       </div>
     </section>
   );
 }
 ```
-
-If the projects data does not have a `commits` field, fall back to hard-coded values (in code, not as a TODO). For example: `<HatchBar label="snaily" value={73} />` — three real labels with values 73, 41, 28. Keep the code self-contained.
 
 - [ ] **Step 2: Implement `<LinksPane>`**
 
@@ -1778,7 +1887,7 @@ Expected: FAIL.
 ```ts
 // src/lib/commands.ts
 import type { SectionId } from "@/app/routes";
-import { projects } from "@/data/projects";
+import { ProjectCatalog, projectCatalogKeys } from "@/data/projects";
 import { PINNED_LINKS } from "@/data/links";
 
 export interface CommandContext {
@@ -1828,7 +1937,7 @@ export function buildCommands(ctx: CommandContext): Command[] {
 
   const actions: Command[] = [];
 
-  const externalLinks = PINNED_LINKS.filter((l) => l.href);
+  const externalLinks = PINNED_LINKS.filter((l) => l.href && l.href !== "#");
   for (const link of externalLinks) {
     actions.push({
       id: `open-${link.id}`,
@@ -1839,13 +1948,13 @@ export function buildCommands(ctx: CommandContext): Command[] {
     });
   }
 
-  for (const p of projects) {
-    const slug = p.name.toLowerCase().replace(/\s+/g, "-");
-    const href = p.deployment ?? p.repo;
+  for (const key of projectCatalogKeys) {
+    const p = ProjectCatalog[key];
+    const href = p.links.deployment ?? p.links.repo;
     if (!href) continue;
     actions.push({
-      id: `view-${slug}`,
-      label: `view ${slug}`,
+      id: `view-${key}`,
+      label: `view ${key}`,
       hint: href,
       group: "action",
       run: () => ctx.openExternal(href),
@@ -1859,7 +1968,7 @@ export function buildCommands(ctx: CommandContext): Command[] {
 }
 ```
 
-If your `projects` data uses different field names (e.g. `repoUrl` vs `repo`), adjust the `href` pickup accordingly.
+The `link.href !== "#"` check filters out the placeholder LinkedIn URL until the user provides a real one — the `open linkedin` command will only register once a real URL is in `src/data/links.ts`.
 
 - [ ] **Step 4: Run test, verify it passes**
 
@@ -2019,24 +2128,27 @@ git commit -m "feat: build CommandPrompt with cmdk; wire ⌘K shortcut"
 - Create: `src/components/ResumeDialog.tsx`
 - Modify: `src/app/App.tsx`
 
-- [ ] **Step 1: Look at the existing resume content (was in old `ResumeCvComponent`). Since we wiped the old file, we need to reconstruct its content from `src/data/experience.ts` plus the basic profile info.**
+- [ ] **Step 1: Plan the resume content**
 
-The dialog renders: name, title, contact summary, then the experience timeline, then a download button.
+The old `ResumeCvComponent` was wiped along with the rest of `src/components/`. The new dialog reconstructs its content from existing data: profile (name + title), contact list (from `PINNED_LINKS`), experience timeline (from `events`), and a download CTA. No new content authoring required.
 
 - [ ] **Step 2: Implement `<ResumeDialog>` using shadcn `<Dialog>`**
 
 ```tsx
 // src/components/ResumeDialog.tsx
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { experience } from "@/data/experience";
+import { events } from "@/data/experience";
 import { PINNED_LINKS } from "@/data/links";
-import dayjs from "dayjs";
 import { Download } from "lucide-react";
 
 interface ResumeDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+// Keep milestones, impact entries, and achievements that map to a real employer.
+// Drops the standalone bootcamp/internship line items for a tighter resume — adjust the predicate to taste.
+const RESUME_EVENTS = events.filter((e) => e.category !== "achievement" || !!e.subtitle);
 
 export function ResumeDialog({ open, onOpenChange }: ResumeDialogProps) {
   return (
@@ -2048,7 +2160,7 @@ export function ResumeDialog({ open, onOpenChange }: ResumeDialogProps) {
           <div className="text-text">gary rivera</div>
           <div className="text-text-muted text-sm">software engineer · ny</div>
           <div className="text-text-dim text-xs space-x-3 mt-2">
-            {PINNED_LINKS.filter((l) => l.href).map((l) => (
+            {PINNED_LINKS.filter((l) => l.href && l.href !== "#").map((l) => (
               <a key={l.id} href={l.href} target="_blank" rel="noopener" className="hover:text-accent">
                 {l.label}
               </a>
@@ -2059,11 +2171,19 @@ export function ResumeDialog({ open, onOpenChange }: ResumeDialogProps) {
         <section className="border-t border-border pt-4 mt-4">
           <h2 className="text-accent text-sm tracking-widest mb-2">// EXPERIENCE</h2>
           <ul className="space-y-3 text-sm">
-            {experience.map((evt, i) => (
-              <li key={i} className="grid grid-cols-[100px_1fr] gap-3">
-                <span className="text-accent tabular-nums">{dayjs(evt.date).format("YYYY.MM")}</span>
+            {RESUME_EVENTS.map((evt, i) => (
+              <li key={i} className="grid grid-cols-[140px_1fr] gap-3">
+                <span className="text-accent tabular-nums whitespace-nowrap">{evt.date}</span>
                 <div>
-                  <div className="text-text">{evt.role} <span className="text-text-dim">@</span> <span className="text-text-muted">{evt.company}</span></div>
+                  <div className="text-text">
+                    {evt.event}
+                    {evt.subtitle && (
+                      <>
+                        <span className="text-text-dim"> @ </span>
+                        <span className="text-text-muted">{evt.subtitle}</span>
+                      </>
+                    )}
+                  </div>
                   {evt.description && <div className="text-text-muted text-xs mt-1">{evt.description}</div>}
                 </div>
               </li>

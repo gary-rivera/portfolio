@@ -59,3 +59,12 @@ html, body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-surface-2); }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-border); }
+
+@keyframes blink {
+  0%, 60% { opacity: 1; }
+  60.01%, 100% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s steps(1, end) infinite;
+}

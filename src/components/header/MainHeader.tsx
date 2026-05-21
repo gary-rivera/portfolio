@@ -24,7 +24,7 @@ function MainHeader() {
 		<header className="flex flex-col gap-6 pt-6 sm:pt-12">
 			<Name />
 
-			<dl className="mt-2 grid grid-cols-[140px_1fr] gap-x-6 gap-y-[0.4rem] text-[13px]">
+			<dl className="mt-2 grid grid-cols-[140px_1fr] gap-x-6 gap-y-[0.4rem] text-base">
 				{META.map(({ k, v, note, accent }) => (
 					<Fragment key={k}>
 						<dt className="text-text-subtle">{k}</dt>
@@ -45,16 +45,16 @@ function MainHeader() {
 
 			<div
 				id="contact-header"
-				className="grid grid-cols-2 gap-x-8 gap-y-5 border-y border-dashed border-rule py-3 text-[12px] sm:grid-cols-[repeat(4,max-content)]"
+				className="grid grid-cols-2 gap-x-8 gap-y-5 border-y border-dashed border-rule py-3 text-sm sm:grid-cols-[repeat(4,max-content)]"
 			>
 				{CONTACT.map(({ k, v, href }) => (
 					<div key={k} className="flex flex-col gap-[0.15rem]">
-						<span className="text-[10px] tracking-wider text-text-subtle">{k}</span>
+						<span className="text-2xs tracking-wider text-text-subtle">{k}</span>
 						<a
 							href={href}
 							target={href.startsWith("http") ? "_blank" : undefined}
 							rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-							className="text-[13px] text-text transition-colors duration-150 ease-out hover:text-phosphor"
+							className="text-base text-text transition-colors duration-150 ease-out hover:text-phosphor"
 						>
 							{v}
 						</a>

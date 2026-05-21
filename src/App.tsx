@@ -7,7 +7,7 @@ import StickyContact from "./components/StickyContact";
 
 function Footer() {
 	return (
-		<footer className="mt-14 flex flex-wrap items-center justify-between gap-2 border-t border-dashed border-rule pt-4 text-[11px] text-text-subtle">
+		<footer className="mt-14 flex flex-wrap items-center justify-between gap-2 border-t border-dashed border-rule pt-4 text-xs text-text-subtle">
 			<span>nyc · et · 40.6782°N 73.9442°W</span>
 			<span className="text-text-muted">
 				render: 0.41s · build: 4f3a2c1 · © {new Date().getFullYear()}

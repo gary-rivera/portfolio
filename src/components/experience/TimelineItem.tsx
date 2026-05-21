@@ -63,13 +63,13 @@ const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(({ event, ind
 	return (
 		<div
 			ref={ref}
-			className="group grid grid-cols-1 gap-1 border-l-2 border-transparent px-3 py-[0.45rem] transition-[background,border-color] duration-100 ease-out hover:border-phosphor-dim hover:bg-[rgba(123,192,137,0.045)] sm:grid-cols-[180px_90px_1fr_auto] sm:gap-4"
+			className="group grid grid-cols-1 gap-1 border-l-2 border-transparent px-3 py-[0.45rem] transition-[background,border-color] duration-100 ease-out hover:border-phosphor-dim hover:bg-phosphor/[4.5%] sm:grid-cols-[180px_90px_1fr_auto] sm:gap-4"
 		>
-			<div className="text-[12px] tracking-[-0.005em] text-text-subtle">{ts}</div>
-			<div className={`${LEVEL_CLASS[level]} self-start text-[11px] tracking-wider sm:self-baseline`}>
+			<div className="text-sm tracking-[-0.005em] text-text-subtle">{ts}</div>
+			<div className={`${LEVEL_CLASS[level]} self-start text-xs tracking-wider sm:self-baseline`}>
 				[{level.padEnd(6, " ")}]
 			</div>
-			<div className="min-w-0 text-[13px] text-text">
+			<div className="min-w-0 text-base text-text">
 				{company && <span className="text-phosphor">{company}: </span>}
 				<span>{msgPrimary.toLowerCase()}</span>
 				{msgDesc && <span className="text-text-muted"> — {msgDesc.toLowerCase()}</span>}
@@ -80,7 +80,7 @@ const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(({ event, ind
 					</span>
 				)}
 			</div>
-			<div className="justify-self-start text-[11px] text-text-subtle sm:justify-self-end">{id}</div>
+			<div className="justify-self-start text-xs text-text-subtle sm:justify-self-end">{id}</div>
 		</div>
 	);
 });

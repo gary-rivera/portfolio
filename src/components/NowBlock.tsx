@@ -7,16 +7,16 @@ const ITEMS: { text: string; meta?: string }[] = [
 
 function NowBlock() {
 	return (
-		<div className="my-6 border border-dashed border-rule bg-[rgba(123,192,137,0.025)] px-5 py-4">
-			<div className="mb-2 text-[11px] tracking-wider text-phosphor">
+		<div className="my-6 border border-dashed border-rule bg-phosphor/[2.5%] px-5 py-4">
+			<div className="mb-2 text-xs tracking-wider text-phosphor">
 				/etc/now &nbsp;· updated by hand
 			</div>
-			<ul className="list-none p-0 text-[13px] text-text">
+			<ul className="list-none p-0 text-base text-text">
 				{ITEMS.map(({ text, meta }) => (
 					<li key={text} className="relative flex flex-wrap gap-2 py-1 pl-6">
 						<span className="absolute left-0 text-phosphor">→</span>
 						<span>{text}</span>
-						{meta && <span className="text-[11px] text-text-subtle">{meta}</span>}
+						{meta && <span className="text-xs text-text-subtle">{meta}</span>}
 					</li>
 				))}
 			</ul>

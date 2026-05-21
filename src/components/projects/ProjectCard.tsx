@@ -15,17 +15,17 @@ function ProjectRow({ project, index }: ProjectRowProps) {
 	const stack = (tags && tags.length > 0 ? tags : []).join(" · ");
 
 	return (
-		<tr className="group cursor-default transition-colors duration-100 ease-out hover:bg-[rgba(123,192,137,0.045)]">
+		<tr className="group cursor-default transition-colors duration-100 ease-out hover:bg-phosphor/[4.5%]">
 			<td className={`${TD} text-text-subtle`}>{number}</td>
 			<td
 				className={`${TD} font-medium text-text transition-colors duration-100 ease-out group-hover:text-phosphor`}
 			>
 				{name.toLowerCase()}
 			</td>
-			<td className={`${TD} text-[13px] text-text`}>
+			<td className={`${TD} text-base text-text`}>
 				{description ?? <span className="text-text-subtle">—</span>}
 			</td>
-			<td className={`${TD} text-[13px] text-text-muted`}>
+			<td className={`${TD} text-base text-text-muted`}>
 				{stack || <span className="text-text-subtle">—</span>}
 			</td>
 			<td className={`${TD} text-text-subtle`}>{year}</td>
@@ -43,7 +43,7 @@ const TableLink = ({ href, label }: { href: string; label: string }) => (
 		href={href}
 		target="_blank"
 		rel="noopener noreferrer"
-		className="mr-2 text-phosphor-dim transition-[color,text-shadow] duration-100 ease-out hover:text-phosphor hover:[text-shadow:0_0_6px_rgba(123,192,137,0.4)]"
+		className="mr-2 text-phosphor-dim transition-[color,text-shadow] duration-100 ease-out hover:text-phosphor hover:glow-text-phosphor-soft"
 	>
 		{label}
 	</a>

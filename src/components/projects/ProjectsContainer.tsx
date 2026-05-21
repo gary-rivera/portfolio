@@ -2,7 +2,7 @@ import SectionHead from "@/components/SectionHead";
 import ProjectRow from "./ProjectCard";
 import { useProjectsContext } from "@/context/ProjectsContext";
 
-const TH = "border-b border-dashed border-rule px-3 py-1.5 text-left text-[11px] font-normal lowercase tracking-wider text-text-subtle";
+const TH = "border-b border-dashed border-rule px-3 py-1.5 text-left text-xs font-normal lowercase tracking-wider text-text-subtle";
 
 function ProjectsContainer() {
 	const { projects, sortedDesc, isLoading, isError } = useProjectsContext();
@@ -11,14 +11,14 @@ function ProjectsContainer() {
 		return (
 			<section>
 				<SectionHead name="projects.log" meta="loading…" />
-				<p className="text-[12px] text-text-subtle">loading…</p>
+				<p className="text-sm text-text-subtle">loading…</p>
 			</section>
 		);
 	if (isError)
 		return (
 			<section>
 				<SectionHead name="projects.log" meta="err" />
-				<p className="text-[12px] text-danger">error loading repositories.</p>
+				<p className="text-sm text-danger">error loading repositories.</p>
 			</section>
 		);
 
@@ -27,7 +27,7 @@ function ProjectsContainer() {
 	return (
 		<section>
 			<SectionHead name="projects.log" meta={`ls -la · ${visible.length} active`} />
-			<table className="w-full border-collapse text-[13px]">
+			<table className="w-full border-collapse text-base">
 				<thead>
 					<tr>
 						<th className={`${TH} w-10`}>#</th>

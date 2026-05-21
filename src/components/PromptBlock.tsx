@@ -51,7 +51,7 @@ const Glow = ({ href, children }: { href: string; children: React.ReactNode }) =
 		href={href}
 		target={href.startsWith("http") ? "_blank" : undefined}
 		rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-		className="text-phosphor transition-[text-shadow] duration-150 ease-out hover:[text-shadow:0_0_6px_rgba(123,192,137,0.5)]"
+		className="text-phosphor transition-[text-shadow] duration-150 ease-out hover:glow-text-phosphor"
 	>
 		{children}
 	</a>

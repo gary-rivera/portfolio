@@ -1,5 +1,3 @@
-import { Box, chakra, Flex } from "@chakra-ui/react";
-
 const ITEMS: { text: string; meta?: string }[] = [
 	{ text: "shipping the next cut of snaily", meta: "// repo · gary-rivera/flappy-js" },
 	{ text: "soldering a 40% split keyboard", meta: "// build #04, fr4 plate, lubed switches" },
@@ -9,46 +7,20 @@ const ITEMS: { text: string; meta?: string }[] = [
 
 function NowBlock() {
 	return (
-		<Box
-			border="1px dashed"
-			borderColor="rule"
-			bg="rgba(123, 192, 137, 0.025)"
-			px="1.25rem"
-			py="1rem"
-			my="1.5rem"
-		>
-			<chakra.div
-				color="phosphor"
-				fontSize="11px"
-				letterSpacing="0.08em"
-				mb="0.5rem"
-			>
+		<div className="my-6 border border-dashed border-rule bg-[rgba(123,192,137,0.025)] px-5 py-4">
+			<div className="mb-2 text-[11px] tracking-wider text-phosphor">
 				/etc/now &nbsp;· updated by hand
-			</chakra.div>
-			<Box as="ul" listStyle="none" m="0" p="0" color="text" fontSize="13px">
+			</div>
+			<ul className="list-none p-0 text-[13px] text-text">
 				{ITEMS.map(({ text, meta }) => (
-					<Flex
-						as="li"
-						key={text}
-						pl="1.5rem"
-						py="0.25rem"
-						position="relative"
-						gap="0.5rem"
-						wrap="wrap"
-					>
-						<Box position="absolute" left="0" color="phosphor">
-							→
-						</Box>
-						<chakra.span>{text}</chakra.span>
-						{meta && (
-							<chakra.span color="textSubtle" fontSize="11px">
-								{meta}
-							</chakra.span>
-						)}
-					</Flex>
+					<li key={text} className="relative flex flex-wrap gap-2 py-1 pl-6">
+						<span className="absolute left-0 text-phosphor">→</span>
+						<span>{text}</span>
+						{meta && <span className="text-[11px] text-text-subtle">{meta}</span>}
+					</li>
 				))}
-			</Box>
-		</Box>
+			</ul>
+		</div>
 	);
 }
 

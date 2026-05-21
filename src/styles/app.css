@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+/* ─── base palette as plain CSS vars ─────────────────────────────────────── */
+:root {
+	--bg: #0f1310;
+	--bg-raised: #161b17;
+	--bg-deep: #0a0c0a;
+
+	--rule: #2a302b;
+	--rule-strong: #4a5249;
+
+	--text: #d8e0d6;
+	--text-muted: #7a8579;
+	--text-subtle: #4f5650;
+
+	--phosphor: #7bc089;
+	--phosphor-dim: #45684c;
+	--warn: #d4a24b;
+	--danger: #d46b4b;
+
+	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+	color-scheme: dark;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── tailwind v4 theme — exposes the vars above as utilities ────────────── */
+@theme inline {
+	--color-bg: var(--bg);
+	--color-bg-raised: var(--bg-raised);
+	--color-bg-deep: var(--bg-deep);
+
+	--color-rule: var(--rule);
+	--color-rule-strong: var(--rule-strong);
+
+	--color-text: var(--text);
+	--color-text-muted: var(--text-muted);
+	--color-text-subtle: var(--text-subtle);
+
+	--color-phosphor: var(--phosphor);
+	--color-phosphor-dim: var(--phosphor-dim);
+	--color-warn: var(--warn);
+	--color-danger: var(--danger);
+
+	--font-mono: var(--font-mono);
+
+	--ease-out: var(--ease-out);
+}
+
+/* ─── document base ──────────────────────────────────────────────────────── */
+html,
+body {
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	background: var(--bg);
+	color: var(--text);
+	font-family: var(--font-mono);
+	font-size: 13px;
+	line-height: 1.6;
+	font-feature-settings: "calt", "ss01";
+}
+
+body {
+	position: relative;
+	overflow-x: hidden;
+}
+
+/* ambient directional light (phosphor top-left, brass bottom-right) */
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	background:
+		radial-gradient(ellipse 70% 50% at 20% 0%, rgba(123, 192, 137, 0.05), transparent 60%),
+		radial-gradient(ellipse 80% 60% at 90% 100%, rgba(212, 162, 75, 0.025), transparent 60%);
+}
+
+/* subtle CRT scanlines */
+body::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 1;
+	background-image: repeating-linear-gradient(
+		0deg,
+		rgba(123, 192, 137, 0.018),
+		rgba(123, 192, 137, 0.018) 1px,
+		transparent 1px,
+		transparent 3px
+	);
+}
+
+#root {
+	position: relative;
+	z-index: 2;
+}
+
+/* scrollbars */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--rule-strong) transparent;
+}
+*::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+	background: var(--rule-strong);
+	border-radius: 0;
+}
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::selection {
+	background: rgba(123, 192, 137, 0.25);
+	color: var(--text);
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* ─── animations ─────────────────────────────────────────────────────────── */
+@keyframes phosphor-pulse {
+	0%,
+	100% {
+		opacity: 0.4;
+	}
+	50% {
+		opacity: 1;
+	}
+}
+
+@keyframes phosphor-blink {
+	50% {
+		opacity: 0;
+	}
+}
+
+@utility animate-pulse-phosphor {
+	animation: phosphor-pulse 1.6s ease-in-out infinite;
+}
+
+@utility animate-blink-phosphor {
+	animation: phosphor-blink 1.1s steps(2) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animate-pulse-phosphor,
+	.animate-blink-phosphor {
+		animation: none;
+	}
+}

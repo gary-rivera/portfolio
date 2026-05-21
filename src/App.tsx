@@ -1,4 +1,3 @@
-import { Box, Flex, chakra } from "@chakra-ui/react";
 import MainHeader from "./components/header/MainHeader";
 import AcheivementsContainer from "./components/AcheivementsContainer";
 import TopBar from "./components/TopBar";
@@ -8,36 +7,26 @@ import StickyContact from "./components/StickyContact";
 
 function Footer() {
 	return (
-		<Flex
-			as="footer"
-			mt="3.5rem"
-			pt="1rem"
-			borderTop="1px dashed"
-			borderColor="rule"
-			color="textSubtle"
-			fontSize="11px"
-			justify="space-between"
-			align="center"
-			wrap="wrap"
-			gap="0.5rem"
-		>
-			<chakra.span>nyc · et · 40.6782°N 73.9442°W</chakra.span>
-			<chakra.span color="textMuted">render: 0.41s · build: 4f3a2c1 · © {new Date().getFullYear()}</chakra.span>
-		</Flex>
+		<footer className="mt-14 flex flex-wrap items-center justify-between gap-2 border-t border-dashed border-rule pt-4 text-[11px] text-text-subtle">
+			<span>nyc · et · 40.6782°N 73.9442°W</span>
+			<span className="text-text-muted">
+				render: 0.41s · build: 4f3a2c1 · © {new Date().getFullYear()}
+			</span>
+		</footer>
 	);
 }
 
 function App() {
 	return (
 		<>
-			<Box maxW="1080px" mx="auto" px={["1rem", "1.5rem", "2rem"]} py={["1.5rem", "2rem", "2rem"]} pb="4rem">
+			<div className="mx-auto max-w-[1080px] px-4 py-6 pb-16 sm:px-6 sm:py-8 md:px-8">
 				<TopBar />
 				<MainHeader />
 				<NowBlock />
 				<AcheivementsContainer />
 				<PromptBlock />
 				<Footer />
-			</Box>
+			</div>
 			<StickyContact />
 		</>
 	);

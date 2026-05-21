@@ -1,24 +1,16 @@
-import { chakra, Box } from "@chakra-ui/react";
-import { USER_GITHUB_URL } from "@/components/ContactMeIconTray";
-
+const USER_GITHUB_URL = "https://github.com/gary-rivera";
 const USER_LINKEDIN_URL = "https://www.linkedin.com/in/gary-a-rivera/";
 const USER_EMAIL = "mailto:a.gary.rivera@gmail.com";
 
 function PromptBlock() {
 	return (
-		<Box
-			my="2rem"
-			py="1rem"
-			borderTop="1px dashed"
-			borderBottom="1px dashed"
-			borderColor="rule"
-			color="textMuted"
-			fontSize="12.5px"
-		>
+		<div className="my-8 border-y border-dashed border-rule py-4 text-[12.5px] text-text-muted">
 			<Line ps1 cmd="whoami --long" />
 			<Out>gary rivera. nyc software engineer. backend-leaning, infra-shaped.</Out>
-			<Out>solders keyboards. ships small weird named things. writes the year as if it's a log entry.</Out>
-			<Box h="0.5rem" />
+			<Out>
+				solders keyboards. ships small weird named things. writes the year as if it's a log entry.
+			</Out>
+			<div className="h-2" />
 			<Line ps1 cmd="contact" />
 			<Out>
 				→ <Glow href={USER_EMAIL}>gary@…</Glow>
@@ -33,44 +25,36 @@ function PromptBlock() {
 				→ <Glow href="#resume">./resume.pdf</Glow>
 			</Out>
 			<Line ps1 cursor />
-		</Box>
+		</div>
 	);
 }
 
 type LineProps = { ps1?: boolean; cmd?: string; cursor?: boolean };
 const Line = ({ ps1, cmd, cursor }: LineProps) => (
-	<Box py="0.15rem">
+	<div className="py-[0.15rem]">
 		{ps1 && (
-			<chakra.span color="phosphor">
-				<chakra.b fontWeight="700">gary@portfolio</chakra.b>:~$
-			</chakra.span>
+			<span className="text-phosphor">
+				<b className="font-bold">gary@portfolio</b>:~$
+			</span>
 		)}{" "}
-		{cmd && <chakra.span color="text">{cmd}</chakra.span>}
-		{cursor && (
-			<chakra.span color="phosphor" ml="4px" animation="phosphor-blink 1.1s steps(2) infinite">
-				▋
-			</chakra.span>
-		)}
-	</Box>
+		{cmd && <span className="text-text">{cmd}</span>}
+		{cursor && <span className="animate-blink-phosphor ml-1 text-phosphor">▋</span>}
+	</div>
 );
 
 const Out = ({ children }: { children: React.ReactNode }) => (
-	<Box pl="2ch" color="textMuted" py="0.05rem">
-		{children}
-	</Box>
+	<div className="py-[0.05rem] pl-[2ch] text-text-muted">{children}</div>
 );
 
 const Glow = ({ href, children }: { href: string; children: React.ReactNode }) => (
-	<chakra.a
+	<a
 		href={href}
 		target={href.startsWith("http") ? "_blank" : undefined}
 		rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-		color="phosphor"
-		transition="text-shadow 160ms var(--ease-out)"
-		_hover={{ textShadow: "0 0 6px rgba(123, 192, 137, 0.5)" }}
+		className="text-phosphor transition-[text-shadow] duration-150 ease-out hover:[text-shadow:0_0_6px_rgba(123,192,137,0.5)]"
 	>
 		{children}
-	</chakra.a>
+	</a>
 );
 
 export default PromptBlock;

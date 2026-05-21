@@ -1,4 +1,3 @@
-import { chakra } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import { Project } from "@/data/projects";
 
@@ -7,7 +6,8 @@ interface ProjectRowProps {
 	index: number;
 }
 
-/** One row of the projects.log indexed table. */
+const TD = "border-b border-bg-raised px-3 py-2";
+
 function ProjectRow({ project, index }: ProjectRowProps) {
 	const { links, name, description, createdAt, tags } = project;
 	const number = (index + 1).toString().padStart(2, "0");
@@ -15,77 +15,38 @@ function ProjectRow({ project, index }: ProjectRowProps) {
 	const stack = (tags && tags.length > 0 ? tags : []).join(" · ");
 
 	return (
-		<chakra.tr
-			transition="background 120ms var(--ease-out)"
-			_hover={{ bg: "rgba(123, 192, 137, 0.045)" }}
-			cursor="default"
-			role="group"
-		>
-			<chakra.td px="0.75rem" py="0.55rem" color="textSubtle" borderBottom="1px solid" borderColor="bgRaised">
-				{number}
-			</chakra.td>
-			<chakra.td
-				px="0.75rem"
-				py="0.55rem"
-				color="text"
-				fontWeight="500"
-				borderBottom="1px solid"
-				borderColor="bgRaised"
-				_groupHover={{ color: "phosphor" }}
-				transition="color 120ms var(--ease-out)"
+		<tr className="group cursor-default transition-colors duration-100 ease-out hover:bg-[rgba(123,192,137,0.045)]">
+			<td className={`${TD} text-text-subtle`}>{number}</td>
+			<td
+				className={`${TD} font-medium text-text transition-colors duration-100 ease-out group-hover:text-phosphor`}
 			>
 				{name.toLowerCase()}
-			</chakra.td>
-			<chakra.td
-				px="0.75rem"
-				py="0.55rem"
-				color="text"
-				borderBottom="1px solid"
-				borderColor="bgRaised"
-				fontSize="13px"
-			>
-				{description ?? <chakra.span color="textSubtle">—</chakra.span>}
-			</chakra.td>
-			<chakra.td
-				px="0.75rem"
-				py="0.55rem"
-				color="textMuted"
-				borderBottom="1px solid"
-				borderColor="bgRaised"
-				fontSize="13px"
-			>
-				{stack || <chakra.span color="textSubtle">—</chakra.span>}
-			</chakra.td>
-			<chakra.td px="0.75rem" py="0.55rem" color="textSubtle" borderBottom="1px solid" borderColor="bgRaised">
-				{year}
-			</chakra.td>
-			<chakra.td px="0.75rem" py="0.55rem" borderBottom="1px solid" borderColor="bgRaised">
-				{links.npm && (
-					<TableLink href={links.npm} label="npm" />
-				)}
-				{links.deployment && (
-					<TableLink href={links.deployment} label="open" />
-				)}
-				{links.repo && (
-					<TableLink href={links.repo} label="gh" />
-				)}
-			</chakra.td>
-		</chakra.tr>
+			</td>
+			<td className={`${TD} text-[13px] text-text`}>
+				{description ?? <span className="text-text-subtle">—</span>}
+			</td>
+			<td className={`${TD} text-[13px] text-text-muted`}>
+				{stack || <span className="text-text-subtle">—</span>}
+			</td>
+			<td className={`${TD} text-text-subtle`}>{year}</td>
+			<td className={TD}>
+				{links.npm && <TableLink href={links.npm} label="npm" />}
+				{links.deployment && <TableLink href={links.deployment} label="open" />}
+				{links.repo && <TableLink href={links.repo} label="gh" />}
+			</td>
+		</tr>
 	);
 }
 
 const TableLink = ({ href, label }: { href: string; label: string }) => (
-	<chakra.a
+	<a
 		href={href}
 		target="_blank"
 		rel="noopener noreferrer"
-		color="phosphorDim"
-		mr="0.5rem"
-		transition="color 120ms var(--ease-out), text-shadow 120ms var(--ease-out)"
-		_hover={{ color: "phosphor", textShadow: "0 0 6px rgba(123, 192, 137, 0.4)" }}
+		className="mr-2 text-phosphor-dim transition-[color,text-shadow] duration-100 ease-out hover:text-phosphor hover:[text-shadow:0_0_6px_rgba(123,192,137,0.4)]"
 	>
 		{label}
-	</chakra.a>
+	</a>
 );
 
 export default ProjectRow;

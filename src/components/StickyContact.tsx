@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Box, chakra, Flex } from "@chakra-ui/react";
 
 const ITEMS = [
 	{ k: "email", v: "gary@…", href: "mailto:a.gary.rivera@gmail.com" },
@@ -30,98 +29,49 @@ function StickyContact() {
 	}, []);
 
 	return (
-		<Box
+		<aside
 			aria-hidden={!visible}
-			position="fixed"
-			top="50%"
-			right="max(1.5rem, calc((100vw - 1080px) / 2 + 1.5rem))"
-			transform={visible ? "translateY(-50%) translateX(0)" : "translateY(-50%) translateX(12px)"}
-			opacity={visible ? 1 : 0}
-			pointerEvents={visible ? "auto" : "none"}
-			transition="opacity 380ms var(--ease-out), transform 420ms var(--ease-out)"
-			zIndex={5}
-			bg="rgba(15, 19, 16, 0.78)"
-			backdropFilter="blur(6px)"
-			px="1rem"
-			pt="0.85rem"
-			pb="1rem"
-			w="200px"
-			borderTop="1px dashed"
-			borderRight="1px dashed"
-			borderBottom="1px dashed"
-			borderColor="phosphorDim"
-			boxShadow="0 0 0 1px rgba(15, 19, 16, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35)"
-			fontFamily="mono"
-			fontSize="11px"
-			color="textMuted"
-			display={["none", "none", "block"]}
-			css={{
-				"@media (prefers-reduced-motion: reduce)": {
-					transform: "translateY(-50%)",
-					transition: "opacity 200ms ease",
-				},
-				"@media (max-width: 1100px)": { display: "none" },
+			className="fixed top-1/2 z-[5] hidden w-[200px] border-y border-r border-dashed border-phosphor-dim bg-[rgba(15,19,16,0.78)] px-4 pb-4 pt-[0.85rem] font-mono text-[11px] text-text-muted backdrop-blur-md transition-[opacity,transform] duration-[380ms,420ms] ease-out lg:block motion-reduce:transition-opacity motion-reduce:duration-200"
+			style={{
+				right: "max(1.5rem, calc((100vw - 1080px) / 2 + 1.5rem))",
+				opacity: visible ? 1 : 0,
+				pointerEvents: visible ? "auto" : "none",
+				transform: visible
+					? "translateY(-50%) translateX(0)"
+					: "translateY(-50%) translateX(12px)",
+				boxShadow: "0 0 0 1px rgba(15, 19, 16, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35)",
 			}}
 		>
-			<chakra.div
-				position="absolute"
-				top="-0.85rem"
-				left="-1px"
-				bg="bg"
-				px="0.5rem"
-				fontSize="10px"
-				letterSpacing="0.06em"
-				color="phosphor"
-			>
-				<chakra.span color="phosphorDim">~ </chakra.span>contact.bind
-			</chakra.div>
+			<div className="absolute -top-3 -left-px bg-bg px-2 text-[10px] tracking-wider text-phosphor">
+				<span className="text-phosphor-dim">~ </span>contact.bind
+			</div>
 
-			<Box as="dl" display="grid" gap="0.55rem">
+			<dl className="grid gap-[0.55rem]">
 				{ITEMS.map(({ k, v, href }) => (
-					<Box key={k}>
-						<chakra.dt color="textSubtle" fontSize="10px" letterSpacing="0.08em" mb="0.05rem">
-							{k}
-						</chakra.dt>
-						<chakra.dd fontSize="12px">
-							<chakra.a
+					<div key={k}>
+						<dt className="mb-[0.05rem] text-[10px] tracking-wider text-text-subtle">{k}</dt>
+						<dd className="text-[12px]">
+							<a
 								href={href}
 								target={href.startsWith("http") ? "_blank" : undefined}
 								rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-								color="text"
-								borderBottom="1px dotted transparent"
-								pb="1px"
-								transition="color 140ms var(--ease-out), border-color 140ms var(--ease-out)"
-								_hover={{ color: "phosphor", borderColor: "phosphorDim" }}
+								className="border-b border-dotted border-transparent pb-px text-text transition-[color,border-color] duration-150 ease-out hover:border-phosphor-dim hover:text-phosphor"
 							>
 								{v}
-							</chakra.a>
-						</chakra.dd>
-					</Box>
+							</a>
+						</dd>
+					</div>
 				))}
-			</Box>
+			</dl>
 
-			<Flex
-				mt="0.85rem"
-				pt="0.65rem"
-				borderTop="1px dashed"
-				borderColor="rule"
-				align="center"
-				gap="0.5rem"
-				color="textSubtle"
-				fontSize="10px"
-				letterSpacing="0.04em"
-			>
-				<Box
-					w="6px"
-					h="6px"
-					bg="phosphor"
-					borderRadius="full"
-					boxShadow="0 0 6px var(--phosphor)"
-					animation="phosphor-pulse 1.6s ease-in-out infinite"
+			<div className="mt-[0.85rem] flex items-center gap-2 border-t border-dashed border-rule pt-[0.65rem] text-[10px] tracking-wider text-text-subtle">
+				<div
+					className="animate-pulse-phosphor h-1.5 w-1.5 rounded-full bg-phosphor"
+					style={{ boxShadow: "0 0 6px var(--phosphor)" }}
 				/>
 				<span>online · open to work</span>
-			</Flex>
-		</Box>
+			</div>
+		</aside>
 	);
 }
 

@@ -2,10 +2,11 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import svgr from "vite-plugin-svgr";
+import tailwindcss from "@tailwindcss/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react(), tsconfigPaths(), svgr()],
+	plugins: [react(), tsconfigPaths(), svgr(), tailwindcss()],
 	build: {
 		outDir: "dist", // Specifies the output directory
 		emptyOutDir: true, // Clears the output directory before each build

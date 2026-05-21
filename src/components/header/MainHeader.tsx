@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import Name from "./NameTypingEffect";
-import { Box, chakra, Flex, Text } from "@chakra-ui/react";
 
 type MetaEntry = { k: string; v: string; note?: string; accent?: boolean };
 type ContactEntry = { k: string; v: string; href: string };
@@ -22,72 +21,47 @@ const CONTACT: ContactEntry[] = [
 
 function MainHeader() {
 	return (
-		<Flex as="header" direction="column" gap="1.5rem" align="stretch" pt={["1.5rem", "3rem"]}>
+		<header className="flex flex-col gap-6 pt-6 sm:pt-12">
 			<Name />
 
-			<Box
-				as="dl"
-				display="grid"
-				gridTemplateColumns="140px 1fr"
-				rowGap="0.4rem"
-				columnGap="1.5rem"
-				fontSize="13px"
-				mt="0.5rem"
-			>
+			<dl className="mt-2 grid grid-cols-[140px_1fr] gap-x-6 gap-y-[0.4rem] text-[13px]">
 				{META.map(({ k, v, note, accent }) => (
 					<Fragment key={k}>
-						<Box as="dt" color="textSubtle">
-							{k}
-						</Box>
-						<Box as="dd" color="text">
-							<chakra.span color={accent ? "phosphor" : "text"}>{v}</chakra.span>
-							{note && (
-								<chakra.span color="textSubtle" ml="0.5rem">
-									&nbsp;{note}
-								</chakra.span>
-							)}
-						</Box>
+						<dt className="text-text-subtle">{k}</dt>
+						<dd className="text-text">
+							<span className={accent ? "text-phosphor" : "text-text"}>{v}</span>
+							{note && <span className="ml-2 text-text-subtle"> {note}</span>}
+						</dd>
 					</Fragment>
 				))}
-			</Box>
+			</dl>
 
-			<Text color="textMuted" fontSize="13.5px" maxW="70ch" lineHeight="1.6">
-				<chakra.span color="text">engineer.</chakra.span> bootcamp-to-senior arc, three years on the backend at a
-				fintech that got acquired. shipped infra nobody throws launch parties for. off-hours:{" "}
-				<chakra.span color="text">i solder mechanical keyboards</chakra.span>. ask me about either.
-			</Text>
+			<p className="max-w-[70ch] text-[13.5px] leading-relaxed text-text-muted">
+				<span className="text-text">engineer.</span> bootcamp-to-senior arc, three years on the
+				backend at a fintech that got acquired. shipped infra nobody throws launch parties for.
+				off-hours: <span className="text-text">i solder mechanical keyboards</span>. ask me about
+				either.
+			</p>
 
-			<Box
+			<div
 				id="contact-header"
-				display="grid"
-				gridTemplateColumns={["repeat(2, 1fr)", "repeat(4, max-content)"]}
-				gap="1.25rem 2rem"
-				py="0.75rem"
-				borderTop="1px dashed"
-				borderBottom="1px dashed"
-				borderColor="rule"
-				fontSize="12px"
+				className="grid grid-cols-2 gap-x-8 gap-y-5 border-y border-dashed border-rule py-3 text-[12px] sm:grid-cols-[repeat(4,max-content)]"
 			>
 				{CONTACT.map(({ k, v, href }) => (
-					<Flex key={k} direction="column" gap="0.15rem">
-						<chakra.span color="textSubtle" fontSize="10px" letterSpacing="0.08em">
-							{k}
-						</chakra.span>
-						<chakra.a
+					<div key={k} className="flex flex-col gap-[0.15rem]">
+						<span className="text-[10px] tracking-wider text-text-subtle">{k}</span>
+						<a
 							href={href}
 							target={href.startsWith("http") ? "_blank" : undefined}
 							rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-							color="text"
-							fontSize="13px"
-							transition="color 160ms var(--ease-out)"
-							_hover={{ color: "phosphor" }}
+							className="text-[13px] text-text transition-colors duration-150 ease-out hover:text-phosphor"
 						>
 							{v}
-						</chakra.a>
-					</Flex>
+						</a>
+					</div>
 				))}
-			</Box>
-		</Flex>
+			</div>
+		</header>
 	);
 }
 

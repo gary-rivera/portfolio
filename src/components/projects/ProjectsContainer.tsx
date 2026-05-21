@@ -1,7 +1,8 @@
-import { chakra, Text } from "@chakra-ui/react";
 import SectionHead from "@/components/SectionHead";
 import ProjectRow from "./ProjectCard";
 import { useProjectsContext } from "@/context/ProjectsContext";
+
+const TH = "border-b border-dashed border-rule px-3 py-1.5 text-left text-[11px] font-normal lowercase tracking-wider text-text-subtle";
 
 function ProjectsContainer() {
 	const { projects, sortedDesc, isLoading, isError } = useProjectsContext();
@@ -10,18 +11,14 @@ function ProjectsContainer() {
 		return (
 			<section>
 				<SectionHead name="projects.log" meta="loading…" />
-				<Text color="textSubtle" fontSize="12px">
-					loading…
-				</Text>
+				<p className="text-[12px] text-text-subtle">loading…</p>
 			</section>
 		);
 	if (isError)
 		return (
 			<section>
 				<SectionHead name="projects.log" meta="err" />
-				<Text color="danger" fontSize="12px">
-					error loading repositories.
-				</Text>
+				<p className="text-[12px] text-danger">error loading repositories.</p>
 			</section>
 		);
 
@@ -30,43 +27,25 @@ function ProjectsContainer() {
 	return (
 		<section>
 			<SectionHead name="projects.log" meta={`ls -la · ${visible.length} active`} />
-			<chakra.table w="100%" borderCollapse="collapse" fontSize="13px">
-				<chakra.thead>
-					<chakra.tr>
-						<TH width="40px">#</TH>
-						<TH width="160px">name</TH>
-						<TH>description</TH>
-						<TH width="220px">stack</TH>
-						<TH width="80px">year</TH>
-						<TH width="140px">links</TH>
-					</chakra.tr>
-				</chakra.thead>
-				<chakra.tbody>
+			<table className="w-full border-collapse text-[13px]">
+				<thead>
+					<tr>
+						<th className={`${TH} w-10`}>#</th>
+						<th className={`${TH} w-40`}>name</th>
+						<th className={TH}>description</th>
+						<th className={`${TH} w-56`}>stack</th>
+						<th className={`${TH} w-20`}>year</th>
+						<th className={`${TH} w-36`}>links</th>
+					</tr>
+				</thead>
+				<tbody>
 					{visible.map((projectKey, idx) => (
 						<ProjectRow key={projectKey} project={projects[projectKey]} index={idx} />
 					))}
-				</chakra.tbody>
-			</chakra.table>
+				</tbody>
+			</table>
 		</section>
 	);
 }
-
-const TH = ({ children, width }: { children: React.ReactNode; width?: string }) => (
-	<chakra.th
-		textAlign="left"
-		color="textSubtle"
-		fontWeight="400"
-		fontSize="11px"
-		textTransform="lowercase"
-		letterSpacing="0.06em"
-		px="0.75rem"
-		py="0.4rem"
-		borderBottom="1px dashed"
-		borderColor="rule"
-		w={width}
-	>
-		{children}
-	</chakra.th>
-);
 
 export default ProjectsContainer;

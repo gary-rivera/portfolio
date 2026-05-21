@@ -1,8 +1,7 @@
 import { forwardRef } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import ProfileSection from "./ProfileSection";
 import ExperienceSection from "./ExperienceSection";
-import BgOverlay from "@/assets/resume-bg-overlay.svg?react";
 
 const ResumeCvComponent = forwardRef<HTMLDivElement>((_, ref) => {
 	const childrenLayout = {
@@ -22,7 +21,7 @@ const ResumeCvComponent = forwardRef<HTMLDivElement>((_, ref) => {
 		<Flex
 			ref={ref}
 			align={{ base: "stretch", md: "flex-start" }}
-			bg="#fef5f1"
+			bg="surface"
 			overflow="hidden"
 			maxW="675px"
 			w="auto"
@@ -30,20 +29,6 @@ const ResumeCvComponent = forwardRef<HTMLDivElement>((_, ref) => {
 			h="auto"
 			position="relative"
 		>
-			<Box
-				opacity="0.5"
-				position="absolute"
-				left="30%"
-				bottom="0"
-				w="40%"
-				h="50%"
-				zIndex="1"
-				maskImage="linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)), linear-gradient(85deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0))"
-				WebkitMaskImage="linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)), linear-gradient(85deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0))"
-				WebkitMaskComposite="destination-in"
-			>
-				<BgOverlay fill="#FF7230" />
-			</Box>
 			<ProfileSection baseLayout={{ ...childrenLayout.base, ...childrenLayout.profile }} />
 			<ExperienceSection baseLayout={{ ...childrenLayout.base, ...childrenLayout.experience }} />
 		</Flex>

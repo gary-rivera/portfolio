@@ -1,201 +1,115 @@
-import React, { forwardRef } from "react";
-import { Flex, Em, HStack, Heading, Box, Icon, GridItem, Grid, Text } from "@chakra-ui/react";
-import ActionableTextHighlight from "@/components/ActionableTextHighlight";
-import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
+import { forwardRef } from "react";
+import { Box, chakra, Flex } from "@chakra-ui/react";
 import { CareerEvent } from "@/data/experience";
-import { LuTarget } from "react-icons/lu";
-import { HiAtSymbol } from "react-icons/hi";
 
 type TimelineItemProps = {
 	event: CareerEvent;
 	index: number;
-	alternate: boolean;
-	distances: (Distance | null)[];
 };
 
-type ImpactEventCardProps = {
-	event: CareerEvent;
+type Level = "IMPACT" | "HIRED" | "PROMO" | "GRAD" | "INFO";
+
+const MONTHS: Record<string, string> = {
+	jan: "01", feb: "02", mar: "03", apr: "04", may: "05", jun: "06",
+	jul: "07", aug: "08", sep: "09", oct: "10", nov: "11", dec: "12",
 };
 
-const TimelineEventCard: React.FC<ImpactEventCardProps> = ({ event }) => {
-	const { event: eventTitle, subtitle, companyName, companyDescription, description, origin, icon } = event;
+const LEVEL_COLOR: Record<Level, string> = {
+	IMPACT: "warn",
+	HIRED: "phosphor",
+	PROMO: "phosphor",
+	GRAD: "phosphor",
+	INFO: "phosphorDim",
+};
 
-	const titleStyles = {
-		fontSize: ["0.70rem", "0.8rem", "0.85rem", "0.925rem"],
-		fontWeight: "semibold",
-		color: "blackAlpha.800",
-		lineHeight: "normal",
-	};
+function classifyLevel(event: CareerEvent): Level {
+	const title = event.event.toLowerCase();
+	if (title.includes("hired")) return "HIRED";
+	if (title.includes("schooling") || title.includes("completed")) return "GRAD";
+	if (title.includes("senior") || title.includes("promotion")) return "PROMO";
+	if (event.category === "impact") return "IMPACT";
+	return "INFO";
+}
+
+/** Parse the start of a date range like "Feb 2024 → Sep 2024" into an ISO-ish timestamp. */
+function toIsoTs(date: string, index: number): { ts: string; range?: string } {
+	const start = date.split("→")[0].trim();
+	const end = date.includes("→") ? date.split("→")[1].trim() : undefined;
+	const m = start.match(/(\w+)\s+(\d{4})/);
+	if (!m) return { ts: start };
+	const mon = MONTHS[m[1].toLowerCase().slice(0, 3)] || "01";
+	const day = String(((index * 7 + 3) % 27) + 1).padStart(2, "0");
+	const ts = `${m[2]}-${mon}-${day}T00:00Z`;
+	const range = end
+		? `${m[2]}-${mon} → ${end
+				.match(/(\w+)\s+(\d{4})/)
+				?.slice(1)
+				.reverse()
+				.map((s, i) => (i === 1 ? MONTHS[s.toLowerCase().slice(0, 3)] || "01" : s))
+				.join("-") ?? end}`
+		: undefined;
+	return { ts, range };
+}
+
+function shortId(text: string): string {
+	let h = 0;
+	for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
+	return "#" + h.toString(16).padStart(6, "0").slice(0, 6);
+}
+
+const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(({ event, index }, ref) => {
+	const level = classifyLevel(event);
+	const { ts, range } = toIsoTs(event.date, index);
+	const id = shortId(event.event + event.date);
+	const company = event.subtitle?.toLowerCase();
+	const msgPrimary = event.event;
+	const msgDesc = event.description;
+
 	return (
 		<Flex
-			gap={0}
-			//
-			w="auto"
-			bg="var(--primary-bg-color)"
-			h={["auto", "auto", "auto", "100%"]}
-			borderRadius="5px"
-			py={[2.5, 3]}
-			px={[3, 4, 5]}
-			direction="column"
-			justifyContent="space-evenly"
-			fontSize="24px"
-			// border="1px solid orange"
+			ref={ref}
+			role="group"
+			display="grid"
+			gridTemplateColumns={["1fr", "180px 90px 1fr auto"]}
+			gap={["0.25rem", "1rem"]}
+			px="0.7rem"
+			py="0.45rem"
+			borderLeft="2px solid transparent"
+			transition="background 120ms var(--ease-out), border-color 120ms var(--ease-out)"
+			_hover={{ bg: "rgba(123, 192, 137, 0.045)", borderColor: "phosphorDim" }}
 		>
-			{/* Title */}
-			<HStack
-				mb="0"
-				//
-				h="fit-content"
-			>
-				{subtitle ? (
-					<Flex gap="0.05rem" align="center" wrap="nowrap">
-						<Heading
-							{...titleStyles}
-							//
-						>
-							{eventTitle}
-						</Heading>
-						<Icon //
-							fontSize={["0.5rem", "0.75rem", "0.7rem", "0.85rem"]}
-							mt="1px"
-							color="blackAlpha.500"
-						>
-							<HiAtSymbol />
-						</Icon>
-						<ActionableTextHighlight
-							tooltipContent={{
-								icon,
-								heading: companyName,
-								text: companyDescription,
-								iconLinkUrl: origin,
-							}}
-							linkProps={{ ...titleStyles }}
-						>
-							{subtitle}
-						</ActionableTextHighlight>
-					</Flex>
-				) : (
-					<Heading //
-						{...titleStyles}
-					>
-						{eventTitle}
-					</Heading>
+			<Box color="textSubtle" fontSize="12px" letterSpacing="-0.005em">
+				{ts}
+			</Box>
+			<Box color={LEVEL_COLOR[level]} fontSize="11px" letterSpacing="0.06em" alignSelf={["start", "baseline"]}>
+				[{level.padEnd(6, " ")}]
+			</Box>
+			<Box color="text" fontSize="13px" minW="0">
+				{company && (
+					<>
+						<chakra.span color="phosphor">{company}:</chakra.span>{" "}
+					</>
 				)}
-			</HStack>
-			{/* Subtext */}
-			{description && (
-				<Text fontSize={["0.5rem", "0.65rem", "0.65rem", "0.8rem"]} mt="1" lineHeight="1.4">
-					{description}
-				</Text>
-			)}
-		</Flex>
-	);
-};
-
-const TimelineEventDate: React.FC<{ date: string }> = ({ date }) => (
-	<Em fontSize="2xs" width="fit-content" color="rgba(82,82,91)" lineHeight="50px">
-		{date}
-	</Em>
-);
-
-const TimelinePath = forwardRef<
-	HTMLDivElement,
-	{
-		index: number;
-		distances: (Distance | null)[];
-	}
->(({ index, distances }, ref) => {
-	const currentTimelineIcon = distances[index];
-	const distanceToNextTimelineIcon = distances[index]?.distance;
-
-	// justification 2 - i need to redo the ref logic to better manage drilling of icon refs -- https://react.dev/reference/react/forwardRef
-
-	const distanceOffset = currentTimelineIcon?.refHeight || 20;
-	const dynamicPathLength = distanceToNextTimelineIcon ? distanceToNextTimelineIcon - distanceOffset : 100;
-	const isLast = index === distances.length - 1;
-
-	const TimelineConnector = () => (
-		<Box
-			position="absolute"
-			top="100%"
-			width="1px"
-			height={`${dynamicPathLength}px`}
-			bg="blackAlpha.500"
-			overflow="hidden"
-			zIndex={0}
-		/>
-	);
-
-	return (
-		<Flex fontSize="20px" position="relative" width="auto" alignItems="center" justifyContent="center" ref={ref}>
-			<Icon fontSize={["0.7rem", "0.8rem", "1rem"]} zIndex={1} color="#0891b2">
-				<LuTarget opacity="0.8" />
-			</Icon>
-			{!isLast && <TimelineConnector />}
+				<chakra.span>{msgPrimary.toLowerCase()}</chakra.span>
+				{msgDesc && (
+					<chakra.span color="textMuted">
+						{" "}— {msgDesc.toLowerCase()}
+					</chakra.span>
+				)}
+				{range && (
+					<chakra.span color="textMuted">
+						{" "}
+						<chakra.span color="textSubtle">// {range}</chakra.span>
+					</chakra.span>
+				)}
+			</Box>
+			<Box color="textSubtle" fontSize="11px" justifySelf={["start", "end"]}>
+				{id}
+			</Box>
 		</Flex>
 	);
 });
-TimelinePath.displayName = "TimelinePath";
 
-const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(({ event, index, alternate, distances }, ref) => {
-	const LayoutOfDateIconCard = (
-		<>
-			<GridItem //
-				width="auto"
-				height="fit-content"
-				justifySelf="end"
-			>
-				<TimelineEventDate date={event.date} />
-			</GridItem>
-			<GridItem placeSelf="center">
-				<TimelinePath ref={ref} index={index} distances={distances} />
-			</GridItem>
-			<GridItem h="auto" justifySelf="start" alignItems="center">
-				<TimelineEventCard event={event} />
-			</GridItem>
-		</>
-	);
-
-	const LayoutOfCardIconDate = (
-		<>
-			<GridItem //
-				h="auto"
-				justifySelf="end"
-				alignItems="center"
-			>
-				<TimelineEventCard event={event} />
-			</GridItem>
-			<GridItem placeSelf="center">
-				<TimelinePath ref={ref} index={index} distances={distances} />
-			</GridItem>
-			<GridItem //
-				width="auto"
-				justifySelf="start"
-			>
-				<TimelineEventDate date={event.date} />
-			</GridItem>
-		</>
-	);
-
-	return (
-		<Grid
-			gap={[1, 2]}
-			position="relative"
-			templateColumns="1fr auto 1fr"
-			templateRows="1fr"
-			gridAutoFlow="row"
-			gridAutoColumns="auto"
-			alignItems="center"
-			justifyContent="center"
-			// border="1px solid green"
-			my="-1.5"
-		>
-			{alternate ? LayoutOfCardIconDate : LayoutOfDateIconCard}
-		</Grid>
-	);
-});
-
-// Add a displayName for easier debugging in React DevTools
 TimelineItem.displayName = "TimelineItem";
 
 export default TimelineItem;

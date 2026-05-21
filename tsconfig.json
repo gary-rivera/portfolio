@@ -14,7 +14,6 @@
 		"noEmit": false, // Ensures TypeScript does not emit compiled files (Vite handles this)
 		"jsx": "react-jsx",
 		"skipLibCheck": true,
-		"customConditions": ["source"],
 		"paths": {
 			"@/*": ["./src/*"]
 		},

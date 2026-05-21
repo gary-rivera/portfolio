@@ -1,123 +1,91 @@
-import { Project } from "@/data/projects";
-import { getBadgeDetails } from "@/utils/badges";
+import { chakra } from "@chakra-ui/react";
 import dayjs from "dayjs";
-import ActionableTextHighlight from "@/components/ActionableTextHighlight";
+import { Project } from "@/data/projects";
 
-// styling
-import { chakra, Badge, Flex, HStack, Icon, Image, Text, Spacer, Code } from "@chakra-ui/react";
-
-// icons
-import { FaNpm } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
-import { FaExternalLinkAlt } from "react-icons/fa";
-
-import LinkIcon from "@/components/LinkIconFactory";
-interface ProjectCardProps {
+interface ProjectRowProps {
 	project: Project;
+	index: number;
 }
 
-const GhIcon = chakra(FaGithub);
-const ExternalLinkIcon = chakra(FaExternalLinkAlt);
-const NpmIcon = chakra(FaNpm);
-
-type IconKeys = "repo" | "npm" | "deployment";
-const IconMap: Record<IconKeys, typeof GhIcon | typeof NpmIcon | typeof ExternalLinkIcon> = {
-	repo: GhIcon,
-	npm: NpmIcon,
-	deployment: ExternalLinkIcon,
-};
-
-const iconPropsMap: Record<string, Record<string, any>> = {
-	repo: { boxSize: "1.3rem" },
-	npm: { boxSize: "2rem", _hover: { color: "#CC3534" } },
-	deployment: { boxSize: "0.9rem", ml: "4px" },
-};
-
-function ProjectCard({ project }: ProjectCardProps) {
-	const { logoConfig, links, name, description, totalCommits, createdAt, tags } = project;
-	const iconItems = Object.entries(links)
-		.filter(([key, value]) => key in IconMap && value)
-		.map(([key, value]) => ({
-			IconComponent: IconMap[key as IconKeys],
-			href: value,
-			props: iconPropsMap[key] || {},
-		}));
+/** One row of the projects.log indexed table. */
+function ProjectRow({ project, index }: ProjectRowProps) {
+	const { links, name, description, createdAt, tags } = project;
+	const number = (index + 1).toString().padStart(2, "0");
+	const year = createdAt ? dayjs(createdAt).format("YYYY") : "—";
+	const stack = (tags && tags.length > 0 ? tags : []).join(" · ");
 
 	return (
-		<Flex
-			direction="column"
-			w={["100%", "100%", "40rem", "45rem"]}
-			h={["auto", "12rem", "13rem", "14rem"]}
-			bg="var(--primary-bg-color)"
-			borderRadius="sm"
-			py={["4", "6", "6"]}
-			px={["6", "8", "10"]}
-			fontSize={["16px", "20px", "22px"]}
+		<chakra.tr
+			transition="background 120ms var(--ease-out)"
+			_hover={{ bg: "rgba(123, 192, 137, 0.045)" }}
+			cursor="default"
+			role="group"
 		>
-			<Flex justify="space-between">
-				<Flex align="center" justify="center">
-					<Image src={logoConfig[0]} alt="project-logo" h="auto" w={logoConfig[1].width} mt="1" mr="1" />
-
-					<ActionableTextHighlight children={name} externalLink={links.repo || ""} />
-				</Flex>
-
-				<Flex direction="column" justify="start" m="0">
-					{/* Code component? */}
-					{[
-						{ title: "commits", value: totalCommits ? totalCommits && totalCommits.toString() : "N/A" },
-						{ title: "created", value: dayjs(createdAt).format("MMM YYYY") },
-					].map(({ title, value }) => (
-						<Code
-							// @ts-ignore // variant="none" is not in the types as of chakra v3 for some reason
-							variant="none"
-							fontWeight="300"
-							color="blackAlpha.500"
-							textAlign="right"
-							letterSpacing="tight"
-							py="0"
-							my="0"
-							key={title}
-							minHeight="1"
-							fontSize={["0.55rem", "0.6rem", "0.65rem"]}
-						>
-							{title}: {value}
-						</Code>
-					))}
-				</Flex>
-			</Flex>
-			<HStack fontWeight="500" mt={[1, 1, 1.5]} justifySelf="end" h="auto">
-				<Text
-					// fontSize="1rem"
-					color="blackAlpha.800"
-					fontSize={["0.8rem", "0.85rem", "0.9rem", "1rem"]}
-					borderColor="cyan.600"
-				>
-					{description}
-				</Text>
-			</HStack>
-			<Spacer />
-
-			<Flex justify="space-between" h="2.3rem">
-				<HStack gap="0.25rem">
-					{tags?.length &&
-						tags?.map((tag) => {
-							const [title, colorScheme, icon] = getBadgeDetails(tag);
-							return (
-								<Badge key={`badge-${tag}`} variant="subtle" colorPalette={colorScheme} opacity="0.5">
-									{title}
-									{icon && <Icon>{icon}</Icon>}
-								</Badge>
-							);
-						})}
-				</HStack>
-				<HStack gap="0.3rem" h="inherit">
-					{iconItems.map(({ IconComponent, href, props }, idx) => (
-						<LinkIcon key={`icon-${idx}`} iconProps={{ href }} IconTemplate={<IconComponent {...props} />} />
-					))}
-				</HStack>
-			</Flex>
-		</Flex>
+			<chakra.td px="0.75rem" py="0.55rem" color="textSubtle" borderBottom="1px solid" borderColor="bgRaised">
+				{number}
+			</chakra.td>
+			<chakra.td
+				px="0.75rem"
+				py="0.55rem"
+				color="text"
+				fontWeight="500"
+				borderBottom="1px solid"
+				borderColor="bgRaised"
+				_groupHover={{ color: "phosphor" }}
+				transition="color 120ms var(--ease-out)"
+			>
+				{name.toLowerCase()}
+			</chakra.td>
+			<chakra.td
+				px="0.75rem"
+				py="0.55rem"
+				color="text"
+				borderBottom="1px solid"
+				borderColor="bgRaised"
+				fontSize="13px"
+			>
+				{description ?? <chakra.span color="textSubtle">—</chakra.span>}
+			</chakra.td>
+			<chakra.td
+				px="0.75rem"
+				py="0.55rem"
+				color="textMuted"
+				borderBottom="1px solid"
+				borderColor="bgRaised"
+				fontSize="13px"
+			>
+				{stack || <chakra.span color="textSubtle">—</chakra.span>}
+			</chakra.td>
+			<chakra.td px="0.75rem" py="0.55rem" color="textSubtle" borderBottom="1px solid" borderColor="bgRaised">
+				{year}
+			</chakra.td>
+			<chakra.td px="0.75rem" py="0.55rem" borderBottom="1px solid" borderColor="bgRaised">
+				{links.npm && (
+					<TableLink href={links.npm} label="npm" />
+				)}
+				{links.deployment && (
+					<TableLink href={links.deployment} label="open" />
+				)}
+				{links.repo && (
+					<TableLink href={links.repo} label="gh" />
+				)}
+			</chakra.td>
+		</chakra.tr>
 	);
 }
 
-export default ProjectCard;
+const TableLink = ({ href, label }: { href: string; label: string }) => (
+	<chakra.a
+		href={href}
+		target="_blank"
+		rel="noopener noreferrer"
+		color="phosphorDim"
+		mr="0.5rem"
+		transition="color 120ms var(--ease-out), text-shadow 120ms var(--ease-out)"
+		_hover={{ color: "phosphor", textShadow: "0 0 6px rgba(123, 192, 137, 0.4)" }}
+	>
+		{label}
+	</chakra.a>
+);
+
+export default ProjectRow;

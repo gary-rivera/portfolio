@@ -12,9 +12,7 @@ interface DialogProps {
 function ResumeDialogContainer({ isOpen, onClose }: DialogProps) {
 	const onKeyDown = useCallback(
 		(event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				onClose();
-			}
+			if (event.key === "Escape") onClose();
 		},
 		[onClose],
 	);
@@ -24,29 +22,14 @@ function ResumeDialogContainer({ isOpen, onClose }: DialogProps) {
 			document.body.style.overflow = "hidden";
 			window.addEventListener("keydown", onKeyDown);
 		}
-
 		return () => {
 			document.body.style.overflow = "";
 			window.removeEventListener("keydown", onKeyDown);
 		};
 	}, [isOpen, onKeyDown]);
 
-	const overlayVariants = {
-		hidden: { opacity: 0 },
-		visible: { opacity: 1 },
-	};
-
-	const contentVariants = {
-		hidden: { y: -50, opacity: 0 },
-		visible: { y: 0, opacity: 1 },
-	};
-
 	const portalRoot = document.getElementById("dialog-root");
-
-	if (!portalRoot) {
-		console.error("The element #dialog-root was not found.");
-		return null;
-	}
+	if (!portalRoot) return null;
 
 	return createPortal(
 		<AnimatePresence>
@@ -55,18 +38,20 @@ function ResumeDialogContainer({ isOpen, onClose }: DialogProps) {
 					key="resume-modal"
 					className="dialog-overlay"
 					onClick={onClose}
-					variants={overlayVariants}
-					initial="hidden"
-					animate="visible"
-					exit="hidden"
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
 				>
 					<motion.div
 						className="dialog-content"
 						role="dialog"
 						aria-modal="true"
 						onClick={(e) => e.stopPropagation()}
-						variants={contentVariants}
-						transition={{ type: "spring", damping: 25, stiffness: 300 }}
+						initial={{ opacity: 0, y: 8 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: 8 }}
+						transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
 					>
 						<ResumeCvComponent />
 					</motion.div>

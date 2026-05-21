@@ -9,21 +9,20 @@ function ResumeIcon() {
 	return (
 		<>
 			<chakra.button
-				color="blackAlpha.500"
-				py="0.5"
-				m="0"
-				p="0"
-				h="18px"
-				w="auto"
-				_hover={{ color: "blackAlpha.950", cursor: "pointer" }}
+				color="textMuted"
+				h="14px"
+				w="14px"
+				transition="color 200ms var(--ease-out)"
+				_hover={{ color: "textPrimary", cursor: "pointer" }}
 				onClick={() => setDialogOpen(true)}
+				aria-label="Open resume"
 			>
 				<ResumeCvSquareSvg
 					fill="none"
 					stroke="currentColor"
 					style={{
-						width: "inherit",
-						height: "inherit",
+						width: "100%",
+						height: "100%",
 					}}
 				/>
 			</chakra.button>

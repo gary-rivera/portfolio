@@ -12,7 +12,6 @@ interface TooltipContentProps {
 	heading?: string;
 	text?: string;
 	iconLinkUrl?: string;
-	// iconLinkUrl?: React.ReactNode;
 }
 
 interface ActionableTextHighlightProps {
@@ -26,19 +25,14 @@ const ExternalLinkIcon = chakra(FaExternalLinkAlt);
 
 function ActionableTextHighlight({ children, linkProps, externalLink, tooltipContent }: ActionableTextHighlightProps) {
 	const sharedStyles = {
-		color: "blackAlpha.900",
-		textDecoration: "underline",
-		textDecorationStyle: "dotted",
-		textDecorationThickness: "0.16rem",
-		textDecorationColor: "rgba(161,161,170)",
-		textUnderlineOffset: "0.2rem",
-		fontWeight: "700",
+		color: "textPrimary",
+		fontWeight: "500",
+		borderBottom: "1px solid",
+		borderColor: "hairlineStrong",
+		transition: "color 200ms var(--ease-out), border-color 200ms var(--ease-out)",
 		_hover: {
-			textDecorationColor: "var(--primary-blue)",
-			// bg: "blackAlpha.50",
-			color: "blackAlpha.700",
-			textDecorationThickness: "0.18rem",
-			textUnderlineOffset: "0.25rem",
+			color: "accent",
+			borderColor: "accent",
 		},
 		_focus: {
 			outline: "none",
@@ -57,42 +51,40 @@ function ActionableTextHighlight({ children, linkProps, externalLink, tooltipCon
 				<Tippy
 					content={
 						tooltipContent && (
-							<Flex m="1" w="auto" direction="column" fontSize="16px" color="whiteAlpha.900">
+							<Flex m="1" w="auto" direction="column" fontFamily="var(--font-sans)" color="white">
 								{tooltipContent.icon && (
-									<HStack h="25px" gap="0.5">
+									<HStack h="25px" gap="2">
 										{tooltipContent.icon}
-										<Heading fontSize="0.9rem" mx="0" px="0">
+										<Heading fontSize="13px" fontWeight="500" m="0" p="0">
 											{tooltipContent.heading}
 										</Heading>
 										<Spacer />
 										{tooltipContent.iconLinkUrl?.length && (
 											<LinkIcon
 												iconProps={{
-													mb: "2px",
 													href: tooltipContent.iconLinkUrl || "",
 													target: "_blank",
 													rel: "noopener noreferrer",
-													color: "whiteAlpha.600",
-													_hover: { color: "whiteAlpha.800" },
+													color: "whiteAlpha.700",
+													_hover: { color: "white" },
 												}}
-												IconTemplate={<ExternalLinkIcon boxSize="0.75rem" />}
+												IconTemplate={<ExternalLinkIcon boxSize="0.7rem" />}
 											/>
 										)}
 									</HStack>
 								)}
 								{tooltipContent.text && (
-									<Text fontSize="0.75rem" fontWeight="normal" textAlign="start" mb="1.5">
+									<Text fontSize="12px" fontWeight="400" color="whiteAlpha.800" mb="1" lineHeight="1.5">
 										{tooltipContent.text}
 									</Text>
 								)}
 							</Flex>
 						)
 					}
-					// visible={true} // debugging prop
 					interactive={true}
 					{...tooltipConfig}
 				>
-					<chakra.span {...sharedStyles} {...(linkProps ? linkProps : {})}>
+					<chakra.span {...sharedStyles} cursor="default">
 						{children}
 					</chakra.span>
 				</Tippy>

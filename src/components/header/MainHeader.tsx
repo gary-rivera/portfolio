@@ -2,21 +2,12 @@ import { Fragment } from "react";
 import Name from "./NameTypingEffect";
 
 type MetaEntry = { k: string; v: string; note?: string; accent?: boolean };
-type ContactEntry = { k: string; v: string; href: string };
 
 const META: MetaEntry[] = [
-	{ k: "handle", v: "gary-rivera", accent: true },
 	{ k: "location", v: "40.6782°N · 73.9442°W", note: "// brooklyn, ny" },
 	{ k: "last_commit", v: "2h ago", note: "// portfolio · main · 4f3a2c1" },
 	{ k: "status", v: "● open", accent: true, note: "// senior backend / platform" },
 	{ k: "uptime", v: "5y 84d", note: "// since rithm school graduation" },
-];
-
-const CONTACT: ContactEntry[] = [
-	{ k: "email", v: "gary@…", href: "mailto:a.gary.rivera@gmail.com" },
-	{ k: "github", v: "gary-rivera", href: "https://github.com/gary-rivera" },
-	{ k: "linkedin", v: "gary-a-rivera", href: "https://www.linkedin.com/in/gary-a-rivera/" },
-	{ k: "cv", v: "resume.pdf", href: "#resume" },
 ];
 
 function MainHeader() {
@@ -43,24 +34,6 @@ function MainHeader() {
 				either.
 			</p>
 
-			<div
-				id="contact-header"
-				className="grid grid-cols-2 gap-x-8 gap-y-5 border-y border-dashed border-rule py-3 text-sm sm:grid-cols-[repeat(4,max-content)]"
-			>
-				{CONTACT.map(({ k, v, href }) => (
-					<div key={k} className="flex flex-col gap-[0.15rem]">
-						<span className="text-2xs tracking-wider text-text-subtle">{k}</span>
-						<a
-							href={href}
-							target={href.startsWith("http") ? "_blank" : undefined}
-							rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-							className="text-base text-text transition-colors duration-150 ease-out hover:text-phosphor"
-						>
-							{v}
-						</a>
-					</div>
-				))}
-			</div>
 		</header>
 	);
 }

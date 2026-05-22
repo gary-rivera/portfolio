@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { Project } from "@/data/projects";
+import { Project } from "@data/projects";
 
 interface ProjectRowProps {
 	project: Project;

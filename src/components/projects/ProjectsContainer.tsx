@@ -1,6 +1,6 @@
-import SectionHead from "@/components/SectionHead";
+import SectionHead from "@components/SectionHead";
 import ProjectRow from "./ProjectCard";
-import { useProjectsContext } from "@/context/ProjectsContext";
+import { useProjectsContext } from "@context/ProjectsContext";
 
 const TH = "border-b border-dashed border-rule px-3 py-1.5 text-left text-xs font-normal lowercase tracking-wider text-text-subtle";
 

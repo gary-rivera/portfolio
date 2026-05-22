@@ -1,8 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { ProjectsProvider } from "./context/ProjectsContext";
+import { ProjectsProvider } from "@context/ProjectsContext";
 
-import "@/styles/app.css";
+import "@styles/app.css";
 
 import App from "./App";
 

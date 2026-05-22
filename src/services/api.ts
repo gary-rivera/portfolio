@@ -6,7 +6,7 @@ const GH_USERNAME = "gary-rivera";
 
 const GitHubGQLConfig = graphql.defaults({
 	headers: {
-		authorization: `token ${VITE_GH_API_TOKEN}`,
+		authorization: `Bearer ${VITE_GH_API_TOKEN}`,
 	},
 });
 
@@ -49,58 +49,6 @@ interface RepositoryData {
 		};
 	};
 }
-
-export const fetchGithubRepositoryGQL = async (username: string, repoName: string): Promise<RepositoryData> => {
-	const query = `
-    query ($username: String!, $repoName: String!) {
-      repository(owner: $username, name: $repoName) {
-        name
-        description
-        stargazerCount
-        createdAt
-        url
-        languages(first: 5) {
-          edges {
-            node {
-              name
-            }
-          }
-        }
-        owner {
-          login
-          avatarUrl
-        }
-        primaryLanguage {
-          name
-        }
-        repositoryTopics(first: 5) {
-          edges {
-            node {
-              topic {
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
-	const variables = { username, repoName };
-
-	try {
-		const data: GraphQlQueryResponseData = await GitHubGQLConfig(query, variables);
-		const { repository } = data;
-
-		return repository as RepositoryData;
-	} catch (error) {
-		if (error instanceof GraphqlResponseError) {
-			console.error("GraphQL Error Data:", error.data);
-			throw new Error(`GitHub API Error: ${error.message}`);
-		}
-		throw error;
-	}
-};
 
 export const fetchGithubRepositoriesGQL = async (repoNames: string[]): Promise<Record<string, RepositoryData>> => {
 	const sanitizeAlias = (name: string) => name.replace(/[^a-zA-Z0-9_]/g, "_");
@@ -164,7 +112,7 @@ export const fetchGithubRepositoriesGQL = async (repoNames: string[]): Promise<R
 export const fetcher = (url: string) =>
 	fetch(url, {
 		headers: {
-			Authorization: `token ${VITE_GH_API_TOKEN}`,
+			Authorization: `Bearer ${VITE_GH_API_TOKEN}`,
 		},
 	}).then((res) => {
 		if (!res.ok) throw new Error("Failed to fetch data");

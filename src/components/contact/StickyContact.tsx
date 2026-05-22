@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-
-const ITEMS = [
-	{ k: "email", v: "gary@…", href: "mailto:a.gary.rivera@gmail.com" },
-	{ k: "github", v: "gary-rivera", href: "https://github.com/gary-rivera" },
-	{ k: "linkedin", v: "gary-a-rivera", href: "https://www.linkedin.com/in/gary-a-rivera/" },
-	{ k: "cv", v: "resume.pdf", href: "#resume" },
-] as const;
+import { CONTACT_LINKS } from "@data/contact";
+import ContactLink from "./ContactLink";
 
 function StickyContact() {
 	const [visible, setVisible] = useState(false);
@@ -43,18 +38,11 @@ function StickyContact() {
 			</div>
 
 			<dl className="grid gap-[0.55rem]">
-				{ITEMS.map(({ k, v, href }) => (
+				{CONTACT_LINKS.map(({ k, v, href }) => (
 					<div key={k}>
 						<dt className="mb-[0.05rem] text-2xs tracking-wider text-text-subtle">{k}</dt>
 						<dd className="text-sm">
-							<a
-								href={href}
-								target={href.startsWith("http") ? "_blank" : undefined}
-								rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-								className="border-b border-dotted border-transparent pb-px text-text transition-[color,border-color] duration-150 ease-out hover:border-phosphor-dim hover:text-phosphor"
-							>
-								{v}
-							</a>
+							<ContactLink href={href}>{v}</ContactLink>
 						</dd>
 					</div>
 				))}

@@ -1,6 +1,6 @@
-import SectionHead from "@/components/SectionHead";
+import SectionHead from "@components/SectionHead";
 import TimelineItem from "./TimelineItem";
-import { events } from "@/data/experience";
+import { events } from "@data/experience";
 
 function ExperienceContainer() {
 	return (

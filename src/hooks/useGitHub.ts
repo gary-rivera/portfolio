@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { fetcher, fetchGithubRepositoriesGQL } from "../services/api";
+import { fetcher, fetchGithubRepositoriesGQL } from "@services/api";
 import type { GraphQlQueryResponseData } from "@octokit/graphql";
 
 export const useGitHubReposGQL = (repoNames: string[]) => {
@@ -38,20 +38,3 @@ export const useGithubRepos = () => {
 	};
 };
 
-export const useResumeRepo = () => {
-	const { data, error, isLoading } = useSWR(
-		"https://raw.githubusercontent.com/gary-rivera/resume-md/main/README.md",
-		(url: string) => fetch(url).then((res) => res.text()),
-		{
-			revalidateOnFocus: false,
-			revalidateOnReconnect: false,
-			shouldRetryOnError: false,
-		},
-	);
-
-	return {
-		readmeContent: data,
-		isLoading,
-		isError: !!error,
-	};
-};

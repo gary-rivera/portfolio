@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { CareerEvent } from "@/data/experience";
+import { CareerEvent } from "@data/experience";
 
 type TimelineItemProps = {
 	event: CareerEvent;

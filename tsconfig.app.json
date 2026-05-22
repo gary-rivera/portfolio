@@ -13,7 +13,15 @@
 		"moduleDetection": "force", // Forces module mode, avoids pitfalls
 		"jsx": "react-jsx", // JSX handling for React
 		"paths": {
-			"@/*": ["./src/*"] // Simplified path aliases for cleaner imports
+			"@/*": ["./src/*"],
+			"@components/*": ["./src/components/*"],
+			"@context/*": ["./src/context/*"],
+			"@data/*": ["./src/data/*"],
+			"@hooks/*": ["./src/hooks/*"],
+			"@services/*": ["./src/services/*"],
+			"@styles/*": ["./src/styles/*"],
+			"@utils/*": ["./src/utils/*"],
+			"@assets/*": ["./src/assets/*"]
 		},
 
 		/* Build settings */

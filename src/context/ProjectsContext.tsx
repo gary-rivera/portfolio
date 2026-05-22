@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useContext, useMemo, createContext, useState, useEffect, ReactNode } from "react";
-import { useGitHubReposGQL } from "@/hooks/useGitHub";
-import { ProjectCatalog, projectCatalogKeys, Projects, projectTagsConfig } from "@/data/projects";
+import { useGitHubReposGQL } from "@hooks/useGitHub";
+import { ProjectCatalog, projectCatalogKeys, Projects, projectTagsConfig } from "@data/projects";
 
 type ProjectsContextType = {
 	projects: Projects;

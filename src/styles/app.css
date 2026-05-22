@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ─── design tokens ──────────────────────────────────────────────────────── */
+/* ─── design tokens (dark defaults) ──────────────────────────────────────── */
 @theme {
 	--color-bg: #0f1310;
 	--color-bg-raised: #161b17;
@@ -21,20 +21,43 @@
 	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
 	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-
-	--text-2xs: 10px;
-	--text-xs: 11px;
-	--text-sm: 12px;
-	--text-base: 13px;
 }
 
-/* ─── document base ──────────────────────────────────────────────────────── */
+/* ─── theme-aware non-utility tokens ─────────────────────────────────────── */
 :root {
 	color-scheme: dark;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	--grain: color-mix(in srgb, var(--color-phosphor) 1.8%, transparent);
+	--panel-shadow-soft: rgba(0, 0, 0, 0.35);
 }
 
+/* ─── light palette: paper / cream ───────────────────────────────────────── */
+:root[data-theme="light"] {
+	color-scheme: light;
+
+	--color-bg: #f5f1e8;
+	--color-bg-raised: #ede7d6;
+	--color-bg-deep: #e8e1cd;
+
+	--color-rule: #c9c2af;
+	--color-rule-strong: #a39c87;
+
+	--color-text: #1a1f1a;
+	--color-text-muted: #5a5e54;
+	--color-text-subtle: #8a8d80;
+
+	--color-phosphor: #2d6b3a;
+	--color-phosphor-dim: #6b8a6e;
+	--color-warn: #8a5a14;
+	--color-danger: #a13a1f;
+
+	--grain: color-mix(in srgb, var(--color-text) 2.5%, transparent);
+	--panel-shadow-soft: rgba(26, 31, 26, 0.12);
+}
+
+/* ─── document base ──────────────────────────────────────────────────────── */
 html,
 body {
 	margin: 0;
@@ -53,7 +76,7 @@ body {
 	overflow-x: hidden;
 }
 
-/* ambient directional light (phosphor top-left, brass bottom-right) */
+/* ambient directional light */
 body::before {
 	content: "";
 	position: fixed;
@@ -65,7 +88,7 @@ body::before {
 		radial-gradient(ellipse 80% 60% at 90% 100%, color-mix(in srgb, var(--color-warn) 2.5%, transparent), transparent 60%);
 }
 
-/* subtle CRT scanlines */
+/* CRT scanlines (dark) / ink grain (light) */
 body::after {
 	content: "";
 	position: fixed;
@@ -74,8 +97,8 @@ body::after {
 	z-index: 1;
 	background-image: repeating-linear-gradient(
 		0deg,
-		color-mix(in srgb, var(--color-phosphor) 1.8%, transparent),
-		color-mix(in srgb, var(--color-phosphor) 1.8%, transparent) 1px,
+		var(--grain),
+		var(--grain) 1px,
 		transparent 1px,
 		transparent 3px
 	);
@@ -165,5 +188,5 @@ a {
 @utility panel-shadow {
 	box-shadow:
 		0 0 0 1px color-mix(in srgb, var(--color-bg) 40%, transparent),
-		0 8px 24px rgba(0, 0, 0, 0.35);
+		0 8px 24px var(--panel-shadow-soft);
 }

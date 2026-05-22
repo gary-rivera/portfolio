@@ -1,9 +1,9 @@
-import MainHeader from "./components/header/MainHeader";
-import AcheivementsContainer from "./components/AcheivementsContainer";
-import TopBar from "./components/TopBar";
-import NowBlock from "./components/NowBlock";
-import PromptBlock from "./components/PromptBlock";
-import StickyContact from "./components/StickyContact";
+import MainHeader from "@components/header/MainHeader";
+import AcheivementsContainer from "@components/AcheivementsContainer";
+import TopBar from "@components/TopBar";
+import NowBlock from "@components/NowBlock";
+import PromptBlock from "@components/PromptBlock";
+import StickyContact from "@components/contact/StickyContact";
 
 function Footer() {
 	return (

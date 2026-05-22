@@ -137,13 +137,32 @@ a {
 }
 
 /* ─── animations ─────────────────────────────────────────────────────────── */
+
+/* EKG-style two-beat heartbeat — modulates opacity + halo */
 @keyframes phosphor-pulse {
-	0%,
+	0% {
+		opacity: 0.35;
+		box-shadow: 0 0 4px var(--color-phosphor);
+	}
+	8% {
+		opacity: 1;
+		box-shadow: 0 0 9px var(--color-phosphor);
+	}
+	16% {
+		opacity: 0.5;
+		box-shadow: 0 0 5px var(--color-phosphor);
+	}
+	24% {
+		opacity: 1;
+		box-shadow: 0 0 9px var(--color-phosphor);
+	}
+	32% {
+		opacity: 0.4;
+		box-shadow: 0 0 4px var(--color-phosphor);
+	}
 	100% {
 		opacity: 0.4;
-	}
-	50% {
-		opacity: 1;
+		box-shadow: 0 0 4px var(--color-phosphor);
 	}
 }
 
@@ -154,17 +173,149 @@ a {
 }
 
 @utility animate-pulse-phosphor {
-	animation: phosphor-pulse 1.6s ease-in-out infinite;
+	animation: phosphor-pulse 2.4s infinite;
 }
 
 @utility animate-blink-phosphor {
 	animation: phosphor-blink 1.1s steps(2) infinite;
 }
 
+/* boot: power-on flicker (one-shot on html.crt-boot) */
+@keyframes crt-on {
+	0%   { filter: brightness(0); }
+	8%   { filter: brightness(2.4) contrast(1.4); }
+	14%  { filter: brightness(0.6); }
+	22%  { filter: brightness(1.3); }
+	100% { filter: none; }
+}
+html.crt-boot {
+	animation: crt-on 0.6s steps(1) forwards;
+}
+
+/* boot: scan sweep — fixed band that translates top→bottom */
+@keyframes boot-sweep {
+	0%   { transform: translateY(-30vh); opacity: 0; }
+	20%  { opacity: 0.9; }
+	100% { transform: translateY(110vh); opacity: 0; }
+}
+.boot-sweep {
+	position: fixed;
+	inset: 0 0 auto 0;
+	height: 120px;
+	pointer-events: none;
+	z-index: 20;
+	opacity: 0;
+	background: linear-gradient(
+		180deg,
+		transparent 0%,
+		color-mix(in srgb, var(--color-phosphor) 18%, transparent) 50%,
+		transparent 100%
+	);
+	animation: boot-sweep 0.6s var(--ease-out) forwards;
+}
+
+/* staggered log-line reveal — set --log-i on the element */
+@keyframes log-print {
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+@utility log-line {
+	opacity: 0;
+	transform: translateY(-2px);
+	animation: log-print 0.22s var(--ease-out) forwards;
+	animation-delay: calc(var(--log-i, 0) * 60ms + 200ms);
+}
+
+/* timeline-row: caret pseudo-element + slide-in on hover */
+.timeline-row {
+	position: relative;
+}
+.timeline-row::before {
+	content: "❯";
+	position: absolute;
+	left: -0.95rem;
+	top: 50%;
+	font-size: 0.9rem;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--color-phosphor);
+	text-shadow: 0 0 6px color-mix(in srgb, var(--color-phosphor) 45%, transparent);
+	opacity: 0;
+	transform: translate(-8px, -50%);
+	transition:
+		opacity 0.14s var(--ease-out),
+		transform 0.14s var(--ease-out);
+	pointer-events: none;
+}
+.timeline-row:hover::before {
+	opacity: 1;
+	transform: translate(0, -50%);
+}
+
+/* click flash-invert — phosphor wash on press, self-clears */
+@keyframes flash-invert {
+	0%, 100% {
+		background: transparent;
+		color: inherit;
+	}
+	30% {
+		background: var(--color-phosphor);
+		color: var(--color-bg);
+	}
+}
+@utility flash-invert {
+	animation: flash-invert 0.18s var(--ease-out);
+}
+
+/* theme wash overlay — fixed div, flashed by useTheme */
+@keyframes theme-wash {
+	0%   { opacity: 0; }
+	40%  { opacity: 0.08; }
+	100% { opacity: 0; }
+}
+.theme-wash {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 15;
+	background: var(--color-phosphor);
+	opacity: 0;
+}
+.theme-wash.flash {
+	animation: theme-wash 0.28s var(--ease-out);
+}
+html.theme-transitioning,
+html.theme-transitioning body {
+	transition:
+		background-color 0.28s var(--ease-out),
+		color 0.28s var(--ease-out);
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.animate-pulse-phosphor,
-	.animate-blink-phosphor {
-		animation: none;
+	.animate-blink-phosphor,
+	html.crt-boot,
+	.boot-sweep,
+	.log-line,
+	.flash-invert,
+	.theme-wash.flash {
+		animation: none !important;
+	}
+	.log-line {
+		opacity: 1;
+		transform: none;
+	}
+	.boot-sweep {
+		display: none;
+	}
+	.timeline-row::before {
+		transition: none;
+	}
+	html.theme-transitioning,
+	html.theme-transitioning body {
+		transition: none;
 	}
 }
 

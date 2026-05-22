@@ -1,3 +1,4 @@
+import { useState } from "react";
 import dayjs from "dayjs";
 import { Project } from "@data/projects";
 
@@ -38,13 +39,23 @@ export default function ProjectRow({ project, index }: ProjectRowProps) {
 	);
 }
 
-const TableLink = ({ href, label }: { href: string; label: string }) => (
-	<a
-		href={href}
-		target="_blank"
-		rel="noopener noreferrer"
-		className="mr-2 text-phosphor-dim transition-[color,text-shadow] duration-100 ease-out hover:text-phosphor hover:glow-text-phosphor-soft"
-	>
-		{label}
-	</a>
-);
+const TableLink = ({ href, label }: { href: string; label: string }) => {
+	const [flashing, setFlashing] = useState(false);
+	return (
+		<a
+			href={href}
+			target="_blank"
+			rel="noopener noreferrer"
+			onPointerDown={() => {
+				setFlashing(false);
+				requestAnimationFrame(() => setFlashing(true));
+			}}
+			onAnimationEnd={() => setFlashing(false)}
+			className={`mr-2 inline-block px-1 text-phosphor-dim transition-[color,text-shadow] duration-100 ease-out hover:text-phosphor hover:glow-text-phosphor-soft ${
+				flashing ? "flash-invert" : ""
+			}`}
+		>
+			{label}
+		</a>
+	);
+};

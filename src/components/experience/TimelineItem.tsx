@@ -63,10 +63,14 @@ const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(({ event, ind
 	return (
 		<div
 			ref={ref}
-			className="group grid grid-cols-1 gap-1 border-l-2 border-transparent px-3 py-[0.45rem] transition-[background,border-color] duration-100 ease-out hover:border-phosphor-dim hover:bg-phosphor/[4.5%] sm:grid-cols-[180px_90px_1fr_auto] sm:gap-4"
+			className="timeline-row group grid grid-cols-1 gap-1 px-3 py-[0.45rem] transition-colors duration-100 ease-out hover:bg-phosphor/[4.5%] sm:grid-cols-[180px_90px_1fr_auto] sm:gap-4"
 		>
-			<div className="text-sm tracking-[-0.005em] text-text-subtle">{ts}</div>
-			<div className={`${LEVEL_CLASS[level]} self-start text-xs tracking-wider sm:self-baseline`}>
+			<div className="text-sm tracking-[-0.005em] text-text-subtle transition-colors duration-100 ease-out group-hover:text-phosphor-dim">
+				{ts}
+			</div>
+			<div
+				className={`${LEVEL_CLASS[level]} self-start text-xs tracking-wider transition-[text-shadow] duration-100 ease-out group-hover:glow-text-phosphor-soft sm:self-baseline`}
+			>
 				[{level.padEnd(6, " ")}]
 			</div>
 			<div className="min-w-0 text-base text-text">

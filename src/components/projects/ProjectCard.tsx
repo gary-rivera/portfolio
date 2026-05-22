@@ -8,7 +8,7 @@ interface ProjectRowProps {
 
 const TD = "border-b border-bg-raised px-3 py-2";
 
-function ProjectRow({ project, index }: ProjectRowProps) {
+export default function ProjectRow({ project, index }: ProjectRowProps) {
 	const { links, name, description, createdAt, tags } = project;
 	const number = (index + 1).toString().padStart(2, "0");
 	const year = createdAt ? dayjs(createdAt).format("YYYY") : "—";
@@ -48,5 +48,3 @@ const TableLink = ({ href, label }: { href: string; label: string }) => (
 		{label}
 	</a>
 );
-
-export default ProjectRow;

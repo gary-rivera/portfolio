@@ -5,7 +5,7 @@ const ITEMS: { text: string; meta?: string }[] = [
 	{ text: "open to: senior backend / platform roles", meta: "// nyc, remote, or remote-with-quarterly-onsites" },
 ];
 
-function NowBlock() {
+export default function NowBlock() {
 	return (
 		<div className="my-6 border border-dashed border-rule bg-phosphor/[2.5%] px-5 py-4">
 			<div className="mb-2 text-xs tracking-wider text-phosphor">
@@ -23,5 +23,3 @@ function NowBlock() {
 		</div>
 	);
 }
-
-export default NowBlock;

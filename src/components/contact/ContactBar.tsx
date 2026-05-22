@@ -1,7 +1,7 @@
 import { CONTACT_LINKS } from "@data/contact";
 import ContactLink from "./ContactLink";
 
-function ContactBar() {
+export default function ContactBar() {
 	return (
 		<div id="contact-header" className="flex items-center gap-6" aria-label="user info">
 			{CONTACT_LINKS.map(({ k, v, href }) => (
@@ -13,5 +13,3 @@ function ContactBar() {
 		</div>
 	);
 }
-
-export default ContactBar;

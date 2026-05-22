@@ -2,7 +2,7 @@ const USER_GITHUB_URL = "https://github.com/gary-rivera";
 const USER_LINKEDIN_URL = "https://www.linkedin.com/in/gary-a-rivera/";
 const USER_EMAIL = "mailto:a.gary.rivera@gmail.com";
 
-function PromptBlock() {
+export default function PromptBlock() {
 	return (
 		<div className="my-8 border-y border-dashed border-rule py-4 text-[12.5px] text-text-muted">
 			<Line ps1 cmd="whoami --long" />
@@ -56,5 +56,3 @@ const Glow = ({ href, children }: { href: string; children: React.ReactNode }) =
 		{children}
 	</a>
 );
-
-export default PromptBlock;

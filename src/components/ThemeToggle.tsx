@@ -4,7 +4,7 @@ type Props = {
 	className?: string;
 };
 
-function ThemeToggle({ className }: Props) {
+export default function ThemeToggle({ className }: Props) {
 	const [theme, setTheme] = useTheme();
 
 	return (
@@ -39,5 +39,3 @@ function Option({ label, active, onClick }: OptionProps) {
 		</button>
 	);
 }
-
-export default ThemeToggle;

@@ -1,7 +1,7 @@
 import ContactBar from "./contact/ContactBar";
 import ThemeToggle from "./ThemeToggle";
 
-function TopBar() {
+export default function TopBar() {
 	return (
 		<nav className="mb-6 flex items-center justify-between border-b border-dashed border-rule pb-2 text-xs tracking-wider text-text-muted lowercase">
 			<ContactBar />
@@ -15,5 +15,3 @@ function TopBar() {
 		</nav>
 	);
 }
-
-export default TopBar;

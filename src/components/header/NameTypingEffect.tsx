@@ -1,7 +1,7 @@
 const ASCII = ` ▄▀  ▄▀█ █▀█ █▄█    █▀█ █ █ █ █▀▀ █▀█ ▄▀█
  ▀▄█ █▀█ █▀▄ ▀█▀ ── █▀▄ █ ▀▄▀ ██▄ █▀▄ █▀█`;
 
-function Name() {
+export default function Name() {
 	return (
 		<pre
 			role="heading"
@@ -13,5 +13,3 @@ function Name() {
 		</pre>
 	);
 }
-
-export default Name;

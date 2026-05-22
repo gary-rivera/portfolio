@@ -2,7 +2,7 @@ import SectionHead from "@components/SectionHead";
 import TimelineItem from "./TimelineItem";
 import { events } from "@data/experience";
 
-function ExperienceContainer() {
+export default function ExperienceContainer() {
 	return (
 		<section>
 			<SectionHead name="work.log" meta={`tail -n ${events.length} · 2021—2024 · sorted desc`} />
@@ -14,5 +14,3 @@ function ExperienceContainer() {
 		</section>
 	);
 }
-
-export default ExperienceContainer;

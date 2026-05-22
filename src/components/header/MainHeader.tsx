@@ -10,7 +10,7 @@ const META: MetaEntry[] = [
 	{ k: "uptime", v: "5y 84d", note: "// since rithm school graduation" },
 ];
 
-function MainHeader() {
+export default function MainHeader() {
 	return (
 		<header className="flex flex-col gap-6 pt-6 sm:pt-12">
 			<Name />
@@ -37,5 +37,3 @@ function MainHeader() {
 		</header>
 	);
 }
-
-export default MainHeader;

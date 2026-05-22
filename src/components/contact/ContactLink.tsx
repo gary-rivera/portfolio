@@ -6,7 +6,7 @@ type ContactLinkProps = {
 	className?: string;
 };
 
-function ContactLink({ href, children, className }: ContactLinkProps) {
+export default function ContactLink({ href, children, className }: ContactLinkProps) {
 	const isExternal = href.startsWith("http");
 	const base =
 		"border-b border-dotted border-transparent pb-px text-text transition-[color,border-color] duration-150 ease-out hover:border-phosphor-dim hover:text-phosphor";
@@ -21,5 +21,3 @@ function ContactLink({ href, children, className }: ContactLinkProps) {
 		</a>
 	);
 }
-
-export default ContactLink;

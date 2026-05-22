@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { CONTACT_LINKS } from "@data/contact";
 import ContactLink from "./ContactLink";
 
-function StickyContact() {
+export default function StickyContact() {
 	const [visible, setVisible] = useState(false);
 	const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -55,5 +55,3 @@ function StickyContact() {
 		</aside>
 	);
 }
-
-export default StickyContact;

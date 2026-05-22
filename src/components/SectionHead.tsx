@@ -3,7 +3,7 @@ type Props = {
 	meta?: string;
 };
 
-function SectionHead({ name, meta }: Props) {
+export default function SectionHead({ name, meta }: Props) {
 	return (
 		<div className="mb-[0.9rem] flex items-center gap-3 text-sm text-text-subtle">
 			<span className="text-phosphor">~</span>
@@ -13,5 +13,3 @@ function SectionHead({ name, meta }: Props) {
 		</div>
 	);
 }
-
-export default SectionHead;

@@ -4,7 +4,7 @@ import { useProjectsContext } from "@context/ProjectsContext";
 
 const TH = "border-b border-dashed border-rule px-3 py-1.5 text-left text-xs font-normal lowercase tracking-wider text-text-subtle";
 
-function ProjectsContainer() {
+export default function ProjectsContainer() {
 	const { projects, sortedDesc, isLoading, isError } = useProjectsContext();
 
 	if (isLoading)
@@ -47,5 +47,3 @@ function ProjectsContainer() {
 		</section>
 	);
 }
-
-export default ProjectsContainer;

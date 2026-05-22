@@ -16,7 +16,7 @@ function Footer() {
 	);
 }
 
-function App() {
+export default function App() {
 	return (
 		<>
 			<div className="mx-auto max-w-[1080px] px-4 py-6 pb-16 sm:px-6 sm:py-8 md:px-8">
@@ -31,5 +31,3 @@ function App() {
 		</>
 	);
 }
-
-export default App;

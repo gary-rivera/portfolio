@@ -80,11 +80,11 @@ const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(({ event, ind
 				{range && (
 					<span className="text-text-muted">
 						{" "}
-						<span className="text-text-subtle">// {range}</span>
+						<span className="vrb-note text-text-subtle">// {range}</span>
 					</span>
 				)}
 			</div>
-			<div className="justify-self-start text-xs text-text-subtle sm:justify-self-end">{id}</div>
+			<div className="vrb-decoration justify-self-start text-xs text-text-subtle sm:justify-self-end">{id}</div>
 		</div>
 	);
 });

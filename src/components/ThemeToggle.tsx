@@ -8,10 +8,20 @@ export default function ThemeToggle({ className }: Props) {
 	const [theme, setTheme] = useTheme();
 
 	return (
-		<span className={className ?? "text-text-subtle"}>
+		<span role="group" aria-label="theme" className={className ?? "text-text-subtle"}>
 			[{" "}
-			<Option label="light" active={theme === "light"} onClick={() => setTheme("light")} /> ·{" "}
-			<Option label="dark" active={theme === "dark"} onClick={() => setTheme("dark")} /> ]
+			<Option
+				label="light"
+				active={theme === "light"}
+				onClick={(e) => setTheme("light", { clientX: e.clientX, clientY: e.clientY })}
+			/>{" "}
+			·{" "}
+			<Option
+				label="dark"
+				active={theme === "dark"}
+				onClick={(e) => setTheme("dark", { clientX: e.clientX, clientY: e.clientY })}
+			/>{" "}
+			]
 		</span>
 	);
 }
@@ -19,7 +29,7 @@ export default function ThemeToggle({ className }: Props) {
 type OptionProps = {
 	label: Theme;
 	active: boolean;
-	onClick: () => void;
+	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 function Option({ label, active, onClick }: OptionProps) {

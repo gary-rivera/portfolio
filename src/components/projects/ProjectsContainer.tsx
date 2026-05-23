@@ -1,22 +1,20 @@
 import SectionHead from "@components/SectionHead";
-import ProjectRow from "./ProjectCard";
+import ProjectCard from "./ProjectCard";
 import { useProjectsContext } from "@context/ProjectsContext";
-
-const TH = "border-b border-dashed border-rule px-3 py-1.5 text-left text-xs font-normal lowercase tracking-wider text-text-subtle";
 
 export default function ProjectsContainer() {
 	const { projects, sortedDesc, isLoading, isError } = useProjectsContext();
 
 	if (isLoading)
 		return (
-			<section>
+			<section aria-labelledby="projects-head">
 				<SectionHead name="projects.log" meta="loading…" />
 				<p className="text-sm text-text-subtle">loading…</p>
 			</section>
 		);
 	if (isError)
 		return (
-			<section>
+			<section aria-labelledby="projects-head">
 				<SectionHead name="projects.log" meta="err" />
 				<p className="text-sm text-danger">error loading repositories.</p>
 			</section>
@@ -25,25 +23,13 @@ export default function ProjectsContainer() {
 	const visible = sortedDesc.filter((projectKey) => projects[projectKey]?.active);
 
 	return (
-		<section>
+		<section aria-labelledby="projects-head">
 			<SectionHead name="projects.log" meta={`ls -la · ${visible.length} active`} />
-			<table className="w-full border-collapse text-base">
-				<thead>
-					<tr>
-						<th className={`${TH} w-10`}>#</th>
-						<th className={`${TH} w-40`}>name</th>
-						<th className={TH}>description</th>
-						<th className={`${TH} w-56`}>stack</th>
-						<th className={`${TH} w-20`}>year</th>
-						<th className={`${TH} w-36`}>links</th>
-					</tr>
-				</thead>
-				<tbody>
-					{visible.map((projectKey, idx) => (
-						<ProjectRow key={projectKey} project={projects[projectKey]} index={idx} />
-					))}
-				</tbody>
-			</table>
+			<div className="flex flex-col gap-2">
+				{visible.map((projectKey, idx) => (
+					<ProjectCard key={projectKey} project={projects[projectKey]} index={idx} />
+				))}
+			</div>
 		</section>
 	);
 }

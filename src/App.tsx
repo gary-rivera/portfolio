@@ -2,9 +2,12 @@ import type { CSSProperties, ReactNode } from "react";
 import MainHeader from "@components/header/MainHeader";
 import AcheivementsContainer from "@components/AcheivementsContainer";
 import TopBar from "@components/TopBar";
-import NowBlock from "@components/NowBlock";
+import StatusConsole from "@components/StatusConsole";
 import PromptBlock from "@components/PromptBlock";
 import StickyContact from "@components/contact/StickyContact";
+import BootSequence from "@components/BootSequence";
+import { useTimeAwarePhosphor } from "@hooks/useTimeAwarePhosphor";
+import { useDynamicTitle } from "@hooks/useDynamicTitle";
 
 function Footer() {
 	return (
@@ -26,16 +29,28 @@ function LogLine({ i, children }: { i: number; children: ReactNode }) {
 }
 
 export default function App() {
+	useTimeAwarePhosphor();
+	useDynamicTitle();
 	return (
 		<>
-			<div className="mx-auto max-w-[1080px] px-4 py-6 pb-16 sm:px-6 sm:py-8 md:px-8">
+			<BootSequence />
+			<a href="#main" className="skip-link">skip to content</a>
+			<main id="main" className="mx-auto max-w-[1080px] px-4 py-6 pb-16 sm:px-6 sm:py-8 md:px-8">
 				<LogLine i={0}><TopBar /></LogLine>
-				<LogLine i={1}><MainHeader /></LogLine>
-				<LogLine i={2}><NowBlock /></LogLine>
-				<LogLine i={3}><AcheivementsContainer /></LogLine>
-				<LogLine i={4}><PromptBlock /></LogLine>
-				<LogLine i={5}><Footer /></LogLine>
-			</div>
+				<LogLine i={1}>
+					<div className="grid grid-cols-1 gap-6 md:grid-cols-[1.45fr_1fr] md:items-start md:gap-8">
+						<MainHeader />
+						<StatusConsole />
+					</div>
+				</LogLine>
+				<LogLine i={2}>
+					<div className="mt-10 sm:mt-14">
+						<AcheivementsContainer />
+					</div>
+				</LogLine>
+				<LogLine i={3}><PromptBlock /></LogLine>
+				<LogLine i={4}><Footer /></LogLine>
+			</main>
 			<StickyContact />
 			<div id="theme-wash" className="theme-wash" aria-hidden="true" />
 		</>

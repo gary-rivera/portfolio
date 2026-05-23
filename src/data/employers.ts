@@ -9,32 +9,31 @@ const employers: Record<string, Employer> = {
 	orchard: {
 		shortName: "Orchard",
 		companyName: "Orchard Mortgage",
-		description: "Fintech company that simplifies the home buying process from start to finish.",
+		description: "home buying, end-to-end. acquired Extra in 2024.",
 		url: "https://orchard.com/",
 	},
 	extra: {
 		shortName: "Extra",
 		companyName: "Extra Card",
-		description:
-			"Debit card that helps you build credit, all the while aiming to uplift the financially underserved.",
+		description: "credit-building debit card. fintech that actually tried to help.",
 		url: "https://extra.app/",
 	},
 	knowCap: {
 		shortName: "KnowCap.io",
-		companyName: "KnowledgeCaptial",
-		description: "Startup Accelerator driving faster MVP development and market entry for early-stage founders.",
+		companyName: "KnowledgeCapital",
+		description: "startup accelerator. shipped MVPs for early-stage founders.",
 		url: "https://www.knowcap.io/",
 	},
 	numbersApi: {
 		shortName: "Numbers API",
 		companyName: "Numbers API",
-		description: "A free API for trivia facts about numbers.",
+		description: "trivia facts about numbers. free. yes, it's real.",
 		url: "http://numbersapi.com/#42",
 	},
 	rithmSchool: {
 		shortName: "Rithm",
 		companyName: "Rithm School",
-		description: "Fullstack Coding Bootcamp.",
+		description: "full-stack bootcamp. shipped me into the industry.",
 		url: "https://www.rithmschool.com/",
 	},
 };

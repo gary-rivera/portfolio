@@ -1,6 +1,5 @@
 import useSWR from "swr";
-import { fetcher, fetchGithubRepositoriesGQL } from "@services/api";
-import type { GraphQlQueryResponseData } from "@octokit/graphql";
+import { fetcher, fetchGithubRepositoriesGQL, type RepositoryData } from "@services/api";
 
 export const useGitHubReposGQL = (repoNames: string[]) => {
 	const fetcher = () => fetchGithubRepositoriesGQL(repoNames);
@@ -15,7 +14,7 @@ export const useGitHubReposGQL = (repoNames: string[]) => {
 	});
 
 	return {
-		repos: data as GraphQlQueryResponseData,
+		repos: data as Record<string, RepositoryData> | undefined,
 		isLoading: !error && !data,
 		isError: error,
 	};
@@ -37,4 +36,3 @@ export const useGithubRepos = () => {
 		isError: !!error,
 	};
 };
-

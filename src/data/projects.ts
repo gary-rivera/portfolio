@@ -38,53 +38,10 @@ export const ProjectCatalog: Projects = {
 			},
 		],
 		name: "ruio",
+		description: "runtime ui debugger. draws boxes around your jsx so you stop opening devtools.",
 		tags: [],
 		links: {
 			npm: "https://www.npmjs.com/package/ruio",
-			repo: GH_USER_LINK,
-		},
-	},
-	calculator: {
-		active: true,
-
-		logoConfig: [calculatorIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
-		name: "Calculator",
-		tags: [],
-		links: {
-			deployment: "https://gary-rivera.github.io/calculator/",
-			repo: GH_USER_LINK,
-		},
-	},
-	gbot: {
-		active: true,
-
-		logoConfig: [gbotIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
-		name: "G-Bot",
-		tags: [],
-		links: {
-			npm: null, // TODO: maybe?
-			repo: GH_USER_LINK,
-		},
-	},
-	"dead-mart": {
-		active: true,
-
-		logoConfig: [deadlockIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
-		tags: [],
-		name: "DeadMart",
-		links: {
-			deployment: "https://gary-rivera.github.io/dead-mart",
-			repo: GH_USER_LINK,
-		},
-	},
-	"meme-generator": {
-		active: true,
-
-		logoConfig: [memeGenieLamp, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
-		tags: [],
-		name: "Meme Genie",
-		links: {
-			deployment: "https://gary-rivera.github.io/meme-generator/",
 			repo: GH_USER_LINK,
 		},
 	},
@@ -94,8 +51,57 @@ export const ProjectCatalog: Projects = {
 		logoConfig: [garyFlappyIcon, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
 		tags: [],
 		name: "Snaily JS",
+		description: "browser physics game. ts + canvas, ships at 60fps on a chromebook.",
 		links: {
 			deployment: "https://gary-rivera.github.io/flappy-js/",
+			repo: GH_USER_LINK,
+		},
+	},
+	"dead-mart": {
+		active: true,
+
+		logoConfig: [deadlockIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
+		tags: [],
+		name: "DeadMart",
+		description: "price tracker for a game economy that doesn't want to be tracked.",
+		links: {
+			deployment: "https://gary-rivera.github.io/dead-mart",
+			repo: GH_USER_LINK,
+		},
+	},
+	gbot: {
+		active: true,
+
+		logoConfig: [gbotIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
+		name: "G-Bot",
+		description: "discord bot. sass, dad jokes, and one cron job for a private server of friends.",
+		tags: [],
+		links: {
+			npm: null,
+			repo: GH_USER_LINK,
+		},
+	},
+	"meme-generator": {
+		active: true,
+
+		logoConfig: [memeGenieLamp, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
+		tags: [],
+		name: "Meme Genie",
+		description: "drag-drop text onto images. the 'i need a meme right now' tool.",
+		links: {
+			deployment: "https://gary-rivera.github.io/meme-generator/",
+			repo: GH_USER_LINK,
+		},
+	},
+	calculator: {
+		active: true,
+
+		logoConfig: [calculatorIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
+		name: "Calculator",
+		description: "first project. keyboard arithmetic, long before redux was a thing to argue about.",
+		tags: [],
+		links: {
+			deployment: "https://gary-rivera.github.io/calculator/",
 			repo: GH_USER_LINK,
 		},
 	},

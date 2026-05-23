@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="g1" cx="20%" cy="0%" r="70%">
+      <stop offset="0" stop-color="#7bc089" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#7bc089" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="90%" cy="100%" r="70%">
+      <stop offset="0" stop-color="#d4a24b" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#d4a24b" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="scan" width="6" height="3" patternUnits="userSpaceOnUse">
+      <rect width="6" height="1" fill="#7bc089" fill-opacity="0.025"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#0f1310"/>
+  <rect width="1200" height="630" fill="url(#g1)"/>
+  <rect width="1200" height="630" fill="url(#g2)"/>
+  <rect width="1200" height="630" fill="url(#scan)"/>
+
+  <text x="80" y="80" fill="#7bc089" font-family="JetBrains Mono, ui-monospace, monospace" font-size="22">● online</text>
+
+  <text x="80" y="200" fill="#7bc089" font-family="JetBrains Mono, ui-monospace, monospace" font-size="34" style="text-shadow: 0 0 12px rgba(123,192,137,0.5)">gary@portfolio:~$ whoami</text>
+
+  <text x="80" y="310" fill="#d8e0d6" font-family="JetBrains Mono, ui-monospace, monospace" font-size="78" font-weight="600">gary rivera</text>
+
+  <text x="80" y="370" fill="#7a8579" font-family="JetBrains Mono, ui-monospace, monospace" font-size="30">senior backend engineer · platform &amp; infra · nyc</text>
+
+  <line x1="80" y1="420" x2="1120" y2="420" stroke="#2a302b" stroke-width="1" stroke-dasharray="8 8"/>
+
+  <text x="80" y="490" fill="#7a8579" font-family="JetBrains Mono, ui-monospace, monospace" font-size="24" font-style="italic">shipped infra nobody throws launch parties for.</text>
+  <text x="80" y="525" fill="#7a8579" font-family="JetBrains Mono, ui-monospace, monospace" font-size="24" font-style="italic">solders mechanical keyboards. ask me about either.</text>
+
+  <text x="80" y="595" fill="#6a716b" font-family="JetBrains Mono, ui-monospace, monospace" font-size="18">backend-leaning, infra-shaped.</text>
+  <text x="1120" y="595" text-anchor="end" fill="#6a716b" font-family="JetBrains Mono, ui-monospace, monospace" font-size="18">garyrivera.dev</text>
+</svg>

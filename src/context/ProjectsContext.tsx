@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useContext, useMemo, createContext, useState, useEffect, ReactNode } from "react";
 import { useGitHubReposGQL } from "@hooks/useGitHub";
 import { ProjectCatalog, projectCatalogKeys, Projects, projectTagsConfig } from "@data/projects";
@@ -17,9 +16,15 @@ const ProjectsContext = createContext<ProjectsContextType>({
 	isError: false,
 });
 
+const toTs = (d: Date | string | undefined): number => {
+	if (!d) return 0;
+	const t = d instanceof Date ? d.getTime() : new Date(d).getTime();
+	return Number.isFinite(t) ? t : 0;
+};
+
 const sortProjectsByDate = (projects: Projects) => {
 	return Object.keys(projects).sort(
-		(a, b) => dayjs(projects[b].createdAt).unix() - dayjs(projects[a].createdAt).unix(),
+		(a, b) => toTs(projects[b].createdAt) - toTs(projects[a].createdAt),
 	);
 };
 
@@ -45,14 +50,15 @@ export const ProjectsProvider = ({ children }: { children: ReactNode }) => {
 				const { url, description, createdAt, name, defaultBranchRef, repositoryTopics } = value;
 				const tags = repositoryTopics?.edges.map((edge: any) => edge.node.topic.name) || [];
 				const sortedTags = sortProjectTags(tags);
-				if (!updatedProjects[name]) continue;
-				updatedProjects[name].links.repo = url;
+				const existing = updatedProjects[name];
+				if (!existing) continue;
 				updatedProjects[name] = {
-					...updatedProjects[name],
-					description,
+					...existing,
+					description: existing.description ?? description,
+					links: { ...existing.links, repo: url },
 					tags: sortedTags,
-					totalCommits: defaultBranchRef.target.history.totalCount,
-					createdAt,
+					totalCommits: defaultBranchRef?.target?.history?.totalCount,
+					createdAt: createdAt ? new Date(createdAt) : existing.createdAt,
 				};
 			}
 

@@ -1,16 +1,15 @@
 import ContactBar from "./contact/ContactBar";
 import ThemeToggle from "./ThemeToggle";
+import VerbosityToggle from "./VerbosityToggle";
 
 export default function TopBar() {
 	return (
-		<nav className="mb-6 flex items-center justify-between border-b border-dashed border-rule pb-2 text-xs tracking-wider text-text-muted lowercase">
+		<nav className="mb-6 flex flex-wrap items-center justify-between gap-y-2 border-b border-dashed border-rule pb-2 text-xs tracking-wider text-text-muted lowercase">
 			<ContactBar />
-			<div className="flex items-center gap-6">
+			<div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+				<VerbosityToggle />
 				<ThemeToggle />
-				<div className="flex items-center gap-1.5">
-					<div className="animate-pulse-phosphor dot-glow h-1.5 w-1.5 rounded-full bg-phosphor" />
-					<span>online · {new Date().toISOString().slice(0, 10)}</span>
-				</div>
+				<span className="text-text-subtle vrb-decoration">{new Date().toISOString().slice(0, 10)}</span>
 			</div>
 		</nav>
 	);

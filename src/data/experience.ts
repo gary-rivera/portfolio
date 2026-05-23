@@ -17,7 +17,7 @@ export const events: CareerEvent[] = [
 		event: "Cross-platform integration",
 		date: "Mar 2024",
 		description:
-			"Led the full stack development of funneling Extra's customer base into Orchard’s mortgaging services.",
+			"wired Extra's customer base into Orchard's mortgage flow. full stack, two teams, one weekend of regret.",
 		attributes: [
 			{ attribute: "Full stack", colorScheme: "blue" },
 			{ attribute: "Integration", colorScheme: "yellow" },
@@ -30,20 +30,22 @@ export const events: CareerEvent[] = [
 		companyName: employers.orchard.companyName,
 		companyDescription: employers.orchard.description,
 		date: "Feb 2024 → Sep 2024",
-		description: "Corporate merger between Extra and Orchard.",
+		description: "rolled into Orchard after the Extra acquisition. kept the lights on.",
 		origin: employers.orchard.url,
 		category: "milestone",
 	},
 	{
 		event: "Cloud infrastructure migration",
 		date: "Oct 2022 → Jan 2023",
-		description: "Assisted in transitioning from DigitalOcean to AWS. Did it with zero down time.",
+		description:
+			"moved production from DigitalOcean to AWS. zero downtime, zero pages, no launch party.",
 		category: "impact",
 	},
 	{
 		event: "API security redesign",
 		date: "Sep 2022",
-		description: "Engineered a permissions framework for all internal API interactions.",
+		description:
+			"built the permissions framework that every internal API call now runs through. one source of truth instead of six.",
 		category: "impact",
 	},
 	{
@@ -59,14 +61,14 @@ export const events: CareerEvent[] = [
 		event: "TypeScript migration",
 		date: "Jan 2022",
 		description:
-			"Converted our frontend to good ol' TypeScript. Also redesigned the backend config to enable shared backend types.",
+			"ported the frontend to TypeScript and rewired the backend to share types end-to-end. fewer prod surprises, faster reviews.",
 		category: "impact",
 	},
 	{
 		event: "Revamped signup process",
 		date: "Sep 2021",
 		description:
-			"Pretty significant rework of our signup process to retain more potential applicants and improve CRM insights.",
+			"rebuilt onboarding from the form up. higher completion, cleaner downstream data — finally something marketing could trust.",
 		category: "impact",
 	},
 	{

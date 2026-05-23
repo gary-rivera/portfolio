@@ -14,7 +14,7 @@ export default function StatusConsole() {
 		>
 			<div id="status-console-head" className="mb-3 flex items-baseline gap-2 text-xs">
 				<span className="text-phosphor tracking-wider">~$ status.live</span>
-				<span className="vrb-note text-text-subtle">// updated {__REPO_LAST_PUSHED__}</span>
+				<span className="text-text-subtle">// updated {__REPO_LAST_PUSHED__}</span>
 			</div>
 
 			<dl className="grid grid-cols-1 gap-y-[0.5rem] text-sm">
@@ -23,7 +23,7 @@ export default function StatusConsole() {
 						<dt className="w-[5.5rem] shrink-0 text-xs text-text-subtle">{k}</dt>
 						<dd className="min-w-0 flex-1 text-text">
 							<span className={accent ? "text-phosphor" : "text-text"}>{v}</span>
-							{meta && <span className="vrb-note ml-1 text-xs text-text-subtle">{meta}</span>}
+							{meta && <span className="ml-1 text-xs text-text-subtle">{meta}</span>}
 						</dd>
 					</div>
 				))}

@@ -61,7 +61,7 @@ export default function MainHeader() {
 						<dt className="text-text-subtle">{k}</dt>
 						<dd className="text-text">
 							<span className={accent ? "text-phosphor" : "text-text"}>{v}</span>
-							{note && <span className="vrb-note ml-2 text-text-subtle"> {note}</span>}
+							{note && <span className="ml-2 text-text-subtle"> {note}</span>}
 						</dd>
 					</Fragment>
 				))}

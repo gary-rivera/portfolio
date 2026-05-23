@@ -340,31 +340,6 @@ html.theme-ripple::view-transition-new(root) {
 	mix-blend-mode: normal;
 }
 
-/* ─── verbosity ──────────────────────────────────────────────────────────── */
-/* default (normal) shows everything as-is. quiet hides decorative comments. */
-:root[data-verbosity="quiet"] .vrb-note,
-:root[data-verbosity="quiet"] .vrb-decoration {
-	display: none !important;
-}
-/* verbose surfaces the .vrb-verbose-only spans that are otherwise sr-only */
-:root[data-verbosity="verbose"] .vrb-verbose-only {
-	position: static;
-	width: auto;
-	height: auto;
-	margin: 0;
-	padding: 0;
-	overflow: visible;
-	clip: auto;
-	white-space: normal;
-	color: var(--color-text-muted);
-}
-/* quiet also softens motion further */
-:root[data-verbosity="quiet"] .animate-pulse-phosphor,
-:root[data-verbosity="quiet"] .animate-blink-phosphor {
-	animation: none !important;
-	opacity: 0.7;
-}
-
 @media (prefers-reduced-motion: reduce) {
 	.animate-pulse-phosphor,
 	.animate-blink-phosphor,

@@ -23,13 +23,13 @@
 
   <text x="80" y="310" fill="#d8e0d6" font-family="JetBrains Mono, ui-monospace, monospace" font-size="78" font-weight="600">gary rivera</text>
 
-  <text x="80" y="370" fill="#7a8579" font-family="JetBrains Mono, ui-monospace, monospace" font-size="30">senior backend engineer · platform &amp; infra · nyc</text>
+  <text x="80" y="370" fill="#7a8579" font-family="JetBrains Mono, ui-monospace, monospace" font-size="30">frontend &amp; fullstack engineer · design-leaning · sf</text>
 
   <line x1="80" y1="420" x2="1120" y2="420" stroke="#2a302b" stroke-width="1" stroke-dasharray="8 8"/>
 
-  <text x="80" y="490" fill="#7a8579" font-family="JetBrains Mono, ui-monospace, monospace" font-size="24" font-style="italic">shipped infra nobody throws launch parties for.</text>
+  <text x="80" y="490" fill="#7a8579" font-family="JetBrains Mono, ui-monospace, monospace" font-size="24" font-style="italic">ships interfaces where taste does the heavy lifting.</text>
   <text x="80" y="525" fill="#7a8579" font-family="JetBrains Mono, ui-monospace, monospace" font-size="24" font-style="italic">solders mechanical keyboards. ask me about either.</text>
 
-  <text x="80" y="595" fill="#6a716b" font-family="JetBrains Mono, ui-monospace, monospace" font-size="18">backend-leaning, infra-shaped.</text>
+  <text x="80" y="595" fill="#6a716b" font-family="JetBrains Mono, ui-monospace, monospace" font-size="18">design-leaning, taste-shaped.</text>
   <text x="1120" y="595" text-anchor="end" fill="#6a716b" font-family="JetBrains Mono, ui-monospace, monospace" font-size="18">garyrivera.dev</text>
 </svg>

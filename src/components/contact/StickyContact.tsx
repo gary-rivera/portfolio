@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CONTACT_LINKS } from "@data/contact";
 import ContactLink from "./ContactLink";
+import Monogram from "@components/Monogram";
 
 export default function StickyContact() {
 	const [visible, setVisible] = useState(false);
@@ -37,6 +38,10 @@ export default function StickyContact() {
 				<span className="text-phosphor-dim">~ </span>contact.bind
 			</div>
 
+			<div className="mb-[0.65rem] flex justify-end border-b border-dashed border-rule pb-[0.6rem]">
+				<Monogram size="xs" />
+			</div>
+
 			<dl className="grid gap-[0.55rem]">
 				{CONTACT_LINKS.map(({ k, v, href }) => (
 					<div key={k}>
@@ -50,7 +55,7 @@ export default function StickyContact() {
 
 			<div className="mt-[0.85rem] flex items-center gap-2 border-t border-dashed border-rule pt-[0.65rem] text-2xs tracking-wider text-text-subtle">
 				<div className="animate-pulse-phosphor dot-glow h-1.5 w-1.5 rounded-full bg-phosphor" />
-				<span>online · open to work</span>
+				<span>open to work</span>
 			</div>
 		</aside>
 	);

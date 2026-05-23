@@ -1,10 +1,9 @@
 type Entry = { k: string; v: string; meta?: string; accent?: boolean };
 
 const ENTRIES: Entry[] = [
-	{ k: "open_to", v: "senior backend / platform", meta: "// nyc, remote, or remote-w/-quarterly-onsites" },
+	{ k: "open_to", v: "frontend / fullstack", meta: "// sf, remote, or remote-w/-quarterly-onsites" },
 	{ k: "shipping", v: "snaily v0.4", meta: "// gary-rivera/flappy-js" },
 	{ k: "reading", v: "Designing Data-Intensive Applications", meta: "// what AI can't replace" },
-	{ k: "reply_eta", v: "< 24h", accent: true, meta: "// email me about either" },
 ];
 
 export default function StatusConsole() {
@@ -30,10 +29,6 @@ export default function StatusConsole() {
 				))}
 			</dl>
 
-			<div className="mt-3 flex items-center gap-2 border-t border-dashed border-rule pt-2 text-xs text-text-subtle">
-				<div className="animate-pulse-phosphor dot-glow h-1.5 w-1.5 rounded-full bg-phosphor" />
-				<span>online · open to work</span>
-			</div>
 		</aside>
 	);
 }

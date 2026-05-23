@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 const LOG_LINES = [
 	{ tag: "OK", text: "mounted /dev/gary" },
-	{ tag: "OK", text: "loaded brooklyn.geo (40.6782N, 73.9442W)" },
-	{ tag: "OK", text: "started senior-backend.service since 2020-08" },
+	{ tag: "OK", text: "loaded mission.geo (37.7599N, 122.4148W)" },
+	{ tag: "OK", text: "started design-engineer.service since 2020-08" },
 	{ tag: "OK", text: "keyboards.timer active (next: tonight)" },
 	{ tag: "WARN", text: "coffee.service degraded" },
 	{ tag: "OK", text: "resume staged" },

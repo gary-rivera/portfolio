@@ -46,16 +46,9 @@ function toIsoTs(date: string, index: number): { ts: string; range?: string } {
 	return { ts, range };
 }
 
-function shortId(text: string): string {
-	let h = 0;
-	for (let i = 0; i < text.length; i++) h = (h * 31 + text.charCodeAt(i)) >>> 0;
-	return "#" + h.toString(16).padStart(6, "0").slice(0, 6);
-}
-
 const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(({ event, index }, ref) => {
 	const level = classifyLevel(event);
 	const { ts, range } = toIsoTs(event.date, index);
-	const id = shortId(event.event + event.date);
 	const company = event.subtitle?.toLowerCase();
 	const msgPrimary = event.event;
 	const msgDesc = event.description;
@@ -63,7 +56,7 @@ const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(({ event, ind
 	return (
 		<div
 			ref={ref}
-			className="timeline-row group grid grid-cols-1 gap-1 px-3 py-[0.45rem] transition-colors duration-100 ease-out hover:bg-phosphor/[4.5%] sm:grid-cols-[180px_90px_1fr_auto] sm:gap-4"
+			className="timeline-row group grid grid-cols-1 gap-1 px-3 py-[0.45rem] transition-colors duration-100 ease-out hover:bg-phosphor/[4.5%] sm:grid-cols-[180px_90px_1fr] sm:gap-4"
 		>
 			<div className="text-sm tracking-[-0.005em] text-text-subtle transition-colors duration-100 ease-out group-hover:text-phosphor-dim">
 				{ts}
@@ -84,7 +77,6 @@ const TimelineItem = forwardRef<HTMLDivElement, TimelineItemProps>(({ event, ind
 					</span>
 				)}
 			</div>
-			<div className="vrb-decoration justify-self-start text-xs text-text-subtle sm:justify-self-end">{id}</div>
 		</div>
 	);
 });

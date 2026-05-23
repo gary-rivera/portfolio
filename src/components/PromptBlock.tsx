@@ -4,8 +4,8 @@ import { useTheme } from "@hooks/useTheme";
 type Line = { kind: "in" | "out" | "warn" | "ok"; text: ReactNode };
 
 const ABOUT = [
-	"gary rivera. nyc software engineer.",
-	"backend-leaning, infra-shaped.",
+	"gary rivera. sf software engineer.",
+	"design-leaning, taste-shaped.",
 	"solders keyboards. ships small weird named things.",
 	"writes the year as if it's a log entry.",
 ];
@@ -36,7 +36,7 @@ const CONTACT_TEXT = [
 
 const INITIAL: Line[] = [
 	{ kind: "in", text: "whoami --long" },
-	{ kind: "out", text: "gary rivera. nyc software engineer. backend-leaning, infra-shaped." },
+	{ kind: "out", text: "gary rivera. sf software engineer. design-leaning, taste-shaped." },
 	{ kind: "out", text: "solders keyboards. ships small weird named things." },
 	{ kind: "out", text: "" },
 	{ kind: "ok", text: "type 'help' for commands. some aren't listed." },

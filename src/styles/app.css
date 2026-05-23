@@ -340,6 +340,17 @@ html.theme-ripple::view-transition-new(root) {
 	mix-blend-mode: normal;
 }
 
+/* ─── density ────────────────────────────────────────────────────────────── */
+/* normal (default) shows everything. minimal hides decorative metadata. */
+:root[data-density="minimal"] .density-extra {
+	display: none !important;
+}
+:root[data-density="minimal"] .animate-pulse-phosphor,
+:root[data-density="minimal"] .animate-blink-phosphor {
+	animation: none !important;
+	opacity: 0.7;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.animate-pulse-phosphor,
 	.animate-blink-phosphor,

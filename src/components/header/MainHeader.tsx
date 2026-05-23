@@ -1,7 +1,5 @@
-import { Fragment } from "react";
 import Name from "./NameTypingEffect";
-
-type MetaEntry = { k: string; v: string; note?: string; accent?: boolean };
+import ConsoleCard, { type ConsoleEntry } from "@components/ConsoleCard";
 
 const GRADUATION = new Date(2020, 7, 4);
 
@@ -27,13 +25,13 @@ function formatExperience(from: Date, to: Date) {
 }
 
 export default function MainHeader() {
-	const META: MetaEntry[] = [
-		{ k: "location", v: "mission district, sf", note: "// 37.7599°N · 122.4148°W" },
-		{ k: "last_commit", v: "2h ago", note: "// portfolio · 4f3a2c1" },
+	const META: ConsoleEntry[] = [
+		{ k: "location", v: "mission district, sf", meta: "// 37.7599°N · 122.4148°W" },
+		{ k: "last_commit", v: "2h ago", meta: "// portfolio · 4f3a2c1" },
 		{
 			k: "experience",
 			v: formatExperience(GRADUATION, new Date()),
-			note: "// since rithm school graduation",
+			meta: "// since rithm school graduation",
 		},
 	];
 
@@ -55,17 +53,7 @@ export default function MainHeader() {
 				</div>
 			</div>
 
-			<dl className="mt-1 grid grid-cols-[110px_1fr] gap-x-5 gap-y-[0.4rem] text-sm sm:grid-cols-[140px_1fr] sm:gap-x-6 sm:text-base">
-				{META.map(({ k, v, note, accent }) => (
-					<Fragment key={k}>
-						<dt className="text-text-subtle">{k}</dt>
-						<dd className="text-text">
-							<span className={accent ? "text-phosphor" : "text-text"}>{v}</span>
-							{note && <span className="density-extra ml-2 text-text-subtle"> {note}</span>}
-						</dd>
-					</Fragment>
-				))}
-			</dl>
+			<ConsoleCard title="ident.meta" entries={META} size="md" className="mt-1" />
 
 			<p className="max-w-[68ch] text-sm leading-relaxed text-text-muted">
 				<span className="text-text">engineer.</span> bootcamp-to-senior arc, three years on the

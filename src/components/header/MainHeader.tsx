@@ -6,9 +6,6 @@ export default function MainHeader() {
 	return (
 		<header className="mh">
 			<div className="mh-marquee">
-				<span className="mh-frame-label" aria-hidden="true">
-					ident&nbsp;&nbsp;//&nbsp;&nbsp;<b>callsign</b>
-				</span>
 				<span className="mh-reticle tl" aria-hidden="true" />
 				<span className="mh-reticle tr" aria-hidden="true" />
 				<span className="mh-reticle bl" aria-hidden="true" />

@@ -4,24 +4,10 @@ import AcheivementsContainer from "@components/AcheivementsContainer";
 import TopBar from "@components/TopBar";
 import StickyContact from "@components/contact/StickyContact";
 import BootSequence from "@components/BootSequence";
-import Monogram from "@components/Monogram";
+import Footer from "@components/Footer";
 import ThemeToggle from "@components/ThemeToggle";
 import { useTimeAwarePhosphor } from "@hooks/useTimeAwarePhosphor";
 import { useDynamicTitle } from "@hooks/useDynamicTitle";
-
-function Footer() {
-	return (
-		<footer className="mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-dashed border-rule pt-4 text-xs text-text-subtle">
-			<span>sf · pt · 37.7599°N 122.4148°W</span>
-			<div className="flex items-center gap-4">
-				<span className="text-text-muted">
-					render: 0.41s · build: 4f3a2c1 · © {new Date().getFullYear()}
-				</span>
-				<Monogram size="sm" />
-			</div>
-		</footer>
-	);
-}
 
 function LogLine({ i, children }: { i: number; children: ReactNode }) {
 	return (

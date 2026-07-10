@@ -31,26 +31,6 @@
 		color-mix(in srgb, var(--color-phosphor) 1.6%, transparent);
 }
 
-/* label tabbed onto the top border of the card */
-.mh-frame-label {
-	position: absolute;
-	top: -0.6rem;
-	left: 50%;
-	transform: translateX(-50%);
-	z-index: 3;
-	padding: 0 0.6rem;
-	background: var(--color-bg);
-	font-size: 9.5px;
-	letter-spacing: 0.3em;
-	text-transform: uppercase;
-	color: var(--color-text-subtle);
-	white-space: nowrap;
-}
-.mh-frame-label b {
-	color: var(--color-phosphor-dim);
-	font-weight: 500;
-}
-
 /* reticle corner brackets at the four corners of the whole marquee zone */
 .mh-reticle {
 	position: absolute;

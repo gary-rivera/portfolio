@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
+import { sortedDesc } from "@data/getProjects";
+
+// Every line reports a real operation. The build SHA and last-push date are
+// baked in by vite.config.ts; the card count is the number actually rendered;
+// JetBrains Mono is the site's only external request; the phosphor line only
+// appears when the time-aware hue is actually applied (dark theme). data-theme
+// is set by the inline script in index.html before this module evaluates.
+const IS_DARK = document.documentElement.getAttribute("data-theme") !== "light";
 
 const LOG_LINES = [
-	{ tag: "OK", text: "mounted /dev/gary" },
-	{ tag: "OK", text: "loaded mission.geo (37.7599N, 122.4148W)" },
-	{ tag: "OK", text: "started design-engineer.service since 2020-08" },
-	{ tag: "OK", text: "keyboards.timer active (next: tonight)" },
-	{ tag: "WARN", text: "coffee.service degraded" },
-	{ tag: "OK", text: "resume staged" },
+	{ tag: "OK", text: "mounted #root (react 18, strict mode)" },
+	{ tag: "OK", text: `loaded build ${__GIT_SHA__}` },
+	{ tag: "OK", text: `loaded github snapshot (last push ${__REPO_LAST_PUSHED__})` },
+	{ tag: "OK", text: `rendered ${sortedDesc.length} project cards` },
+	...(IS_DARK ? [{ tag: "OK", text: "calibrated phosphor to local hour" }] : []),
+	{ tag: "WARN", text: "external fetch: jetbrains mono (google fonts)" },
+	{ tag: "OK", text: "api calls: none — github data baked at build" },
 ];
 
 const SCAN_AT_MS = 100;

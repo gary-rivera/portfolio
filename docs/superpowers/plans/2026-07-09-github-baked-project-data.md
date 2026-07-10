@@ -16,6 +16,7 @@
 - **Non-fatal build fetch:** the build must succeed even when GitHub is unreachable or the token is unset. A prior build-time GitHub call once "blocked the build" (see `vite.config.ts`) — do not reintroduce that.
 - **No `VITE_`-prefixed secret:** the token env var is `GH_API_TOKEN` (no `VITE_` prefix) so it is never bundled into client JS.
 - **Node import style:** scripts are ESM `.mjs`; use `node:fs` / `node:path` / `node:url` prefixed imports.
+- **Explicit staging only:** the working tree contains UNRELATED uncommitted WIP (UI-aesthetic work: `App.tsx`, `NameNeon*` components, neon CSS, etc.). NEVER run `git add -A`, `git add .`, or `git commit -a`. Stage only the exact files named in each task's commit step. Do not touch, revert, or commit any file not listed for the current task.
 
 ---
 
@@ -523,8 +524,12 @@ Expected: the `projects.log` section shows all 6 projects with commit counts, ye
 
 - [ ] **Step 10: Commit**
 
+Stage only this task's files (the deletions from Step 6 are already staged by `git rm`; include `projects.generated.json` in case the build in Step 8 refreshed it):
+
 ```bash
-git add -A
+git add tsconfig.app.json src/data/projects.ts src/data/getProjects.ts \
+  src/context/ProjectsContext.tsx src/components/projects/ProjectsContainer.tsx \
+  package.json package-lock.json src/data/projects.generated.json
 git commit -m "feat: render projects from build-time baked GitHub data"
 ```
 
@@ -630,9 +635,12 @@ Verify (no command needed — a written confirmation): `GH_API_TOKEN` must be se
 
 - [ ] **Step 5: Final commit (if Step 2 or 3 left any changes)**
 
+Only `src/data/projects.generated.json` could have changed (from a build refresh). Check and, if so, commit just that file:
+
 ```bash
-git add -A
+git diff --stat src/data/projects.generated.json
+git add src/data/projects.generated.json
 git commit -m "chore: verify baked-data build is secret-free and non-fatal"
 ```
 
-If nothing changed, skip this commit.
+If `git diff --stat` shows no change, skip this commit entirely.

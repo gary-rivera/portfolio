@@ -29,3 +29,6 @@ dist-ssr
 *.tsbuildinfo
 
 mockups/
+
+# Claude plugin working state
+.superpowers/

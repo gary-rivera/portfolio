@@ -1,54 +1,18 @@
-import React, { useRef } from "react";
-import { useResumeRepo } from "../../hooks/useGitHub";
-import { useDistanceBetweenElements } from "@/hooks/useDistanceBetweenElements.ts";
-import { Flex, Spacer } from "@chakra-ui/react";
-import TimelineItem from "./TimelineItem";
-import { events } from "@/data/experience";
-import { Distance } from "@/hooks/useDistanceBetweenElements.ts";
+import SectionHead from "@components/SectionHead";
+import CareerChapter, { OnRamp } from "./CareerChapter";
+import { chapters, onRamp, totalSpan } from "@data/experience";
+import "@styles/work-log.css";
 
-function ExperienceContainer() {
-	const { /*readmeContent,*/ isLoading, isError } = useResumeRepo();
-
-	const iconRefs = events.map(() => useRef<HTMLDivElement>(null));
-	const distances: (Distance | null)[] = iconRefs.map((ref, index) => {
-		if (index < iconRefs.length - 1) {
-			return useDistanceBetweenElements(ref, iconRefs[index + 1]);
-		}
-		return null;
-	});
-
-	if (isLoading) return <p>Loading...</p>;
-	if (isError) return <p>Error loading repository contents</p>;
-
+export default function ExperienceContainer() {
 	return (
-		<Flex
-			key="experience-container"
-			direction="column"
-			gap={0}
-			position="relative"
-			mt="0.75rem"
-			minHeight="100%"
-			overflowX="visible"
-			pr={["0", "2.5"]}
-		>
-			{events.map((event, index) => {
-				const alternate = !!(index % 2); // alternates the timeline item's layout
-
-				return (
-					<React.Fragment key={`timeline-item-fragment-${index}`}>
-						<TimelineItem
-							index={index}
-							event={event}
-							alternate={alternate}
-							ref={iconRefs[index]}
-							distances={distances}
-						/>
-						<Spacer />
-					</React.Fragment>
-				);
-			})}
-		</Flex>
+		<section>
+			<SectionHead name="work.history" meta={totalSpan()} />
+			<ol aria-label="career history" className="flex w-full list-none flex-col p-0">
+				{chapters.map((chapter, index) => (
+					<CareerChapter key={chapter.id} chapter={chapter} last={index === chapters.length - 1} />
+				))}
+				<OnRamp tenure={onRamp.tenure} items={onRamp.items} />
+			</ol>
+		</section>
 	);
 }
-
-export default ExperienceContainer;

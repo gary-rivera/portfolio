@@ -1,0 +1,356 @@
+/* ────────────────────────────────────────────────────────────────────────────
+ * NEON-A · classic tube neon (warm electric pink)
+ * Tube core → inner bloom → mid glow → outer atmospheric haze.
+ * The strokes are bent glass; the gas inside is hot-pink with a white-hot core.
+ * Scoped under .neon-a to avoid collision with sibling variants.
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+.neon-a {
+	/* Named tube palette — easy to tune later */
+	--neon-a-core: #fff1f6;        /* white-hot center of the gas */
+	--neon-a-tube: #ff7ab8;        /* tube wall — warm electric pink */
+	--neon-a-tube-deep: #ff3d8a;   /* saturated mid */
+	--neon-a-haze: #ff1f6a;        /* outer haze color (carries far) */
+	--neon-a-shadow-tint: #5a0a26; /* deep wine for the cast shadow */
+
+	/* Halo / atmospheric bleed onto the backdrop */
+	--neon-a-halo-1: color-mix(in srgb, var(--neon-a-haze) 38%, transparent);
+	--neon-a-halo-2: color-mix(in srgb, var(--neon-a-tube) 18%, transparent);
+	--neon-a-halo-3: color-mix(in srgb, var(--neon-a-haze) 8%, transparent);
+
+	position: relative;
+	display: inline-block;
+	isolation: isolate;
+	/* Slight optical lift off the page */
+	padding: 0.35rem 0.15rem 0.6rem;
+	margin: 0;
+	color: var(--neon-a-core);
+}
+
+/* ── the backdrop: a faint wall-stain & reflected underglow ───────────────── */
+.neon-a::before {
+	content: "";
+	position: absolute;
+	inset: -22% -8% -32% -8%;
+	z-index: -2;
+	pointer-events: none;
+	background:
+		/* big atmospheric bloom, slightly below the sign */
+		radial-gradient(
+			ellipse 60% 55% at 50% 62%,
+			var(--neon-a-halo-1),
+			transparent 70%
+		),
+		/* wider colored air */
+		radial-gradient(
+			ellipse 85% 75% at 50% 55%,
+			var(--neon-a-halo-3),
+			transparent 75%
+		);
+	filter: blur(14px) saturate(115%);
+	opacity: 0.95;
+}
+
+/* a slim reflected sheen below — the "shelf" gleam */
+.neon-a::after {
+	content: "";
+	position: absolute;
+	left: 6%;
+	right: 6%;
+	bottom: -2px;
+	height: 1px;
+	z-index: -1;
+	pointer-events: none;
+	background: linear-gradient(
+		to right,
+		transparent 0%,
+		color-mix(in srgb, var(--neon-a-tube) 55%, transparent) 25%,
+		color-mix(in srgb, var(--neon-a-core) 70%, transparent) 50%,
+		color-mix(in srgb, var(--neon-a-tube) 55%, transparent) 75%,
+		transparent 100%
+	);
+	box-shadow:
+		0 1px 8px color-mix(in srgb, var(--neon-a-tube) 60%, transparent),
+		0 3px 22px color-mix(in srgb, var(--neon-a-haze) 35%, transparent),
+		0 6px 48px color-mix(in srgb, var(--neon-a-haze) 18%, transparent);
+}
+
+/* ── the gas-in-glass: layered text-shadow stack ──────────────────────────────
+ * Order matters. Each layer adds a wavelength of bloom.
+ *   1px crisp core (white-hot)
+ *   2-4px tube highlight (pink ring)
+ *   8-16px inner bloom
+ *   28-46px mid haze
+ *   70-110px outer atmospheric
+ *  + small dark drop to seat it against the wall
+ * ──────────────────────────────────────────────────────────────────────────── */
+.neon-a .neon-a-glass {
+	color: var(--neon-a-core);
+	text-shadow:
+		0 0 1px var(--neon-a-core),
+		0 0 2px var(--neon-a-core),
+		0 0 4px var(--neon-a-tube),
+		0 0 8px var(--neon-a-tube),
+		0 0 16px var(--neon-a-tube-deep),
+		0 0 28px var(--neon-a-haze),
+		0 0 46px var(--neon-a-haze),
+		0 0 70px color-mix(in srgb, var(--neon-a-haze) 70%, transparent),
+		0 0 110px color-mix(in srgb, var(--neon-a-haze) 45%, transparent),
+		0 2px 1px color-mix(in srgb, var(--neon-a-shadow-tint) 55%, transparent);
+	/* Slight saturation pump on the rendered pixels */
+	-webkit-font-smoothing: antialiased;
+	will-change: opacity, text-shadow;
+}
+
+/* each ASCII row is its own light pipe so we can asymmetrically warm them up */
+.neon-a .neon-a-row {
+	display: block;
+	transition: opacity 90ms linear, filter 90ms linear;
+}
+
+/* ── POWER-ON SEQUENCE ────────────────────────────────────────────────────────
+ * Real neon signs don't just appear. They warm up:
+ *   cold    — gas energized but no visible light (cold-cathode whisper)
+ *   sputter — one row tries to strike and dies back
+ *   partial — row 1 hums, row 2 mostly dark, catches asymmetrically
+ *   surge   — full ionization, brief over-bright burst
+ *   settle  — easing into the steady-state shadow stack
+ *   steady  — handed off to neon-a-flicker
+ *
+ * We dim the steady text-shadow stack with `filter` + `opacity`, and tint the
+ * cold phase blue so the gas reads as cold-cathode rather than dim pink. The
+ * full warm shadow palette is preserved — we only modulate it.
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+/* COLD: very dim, slight blue cast — gas just got the kick, no real strike yet */
+.neon-a[data-phase="cold"] .neon-a-glass {
+	color: color-mix(in srgb, #a8c4ff 35%, var(--neon-a-core) 65%);
+	text-shadow:
+		0 0 1px color-mix(in srgb, #c8d8ff 40%, transparent),
+		0 0 4px color-mix(in srgb, #6b88c8 30%, transparent),
+		0 0 10px color-mix(in srgb, #2a3c66 20%, transparent);
+	opacity: 0.22;
+	animation: none;
+}
+.neon-a[data-phase="cold"]::before { opacity: 0.08; animation: none; }
+.neon-a[data-phase="cold"]::after  { opacity: 0.06; }
+
+/* SPUTTER: top row stabs on dim-pink for a tick, then collapses; bottom stays cold */
+.neon-a[data-phase="sputter"] .neon-a-glass {
+	color: var(--neon-a-core);
+	text-shadow:
+		0 0 1px var(--neon-a-core),
+		0 0 3px var(--neon-a-tube),
+		0 0 8px var(--neon-a-tube-deep),
+		0 0 16px color-mix(in srgb, var(--neon-a-haze) 50%, transparent);
+	animation: neon-a-sputter 240ms steps(8, end) 1;
+}
+.neon-a[data-phase="sputter"] .neon-a-row[data-row="top"] {
+	animation: neon-a-row-sputter 240ms steps(6, end) 1;
+}
+.neon-a[data-phase="sputter"] .neon-a-row[data-row="bot"] {
+	opacity: 0.18;
+	filter: saturate(0.4) brightness(0.5);
+}
+.neon-a[data-phase="sputter"]::before { opacity: 0.25; animation: none; }
+
+/* PARTIAL: top row hums at ~55%, bottom row catches halfway through */
+.neon-a[data-phase="partial"] .neon-a-glass {
+	color: var(--neon-a-core);
+	text-shadow:
+		0 0 1px var(--neon-a-core),
+		0 0 2px var(--neon-a-core),
+		0 0 4px var(--neon-a-tube),
+		0 0 10px var(--neon-a-tube),
+		0 0 20px var(--neon-a-tube-deep),
+		0 0 36px color-mix(in srgb, var(--neon-a-haze) 70%, transparent),
+		0 0 60px color-mix(in srgb, var(--neon-a-haze) 35%, transparent);
+	animation: neon-a-partial-hum 680ms ease-in-out 1;
+}
+.neon-a[data-phase="partial"] .neon-a-row[data-row="top"] {
+	animation: neon-a-row-hum 680ms ease-in-out 1;
+}
+.neon-a[data-phase="partial"] .neon-a-row[data-row="bot"] {
+	animation: neon-a-row-late-catch 680ms ease-out 1;
+}
+.neon-a[data-phase="partial"]::before {
+	opacity: 0.55;
+	animation: none;
+}
+
+/* SURGE: full ionization, brief over-bright burst */
+.neon-a[data-phase="surge"] .neon-a-glass {
+	color: #ffffff;
+	text-shadow:
+		0 0 1px #ffffff,
+		0 0 3px #ffffff,
+		0 0 6px var(--neon-a-core),
+		0 0 12px var(--neon-a-tube),
+		0 0 22px var(--neon-a-tube),
+		0 0 40px var(--neon-a-tube-deep),
+		0 0 64px var(--neon-a-haze),
+		0 0 100px var(--neon-a-haze),
+		0 0 150px color-mix(in srgb, var(--neon-a-haze) 80%, transparent),
+		0 2px 1px color-mix(in srgb, var(--neon-a-shadow-tint) 55%, transparent);
+	animation: neon-a-surge 280ms ease-out 1;
+}
+.neon-a[data-phase="surge"]::before {
+	opacity: 1;
+	filter: blur(18px) saturate(140%) brightness(1.3);
+	animation: none;
+}
+
+/* SETTLE: ease from surge values back into steady-state stack */
+.neon-a[data-phase="settle"] .neon-a-glass {
+	animation: neon-a-settle 370ms ease-in-out 1 forwards;
+}
+.neon-a[data-phase="settle"]::before {
+	animation: neon-a-halo-settle 370ms ease-in-out 1 forwards;
+}
+
+/* ── POWER-ON KEYFRAMES ─────────────────────────────────────────────────────── */
+
+/* sputter: dim → flash → dim → off-ish — irregular stops mimic a bad strike */
+@keyframes neon-a-sputter {
+	0%   { opacity: 0.25; }
+	18%  { opacity: 0.78; }
+	24%  { opacity: 0.20; }
+	38%  { opacity: 0.55; }
+	44%  { opacity: 0.15; }
+	62%  { opacity: 0.35; }
+	78%  { opacity: 0.10; }
+	100% { opacity: 0.22; }
+}
+@keyframes neon-a-row-sputter {
+	0%   { opacity: 0.30; filter: brightness(0.7); }
+	20%  { opacity: 0.95; filter: brightness(1.05); }
+	30%  { opacity: 0.25; filter: brightness(0.6); }
+	55%  { opacity: 0.7;  filter: brightness(0.9); }
+	75%  { opacity: 0.20; filter: brightness(0.5); }
+	100% { opacity: 0.38; filter: brightness(0.7); }
+}
+
+/* partial hum: gradual rise with two small dips — gas isn't fully ionized yet */
+@keyframes neon-a-partial-hum {
+	0%   { opacity: 0.40; }
+	22%  { opacity: 0.62; }
+	34%  { opacity: 0.48; }   /* dip */
+	58%  { opacity: 0.75; }
+	72%  { opacity: 0.60; }   /* dip */
+	100% { opacity: 0.85; }
+}
+@keyframes neon-a-row-hum {
+	0%   { opacity: 0.45; filter: brightness(0.85); }
+	30%  { opacity: 0.78; filter: brightness(0.95); }
+	55%  { opacity: 0.60; filter: brightness(0.9); }
+	100% { opacity: 0.92; filter: brightness(1); }
+}
+@keyframes neon-a-row-late-catch {
+	0%   { opacity: 0.20; filter: saturate(0.5) brightness(0.55); }
+	45%  { opacity: 0.22; filter: saturate(0.5) brightness(0.55); }
+	58%  { opacity: 0.70; filter: saturate(0.95) brightness(1.05); }  /* strike */
+	68%  { opacity: 0.45; filter: saturate(0.8)  brightness(0.85); }  /* settle */
+	100% { opacity: 0.88; filter: saturate(1)    brightness(1); }
+}
+
+/* surge: snap to over-bright then ease down a touch by end */
+@keyframes neon-a-surge {
+	0%   { opacity: 0.95; transform: scale(1); }
+	18%  { opacity: 1.0;  transform: scale(1.005); }
+	100% { opacity: 1.0;  transform: scale(1); }
+}
+
+/* settle: fade the surge intensity into the steady stack */
+@keyframes neon-a-settle {
+	0%   { opacity: 1.0; filter: brightness(1.18) saturate(1.15); }
+	60%  { opacity: 1.0; filter: brightness(1.05) saturate(1.06); }
+	100% { opacity: 1.0; filter: brightness(1)    saturate(1); }
+}
+@keyframes neon-a-halo-settle {
+	0%   { opacity: 1.0;  filter: blur(18px) saturate(140%) brightness(1.3); }
+	100% { opacity: 0.95; filter: blur(14px) saturate(115%) brightness(1); }
+}
+
+/* one-shot re-strike: brief tube-fail blink that happens once 3-6s after settle */
+@keyframes neon-a-restrike {
+	0%   { opacity: 1; }
+	12%  { opacity: 0.35; }
+	18%  { opacity: 0.85; }
+	24%  { opacity: 0.2; }
+	30%  { opacity: 0.95; }
+	40%  { opacity: 0.55; }
+	48%  { opacity: 1; }
+	100% { opacity: 1; }
+}
+.neon-a[data-restrike="on"] .neon-a-glass {
+	animation: neon-a-restrike 820ms steps(10, end) 1, neon-a-flicker 7.3s infinite 820ms;
+}
+
+/* ── flicker: irregular, gas-tube authentic ───────────────────────────────────
+ * Real neon flicker isn't a sine wave. We use uneven keyframe stops with
+ * occasional brown-outs where the gas dims and the halo collapses inward.
+ * Total cycle ≈ 7.3s so it never feels metronomic next to other animations.
+ * ──────────────────────────────────────────────────────────────────────────── */
+@keyframes neon-a-flicker {
+	0%, 100%   { opacity: 1; }
+	2.1%       { opacity: 1; }
+	2.5%       { opacity: 0.55; }                /* quick brown-out */
+	2.9%       { opacity: 1; }
+	17.4%      { opacity: 1; }
+	17.8%      { opacity: 0.82; }
+	18.0%      { opacity: 1; }
+	41.2%      { opacity: 1; }
+	41.5%      { opacity: 0.4; }                 /* longer dip */
+	41.7%      { opacity: 0.95; }
+	42.0%      { opacity: 0.7; }
+	42.3%      { opacity: 1; }
+	68.6%      { opacity: 1; }
+	68.9%      { opacity: 0.75; }
+	69.1%      { opacity: 1; }
+	88.4%      { opacity: 1; }
+	88.7%      { opacity: 0.5; }
+	88.9%      { opacity: 1; }
+}
+
+/* Subtle hue/saturation breathing on the halo — gas warming up */
+@keyframes neon-a-breathe {
+	0%, 100% { filter: blur(14px) saturate(115%) brightness(1); }
+	50%      { filter: blur(15px) saturate(125%) brightness(1.06); }
+}
+
+.neon-a[data-flicker="on"] .neon-a-glass {
+	animation: neon-a-flicker 7.3s infinite;
+	animation-timing-function: steps(1, end);
+}
+.neon-a[data-flicker="on"]::before {
+	animation: neon-a-breathe 6.1s ease-in-out infinite;
+}
+
+/* ── accessibility: reduced motion kills flicker & breathe ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+	.neon-a[data-flicker="on"] .neon-a-glass,
+	.neon-a[data-flicker="on"]::before {
+		animation: none !important;
+	}
+}
+
+/* Light theme: the sign is the same gas, but the backdrop is paper.
+ * Pink reads great on cream — we just lower the outer haze so the room
+ * doesn't go pink. */
+:root[data-theme="light"] .neon-a {
+	--neon-a-shadow-tint: #4a0820;
+	--neon-a-halo-1: color-mix(in srgb, var(--neon-a-haze) 22%, transparent);
+	--neon-a-halo-2: color-mix(in srgb, var(--neon-a-tube) 12%, transparent);
+	--neon-a-halo-3: color-mix(in srgb, var(--neon-a-haze) 5%, transparent);
+}
+:root[data-theme="light"] .neon-a .neon-a-glass {
+	text-shadow:
+		0 0 1px var(--neon-a-core),
+		0 0 2px var(--neon-a-tube),
+		0 0 4px var(--neon-a-tube),
+		0 0 9px var(--neon-a-tube-deep),
+		0 0 18px var(--neon-a-haze),
+		0 0 36px color-mix(in srgb, var(--neon-a-haze) 60%, transparent),
+		0 0 70px color-mix(in srgb, var(--neon-a-haze) 30%, transparent),
+		0 1px 0 color-mix(in srgb, var(--neon-a-shadow-tint) 30%, transparent);
+}

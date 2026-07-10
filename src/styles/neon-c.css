@@ -1,0 +1,383 @@
+/* ============================================================
+   neon-c.css — Synthwave Gradient Neon (Miami sunset)
+   Scope: every rule lives under `.neon-c` so it cannot collide.
+   ============================================================ */
+
+.neon-c {
+	/* — palette: hot-pink → magenta → violet → orange-pink — */
+	--nc-hot-pink: #ff5cae;
+	--nc-magenta: #ff3d8a;
+	--nc-violet: #7a3cff;
+	--nc-indigo: #4b1f7a;
+	--nc-orange: #ff9a5c;
+	--nc-peach: #ffc28a;
+	--nc-sunset-top: #ff7ab8;
+	--nc-sunset-mid: #c14bff;
+	--nc-sunset-low: #ff8a5c;
+
+	/* — glow envelope — fat, soft, romantic — */
+	--nc-bloom-1: color-mix(in oklab, var(--nc-magenta) 55%, transparent);
+	--nc-bloom-2: color-mix(in oklab, var(--nc-violet) 38%, transparent);
+	--nc-bloom-3: color-mix(in oklab, var(--nc-orange) 22%, transparent);
+	--nc-bloom-4: color-mix(in oklab, var(--nc-hot-pink) 12%, transparent);
+
+	/* — horizon — */
+	--nc-grid-line: color-mix(in oklab, var(--nc-magenta) 38%, transparent);
+	--nc-grid-fade: color-mix(in oklab, var(--nc-violet) 22%, transparent);
+
+	/* — easing token: long, romantic exponential out — */
+	--nc-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+	position: relative;
+	display: inline-block;
+	isolation: isolate;
+	padding: 0.35rem 0.1rem 0.9rem;
+}
+
+/* — the ASCII block itself: gradient through the strokes — */
+.neon-c__art {
+	position: relative;
+	margin: 0;
+	white-space: pre;
+	font-weight: 500;
+	line-height: 1;
+	letter-spacing: -0.01em;
+
+	background-image: linear-gradient(
+		180deg,
+		var(--nc-sunset-top) 0%,
+		var(--nc-magenta) 32%,
+		var(--nc-sunset-mid) 58%,
+		var(--nc-orange) 88%,
+		var(--nc-peach) 100%
+	);
+	background-size: 100% 220%;
+	background-position: 0% 0%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	-webkit-text-fill-color: transparent;
+
+	/* the bloom rides via filter so the gradient stays clean */
+	filter:
+		drop-shadow(0 0 1px color-mix(in oklab, var(--nc-hot-pink) 85%, white))
+		drop-shadow(0 0 6px var(--nc-bloom-1))
+		drop-shadow(0 0 18px var(--nc-bloom-2))
+		drop-shadow(0 0 38px var(--nc-bloom-3))
+		drop-shadow(0 0 68px var(--nc-bloom-4));
+
+	will-change: background-position, filter, opacity, mask-position;
+}
+
+/* steady-state drift — only after the warm-up has settled */
+.neon-c.is-settled .neon-c__art {
+	animation: nc-drift 18s ease-in-out infinite;
+}
+
+/* slow vertical gradient drift — barely perceptible */
+@keyframes nc-drift {
+	0%,
+	100% {
+		background-position: 0% 8%;
+	}
+	50% {
+		background-position: 0% 46%;
+	}
+}
+
+/* faint, very slow hue-shift on the bloom only (color, not position) */
+@keyframes nc-bloom-warm {
+	0%,
+	100% {
+		filter:
+			drop-shadow(0 0 1px color-mix(in oklab, var(--nc-hot-pink) 85%, white))
+			drop-shadow(0 0 6px var(--nc-bloom-1))
+			drop-shadow(0 0 18px var(--nc-bloom-2))
+			drop-shadow(0 0 38px var(--nc-bloom-3))
+			drop-shadow(0 0 68px var(--nc-bloom-4));
+	}
+	50% {
+		filter:
+			drop-shadow(0 0 1px color-mix(in oklab, var(--nc-peach) 80%, white))
+			drop-shadow(0 0 7px color-mix(in oklab, var(--nc-hot-pink) 55%, transparent))
+			drop-shadow(0 0 22px color-mix(in oklab, var(--nc-magenta) 40%, transparent))
+			drop-shadow(0 0 42px color-mix(in oklab, var(--nc-orange) 24%, transparent))
+			drop-shadow(0 0 78px color-mix(in oklab, var(--nc-violet) 16%, transparent));
+	}
+}
+
+.neon-c.is-settled .neon-c__art--breathing {
+	animation:
+		nc-drift 18s ease-in-out infinite,
+		nc-bloom-warm 13s ease-in-out infinite;
+}
+
+/* — horizon: sits under the name, sells the synthwave sunset — */
+.neon-c__horizon {
+	pointer-events: none;
+	position: absolute;
+	left: -4%;
+	right: -4%;
+	bottom: 0.1rem;
+	height: 0.9rem;
+	z-index: -1;
+	opacity: 0.85;
+
+	/* the single bright horizon line + perspective grid lines fading up */
+	background:
+		/* main horizon line */
+		linear-gradient(
+			to bottom,
+			transparent 0%,
+			transparent 46%,
+			var(--nc-sunset-top) 49%,
+			var(--nc-magenta) 50%,
+			var(--nc-orange) 51%,
+			transparent 54%,
+			transparent 100%
+		),
+		/* receding grid bars above the horizon */
+		repeating-linear-gradient(
+			to top,
+			transparent 0px,
+			transparent 4px,
+			var(--nc-grid-line) 4px,
+			var(--nc-grid-line) 5px
+		);
+	mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+	-webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+	filter:
+		drop-shadow(0 0 6px color-mix(in oklab, var(--nc-magenta) 55%, transparent))
+		drop-shadow(0 0 18px color-mix(in oklab, var(--nc-violet) 28%, transparent));
+}
+
+/* — soft ambient halo glow behind the whole sign — */
+.neon-c__halo {
+	pointer-events: none;
+	position: absolute;
+	inset: -20% -8% -10%;
+	z-index: -2;
+	background:
+		radial-gradient(
+			ellipse 60% 70% at 50% 55%,
+			color-mix(in oklab, var(--nc-magenta) 22%, transparent) 0%,
+			color-mix(in oklab, var(--nc-violet) 14%, transparent) 35%,
+			transparent 70%
+		),
+		radial-gradient(
+			ellipse 80% 40% at 50% 95%,
+			color-mix(in oklab, var(--nc-orange) 18%, transparent) 0%,
+			transparent 65%
+		);
+	filter: blur(2px);
+	opacity: 0.9;
+}
+
+/* ============================================================
+   POWER-ON SEQUENCE
+   Romantic, dreamy ignition — no flicker. Total ~2.8s.
+   Stage 1 (0–600ms)        horizon seam wakes up
+   Stage 2 (300–1100ms)     grid bars sweep outward from center
+   Stage 3 (700–2200ms)     letters ignite bottom→top (orange→magenta→pink)
+   Stage 4 (1100–2600ms)    bloom layers fade in: tight first, wide last
+   Stage 5 (2600–2800ms)    hand off to steady-state breathing
+   ============================================================ */
+
+/* --- pre-ignition: everything dark and ready --- */
+.neon-c:not(.is-reduced) .neon-c__art {
+	opacity: 0;
+	/* before ignition the bloom is collapsed — just a tiny inner kiss */
+	filter:
+		drop-shadow(0 0 0.5px color-mix(in oklab, var(--nc-hot-pink) 30%, transparent));
+}
+.neon-c:not(.is-reduced) .neon-c__horizon {
+	opacity: 0;
+	/* grid clipped to a hairline at center horizontally */
+	-webkit-mask-image: linear-gradient(to right, transparent 48%, black 50%, transparent 52%);
+	mask-image: linear-gradient(to right, transparent 48%, black 50%, transparent 52%);
+}
+.neon-c:not(.is-reduced) .neon-c__halo {
+	opacity: 0;
+}
+
+/* --- ignited: drive each stage with its own keyframe --- */
+.neon-c.is-ignited .neon-c__horizon {
+	animation: nc-horizon-rise 2800ms var(--nc-ease) forwards;
+}
+
+.neon-c.is-ignited .neon-c__halo {
+	animation: nc-halo-bloom 2800ms var(--nc-ease) forwards;
+}
+
+.neon-c.is-ignited .neon-c__art {
+	animation: nc-letters-ignite 2800ms var(--nc-ease) forwards;
+}
+
+/* Stage 1 + 2 combined: horizon seam glows, then grid sweeps outward.
+   We animate the mask gradient so the bright center expands across the bar. */
+@keyframes nc-horizon-rise {
+	0% {
+		opacity: 0;
+		-webkit-mask-image: linear-gradient(to right, transparent 48%, black 50%, transparent 52%);
+		mask-image: linear-gradient(to right, transparent 48%, black 50%, transparent 52%);
+		filter:
+			drop-shadow(0 0 2px color-mix(in oklab, var(--nc-sunset-top) 60%, transparent));
+	}
+	8% {
+		/* sunrise seam — thin, warm, alone */
+		opacity: 0.55;
+		-webkit-mask-image: linear-gradient(to right, transparent 46%, black 50%, transparent 54%);
+		mask-image: linear-gradient(to right, transparent 46%, black 50%, transparent 54%);
+		filter:
+			drop-shadow(0 0 6px color-mix(in oklab, var(--nc-sunset-top) 80%, transparent))
+			drop-shadow(0 0 14px color-mix(in oklab, var(--nc-orange) 50%, transparent));
+	}
+	22% {
+		/* grid bars start sweeping outward */
+		opacity: 0.7;
+		-webkit-mask-image: linear-gradient(to right, transparent 32%, black 45%, black 55%, transparent 68%);
+		mask-image: linear-gradient(to right, transparent 32%, black 45%, black 55%, transparent 68%);
+	}
+	45% {
+		opacity: 0.82;
+		-webkit-mask-image: linear-gradient(to right, transparent 18%, black 30%, black 70%, transparent 82%);
+		mask-image: linear-gradient(to right, transparent 18%, black 30%, black 70%, transparent 82%);
+	}
+	100% {
+		opacity: 0.85;
+		-webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+		mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+		filter:
+			drop-shadow(0 0 6px color-mix(in oklab, var(--nc-magenta) 55%, transparent))
+			drop-shadow(0 0 18px color-mix(in oklab, var(--nc-violet) 28%, transparent));
+	}
+}
+
+/* Stage 4: halo blooms in — slowest of all, settles last */
+@keyframes nc-halo-bloom {
+	0%, 25% {
+		opacity: 0;
+		transform: scale(0.88);
+	}
+	60% {
+		opacity: 0.55;
+		transform: scale(0.96);
+	}
+	100% {
+		opacity: 0.9;
+		transform: scale(1);
+	}
+}
+
+/* Stage 3 + 4: letters ignite bottom-up via mask sweep, then bloom layers
+   expand outward in waves. The mask gradient reveals from the bottom of
+   each glyph upward — so the first thing visible is the orange/peach foot
+   of the gradient, then magenta middle, then hot-pink crown.
+   The drop-shadow stack widens in stages: inner kiss → mid magenta →
+   violet middle → orange wide → outermost hot-pink halo. */
+@keyframes nc-letters-ignite {
+	0% {
+		opacity: 0;
+		background-position: 0% 100%;
+		-webkit-mask-image: linear-gradient(to top, black 0%, black 0%, transparent 4%);
+		mask-image: linear-gradient(to top, black 0%, black 0%, transparent 4%);
+		filter:
+			drop-shadow(0 0 0.5px color-mix(in oklab, var(--nc-hot-pink) 30%, transparent));
+	}
+	18% {
+		/* nothing in the letters yet — horizon is still solo */
+		opacity: 0;
+		background-position: 0% 100%;
+		-webkit-mask-image: linear-gradient(to top, black 0%, black 0%, transparent 4%);
+		mask-image: linear-gradient(to top, black 0%, black 0%, transparent 4%);
+	}
+	28% {
+		/* orange/peach foot ignites at the bottom of the letters */
+		opacity: 0.9;
+		background-position: 0% 100%;
+		-webkit-mask-image: linear-gradient(to top, black 0%, black 8%, transparent 30%);
+		mask-image: linear-gradient(to top, black 0%, black 8%, transparent 30%);
+		filter:
+			drop-shadow(0 0 1px color-mix(in oklab, var(--nc-peach) 80%, white))
+			drop-shadow(0 0 5px color-mix(in oklab, var(--nc-orange) 70%, transparent))
+			drop-shadow(0 0 14px color-mix(in oklab, var(--nc-orange) 35%, transparent));
+	}
+	48% {
+		/* magenta climbs through the middle */
+		opacity: 1;
+		background-position: 0% 70%;
+		-webkit-mask-image: linear-gradient(to top, black 0%, black 45%, transparent 75%);
+		mask-image: linear-gradient(to top, black 0%, black 45%, transparent 75%);
+		filter:
+			drop-shadow(0 0 1px color-mix(in oklab, var(--nc-magenta) 80%, white))
+			drop-shadow(0 0 7px color-mix(in oklab, var(--nc-magenta) 60%, transparent))
+			drop-shadow(0 0 20px color-mix(in oklab, var(--nc-violet) 35%, transparent))
+			drop-shadow(0 0 34px color-mix(in oklab, var(--nc-orange) 20%, transparent));
+	}
+	72% {
+		/* hot-pink crowns the top — full strokes visible */
+		opacity: 1;
+		background-position: 0% 25%;
+		-webkit-mask-image: linear-gradient(to top, black 0%, black 92%, transparent 105%);
+		mask-image: linear-gradient(to top, black 0%, black 92%, transparent 105%);
+		filter:
+			drop-shadow(0 0 1px color-mix(in oklab, var(--nc-hot-pink) 85%, white))
+			drop-shadow(0 0 6px var(--nc-bloom-1))
+			drop-shadow(0 0 18px var(--nc-bloom-2))
+			drop-shadow(0 0 30px color-mix(in oklab, var(--nc-orange) 18%, transparent));
+	}
+	100% {
+		/* bloom waves expand to full radius — outermost layer arrives last */
+		opacity: 1;
+		background-position: 0% 8%;
+		-webkit-mask-image: linear-gradient(to top, black 0%, black 100%, black 100%);
+		mask-image: linear-gradient(to top, black 0%, black 100%, black 100%);
+		filter:
+			drop-shadow(0 0 1px color-mix(in oklab, var(--nc-hot-pink) 85%, white))
+			drop-shadow(0 0 6px var(--nc-bloom-1))
+			drop-shadow(0 0 18px var(--nc-bloom-2))
+			drop-shadow(0 0 38px var(--nc-bloom-3))
+			drop-shadow(0 0 68px var(--nc-bloom-4));
+	}
+}
+
+/* — reduced motion: kill drifts and the warm-up; just be there — */
+@media (prefers-reduced-motion: reduce) {
+	.neon-c .neon-c__art,
+	.neon-c .neon-c__art--breathing {
+		animation: none !important;
+		opacity: 1 !important;
+		background-position: 0% 30% !important;
+		-webkit-mask-image: none !important;
+		mask-image: none !important;
+	}
+	.neon-c .neon-c__horizon {
+		animation: none !important;
+		opacity: 0.85 !important;
+		-webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent) !important;
+		mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent) !important;
+	}
+	.neon-c .neon-c__halo {
+		animation: none !important;
+		opacity: 0.9 !important;
+		transform: none !important;
+	}
+}
+.neon-c.is-reduced .neon-c__art {
+	opacity: 1;
+	filter:
+		drop-shadow(0 0 1px color-mix(in oklab, var(--nc-hot-pink) 85%, white))
+		drop-shadow(0 0 6px var(--nc-bloom-1))
+		drop-shadow(0 0 18px var(--nc-bloom-2))
+		drop-shadow(0 0 38px var(--nc-bloom-3))
+		drop-shadow(0 0 68px var(--nc-bloom-4));
+}
+.neon-c.is-reduced .neon-c__horizon {
+	opacity: 0.85;
+	-webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+	mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+.neon-c.is-reduced .neon-c__halo {
+	opacity: 0.9;
+}
+

@@ -1,0 +1,101 @@
+{
+  "ruio": {
+    "name": "ruio",
+    "description": "A lightweight developer tool to visualize and debug React component hierarchy. ",
+    "url": "https://github.com/gary-rivera/ruio",
+    "homepageUrl": "https://ruio.garyrivera.me/",
+    "createdAt": "2024-09-13T07:20:17Z",
+    "pushedAt": "2025-11-10T19:13:40Z",
+    "stargazerCount": 3,
+    "totalCommits": 311,
+    "topics": [
+      "developer-tools",
+      "react",
+      "typescript"
+    ],
+    "languages": [
+      "JavaScript",
+      "TypeScript",
+      "CSS"
+    ]
+  },
+  "flappy-js": {
+    "name": "flappy-js",
+    "description": "Modeled after the original Flappy Bird game with an added twist of being written in 30 lines.",
+    "url": "https://github.com/gary-rivera/flappy-js",
+    "homepageUrl": "https://gary-rivera.github.io/flappy-js/",
+    "createdAt": "2021-01-19T23:09:06Z",
+    "pushedAt": "2024-11-18T23:40:24Z",
+    "stargazerCount": 0,
+    "totalCommits": 9,
+    "topics": [
+      "canvas2d",
+      "html",
+      "javascript"
+    ],
+    "languages": [
+      "HTML",
+      "JavaScript"
+    ]
+  },
+  "gbot": {
+    "name": "gbot",
+    "description": "An automated crypto trading bot built for Unix-based systems, activated via the command line. It analyzes market trends to execute winning trades in real-time without storing personal data.",
+    "url": "https://github.com/gary-rivera/gbot",
+    "homepageUrl": "",
+    "createdAt": "2024-03-17T18:20:11Z",
+    "pushedAt": "2024-09-16T02:40:37Z",
+    "stargazerCount": 1,
+    "totalCommits": 12,
+    "topics": [
+      "ai",
+      "python",
+      "unix"
+    ],
+    "languages": [
+      "Python",
+      "Roff",
+      "Shell"
+    ]
+  },
+  "meme-generator": {
+    "name": "meme-generator",
+    "description": "A simple meme generator where users can input text and an image URL to create custom memes. Built with HTML5 Canvas and forms. My first project!",
+    "url": "https://github.com/gary-rivera/meme-generator",
+    "homepageUrl": "",
+    "createdAt": "2021-02-10T01:30:53Z",
+    "pushedAt": "2021-08-17T22:24:01Z",
+    "stargazerCount": 0,
+    "totalCommits": 5,
+    "topics": [
+      "css",
+      "javascript"
+    ],
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ]
+  },
+  "calculator": {
+    "name": "calculator",
+    "description": "A functional, 1:1 recreation of a calculator using React and vanilla CSS, showcasing how developers can create clean, accurate interfaces without relying on external styling libraries/frameworks.",
+    "url": "https://github.com/gary-rivera/calculator",
+    "homepageUrl": "",
+    "createdAt": "2024-10-07T21:44:30Z",
+    "pushedAt": "2024-11-24T21:47:23Z",
+    "stargazerCount": 0,
+    "totalCommits": 29,
+    "topics": [
+      "css",
+      "mockup",
+      "react",
+      "vite"
+    ],
+    "languages": [
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ]
+  }
+}

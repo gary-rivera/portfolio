@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+
 *.local
 .env
 
@@ -26,3 +27,8 @@ dist-ssr
 .DS_Store
 .DS_Store
 *.tsbuildinfo
+
+mockups/
+
+# Claude plugin working state
+.superpowers/

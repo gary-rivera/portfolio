@@ -1,0 +1,144 @@
+/* monochrome phosphor neon sign — single color, irregular flicker.
+   the ascii reveal is handled by a brief power-on at mount, then
+   js schedules discrete flicker events with weighted-random timing
+   so the pattern doesn't tile. */
+
+.neon-phos {
+	--neon-phos-color: var(--color-phosphor);
+	--neon-phos-white: color-mix(in srgb, var(--color-phosphor) 90%, white);
+	--neon-phos-on-shadow:
+		0 0 1px var(--neon-phos-white),
+		0 0 4px var(--neon-phos-color),
+		0 0 10px color-mix(in srgb, var(--neon-phos-color) 75%, transparent),
+		0 0 22px color-mix(in srgb, var(--neon-phos-color) 50%, transparent),
+		0 0 42px color-mix(in srgb, var(--neon-phos-color) 28%, transparent),
+		0 0 72px color-mix(in srgb, var(--neon-phos-color) 14%, transparent);
+	display: inline-block;
+	position: relative;
+}
+
+.neon-phos__art {
+	color: var(--neon-phos-color);
+	text-shadow: var(--neon-phos-on-shadow);
+	opacity: 1;
+	will-change: text-shadow, opacity, filter;
+}
+
+/* discrete flicker states — 6 depths from fully lit to dead.
+   each state collapses the shadow stack one tier and dips opacity
+   so the eye reads continuous depth, not binary on/off. */
+.neon-phos__art[data-flick="soft"] {
+	/* barely-off-full: still glowing strong, slight bloom shrink */
+	text-shadow:
+		0 0 1px color-mix(in srgb, var(--neon-phos-color) 80%, white),
+		0 0 4px color-mix(in srgb, var(--neon-phos-color) 90%, transparent),
+		0 0 9px color-mix(in srgb, var(--neon-phos-color) 60%, transparent),
+		0 0 18px color-mix(in srgb, var(--neon-phos-color) 38%, transparent),
+		0 0 34px color-mix(in srgb, var(--neon-phos-color) 20%, transparent);
+	opacity: 0.86;
+	filter: brightness(0.94);
+}
+.neon-phos__art[data-flick="mid"] {
+	/* clearly weakened: tube struggling, bloom shrunk further */
+	text-shadow:
+		0 0 1px color-mix(in srgb, var(--neon-phos-color) 80%, transparent),
+		0 0 3px color-mix(in srgb, var(--neon-phos-color) 65%, transparent),
+		0 0 7px color-mix(in srgb, var(--neon-phos-color) 42%, transparent),
+		0 0 14px color-mix(in srgb, var(--neon-phos-color) 22%, transparent);
+	opacity: 0.6;
+	filter: brightness(0.86);
+}
+.neon-phos__art[data-flick="deep"] {
+	/* nearly out: gas barely ionized, just a residual hum */
+	text-shadow:
+		0 0 1px color-mix(in srgb, var(--neon-phos-color) 60%, transparent),
+		0 0 3px color-mix(in srgb, var(--neon-phos-color) 35%, transparent);
+	opacity: 0.525;
+	filter: brightness(0.92);
+}
+.neon-phos__art[data-flick="off"] {
+	/* lowest floor — vibrant residual core, no bloom halo */
+	text-shadow:
+		0 0 1px color-mix(in srgb, var(--neon-phos-color) 55%, transparent);
+	opacity: 0.425;
+	filter: brightness(0.65);
+}
+.neon-phos__art[data-flick="surge"] {
+	/* re-strike overshoot — gas ionizes hard, brief over-brighten */
+	text-shadow:
+		0 0 1px var(--neon-phos-white),
+		0 0 6px var(--neon-phos-color),
+		0 0 14px color-mix(in srgb, var(--neon-phos-color) 85%, transparent),
+		0 0 30px color-mix(in srgb, var(--neon-phos-color) 65%, transparent),
+		0 0 58px color-mix(in srgb, var(--neon-phos-color) 40%, transparent),
+		0 0 96px color-mix(in srgb, var(--neon-phos-color) 22%, transparent);
+	opacity: 1;
+	filter: brightness(1.15) saturate(1.025);
+}
+
+/* power-on at mount: ~280ms — sputter, dim, hold, on. uses data-phase. */
+.neon-phos[data-phase="boot"] .neon-phos__art {
+	animation: neon-phos-boot 320ms steps(1, end) forwards;
+}
+@keyframes neon-phos-boot {
+	0% {
+		opacity: 0;
+		text-shadow: none;
+	}
+	14% {
+		opacity: 0.38;
+		text-shadow:
+			0 0 1px color-mix(in srgb, var(--neon-phos-color) 60%, transparent),
+			0 0 3px color-mix(in srgb, var(--neon-phos-color) 30%, transparent);
+	}
+	22% {
+		opacity: 0.12;
+		text-shadow: none;
+	}
+	44% {
+		opacity: 0.55;
+		text-shadow:
+			0 0 1px color-mix(in srgb, var(--neon-phos-color) 70%, transparent),
+			0 0 5px color-mix(in srgb, var(--neon-phos-color) 45%, transparent);
+	}
+	58% {
+		opacity: 0.28;
+		text-shadow: none;
+	}
+	76%, 100% {
+		opacity: 1;
+		text-shadow: var(--neon-phos-on-shadow);
+	}
+}
+
+/* halo bleed behind the sign — phosphor-monochrome ambient */
+.neon-phos__halo {
+	position: absolute;
+	inset: -22% -12%;
+	pointer-events: none;
+	z-index: -1;
+	background: radial-gradient(
+		ellipse at center,
+		color-mix(in srgb, var(--neon-phos-color) 18%, transparent) 0%,
+		color-mix(in srgb, var(--neon-phos-color) 6%, transparent) 38%,
+		transparent 72%
+	);
+	filter: blur(14px);
+	opacity: 0;
+	transition: opacity 480ms ease-out;
+}
+.neon-phos[data-phase="lit"] .neon-phos__halo {
+	opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.neon-phos[data-phase="boot"] .neon-phos__art,
+	.neon-phos__art {
+		animation: none !important;
+	}
+	.neon-phos__art[data-flick] {
+		text-shadow: var(--neon-phos-on-shadow);
+		opacity: 1;
+		filter: none;
+	}
+}

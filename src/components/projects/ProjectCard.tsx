@@ -1,123 +1,150 @@
-import { Project } from "@/data/projects";
-import { getBadgeDetails } from "@/utils/badges";
-import dayjs from "dayjs";
-import ActionableTextHighlight from "@/components/ActionableTextHighlight";
+import { useState, type CSSProperties } from "react";
+import { Project, projectTagsConfig } from "@data/projects";
 
-// styling
-import { chakra, Badge, Flex, HStack, Icon, Image, Text, Spacer, Code } from "@chakra-ui/react";
+export type LifespanAxis = { start: number; end: number };
 
-// icons
-import { FaNpm } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
-import { FaExternalLinkAlt } from "react-icons/fa";
-
-import LinkIcon from "@/components/LinkIconFactory";
 interface ProjectCardProps {
 	project: Project;
+	axis: LifespanAxis;
 }
 
-const GhIcon = chakra(FaGithub);
-const ExternalLinkIcon = chakra(FaExternalLinkAlt);
-const NpmIcon = chakra(FaNpm);
+const monthLabel = (d: Date) =>
+	d.toLocaleString("en-US", { month: "short", year: "numeric" }).toLowerCase();
 
-type IconKeys = "repo" | "npm" | "deployment";
-const IconMap: Record<IconKeys, typeof GhIcon | typeof NpmIcon | typeof ExternalLinkIcon> = {
-	repo: GhIcon,
-	npm: NpmIcon,
-	deployment: ExternalLinkIcon,
-};
+function pushedAgo(pushed: Date, now: number): string {
+	const months = Math.max(0, Math.floor((now - pushed.getTime()) / (1000 * 60 * 60 * 24 * 30.44)));
+	if (months < 12) return `pushed ${months}mo ago`;
+	const y = Math.floor(months / 12);
+	const m = months % 12;
+	return m ? `pushed ${y}y ${m}mo ago` : `pushed ${y}y ago`;
+}
 
-const iconPropsMap: Record<string, Record<string, any>> = {
-	repo: { boxSize: "1.3rem" },
-	npm: { boxSize: "2rem", _hover: { color: "#CC3534" } },
-	deployment: { boxSize: "0.9rem", ml: "4px" },
-};
+export default function ProjectCard({ project, axis }: ProjectCardProps) {
+	const { links, name, kind, description, createdAt, pushedAt, tags, logoConfig, totalCommits } = project;
+	const logoSrc = logoConfig?.[0];
 
-function ProjectCard({ project }: ProjectCardProps) {
-	const { logoConfig, links, name, description, totalCommits, createdAt, tags } = project;
-	const iconItems = Object.entries(links)
-		.filter(([key, value]) => key in IconMap && value)
-		.map(([key, value]) => ({
-			IconComponent: IconMap[key as IconKeys],
-			href: value,
-			props: iconPropsMap[key] || {},
-		}));
+	const span = axis.end - axis.start;
+	const pos = (d?: Date) =>
+		d instanceof Date && span > 0
+			? Math.min(100, Math.max(0, ((d.getTime() - axis.start) / span) * 100))
+			: null;
+	const trackStart = pos(createdAt);
+	const trackEnd = pos(pushedAt);
+	const hasTrack = trackStart !== null && trackEnd !== null;
+	// end-cap brightness: quadratic on the push's position along the axis, so
+	// recent work glows and old work cools without a status taxonomy
+	const heat = hasTrack ? Math.max(0.08, (trackEnd / 100) ** 2) : 0.08;
+
+	const topTags = (tags ?? []).map((t) => projectTagsConfig[t]?.badge[0] ?? t).slice(0, 3);
+
+	// no date range here — the lifespan track already draws it
+	const facts = [
+		typeof totalCommits === "number" && totalCommits > 0 ? `${totalCommits} commits` : null,
+		pushedAt ? pushedAgo(pushedAt, axis.end) : null,
+	].filter(Boolean);
 
 	return (
-		<Flex
-			direction="column"
-			w={["100%", "100%", "40rem", "45rem"]}
-			h={["auto", "12rem", "13rem", "14rem"]}
-			bg="var(--primary-bg-color)"
-			borderRadius="sm"
-			py={["4", "6", "6"]}
-			px={["6", "8", "10"]}
-			fontSize={["16px", "20px", "22px"]}
+		<li
+			className="pl-strip"
+			tabIndex={0}
+			style={
+				hasTrack
+					? ({ "--s": `${trackStart}%`, "--e": `${trackEnd}%`, "--heat": heat } as CSSProperties)
+					: ({ "--heat": heat } as CSSProperties)
+			}
 		>
-			<Flex justify="space-between">
-				<Flex align="center" justify="center">
-					<Image src={logoConfig[0]} alt="project-logo" h="auto" w={logoConfig[1].width} mt="1" mr="1" />
-
-					<ActionableTextHighlight children={name} externalLink={links.repo || ""} />
-				</Flex>
-
-				<Flex direction="column" justify="start" m="0">
-					{/* Code component? */}
-					{[
-						{ title: "commits", value: totalCommits ? totalCommits && totalCommits.toString() : "N/A" },
-						{ title: "created", value: dayjs(createdAt).format("MMM YYYY") },
-					].map(({ title, value }) => (
-						<Code
-							// @ts-ignore // variant="none" is not in the types as of chakra v3 for some reason
-							variant="none"
-							fontWeight="300"
-							color="blackAlpha.500"
-							textAlign="right"
-							letterSpacing="tight"
-							py="0"
-							my="0"
-							key={title}
-							minHeight="1"
-							fontSize={["0.55rem", "0.6rem", "0.65rem"]}
-						>
-							{title}: {value}
-						</Code>
-					))}
-				</Flex>
-			</Flex>
-			<HStack fontWeight="500" mt={[1, 1, 1.5]} justifySelf="end" h="auto">
-				<Text
-					// fontSize="1rem"
-					color="blackAlpha.800"
-					fontSize={["0.8rem", "0.85rem", "0.9rem", "1rem"]}
-					borderColor="cyan.600"
+			<div className="pl-l1">
+				{logoSrc && (
+					<img
+						className="pl-logo"
+						src={logoSrc}
+						alt=""
+						width={16}
+						height={16}
+						loading="lazy"
+						decoding="async"
+					/>
+				)}
+				<a
+					className="neon-link pl-name"
+					href={links.repo ?? undefined}
+					target="_blank"
+					rel="noopener noreferrer"
 				>
-					{description}
-				</Text>
-			</HStack>
-			<Spacer />
+					{name.toLowerCase()}
+				</a>
+				{kind && <span className="pl-kind">· {kind}</span>}
+				<span className="pl-links">
+					{links.deployment && (
+						<CardLink href={links.deployment} label="demo" name={name} kind="demo" />
+					)}
+					{links.npm && <CardLink href={links.npm} label="npm" name={name} kind="npm" />}
+					{links.repo && <CardLink href={links.repo} label="gh" name={name} kind="gh" />}
+				</span>
+			</div>
 
-			<Flex justify="space-between" h="2.3rem">
-				<HStack gap="0.25rem">
-					{tags?.length &&
-						tags?.map((tag) => {
-							const [title, colorScheme, icon] = getBadgeDetails(tag);
-							return (
-								<Badge key={`badge-${tag}`} variant="subtle" colorPalette={colorScheme} opacity="0.5">
-									{title}
-									{icon && <Icon>{icon}</Icon>}
-								</Badge>
-							);
-						})}
-				</HStack>
-				<HStack gap="0.3rem" h="inherit">
-					{iconItems.map(({ IconComponent, href, props }, idx) => (
-						<LinkIcon key={`icon-${idx}`} iconProps={{ href }} IconTemplate={<IconComponent {...props} />} />
+			{topTags.length > 0 ? (
+				<ul className="pl-tags" aria-label={`${name} topics`}>
+					{topTags.map((tag) => (
+						<li key={tag} className="pl-tag">
+							{tag.toLowerCase()}
+						</li>
 					))}
-				</HStack>
-			</Flex>
-		</Flex>
+				</ul>
+			) : (
+				description && <p className="pl-desc">{description}</p>
+			)}
+
+			{hasTrack && (
+				<div
+					className="pl-track"
+					role="img"
+					aria-label={`lifespan: ${monthLabel(createdAt!)} to ${monthLabel(pushedAt!)}`}
+				>
+					<span className="pl-bar" />
+				</div>
+			)}
+
+			{(description || facts.length > 0) && (
+				<span className="pl-det">
+					<span>
+						{description && topTags.length > 0 && <span className="pl-dl">{description}</span>}
+						{facts.length > 0 && <span className="pl-dl pl-dl--sub">{facts.join(" · ")}</span>}
+					</span>
+				</span>
+			)}
+		</li>
 	);
 }
 
-export default ProjectCard;
+type CardLinkProps = {
+	href: string;
+	label: string;
+	name: string;
+	kind: "demo" | "npm" | "gh";
+};
+
+function CardLink({ href, label, name, kind }: CardLinkProps) {
+	const [flashing, setFlashing] = useState(false);
+	const ariaLabels: Record<CardLinkProps["kind"], string> = {
+		demo: `open ${name} (demo)`,
+		npm: `${name} on npm`,
+		gh: `${name} on github`,
+	};
+	return (
+		<a
+			href={href}
+			target="_blank"
+			rel="noopener noreferrer"
+			aria-label={ariaLabels[kind]}
+			onPointerDown={() => {
+				setFlashing(false);
+				requestAnimationFrame(() => setFlashing(true));
+			}}
+			onAnimationEnd={() => setFlashing(false)}
+			className={`pl-link ${flashing ? "flash-invert" : ""}`}
+		>
+			{label}
+		</a>
+	);
+}

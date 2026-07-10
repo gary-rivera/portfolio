@@ -1,94 +1,49 @@
-import { useState, useEffect } from "react";
-import MainHeader from "./components/header/MainHeader";
-import AcheivementsContainer from "./components/AcheivementsContainer";
-import { HStack, Flex } from "@chakra-ui/react";
-import { motion } from "framer-motion";
+import type { CSSProperties, ReactNode } from "react";
+import MainHeader from "@components/header/MainHeader";
+import AcheivementsContainer from "@components/AcheivementsContainer";
+import TopBar from "@components/TopBar";
+import StickyContact from "@components/contact/StickyContact";
+import BootSequence from "@components/BootSequence";
+import Footer from "@components/Footer";
+import ThemeToggle from "@components/ThemeToggle";
+import { useTimeAwarePhosphor } from "@hooks/useTimeAwarePhosphor";
+import { useDynamicTitle } from "@hooks/useDynamicTitle";
 
-// p1 aka mandatory for today
-// DONE: responsive design -> media querying
-// DONE: make resume in code
-
-// p2 aka mandatory for release
-// DONE: update repo descriptions and add topics too
-// DONE: hook up links for projects + conditional render of icons controller
-// DONE: find/make better icons for projects (outsource?)
-// DONE: finalize the onload animations. loadtimes are a bit slow rn
-
-// p3 aka low hanging fruit
-// TODO: add some flare/love to the ProjectCard's. Feels lacking in comparison
-// TODO: remove all `type: any`
-// DONE: add iconRef for height differential on TimelinePath offset (static to 20px rn)
-// DONE: assets/icons cleanup or optimize?
-// DONE: HAVE TO -_- redo navtab UI for selecting tab. underline on current tab and opaque background too UNTIL other tab is hovered, then animate that opaque background to the hovered tab.
-// TODO: memoize the tabs content so that it doesn't rerender on tab switch
-
-// maybe/graveyard
-
-// TODO: gradient on top or bottom (or both?) of the achievement container so that content isnt so suddenly cut off
-// TODO: maybe? dynamic pull data from resume-md repo?
-// TODO: maybe? fetch my user info too for overall profile stats (commits, activity charting, etc.)
-// NOTE: NOT DOING - sorta undid the overlap UI that I really liked for ExperienceCards. explore how to readd that but without doing so in a hacky way
-
-/* NOTE: NOT DOING light/dark mode:
-			[ ] complete chakra migration for light/dark mode
-			[ ] switch component to toggle between
-	*/
-
-function App() {
-	const [isLoadingAnimationComplete, setIsLoadingAnimationComplete] = useState(false);
-	const [loadRest, setLoadRest] = useState(false);
-
-	useEffect(() => {
-		if (isLoadingAnimationComplete) {
-			setLoadRest(true);
-		}
-	}, [isLoadingAnimationComplete]);
-
-	const containerVariants = {
-		hidden: { opacity: 0, y: 0 },
-		visible: { opacity: 1, y: 0, transition: { duration: 1 } },
-	};
-
-	const staggerVariants = {
-		hidden: { opacity: 0, y: 0 },
-		visible: {
-			opacity: 1,
-			y: 0,
-			transition: {
-				staggerChildren: 1,
-			},
-		},
-	};
-
+function LogLine({ i, children }: { i: number; children: ReactNode }) {
 	return (
-		<HStack
-			alignItems="center"
-			zIndex="1"
-			my={["2rem", "3rem", "4rem", "5rem"]}
-			justifyContent="center"
-			w="100vw"
-			px={["1rem", "1.5rem", "2rem", "3rem"]}
-			fontFamily={"Inter"}
-		>
-			<Flex direction="column" w="100%" maxW="1000px" h="100%" justifyContent="center" zIndex="1">
-				<MainHeader setIsLoadingAnimationComplete={setIsLoadingAnimationComplete} />
-				<motion.div
-					variants={staggerVariants}
-					initial="hidden"
-					animate={loadRest ? "visible" : "hidden"}
-					style={{
-						width: "100%",
-						height: "100%",
-						marginTop: "0.5rem",
-					}}
-				>
-					<motion.div variants={containerVariants}>
-						<AcheivementsContainer />
-					</motion.div>
-				</motion.div>
-			</Flex>
-		</HStack>
+		<div className="log-line" style={{ "--log-i": i } as CSSProperties}>
+			{children}
+		</div>
 	);
 }
 
-export default App;
+export default function App() {
+	useTimeAwarePhosphor();
+	useDynamicTitle();
+	return (
+		<>
+			<BootSequence />
+			<a href="#main" className="skip-link">skip to content</a>
+			<main id="main" className="mx-auto max-w-[1080px] px-4 py-6 pb-16 sm:px-6 sm:py-8 md:px-8">
+				<LogLine i={0}><TopBar /></LogLine>
+				<LogLine i={1}>
+					<MainHeader />
+				</LogLine>
+				<LogLine i={2}>
+					<div className="mt-10 sm:mt-14">
+						<AcheivementsContainer />
+					</div>
+				</LogLine>
+				<LogLine i={4}><Footer /></LogLine>
+			</main>
+			<StickyContact />
+			<aside
+				aria-label="display controls"
+				className="fixed bottom-6 left-6 z-[5] hidden flex-col items-start gap-2 text-xs tracking-wider text-text-subtle lowercase lg:flex"
+			>
+				<ThemeToggle />
+			</aside>
+			<div id="theme-wash" className="theme-wash" aria-hidden="true" />
+		</>
+	);
+}

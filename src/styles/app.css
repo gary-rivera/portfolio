@@ -1,0 +1,472 @@
+@import "tailwindcss";
+
+/* ─── design tokens (dark defaults) ──────────────────────────────────────── */
+@theme {
+	--color-bg: #0f1310;
+	--color-bg-raised: #161b17;
+	--color-bg-deep: #0a0c0a;
+
+	--color-rule: #2a302b;
+	--color-rule-strong: #4a5249;
+
+	--color-text: #d8e0d6;
+	--color-text-muted: #7a8579;
+	--color-text-subtle: #6a716b;
+
+	--color-phosphor: #7bc089;
+	--color-phosphor-dim: #45684c;
+	--color-warn: #d4a24b;
+	--color-danger: #d46b4b;
+
+	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── theme-aware non-utility tokens ─────────────────────────────────────── */
+:root {
+	color-scheme: dark;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	--grain: color-mix(in srgb, var(--color-phosphor) 1.8%, transparent);
+	--panel-shadow-soft: rgba(0, 0, 0, 0.35);
+}
+
+/* ─── light palette: paper / cream ───────────────────────────────────────── */
+:root[data-theme="light"] {
+	color-scheme: light;
+
+	--color-bg: #f5f1e8;
+	--color-bg-raised: #ede7d6;
+	--color-bg-deep: #e8e1cd;
+
+	--color-rule: #c9c2af;
+	--color-rule-strong: #a39c87;
+
+	--color-text: #1a1f1a;
+	--color-text-muted: #5a5e54;
+	--color-text-subtle: #6f7268;
+
+	--color-phosphor: #2d6b3a;
+	--color-phosphor-dim: #6b8a6e;
+	--color-warn: #8a5a14;
+	--color-danger: #a13a1f;
+
+	--grain: color-mix(in srgb, var(--color-text) 2.5%, transparent);
+	--panel-shadow-soft: rgba(26, 31, 26, 0.12);
+}
+
+/* ─── document base ──────────────────────────────────────────────────────── */
+html,
+body {
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	background: var(--color-bg);
+	color: var(--color-text);
+	font-family: var(--font-mono);
+	font-size: 14px;
+	line-height: 1.55;
+	font-feature-settings: "calt", "ss01";
+}
+
+body {
+	position: relative;
+	overflow-x: hidden;
+}
+
+/* ambient directional light */
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 0;
+	background:
+		radial-gradient(ellipse 70% 50% at 20% 0%, color-mix(in srgb, var(--color-phosphor) 5%, transparent), transparent 60%),
+		radial-gradient(ellipse 80% 60% at 90% 100%, color-mix(in srgb, var(--color-warn) 2.5%, transparent), transparent 60%);
+}
+
+/* CRT scanlines (dark) / ink grain (light) */
+body::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 1;
+	background-image: repeating-linear-gradient(
+		0deg,
+		var(--grain),
+		var(--grain) 1px,
+		transparent 1px,
+		transparent 3px
+	);
+}
+
+#root {
+	position: relative;
+	z-index: 2;
+}
+
+/* scrollbars */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-rule-strong) transparent;
+}
+*::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+	background: var(--color-rule-strong);
+	border-radius: 0;
+}
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::selection {
+	background: color-mix(in srgb, var(--color-phosphor) 25%, transparent);
+	color: var(--color-text);
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* ─── focus visibility ───────────────────────────────────────────────────── */
+:focus {
+	outline: none;
+}
+:focus-visible {
+	outline: 2px solid var(--color-phosphor);
+	outline-offset: 2px;
+	border-radius: 1px;
+}
+
+/* skip-to-content link */
+.skip-link {
+	position: fixed;
+	top: 0.5rem;
+	left: 0.5rem;
+	z-index: 100;
+	padding: 0.4rem 0.75rem;
+	background: var(--color-bg);
+	border: 1px solid var(--color-phosphor);
+	color: var(--color-phosphor);
+	font-size: 12px;
+	transform: translateY(-200%);
+	transition: transform 0.16s var(--ease-out);
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+	transform: translateY(0);
+	outline: none;
+}
+
+/* ─── animations ─────────────────────────────────────────────────────────── */
+
+/* EKG-style two-beat heartbeat — modulates opacity + halo */
+@keyframes phosphor-pulse {
+	0% {
+		opacity: 0.35;
+		box-shadow: 0 0 4px var(--color-phosphor);
+	}
+	8% {
+		opacity: 1;
+		box-shadow: 0 0 9px var(--color-phosphor);
+	}
+	16% {
+		opacity: 0.5;
+		box-shadow: 0 0 5px var(--color-phosphor);
+	}
+	24% {
+		opacity: 1;
+		box-shadow: 0 0 9px var(--color-phosphor);
+	}
+	32% {
+		opacity: 0.4;
+		box-shadow: 0 0 4px var(--color-phosphor);
+	}
+	100% {
+		opacity: 0.4;
+		box-shadow: 0 0 4px var(--color-phosphor);
+	}
+}
+
+@keyframes phosphor-blink {
+	50% {
+		opacity: 0;
+	}
+}
+
+@utility animate-pulse-phosphor {
+	animation: phosphor-pulse 2.4s infinite;
+}
+
+@utility animate-blink-phosphor {
+	animation: phosphor-blink 1.1s steps(2) infinite;
+}
+
+/* boot: power-on flicker (one-shot on html.crt-boot) */
+@keyframes crt-on {
+	0%   { filter: brightness(0); }
+	8%   { filter: brightness(2.4) contrast(1.4); }
+	14%  { filter: brightness(0.6); }
+	22%  { filter: brightness(1.3); }
+	100% { filter: none; }
+}
+html.crt-boot {
+	animation: crt-on 0.6s steps(1) forwards;
+}
+
+/* boot: scan sweep — fixed band that translates top→bottom */
+@keyframes boot-sweep {
+	0%   { transform: translateY(-30vh); opacity: 0; }
+	20%  { opacity: 0.9; }
+	100% { transform: translateY(110vh); opacity: 0; }
+}
+.boot-sweep {
+	position: fixed;
+	inset: 0 0 auto 0;
+	height: 120px;
+	pointer-events: none;
+	z-index: 20;
+	opacity: 0;
+	background: linear-gradient(
+		180deg,
+		transparent 0%,
+		color-mix(in srgb, var(--color-phosphor) 18%, transparent) 50%,
+		transparent 100%
+	);
+	animation: boot-sweep 0.6s var(--ease-out) forwards;
+}
+
+/* staggered log-line reveal — set --log-i on the element */
+@keyframes log-print {
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+@utility log-line {
+	opacity: 0;
+	transform: translateY(-2px);
+	animation: log-print 0.22s var(--ease-out) forwards;
+	animation-delay: calc(var(--log-i, 0) * 60ms + 200ms);
+}
+
+/* click flash-invert — phosphor wash on press, self-clears */
+@keyframes flash-invert {
+	0%, 100% {
+		background: transparent;
+		color: inherit;
+	}
+	30% {
+		background: var(--color-phosphor);
+		color: var(--color-bg);
+	}
+}
+@utility flash-invert {
+	animation: flash-invert 0.18s var(--ease-out);
+}
+
+/* theme wash overlay — fixed div, flashed by useTheme */
+@keyframes theme-wash {
+	0%   { opacity: 0; }
+	40%  { opacity: 0.08; }
+	100% { opacity: 0; }
+}
+.theme-wash {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 15;
+	background: var(--color-phosphor);
+	opacity: 0;
+}
+.theme-wash.flash {
+	animation: theme-wash 0.28s var(--ease-out);
+}
+html.theme-transitioning,
+html.theme-transitioning body {
+	transition:
+		background-color 0.28s var(--ease-out),
+		color 0.28s var(--ease-out);
+}
+
+/* view-transition ripple from click origin (theme toggle) */
+@keyframes theme-ripple-in {
+	from {
+		clip-path: circle(0 at var(--ripple-x, 50%) var(--ripple-y, 50%));
+	}
+	to {
+		clip-path: circle(150% at var(--ripple-x, 50%) var(--ripple-y, 50%));
+	}
+}
+html.theme-ripple::view-transition-old(root) {
+	animation: none;
+}
+html.theme-ripple::view-transition-new(root) {
+	animation: theme-ripple-in 520ms var(--ease-out);
+	mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animate-pulse-phosphor,
+	.animate-blink-phosphor,
+	.glow-name,
+	html.crt-boot,
+	.boot-sweep,
+	.log-line,
+	.flash-invert,
+	.theme-wash.flash {
+		animation: none !important;
+	}
+	.log-line {
+		opacity: 1;
+		transform: none;
+	}
+	.boot-sweep {
+		display: none;
+	}
+	html.theme-transitioning,
+	html.theme-transitioning body {
+		transition: none;
+	}
+}
+
+/* ─── glow / shadow utilities ────────────────────────────────────────────── */
+@utility glow-text-phosphor {
+	text-shadow: 0 0 6px color-mix(in srgb, var(--color-phosphor) 50%, transparent);
+}
+
+@utility glow-text-phosphor-soft {
+	text-shadow: 0 0 6px color-mix(in srgb, var(--color-phosphor) 40%, transparent);
+}
+
+/* neon contact link — dim phosphor tube that ignites on hover/focus.
+   same treatment as .sticky-contact-link on the hanging sign.
+   .neon-text shares the base tint for non-interactive text (no ignition). */
+.neon-text,
+.neon-link {
+	--neon-link-core: color-mix(in srgb, white 70%, var(--color-phosphor));
+	color: color-mix(in srgb, var(--color-phosphor) 78%, var(--color-text));
+	text-shadow: 0 0 5px color-mix(in srgb, var(--color-phosphor) 28%, transparent);
+}
+.neon-link:hover,
+.neon-link:focus-visible {
+	color: var(--neon-link-core);
+	text-shadow:
+		0 0 1px var(--neon-link-core),
+		0 0 5px var(--color-phosphor),
+		0 0 12px color-mix(in srgb, var(--color-phosphor) 60%, transparent),
+		0 0 24px color-mix(in srgb, var(--color-phosphor) 32%, transparent);
+	border-bottom-color: color-mix(in srgb, var(--color-phosphor) 60%, transparent);
+}
+:root[data-theme="light"] .neon-link {
+	--neon-link-core: color-mix(in srgb, white 30%, var(--color-phosphor));
+}
+
+/* neon sign: two animations with co-prime periods so the combined
+   flicker pattern doesn't repeat for ~14 minutes — reads as sporadic.
+   each tubes-animation holds full glow most of the time and only
+   overrides during its own irregular flicker events. */
+@keyframes neon-tube-a {
+	/* full glow held via steps; flicker bursts at irregular offsets */
+	0%, 11%, 11.7%, 12.1%, 12.7%, 38%, 39%, 40%, 61%, 61.45%, 100% {
+		text-shadow:
+			0 0 1px color-mix(in srgb, var(--color-phosphor) 90%, white),
+			0 0 4px var(--color-phosphor),
+			0 0 10px color-mix(in srgb, var(--color-phosphor) 75%, transparent),
+			0 0 22px color-mix(in srgb, var(--color-phosphor) 50%, transparent),
+			0 0 42px color-mix(in srgb, var(--color-phosphor) 28%, transparent),
+			0 0 72px color-mix(in srgb, var(--color-phosphor) 14%, transparent);
+		opacity: 1;
+		animation-timing-function: steps(1, end);
+	}
+	/* burst: double-stutter @ 11.4% & 12.4% */
+	11.4%, 12.4% {
+		text-shadow: none;
+		opacity: 0.22;
+		animation-timing-function: steps(1, end);
+	}
+	/* sustained struggle 38.4% → 39.6% (tube half-lit, dropping out) */
+	38.4%, 39.6% {
+		text-shadow:
+			0 0 1px color-mix(in srgb, var(--color-phosphor) 50%, transparent),
+			0 0 3px color-mix(in srgb, var(--color-phosphor) 28%, transparent);
+		opacity: 0.5;
+		animation-timing-function: steps(1, end);
+	}
+	39.2% {
+		text-shadow: none;
+		opacity: 0.18;
+		animation-timing-function: steps(1, end);
+	}
+	/* single hard cut @ 61.2% */
+	61.2% {
+		text-shadow: none;
+		opacity: 0.25;
+		animation-timing-function: steps(1, end);
+	}
+}
+
+@keyframes neon-tube-b {
+	/* offset, different bursts — co-prime period = sporadic when combined */
+	0%, 23%, 24%, 25%, 51%, 51.4%, 78%, 78.6%, 79.2%, 79.8%, 100% {
+		text-shadow:
+			0 0 1px color-mix(in srgb, var(--color-phosphor) 90%, white),
+			0 0 4px var(--color-phosphor),
+			0 0 10px color-mix(in srgb, var(--color-phosphor) 75%, transparent),
+			0 0 22px color-mix(in srgb, var(--color-phosphor) 50%, transparent),
+			0 0 42px color-mix(in srgb, var(--color-phosphor) 28%, transparent),
+			0 0 72px color-mix(in srgb, var(--color-phosphor) 14%, transparent);
+		opacity: 1;
+		animation-timing-function: steps(1, end);
+	}
+	/* triple stutter @ 23.4 / 24.4 / 25 (cluster) */
+	23.4%, 24.4% {
+		text-shadow: none;
+		opacity: 0.28;
+		animation-timing-function: steps(1, end);
+	}
+	/* single quick @ 51.2% */
+	51.2% {
+		text-shadow: none;
+		opacity: 0.22;
+		animation-timing-function: steps(1, end);
+	}
+	/* fast 3-flick burst @ ~78–80% */
+	78.3%, 78.9%, 79.5% {
+		text-shadow: none;
+		opacity: 0.2;
+		animation-timing-function: steps(1, end);
+	}
+}
+
+@utility glow-name {
+	text-shadow:
+		0 0 1px color-mix(in srgb, var(--color-phosphor) 90%, white),
+		0 0 4px var(--color-phosphor),
+		0 0 10px color-mix(in srgb, var(--color-phosphor) 75%, transparent),
+		0 0 22px color-mix(in srgb, var(--color-phosphor) 50%, transparent),
+		0 0 42px color-mix(in srgb, var(--color-phosphor) 28%, transparent),
+		0 0 72px color-mix(in srgb, var(--color-phosphor) 14%, transparent);
+	animation:
+		neon-tube-a 7.3s linear infinite,
+		neon-tube-b 11.1s linear infinite;
+	will-change: text-shadow, opacity;
+}
+
+@utility dot-glow {
+	box-shadow: 0 0 6px var(--color-phosphor);
+}
+
+@utility panel-shadow {
+	box-shadow:
+		0 0 0 1px color-mix(in srgb, var(--color-bg) 40%, transparent),
+		0 8px 24px var(--panel-shadow-soft);
+}

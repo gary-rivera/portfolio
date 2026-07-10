@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # @tailwindcss/oxide (Tailwind v4) ships native binaries that require Node >= 20;
+  # the site's UI default of Node 18 makes npm silently skip them as optional deps.
+  NODE_VERSION = "22"

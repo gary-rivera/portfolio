@@ -41,7 +41,9 @@ function buildProjects(): Projects {
 
 		const logoConfig = projectLogos[repoName];
 		if (!logoConfig) {
-			throw new Error(`projects: no logo registered for repo "${repoName}" (add it to projectLogos)`);
+			// Skip rather than throw: a missing logo should drop one card, not white-screen the page.
+			console.warn(`projects: no logo registered for repo "${repoName}" — skipping (add it to projectLogos)`);
+			continue;
 		}
 
 		const g = gen[repoName] ?? {};

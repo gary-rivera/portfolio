@@ -5,15 +5,11 @@ import { projects, sortedDesc } from "@data/getProjects";
 type ProjectsContextType = {
 	projects: Projects;
 	sortedDesc: string[];
-	isLoading: boolean;
-	isError: boolean;
 };
 
 const value: ProjectsContextType = {
 	projects,
 	sortedDesc,
-	isLoading: false,
-	isError: false,
 };
 
 const ProjectsContext = createContext<ProjectsContextType>(value);

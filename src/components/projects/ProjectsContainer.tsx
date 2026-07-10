@@ -9,7 +9,7 @@ export default function ProjectsContainer() {
 
 	return (
 		<section aria-labelledby="projects-head">
-			<SectionHead name="projects.log" meta={`ls -la · ${visible.length} active`} />
+			<SectionHead name="projects.log" meta={`${visible.length} public`} />
 			<div className="flex flex-col gap-2">
 				{visible.map((projectKey, idx) => (
 					<ProjectCard key={projectKey} project={projects[projectKey]} index={idx} />

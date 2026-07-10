@@ -1,0 +1,84 @@
+/* ─── work.log: chapter rail + nodes ─────────────────────────────────────── */
+
+/* rail segment below each chapter node:
+   solid = continuous employment into the chapter below (the acquisition),
+   dashed = elided early era */
+.wl-rail {
+	position: absolute;
+	left: 3px;
+	top: 1.15rem;
+	bottom: 0;
+	width: 0;
+	border-left: 1px solid var(--color-rule);
+}
+.wl-rail--dashed {
+	border-left-style: dashed;
+}
+/* last rail only: decays into the elided early era */
+.wl-rail--fade {
+	mask-image: linear-gradient(to bottom, black 40%, transparent 96%);
+}
+
+/* node brightness decays with age */
+.wl-node {
+	position: absolute;
+	left: 0;
+	top: 0.45rem;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+}
+.wl-node--bright {
+	background: var(--color-phosphor);
+	box-shadow: 0 0 6px color-mix(in srgb, var(--color-phosphor) 45%, transparent);
+}
+.wl-node--dim {
+	background: var(--color-phosphor-dim);
+}
+.wl-node--hollow {
+	left: 1px;
+	width: 5px;
+	height: 5px;
+	background: transparent;
+	border: 1px solid var(--color-phosphor-dim);
+}
+
+/* entry labels: a half-step between text and muted, so they sit below the
+   role title without blending into the muted hover details */
+.wl-entry-label {
+	color: color-mix(in srgb, var(--color-text) 72%, var(--color-text-muted));
+}
+
+/* ─── work.log: hover/focus-expandable detail ────────────────────────────── */
+
+/* collapsed to 0fr, never display:none — screen readers always get it */
+.wl-detail {
+	grid-column: 2;
+	display: grid;
+	grid-template-rows: 0fr;
+	opacity: 0;
+	transition:
+		grid-template-rows 0.18s var(--ease-out),
+		opacity 0.18s var(--ease-out);
+	font-size: 12px;
+	color: var(--color-text-muted);
+}
+.wl-detail--full {
+	grid-column: 1 / -1;
+}
+.wl-detail > span {
+	overflow: hidden;
+	min-height: 0;
+}
+.wl-entry:hover .wl-detail,
+.wl-entry:focus .wl-detail,
+.wl-entry:focus-within .wl-detail {
+	grid-template-rows: 1fr;
+	opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wl-detail {
+		transition: none;
+	}
+}

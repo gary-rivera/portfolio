@@ -1,0 +1,145 @@
+/* ─── main header · minimal HUD (round-2 "E") ────────────────────────────────
+   restraint take: the glowing callsign + reticle framing are the only bright
+   chrome; everything else is hairlines, micro-type, and negative space.
+   two additions over the base mockup: a faint targeting graticule behind the
+   name and a slow drifting scanline sweep through the callsign box. */
+
+.mh {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+/* ─── callsign marquee — a wide framed "target" zone (like v5) enclosing the
+   name + role + geo, with a graticule grid and a scanline sweeping across it.
+   overflow stays visible so the name's neon bloom is never clipped; the sweep
+   and graticule confine themselves. ─────────────────────────────────────── */
+.mh-marquee {
+	position: relative;
+	width: 100%;
+	max-width: 760px;
+	padding: 3.4rem 2rem 3rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	/* instrument card — dashed bezel + faint raised sheen over a phosphor tint */
+	border: 1px dashed var(--color-rule);
+	background:
+		linear-gradient(180deg, color-mix(in srgb, var(--color-bg-raised) 55%, transparent), transparent 30%),
+		color-mix(in srgb, var(--color-phosphor) 1.6%, transparent);
+}
+
+/* label tabbed onto the top border of the card */
+.mh-frame-label {
+	position: absolute;
+	top: -0.6rem;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 3;
+	padding: 0 0.6rem;
+	background: var(--color-bg);
+	font-size: 9.5px;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+	color: var(--color-text-subtle);
+	white-space: nowrap;
+}
+.mh-frame-label b {
+	color: var(--color-phosphor-dim);
+	font-weight: 500;
+}
+
+/* reticle corner brackets at the four corners of the whole marquee zone */
+.mh-reticle {
+	position: absolute;
+	width: 22px;
+	height: 22px;
+	z-index: 3;
+	pointer-events: none;
+}
+.mh-reticle.tl { top: 1.1rem; left: 1.1rem; border-top: 1px solid var(--color-phosphor-dim); border-left: 1px solid var(--color-phosphor-dim); }
+.mh-reticle.tr { top: 1.1rem; right: 1.1rem; border-top: 1px solid var(--color-phosphor-dim); border-right: 1px solid var(--color-phosphor-dim); }
+.mh-reticle.bl { bottom: 1.1rem; left: 1.1rem; border-bottom: 1px solid var(--color-phosphor-dim); border-left: 1px solid var(--color-phosphor-dim); }
+.mh-reticle.br { bottom: 1.1rem; right: 1.1rem; border-bottom: 1px solid var(--color-phosphor-dim); border-right: 1px solid var(--color-phosphor-dim); }
+
+/* faint targeting graticule filling the zone, faded at the edges */
+.mh-graticule {
+	position: absolute;
+	inset: 1.4rem;
+	z-index: 0;
+	pointer-events: none;
+	background-image:
+		linear-gradient(color-mix(in srgb, var(--color-phosphor) 6%, transparent) 1px, transparent 1px),
+		linear-gradient(90deg, color-mix(in srgb, var(--color-phosphor) 6%, transparent) 1px, transparent 1px);
+	background-size: 42px 42px;
+	background-position: center;
+	-webkit-mask-image: radial-gradient(ellipse 64% 76% at 50% 50%, #000 22%, transparent 78%);
+	mask-image: radial-gradient(ellipse 64% 76% at 50% 50%, #000 22%, transparent 78%);
+}
+
+/* slow drifting scanline passing OVER the marquee — clips itself.
+   background-position:100% is height-relative, so it works at any zone size. */
+.mh-sweep {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	pointer-events: none;
+	overflow: hidden;
+	opacity: 0.6;
+	mix-blend-mode: screen;
+	background: linear-gradient(
+		180deg,
+		transparent 0%,
+		color-mix(in srgb, var(--color-phosphor) 13%, transparent) 50%,
+		transparent 100%
+	);
+	background-repeat: no-repeat;
+	background-size: 100% 54px;
+	background-position: 0 -54px;
+	animation: mh-scan 5.5s linear infinite;
+}
+@keyframes mh-scan {
+	0%   { background-position: 0 -54px; opacity: 0; }
+	12%  { opacity: 0.6; }
+	88%  { opacity: 0.6; }
+	100% { background-position: 0 calc(100% + 54px); opacity: 0; }
+}
+
+/* content sits above the graticule (text stays under the passing scanline) */
+.mh-name-layer,
+.mh-role,
+.mh-geo {
+	position: relative;
+	z-index: 1;
+}
+
+/* ─── role + geo ─────────────────────────────────────────────────────────── */
+.mh-role {
+	margin-top: 1.7rem;
+	font-size: clamp(14px, 1.8vw, 17px);
+	letter-spacing: 0.01em;
+	color: var(--color-text);
+}
+.mh-role .p { color: var(--color-phosphor); }
+.mh-role .s { color: var(--color-text-subtle); padding: 0 0.45rem; }
+.mh-role .d { color: var(--color-text-muted); }
+
+.mh-geo {
+	margin-top: 0.55rem;
+	font-size: 11px;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--color-text-subtle);
+	font-variant-numeric: tabular-nums;
+}
+
+/* ─── responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+	.mh-marquee { padding: 2.6rem 1.25rem 2.2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mh-sweep { display: none; }
+}

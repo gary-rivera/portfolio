@@ -7,7 +7,9 @@ export default function ContactBar() {
 			{CONTACT_LINKS.map(({ k, v, href }) => (
 				<div key={k} className="flex items-center gap-1.5">
 					<span className="text-text-subtle">{k}</span>
-					<ContactLink href={href}>{v}</ContactLink>
+					<ContactLink href={href} className="neon-link">
+						{v}
+					</ContactLink>
 				</div>
 			))}
 		</div>

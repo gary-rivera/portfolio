@@ -1,0 +1,322 @@
+/* ────────────────────────────────────────────────────────────────────────────
+ * STICKY-CONTACT · "HANGING NEON OPEN SIGN"
+ * The contact panel is a glass-tube shop sign bolted to the right wall. It
+ * hangs from two mounting screws by short straps, throws a faint wall-stain
+ * bloom onto the page, and powers on like real cold-cathode neon
+ * (cold → sputter → surge → steady buzz).
+ *
+ * House gas is phosphor green. The single warm accent is the amber "OPEN"
+ * hero tube (--color-warn). Everything scoped under .sticky-contact.
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+.sticky-contact {
+	/* white-hot tube cores (theme-aware via color-mix onto brand vars) */
+	--sb-green-core: color-mix(in srgb, white 70%, var(--color-phosphor));
+	--sb-amber-core: color-mix(in srgb, white 68%, var(--color-warn));
+
+	/* atmospheric halo tints that bleed onto the wall */
+	--sb-halo-green: color-mix(in srgb, var(--color-phosphor) 30%, transparent);
+	--sb-halo-amber: color-mix(in srgb, var(--color-warn) 26%, transparent);
+	--sb-halo-faint: color-mix(in srgb, var(--color-phosphor) 9%, transparent);
+}
+
+/* ── the wall behind the sign: reflected underglow + colored air ──────────── */
+.sticky-contact::before {
+	content: "";
+	position: absolute;
+	inset: -34% -30% -40% -34%;
+	z-index: -2;
+	pointer-events: none;
+	background:
+		radial-gradient(ellipse 62% 46% at 50% 40%, var(--sb-halo-green), transparent 72%),
+		radial-gradient(ellipse 50% 30% at 50% 20%, var(--sb-halo-amber), transparent 70%),
+		radial-gradient(ellipse 90% 80% at 50% 55%, var(--sb-halo-faint), transparent 78%);
+	filter: blur(20px) saturate(120%);
+	opacity: 0.9;
+	transition: opacity 220ms linear;
+}
+
+/* a slim reflected sheen below — the "shelf" gleam under the sign */
+.sticky-contact::after {
+	content: "";
+	position: absolute;
+	left: 10%;
+	right: 10%;
+	bottom: -6px;
+	height: 1px;
+	z-index: -1;
+	pointer-events: none;
+	background: linear-gradient(
+		to right,
+		transparent 0%,
+		color-mix(in srgb, var(--color-phosphor) 45%, transparent) 30%,
+		color-mix(in srgb, var(--sb-green-core) 60%, transparent) 50%,
+		color-mix(in srgb, var(--color-phosphor) 45%, transparent) 70%,
+		transparent 100%
+	);
+	box-shadow:
+		0 1px 9px color-mix(in srgb, var(--color-phosphor) 50%, transparent),
+		0 4px 26px color-mix(in srgb, var(--color-phosphor) 24%, transparent);
+	opacity: 0.85;
+	transition: opacity 220ms linear;
+}
+
+/* ── mounting hardware: two straps hanging the sign off wall screws ──────── */
+.sticky-contact .sticky-contact-screw {
+	position: absolute;
+	top: -22px;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: radial-gradient(circle at 35% 30%, var(--sb-green-core), var(--color-phosphor) 55%, var(--color-phosphor-dim));
+	box-shadow:
+		0 0 5px color-mix(in srgb, var(--color-phosphor) 70%, transparent),
+		0 0 12px color-mix(in srgb, var(--color-phosphor) 35%, transparent),
+		inset 0 -1px 1px rgba(0, 0, 0, 0.4);
+}
+.sticky-contact .sticky-contact-screw[data-side="l"] { left: 26px; }
+.sticky-contact .sticky-contact-screw[data-side="r"] { right: 26px; }
+
+.sticky-contact .sticky-contact-strap {
+	position: absolute;
+	top: -18px;
+	width: 2px;
+	height: 20px;
+	background: linear-gradient(
+		to bottom,
+		color-mix(in srgb, var(--color-phosphor) 55%, transparent),
+		color-mix(in srgb, var(--color-phosphor-dim) 80%, transparent)
+	);
+	box-shadow: 0 0 4px color-mix(in srgb, var(--color-phosphor) 30%, transparent);
+}
+.sticky-contact .sticky-contact-strap[data-side="l"] { left: 28.5px; }
+.sticky-contact .sticky-contact-strap[data-side="r"] { right: 28.5px; }
+
+/* ── the sign pane itself: a glowing glass shingle ────────────────────────── */
+.sticky-contact .sticky-contact-pane {
+	border: 1px solid color-mix(in srgb, var(--color-phosphor) 48%, transparent);
+	border-radius: 3px;
+	box-shadow:
+		inset 0 0 14px color-mix(in srgb, var(--color-phosphor) 9%, transparent),
+		inset 0 0 1px color-mix(in srgb, var(--sb-green-core) 45%, transparent),
+		0 0 0 1px color-mix(in srgb, var(--color-phosphor) 18%, transparent),
+		0 0 11px color-mix(in srgb, var(--color-phosphor) 24%, transparent),
+		0 0 30px color-mix(in srgb, var(--color-phosphor) 12%, transparent),
+		0 12px 44px rgba(0, 0, 0, 0.5);
+	will-change: opacity, filter;
+}
+
+/* little corner bolts anchoring the pane to the wall */
+.sticky-contact .sticky-contact-corner {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	border-radius: 50%;
+	background: var(--color-phosphor);
+	box-shadow: 0 0 5px color-mix(in srgb, var(--color-phosphor) 70%, transparent);
+}
+.sticky-contact .sticky-contact-corner[data-c="tl"] { top: 5px; left: 5px; }
+.sticky-contact .sticky-contact-corner[data-c="tr"] { top: 5px; right: 5px; }
+.sticky-contact .sticky-contact-corner[data-c="bl"] { bottom: 5px; left: 5px; }
+.sticky-contact .sticky-contact-corner[data-c="br"] { bottom: 5px; right: 5px; }
+
+/* label tab riding the top edge */
+.sticky-contact .sticky-contact-tab {
+	color: var(--color-phosphor);
+	text-shadow: 0 0 6px color-mix(in srgb, var(--color-phosphor) 45%, transparent);
+}
+.sticky-contact .sticky-contact-tab .sticky-contact-tab-mark { color: var(--color-phosphor-dim); }
+
+/* ── HERO: the amber "OPEN" tube — white-hot core → warm bloom → wall haze ── */
+.sticky-contact .sticky-contact-open {
+	color: var(--sb-amber-core);
+	text-shadow:
+		0 0 1px var(--sb-amber-core),
+		0 0 2px var(--sb-amber-core),
+		0 0 6px var(--color-warn),
+		0 0 13px var(--color-warn),
+		0 0 26px color-mix(in srgb, var(--color-warn) 70%, transparent),
+		0 0 46px color-mix(in srgb, var(--color-warn) 45%, transparent),
+		0 0 78px color-mix(in srgb, var(--color-warn) 24%, transparent);
+	will-change: opacity;
+}
+
+/* the phosphor "TO WORK" tagline tube */
+.sticky-contact .sticky-contact-sub {
+	color: var(--sb-green-core);
+	text-shadow:
+		0 0 1px var(--sb-green-core),
+		0 0 4px var(--color-phosphor),
+		0 0 10px color-mix(in srgb, var(--color-phosphor) 55%, transparent),
+		0 0 20px color-mix(in srgb, var(--color-phosphor) 28%, transparent);
+}
+
+/* dashed divider tuned to glow faintly */
+.sticky-contact .sticky-contact-rule {
+	height: 1px;
+	background: repeating-linear-gradient(
+		to right,
+		color-mix(in srgb, var(--color-phosphor) 35%, transparent) 0 4px,
+		transparent 4px 8px
+	);
+	box-shadow: 0 0 6px color-mix(in srgb, var(--color-phosphor) 18%, transparent);
+}
+
+/* ── contact links: dim phosphor tubes that ignite on hover/focus ─────────── */
+.sticky-contact .sticky-contact-link {
+	color: color-mix(in srgb, var(--color-phosphor) 78%, var(--color-text));
+	text-shadow: 0 0 5px color-mix(in srgb, var(--color-phosphor) 28%, transparent);
+	border-bottom-color: transparent;
+	transition: color 0.16s var(--ease-out), text-shadow 0.16s var(--ease-out),
+		border-color 0.16s var(--ease-out);
+}
+.sticky-contact .sticky-contact-link:hover,
+.sticky-contact .sticky-contact-link:focus-visible {
+	color: var(--sb-green-core);
+	text-shadow:
+		0 0 1px var(--sb-green-core),
+		0 0 5px var(--color-phosphor),
+		0 0 12px color-mix(in srgb, var(--color-phosphor) 60%, transparent),
+		0 0 24px color-mix(in srgb, var(--color-phosphor) 32%, transparent);
+	border-bottom-color: color-mix(in srgb, var(--color-phosphor) 60%, transparent);
+}
+
+/* footer "on air" buzz dot */
+.sticky-contact .sticky-contact-buzz-dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--color-phosphor);
+	box-shadow: 0 0 6px var(--color-phosphor), 0 0 12px color-mix(in srgb, var(--color-phosphor) 40%, transparent);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+ * POWER-ON SEQUENCE — the whole pane ionizes together.
+ * Dimming the pane's opacity/filter dims every tube inside it at once, which
+ * is exactly how a sign warms up. Phase is driven from React (data-phase).
+ * idle == cold so there is never a full-bright flash before the strike.
+ * ════════════════════════════════════════════════════════════════════════════ */
+
+/* COLD: gas energized, barely any light + a cold blue cast on the OPEN tube */
+.sticky-contact[data-phase="idle"] .sticky-contact-pane,
+.sticky-contact[data-phase="cold"] .sticky-contact-pane {
+	opacity: 0.16;
+	filter: saturate(0.45) brightness(0.7);
+}
+.sticky-contact[data-phase="idle"] .sticky-contact-open,
+.sticky-contact[data-phase="cold"] .sticky-contact-open {
+	color: color-mix(in srgb, #a8c4ff 45%, var(--sb-amber-core));
+	text-shadow:
+		0 0 1px color-mix(in srgb, #c8d8ff 40%, transparent),
+		0 0 6px color-mix(in srgb, #6b88c8 30%, transparent);
+}
+.sticky-contact[data-phase="idle"]::before,
+.sticky-contact[data-phase="cold"]::before { opacity: 0.08; }
+.sticky-contact[data-phase="idle"]::after,
+.sticky-contact[data-phase="cold"]::after { opacity: 0.05; }
+
+/* SPUTTER: a bad strike — pane stabs bright then collapses a few times */
+.sticky-contact[data-phase="sputter"] .sticky-contact-pane {
+	animation: sb-sputter 240ms steps(6, end) 1;
+}
+.sticky-contact[data-phase="sputter"]::before { opacity: 0.35; }
+
+/* SURGE: full ionization, brief over-bright burst, then hold at steady */
+.sticky-contact[data-phase="surge"] .sticky-contact-pane {
+	animation: sb-surge 340ms ease-out 1 forwards;
+}
+.sticky-contact[data-phase="surge"]::before { opacity: 1; filter: blur(22px) saturate(140%) brightness(1.25); }
+
+@keyframes sb-sputter {
+	0%   { opacity: 0.2;  filter: brightness(0.7); }
+	18%  { opacity: 0.9;  filter: brightness(1.1); }
+	26%  { opacity: 0.14; filter: brightness(0.6); }
+	46%  { opacity: 0.62; filter: brightness(0.95); }
+	56%  { opacity: 0.1;  filter: brightness(0.55); }
+	74%  { opacity: 0.5;  filter: brightness(0.85); }
+	88%  { opacity: 0.2;  filter: brightness(0.65); }
+	100% { opacity: 0.55; filter: brightness(0.9); }
+}
+@keyframes sb-surge {
+	0%   { opacity: 0.55; filter: brightness(0.9) saturate(0.9); }
+	22%  { opacity: 1;    filter: brightness(1.5) saturate(1.25); }
+	55%  { opacity: 1;    filter: brightness(1.14) saturate(1.08); }
+	100% { opacity: 1;    filter: brightness(1) saturate(1); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+ * STEADY-STATE BUZZ — irregular gas-tube flicker, co-prime periods so the
+ * amber hero and green tubes never sync into a metronome. Tasteful dips only.
+ * ════════════════════════════════════════════════════════════════════════════ */
+
+@keyframes sb-open-buzz {
+	0%, 12%, 12.6%, 13.2%, 40%, 41%, 68%, 100% { opacity: 1; }
+	12.3% { opacity: 0.55; }       /* quick double-stutter */
+	12.9% { opacity: 0.72; }
+	40.5% { opacity: 0.42; }       /* longer brown-out */
+	40.8% { opacity: 0.9; }
+	68.4% { opacity: 0.68; }
+}
+@keyframes sb-green-hum {
+	0%, 100% { opacity: 1; }
+	23.4% { opacity: 0.82; }
+	51.2% { opacity: 0.7; }
+	51.5% { opacity: 0.95; }
+	79%   { opacity: 0.8; }
+}
+@keyframes sb-buzz-dot {
+	0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--color-phosphor), 0 0 12px color-mix(in srgb, var(--color-phosphor) 40%, transparent); }
+	46%  { opacity: 1; }
+	48%  { opacity: 0.35; box-shadow: 0 0 3px var(--color-phosphor); }
+	50%  { opacity: 1; }
+}
+
+.sticky-contact[data-flicker="on"] .sticky-contact-open {
+	animation: sb-open-buzz 6.7s steps(1, end) infinite;
+}
+.sticky-contact[data-flicker="on"] .sticky-contact-sub {
+	animation: sb-green-hum 9.3s steps(1, end) infinite;
+}
+.sticky-contact[data-flicker="on"] .sticky-contact-buzz-dot {
+	animation: sb-buzz-dot 3.7s ease-in-out infinite;
+}
+
+/* ── reduced motion: no flicker, no buzz, no power-on animations ──────────── */
+@media (prefers-reduced-motion: reduce) {
+	.sticky-contact[data-flicker="on"] .sticky-contact-open,
+	.sticky-contact[data-flicker="on"] .sticky-contact-sub,
+	.sticky-contact[data-flicker="on"] .sticky-contact-buzz-dot,
+	.sticky-contact[data-phase="sputter"] .sticky-contact-pane,
+	.sticky-contact[data-phase="surge"] .sticky-contact-pane {
+		animation: none !important;
+	}
+	.sticky-contact::before,
+	.sticky-contact::after {
+		transition: none;
+	}
+}
+
+/* ── light theme: same gas, paper wall — pull the outer haze in so the room
+ *    doesn't wash green/amber over the cream. ──────────────────────────────── */
+:root[data-theme="light"] .sticky-contact {
+	--sb-green-core: color-mix(in srgb, white 30%, var(--color-phosphor));
+	--sb-amber-core: color-mix(in srgb, white 28%, var(--color-warn));
+	--sb-halo-green: color-mix(in srgb, var(--color-phosphor) 18%, transparent);
+	--sb-halo-amber: color-mix(in srgb, var(--color-warn) 16%, transparent);
+	--sb-halo-faint: color-mix(in srgb, var(--color-phosphor) 6%, transparent);
+}
+:root[data-theme="light"] .sticky-contact .sticky-contact-open {
+	text-shadow:
+		0 0 1px var(--sb-amber-core),
+		0 0 3px var(--color-warn),
+		0 0 8px color-mix(in srgb, var(--color-warn) 65%, transparent),
+		0 0 20px color-mix(in srgb, var(--color-warn) 40%, transparent),
+		0 0 40px color-mix(in srgb, var(--color-warn) 20%, transparent);
+}
+:root[data-theme="light"] .sticky-contact .sticky-contact-pane {
+	box-shadow:
+		inset 0 0 10px color-mix(in srgb, var(--color-phosphor) 7%, transparent),
+		0 0 0 1px color-mix(in srgb, var(--color-phosphor) 20%, transparent),
+		0 0 10px color-mix(in srgb, var(--color-phosphor) 16%, transparent),
+		0 10px 36px rgba(26, 31, 26, 0.14);
+}

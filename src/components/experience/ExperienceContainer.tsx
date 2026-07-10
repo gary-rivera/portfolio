@@ -1,16 +1,18 @@
 import SectionHead from "@components/SectionHead";
-import TimelineItem from "./TimelineItem";
-import { events } from "@data/experience";
+import CareerChapter, { OnRamp } from "./CareerChapter";
+import { chapters, onRamp, totalSpan } from "@data/experience";
+import "@styles/work-log.css";
 
 export default function ExperienceContainer() {
 	return (
 		<section>
-			<SectionHead name="work.log" meta={`tail -n ${events.length} · 2021—2026 · sorted desc`} />
-			<div className="-mx-3 flex w-full flex-col">
-				{events.map((event, index) => (
-					<TimelineItem key={`timeline-${index}`} event={event} index={index} />
+			<SectionHead name="work.history" meta={totalSpan()} />
+			<ol aria-label="career history" className="flex w-full list-none flex-col p-0">
+				{chapters.map((chapter, index) => (
+					<CareerChapter key={chapter.id} chapter={chapter} last={index === chapters.length - 1} />
 				))}
-			</div>
+				<OnRamp tenure={onRamp.tenure} items={onRamp.items} />
+			</ol>
 		</section>
 	);
 }

@@ -56,7 +56,7 @@ export default function ConsoleCard({
 		>
 			<div id={headId} className="mb-3 flex items-baseline gap-2 text-xs">
 				<span className="tracking-wider text-phosphor">~$ {title}</span>
-				{meta && <span className="density-extra text-text-subtle">{meta}</span>}
+				{meta && <span className="text-text-subtle">{meta}</span>}
 			</div>
 
 			<dl className={`grid grid-cols-1 ${LIST_GAP[size]}`}>
@@ -66,7 +66,7 @@ export default function ConsoleCard({
 						<dd className={row.value}>
 							<span className={accent ? "text-phosphor" : undefined}>{v}</span>
 							{entryMeta && (
-								<span className={`density-extra ml-1 ${row.metaSize} text-text-subtle`}>
+								<span className={`ml-1 ${row.metaSize} text-text-subtle`}>
 									{entryMeta}
 								</span>
 							)}

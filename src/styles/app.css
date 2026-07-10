@@ -258,32 +258,6 @@ html.crt-boot {
 	animation-delay: calc(var(--log-i, 0) * 60ms + 200ms);
 }
 
-/* timeline-row: caret pseudo-element + slide-in on hover */
-.timeline-row {
-	position: relative;
-}
-.timeline-row::before {
-	content: "❯";
-	position: absolute;
-	left: -0.95rem;
-	top: 50%;
-	font-size: 0.9rem;
-	font-weight: 700;
-	line-height: 1;
-	color: var(--color-phosphor);
-	text-shadow: 0 0 6px color-mix(in srgb, var(--color-phosphor) 45%, transparent);
-	opacity: 0;
-	transform: translate(-8px, -50%);
-	transition:
-		opacity 0.14s var(--ease-out),
-		transform 0.14s var(--ease-out);
-	pointer-events: none;
-}
-.timeline-row:hover::before {
-	opacity: 1;
-	transform: translate(0, -50%);
-}
-
 /* click flash-invert — phosphor wash on press, self-clears */
 @keyframes flash-invert {
 	0%, 100% {
@@ -340,20 +314,10 @@ html.theme-ripple::view-transition-new(root) {
 	mix-blend-mode: normal;
 }
 
-/* ─── density ────────────────────────────────────────────────────────────── */
-/* normal (default) shows everything. minimal hides decorative metadata. */
-:root[data-density="minimal"] .density-extra {
-	display: none !important;
-}
-:root[data-density="minimal"] .animate-pulse-phosphor,
-:root[data-density="minimal"] .animate-blink-phosphor {
-	animation: none !important;
-	opacity: 0.7;
-}
-
 @media (prefers-reduced-motion: reduce) {
 	.animate-pulse-phosphor,
 	.animate-blink-phosphor,
+	.glow-name,
 	html.crt-boot,
 	.boot-sweep,
 	.log-line,
@@ -367,9 +331,6 @@ html.theme-ripple::view-transition-new(root) {
 	}
 	.boot-sweep {
 		display: none;
-	}
-	.timeline-row::before {
-		transition: none;
 	}
 	html.theme-transitioning,
 	html.theme-transitioning body {
@@ -386,8 +347,118 @@ html.theme-ripple::view-transition-new(root) {
 	text-shadow: 0 0 6px color-mix(in srgb, var(--color-phosphor) 40%, transparent);
 }
 
+/* neon contact link — dim phosphor tube that ignites on hover/focus.
+   same treatment as .sticky-contact-link on the hanging sign.
+   .neon-text shares the base tint for non-interactive text (no ignition). */
+.neon-text,
+.neon-link {
+	--neon-link-core: color-mix(in srgb, white 70%, var(--color-phosphor));
+	color: color-mix(in srgb, var(--color-phosphor) 78%, var(--color-text));
+	text-shadow: 0 0 5px color-mix(in srgb, var(--color-phosphor) 28%, transparent);
+}
+.neon-link:hover,
+.neon-link:focus-visible {
+	color: var(--neon-link-core);
+	text-shadow:
+		0 0 1px var(--neon-link-core),
+		0 0 5px var(--color-phosphor),
+		0 0 12px color-mix(in srgb, var(--color-phosphor) 60%, transparent),
+		0 0 24px color-mix(in srgb, var(--color-phosphor) 32%, transparent);
+	border-bottom-color: color-mix(in srgb, var(--color-phosphor) 60%, transparent);
+}
+:root[data-theme="light"] .neon-link {
+	--neon-link-core: color-mix(in srgb, white 30%, var(--color-phosphor));
+}
+
+/* neon sign: two animations with co-prime periods so the combined
+   flicker pattern doesn't repeat for ~14 minutes — reads as sporadic.
+   each tubes-animation holds full glow most of the time and only
+   overrides during its own irregular flicker events. */
+@keyframes neon-tube-a {
+	/* full glow held via steps; flicker bursts at irregular offsets */
+	0%, 11%, 11.7%, 12.1%, 12.7%, 38%, 39%, 40%, 61%, 61.45%, 100% {
+		text-shadow:
+			0 0 1px color-mix(in srgb, var(--color-phosphor) 90%, white),
+			0 0 4px var(--color-phosphor),
+			0 0 10px color-mix(in srgb, var(--color-phosphor) 75%, transparent),
+			0 0 22px color-mix(in srgb, var(--color-phosphor) 50%, transparent),
+			0 0 42px color-mix(in srgb, var(--color-phosphor) 28%, transparent),
+			0 0 72px color-mix(in srgb, var(--color-phosphor) 14%, transparent);
+		opacity: 1;
+		animation-timing-function: steps(1, end);
+	}
+	/* burst: double-stutter @ 11.4% & 12.4% */
+	11.4%, 12.4% {
+		text-shadow: none;
+		opacity: 0.22;
+		animation-timing-function: steps(1, end);
+	}
+	/* sustained struggle 38.4% → 39.6% (tube half-lit, dropping out) */
+	38.4%, 39.6% {
+		text-shadow:
+			0 0 1px color-mix(in srgb, var(--color-phosphor) 50%, transparent),
+			0 0 3px color-mix(in srgb, var(--color-phosphor) 28%, transparent);
+		opacity: 0.5;
+		animation-timing-function: steps(1, end);
+	}
+	39.2% {
+		text-shadow: none;
+		opacity: 0.18;
+		animation-timing-function: steps(1, end);
+	}
+	/* single hard cut @ 61.2% */
+	61.2% {
+		text-shadow: none;
+		opacity: 0.25;
+		animation-timing-function: steps(1, end);
+	}
+}
+
+@keyframes neon-tube-b {
+	/* offset, different bursts — co-prime period = sporadic when combined */
+	0%, 23%, 24%, 25%, 51%, 51.4%, 78%, 78.6%, 79.2%, 79.8%, 100% {
+		text-shadow:
+			0 0 1px color-mix(in srgb, var(--color-phosphor) 90%, white),
+			0 0 4px var(--color-phosphor),
+			0 0 10px color-mix(in srgb, var(--color-phosphor) 75%, transparent),
+			0 0 22px color-mix(in srgb, var(--color-phosphor) 50%, transparent),
+			0 0 42px color-mix(in srgb, var(--color-phosphor) 28%, transparent),
+			0 0 72px color-mix(in srgb, var(--color-phosphor) 14%, transparent);
+		opacity: 1;
+		animation-timing-function: steps(1, end);
+	}
+	/* triple stutter @ 23.4 / 24.4 / 25 (cluster) */
+	23.4%, 24.4% {
+		text-shadow: none;
+		opacity: 0.28;
+		animation-timing-function: steps(1, end);
+	}
+	/* single quick @ 51.2% */
+	51.2% {
+		text-shadow: none;
+		opacity: 0.22;
+		animation-timing-function: steps(1, end);
+	}
+	/* fast 3-flick burst @ ~78–80% */
+	78.3%, 78.9%, 79.5% {
+		text-shadow: none;
+		opacity: 0.2;
+		animation-timing-function: steps(1, end);
+	}
+}
+
 @utility glow-name {
-	text-shadow: 0 0 12px color-mix(in srgb, var(--color-phosphor) 25%, transparent);
+	text-shadow:
+		0 0 1px color-mix(in srgb, var(--color-phosphor) 90%, white),
+		0 0 4px var(--color-phosphor),
+		0 0 10px color-mix(in srgb, var(--color-phosphor) 75%, transparent),
+		0 0 22px color-mix(in srgb, var(--color-phosphor) 50%, transparent),
+		0 0 42px color-mix(in srgb, var(--color-phosphor) 28%, transparent),
+		0 0 72px color-mix(in srgb, var(--color-phosphor) 14%, transparent);
+	animation:
+		neon-tube-a 7.3s linear infinite,
+		neon-tube-b 11.1s linear infinite;
+	will-change: text-shadow, opacity;
 }
 
 @utility dot-glow {

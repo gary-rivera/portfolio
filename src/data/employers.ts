@@ -6,6 +6,12 @@ type Employer = {
 };
 
 const employers: Record<string, Employer> = {
+	hyperFi: {
+		shortName: "HyperFi",
+		companyName: "HyperFi",
+		description: "llm-assisted procurement for telecom. b2b purchasing, guided by ai.",
+		url: "",
+	},
 	orchard: {
 		shortName: "Orchard",
 		companyName: "Orchard Mortgage",

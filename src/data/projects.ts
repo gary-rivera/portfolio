@@ -5,7 +5,8 @@ import gbotIcon from "@assets/icons/projects/g-bot-icon.png";
 import memeGenieLamp from "@assets/icons/projects/meme-genie-logo.svg";
 import garyFlappyIcon from "@assets/icons/projects/flappy-js-logo.png";
 
-const GH_USER_LINK = "https://github.com/gary-rivera";
+export const GH_USER_LINK = "https://github.com/gary-rivera";
+
 export type Project = {
 	logoConfig: [string, { height: number | string; width: number | string | any[] }];
 	name: string;
@@ -26,85 +27,15 @@ export type Projects = {
 	[key: string]: Project;
 };
 
-export const ProjectCatalog: Projects = {
-	ruio: {
-		active: true,
-
-		logoConfig: [
-			ruioIcon,
-			{
-				height: "auto",
-				width: ["2rem", "2.5rem", "3rem"],
-			},
-		],
-		name: "ruio",
-		description: "runtime ui debugger. draws boxes around your jsx so you stop opening devtools.",
-		tags: [],
-		links: {
-			npm: "https://www.npmjs.com/package/ruio",
-			repo: GH_USER_LINK,
-		},
-	},
-	"flappy-js": {
-		active: true,
-
-		logoConfig: [garyFlappyIcon, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
-		tags: [],
-		name: "Snaily JS",
-		description: "browser physics game. ts + canvas, ships at 60fps on a chromebook.",
-		links: {
-			deployment: "https://gary-rivera.github.io/flappy-js/",
-			repo: GH_USER_LINK,
-		},
-	},
-	"dead-mart": {
-		active: true,
-
-		logoConfig: [deadlockIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
-		tags: [],
-		name: "DeadMart",
-		description: "price tracker for a game economy that doesn't want to be tracked.",
-		links: {
-			deployment: "https://gary-rivera.github.io/dead-mart",
-			repo: GH_USER_LINK,
-		},
-	},
-	gbot: {
-		active: true,
-
-		logoConfig: [gbotIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
-		name: "G-Bot",
-		description: "discord bot. sass, dad jokes, and one cron job for a private server of friends.",
-		tags: [],
-		links: {
-			npm: null,
-			repo: GH_USER_LINK,
-		},
-	},
-	"meme-generator": {
-		active: true,
-
-		logoConfig: [memeGenieLamp, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
-		tags: [],
-		name: "Meme Genie",
-		description: "drag-drop text onto images. the 'i need a meme right now' tool.",
-		links: {
-			deployment: "https://gary-rivera.github.io/meme-generator/",
-			repo: GH_USER_LINK,
-		},
-	},
-	calculator: {
-		active: true,
-
-		logoConfig: [calculatorIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
-		name: "Calculator",
-		description: "first project. keyboard arithmetic, long before redux was a thing to argue about.",
-		tags: [],
-		links: {
-			deployment: "https://gary-rivera.github.io/calculator/",
-			repo: GH_USER_LINK,
-		},
-	},
+// Logos are local assets and cannot come from GitHub. Keyed by GitHub repo name;
+// keys MUST match src/data/projects.registry.json.
+export const projectLogos: Record<string, Project["logoConfig"]> = {
+	ruio: [ruioIcon, { height: "auto", width: ["2rem", "2.5rem", "3rem"] }],
+	"flappy-js": [garyFlappyIcon, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
+	"dead-mart": [deadlockIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
+	gbot: [gbotIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
+	"meme-generator": [memeGenieLamp, { height: 100, width: ["1.75rem", "1.9em", "2.5rem"] }],
+	calculator: [calculatorIcon, { height: 100, width: ["1.25rem", "1.5rem", "2rem"] }],
 };
 
 // [ text, color, icon]
@@ -134,5 +65,3 @@ export const projectTagsConfig: Record<string, TagConfig> = {
 
 	"first-project": { priority: 4, badge: ["First Project", "gray", null] },
 };
-
-export const projectCatalogKeys = Object.keys(ProjectCatalog).filter((p) => ProjectCatalog[p].active);

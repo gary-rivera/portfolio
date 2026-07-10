@@ -11,6 +11,7 @@
 		"allowImportingTsExtensions": false, // Ensures extension-less imports
 		"isolatedModules": true, // Helps with tree-shaking and per-file transpilation
 		"moduleDetection": "force", // Forces module mode, avoids pitfalls
+		"resolveJsonModule": true,
 		"jsx": "react-jsx", // JSX handling for React
 		"paths": {
 			"@/*": ["./src/*"],

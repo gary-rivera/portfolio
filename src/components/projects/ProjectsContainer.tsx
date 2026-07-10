@@ -3,22 +3,7 @@ import ProjectCard from "./ProjectCard";
 import { useProjectsContext } from "@context/ProjectsContext";
 
 export default function ProjectsContainer() {
-	const { projects, sortedDesc, isLoading, isError } = useProjectsContext();
-
-	if (isLoading)
-		return (
-			<section aria-labelledby="projects-head">
-				<SectionHead name="projects.log" meta="loading…" />
-				<p className="text-sm text-text-subtle">loading…</p>
-			</section>
-		);
-	if (isError)
-		return (
-			<section aria-labelledby="projects-head">
-				<SectionHead name="projects.log" meta="err" />
-				<p className="text-sm text-danger">error loading repositories.</p>
-			</section>
-		);
+	const { projects, sortedDesc } = useProjectsContext();
 
 	const visible = sortedDesc.filter((projectKey) => projects[projectKey]?.active);
 

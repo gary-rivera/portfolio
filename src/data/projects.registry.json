@@ -1,0 +1,44 @@
+{
+  "ruio": {
+    "name": "ruio",
+    "npm": "https://www.npmjs.com/package/ruio",
+    "descriptionFallback": "runtime ui debugger. draws boxes around your jsx so you stop opening devtools.",
+    "deploymentFallback": null,
+    "active": true
+  },
+  "flappy-js": {
+    "name": "Snaily JS",
+    "npm": null,
+    "descriptionFallback": "browser physics game. ts + canvas, ships at 60fps on a chromebook.",
+    "deploymentFallback": "https://gary-rivera.github.io/flappy-js/",
+    "active": true
+  },
+  "dead-mart": {
+    "name": "DeadMart",
+    "npm": null,
+    "descriptionFallback": "price tracker for a game economy that doesn't want to be tracked.",
+    "deploymentFallback": "https://gary-rivera.github.io/dead-mart",
+    "active": true
+  },
+  "gbot": {
+    "name": "G-Bot",
+    "npm": null,
+    "descriptionFallback": "discord bot. sass, dad jokes, and one cron job for a private server of friends.",
+    "deploymentFallback": null,
+    "active": true
+  },
+  "meme-generator": {
+    "name": "Meme Genie",
+    "npm": null,
+    "descriptionFallback": "drag-drop text onto images. the 'i need a meme right now' tool.",
+    "deploymentFallback": "https://gary-rivera.github.io/meme-generator/",
+    "active": true
+  },
+  "calculator": {
+    "name": "Calculator",
+    "npm": null,
+    "descriptionFallback": "first project. keyboard arithmetic, long before redux was a thing to argue about.",
+    "deploymentFallback": "https://gary-rivera.github.io/calculator/",
+    "active": true
+  }
+}

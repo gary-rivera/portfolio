@@ -4,6 +4,7 @@ import generated from "@data/projects.generated.json";
 
 type RegistryEntry = {
 	name?: string;
+	kind?: string;
 	npm?: string | null;
 	descriptionFallback?: string | null;
 	deploymentFallback?: string | null;
@@ -51,11 +52,13 @@ function buildProjects(): Projects {
 			active: r.active,
 			logoConfig,
 			name: r.name ?? g.name ?? repoName,
+			kind: r.kind,
 			description: nonEmpty(g.description) ? g.description : (r.descriptionFallback ?? null),
 			languages: g.languages ?? [],
 			tags: sortProjectTags(g.topics ?? []),
 			totalCommits: g.totalCommits,
 			createdAt: nonEmpty(g.createdAt) ? new Date(g.createdAt) : undefined,
+			pushedAt: nonEmpty(g.pushedAt) ? new Date(g.pushedAt) : undefined,
 			links: {
 				npm: r.npm ?? null,
 				repo: g.url ?? GH_USER_LINK,
@@ -72,6 +75,9 @@ const toTs = (d: Date | undefined): number =>
 
 export const projects: Projects = buildProjects();
 
+// newest activity first — the projects.log lifespan tracks read top-down by last push
 export const sortedDesc: string[] = Object.keys(projects).sort(
-	(a, b) => toTs(projects[b].createdAt) - toTs(projects[a].createdAt),
+	(a, b) =>
+		(toTs(projects[b].pushedAt) || toTs(projects[b].createdAt)) -
+		(toTs(projects[a].pushedAt) || toTs(projects[a].createdAt)),
 );

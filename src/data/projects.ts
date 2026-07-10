@@ -10,6 +10,7 @@ export const GH_USER_LINK = "https://github.com/gary-rivera";
 export type Project = {
 	logoConfig: [string, { height: number | string; width: number | string | any[] }];
 	name: string;
+	kind?: string;
 	links: {
 		npm?: string | null;
 		repo?: string | null;
@@ -19,6 +20,7 @@ export type Project = {
 	languages?: string[];
 	tags?: string[];
 	createdAt?: Date;
+	pushedAt?: Date;
 	totalCommits?: number;
 	active: boolean;
 };

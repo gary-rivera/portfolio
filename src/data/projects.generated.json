@@ -38,27 +38,6 @@
       "JavaScript"
     ]
   },
-  "dead-mart": {
-    "name": "dead-mart",
-    "description": "Open source, recreation of a video game shop UI (inspired by Valve's in-game design). Written with vanilla CSS. ",
-    "url": "https://github.com/gary-rivera/dead-mart",
-    "homepageUrl": "",
-    "createdAt": "2024-10-18T01:06:25Z",
-    "pushedAt": "2024-11-30T23:08:37Z",
-    "stargazerCount": 0,
-    "totalCommits": 36,
-    "topics": [
-      "mockup",
-      "react",
-      "vite",
-      "gaming"
-    ],
-    "languages": [
-      "JavaScript",
-      "HTML",
-      "CSS"
-    ]
-  },
   "gbot": {
     "name": "gbot",
     "description": "An automated crypto trading bot built for Unix-based systems, activated via the command line. It analyzes market trends to execute winning trades in real-time without storing personal data.",

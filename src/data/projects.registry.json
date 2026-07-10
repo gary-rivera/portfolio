@@ -1,43 +1,41 @@
 {
   "ruio": {
     "name": "ruio",
+    "kind": "ui debugger",
     "npm": "https://www.npmjs.com/package/ruio",
-    "descriptionFallback": "runtime ui debugger. draws boxes around your jsx so you stop opening devtools.",
+    "descriptionFallback": "draws metadata boxes around your jsx so you stop opening devtools.",
     "deploymentFallback": null,
     "active": true
   },
   "flappy-js": {
-    "name": "Snaily JS",
+    "name": "Snaily",
+    "kind": "flappy bird but with a snail",
     "npm": null,
-    "descriptionFallback": "browser physics game. ts + canvas, ships at 60fps on a chromebook.",
+    "descriptionFallback": "browser physics game. ts + canvas. Written in less than 30 lines",
     "deploymentFallback": "https://gary-rivera.github.io/flappy-js/",
-    "active": true
-  },
-  "dead-mart": {
-    "name": "DeadMart",
-    "npm": null,
-    "descriptionFallback": "price tracker for a game economy that doesn't want to be tracked.",
-    "deploymentFallback": "https://gary-rivera.github.io/dead-mart",
     "active": true
   },
   "gbot": {
     "name": "G-Bot",
+    "kind": "automated trading bot",
     "npm": null,
-    "descriptionFallback": "discord bot. sass, dad jokes, and one cron job for a private server of friends.",
+    "descriptionFallback": "Analyzes live market trends and executes automated crypto trades bot.",
     "deploymentFallback": null,
     "active": true
   },
   "meme-generator": {
     "name": "Meme Genie",
+    "kind": "image captioner",
     "npm": null,
-    "descriptionFallback": "drag-drop text onto images. the 'i need a meme right now' tool.",
+    "descriptionFallback": "drag-drop text onto images.",
     "deploymentFallback": "https://gary-rivera.github.io/meme-generator/",
     "active": true
   },
   "calculator": {
     "name": "Calculator",
+    "kind": "pixel-perfect replica",
     "npm": null,
-    "descriptionFallback": "first project. keyboard arithmetic, long before redux was a thing to argue about.",
+    "descriptionFallback": "proving vanilla CSS is an art form",
     "deploymentFallback": "https://gary-rivera.github.io/calculator/",
     "active": true
   }

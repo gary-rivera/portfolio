@@ -1,94 +1,133 @@
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { Project, projectTagsConfig } from "@data/projects";
+
+export type LifespanAxis = { start: number; end: number };
 
 interface ProjectCardProps {
 	project: Project;
-	index: number;
+	axis: LifespanAxis;
 }
 
-export default function ProjectCard({ project, index }: ProjectCardProps) {
-	const { links, name, description, createdAt, tags, logoConfig, totalCommits } = project;
-	const number = (index + 1).toString().padStart(2, "0");
-	const year = createdAt ? new Date(createdAt).getFullYear().toString() : null;
+const monthLabel = (d: Date) =>
+	d.toLocaleString("en-US", { month: "short", year: "numeric" }).toLowerCase();
+
+function pushedAgo(pushed: Date, now: number): string {
+	const months = Math.max(0, Math.floor((now - pushed.getTime()) / (1000 * 60 * 60 * 24 * 30.44)));
+	if (months < 12) return `pushed ${months}mo ago`;
+	const y = Math.floor(months / 12);
+	const m = months % 12;
+	return m ? `pushed ${y}y ${m}mo ago` : `pushed ${y}y ago`;
+}
+
+export default function ProjectCard({ project, axis }: ProjectCardProps) {
+	const { links, name, kind, description, createdAt, pushedAt, tags, logoConfig, totalCommits } = project;
 	const logoSrc = logoConfig?.[0];
 
-	const topTags = (tags ?? [])
-		.map((t) => projectTagsConfig[t]?.badge[0])
-		.filter((t): t is string => Boolean(t))
-		.slice(0, 3);
+	const span = axis.end - axis.start;
+	const pos = (d?: Date) =>
+		d instanceof Date && span > 0
+			? Math.min(100, Math.max(0, ((d.getTime() - axis.start) / span) * 100))
+			: null;
+	const trackStart = pos(createdAt);
+	const trackEnd = pos(pushedAt);
+	const hasTrack = trackStart !== null && trackEnd !== null;
+	// end-cap brightness: quadratic on the push's position along the axis, so
+	// recent work glows and old work cools without a status taxonomy
+	const heat = hasTrack ? Math.max(0.08, (trackEnd / 100) ** 2) : 0.08;
 
-	const hasLiveLink = Boolean(links.deployment || links.npm);
+	const topTags = (tags ?? []).map((t) => projectTagsConfig[t]?.badge[0] ?? t).slice(0, 3);
+
+	// no date range here — the lifespan track already draws it
+	const facts = [
+		typeof totalCommits === "number" && totalCommits > 0 ? `${totalCommits} commits` : null,
+		pushedAt ? pushedAgo(pushedAt, axis.end) : null,
+	].filter(Boolean);
 
 	return (
-		<article className="group relative grid grid-cols-[28px_1fr] gap-x-3 gap-y-1 border border-dashed border-rule bg-bg-deep/40 px-3 py-3 transition-colors duration-150 ease-out hover:border-phosphor-dim hover:bg-phosphor/[3%] sm:grid-cols-[36px_1fr_auto] sm:px-4 sm:py-3">
-			<div className="row-span-2 flex h-7 w-7 items-start justify-center sm:h-9 sm:w-9">
-				{logoSrc ? (
+		<li
+			className="pl-strip"
+			tabIndex={0}
+			style={
+				hasTrack
+					? ({ "--s": `${trackStart}%`, "--e": `${trackEnd}%`, "--heat": heat } as CSSProperties)
+					: ({ "--heat": heat } as CSSProperties)
+			}
+		>
+			<div className="pl-l1">
+				{logoSrc && (
 					<img
+						className="pl-logo"
 						src={logoSrc}
 						alt=""
-						width={28}
-						height={28}
+						width={16}
+						height={16}
 						loading="lazy"
 						decoding="async"
-						className="h-7 w-7 object-contain opacity-90 transition-opacity duration-150 ease-out group-hover:opacity-100 sm:h-9 sm:w-9"
 					/>
-				) : (
-					<span className="text-phosphor-dim" aria-hidden="true">▣</span>
 				)}
-			</div>
-
-			<header className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-				<span className="text-text-subtle text-xs">{number}</span>
-				<h3 className="text-base font-medium text-text transition-colors duration-150 ease-out group-hover:text-phosphor sm:text-lg">
+				<a
+					className="neon-link pl-name"
+					href={links.repo ?? undefined}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					{name.toLowerCase()}
-				</h3>
-				{year && <span className="text-xs text-text-subtle">· {year}</span>}
-				{typeof totalCommits === "number" && totalCommits > 0 && (
-					<span className="text-xs text-text-subtle">· {totalCommits} commits</span>
-				)}
-			</header>
-
-			<div className="col-start-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-text-muted sm:col-start-2">
-				<span className="grow basis-full sm:basis-auto">
-					{description ?? <span className="text-text-subtle">—</span>}
+				</a>
+				{kind && <span className="pl-kind">· {kind}</span>}
+				<span className="pl-links">
+					{links.deployment && (
+						<CardLink href={links.deployment} label="demo" name={name} kind="demo" />
+					)}
+					{links.npm && <CardLink href={links.npm} label="npm" name={name} kind="npm" />}
+					{links.repo && <CardLink href={links.repo} label="gh" name={name} kind="gh" />}
 				</span>
-				{topTags.length > 0 && (
-					<span className="flex flex-wrap gap-1">
-						{topTags.map((t) => (
-							<span
-								key={t}
-								className="border border-rule px-1.5 py-px text-2xs lowercase tracking-wider text-text-subtle"
-							>
-								{t}
-							</span>
-						))}
-					</span>
-				)}
 			</div>
 
-			<div className="col-start-2 mt-1 flex flex-wrap gap-x-3 gap-y-1 sm:col-start-3 sm:row-span-2 sm:mt-0 sm:items-start sm:justify-end">
-				{links.deployment && (
-					<CardLink href={links.deployment} label={hasLiveLink ? "live" : "open"} prominent name={name} kind="live" />
-				)}
-				{links.npm && <CardLink href={links.npm} label="npm" name={name} kind="npm" />}
-				{links.repo && <CardLink href={links.repo} label="gh" name={name} kind="gh" />}
-			</div>
-		</article>
+			{topTags.length > 0 ? (
+				<ul className="pl-tags" aria-label={`${name} topics`}>
+					{topTags.map((tag) => (
+						<li key={tag} className="pl-tag">
+							{tag.toLowerCase()}
+						</li>
+					))}
+				</ul>
+			) : (
+				description && <p className="pl-desc">{description}</p>
+			)}
+
+			{hasTrack && (
+				<div
+					className="pl-track"
+					role="img"
+					aria-label={`lifespan: ${monthLabel(createdAt!)} to ${monthLabel(pushedAt!)}`}
+				>
+					<span className="pl-bar" />
+				</div>
+			)}
+
+			{(description || facts.length > 0) && (
+				<span className="pl-det">
+					<span>
+						{description && topTags.length > 0 && <span className="pl-dl">{description}</span>}
+						{facts.length > 0 && <span className="pl-dl pl-dl--sub">{facts.join(" · ")}</span>}
+					</span>
+				</span>
+			)}
+		</li>
 	);
 }
 
 type CardLinkProps = {
 	href: string;
 	label: string;
-	prominent?: boolean;
 	name: string;
-	kind: "live" | "npm" | "gh";
+	kind: "demo" | "npm" | "gh";
 };
 
-function CardLink({ href, label, prominent, name, kind }: CardLinkProps) {
+function CardLink({ href, label, name, kind }: CardLinkProps) {
 	const [flashing, setFlashing] = useState(false);
 	const ariaLabels: Record<CardLinkProps["kind"], string> = {
-		live: `open ${name} (live)`,
+		demo: `open ${name} (demo)`,
 		npm: `${name} on npm`,
 		gh: `${name} on github`,
 	};
@@ -103,11 +142,7 @@ function CardLink({ href, label, prominent, name, kind }: CardLinkProps) {
 				requestAnimationFrame(() => setFlashing(true));
 			}}
 			onAnimationEnd={() => setFlashing(false)}
-			className={`inline-block px-1.5 py-0.5 text-xs lowercase transition-[color,text-shadow] duration-100 ease-out hover:glow-text-phosphor-soft ${
-				prominent
-					? "border border-phosphor-dim text-phosphor hover:text-phosphor hover:border-phosphor"
-					: "text-phosphor-dim hover:text-phosphor"
-			} ${flashing ? "flash-invert" : ""}`}
+			className={`pl-link ${flashing ? "flash-invert" : ""}`}
 		>
 			{label}
 		</a>
